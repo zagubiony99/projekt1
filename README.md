@@ -154,7 +154,7 @@ Endpointy backendu: `GET /api/projects`, `GET /api/projects/{id}/crawls`,
 
 ### 📋 Recipes — gotowe analizy SEO
 
-Przycisk **Recipes** nad tabelą otwiera bibliotekę **45 gotowych analiz**.
+Przycisk **Recipes** nad tabelą otwiera bibliotekę **92 gotowych analiz**.
 Klik = gotowe OQL + właściwe kolumny + sortowanie. Grupy:
 
 | grupa | przykłady |
@@ -166,14 +166,44 @@ Klik = gotowe OQL + właściwe kolumny + sortowanie. Grupy:
 | **Content quality** | brak title/description/H1, duplikaty, thin content, near-duplicates, brakujące alty |
 | **Internal linking** | strony osierocone, głębokie strony, tylko linki nofollow |
 | **Performance** | wolne strony, słabe LCP/CLS, niski performance score |
-| **Bots & AI crawlers** | nieodwiedzone przez Googlebota, rozbieżny status, **strony zbierane przez boty OpenAI/Claude**, ruch z asystentów AI |
-| **Logs** | boty trafiające na błędy, aktywność botów AI, wizyty SEO, wolne odpowiedzi serwera |
+| **AI crawlers & answers** | 50 analiz — patrz niżej |
+| **Googlebot & crawl budget** | nieodwiedzone przez Googlebota, rozbieżny status, gdzie idzie budżet |
+| **Logs** | boty trafiające na błędy, wizyty SEO, wolne odpowiedzi serwera |
+
+#### AI crawlers & answers — 50 analiz
+
+Oncrawl wzbogaca dane crawla o pola per bot AI (`logs_bot_hits_*`,
+`logs_bot_status_code_*`, `logs_seo_visits_*`), a logi mają `event_bot_kind`
+z wartościami `ai search` / `ai training` / `ai user`. To pozwala odpowiedzieć
+na pytania, których klasyczne narzędzia SEO nie zadają:
+
+- **`{Bot}` received an error** — bot AI dostał 4xx/5xx zamiast treści.
+  Ta strona nigdy nie trafi do odpowiedzi AI. *(per bot: GPTBot, SearchBot,
+  ChatGPT-User, ClaudeBot, Claude-SearchBot, Claude-User, PerplexityBot,
+  Perplexity-User, Gemini Deep Research, Mistral-User)*
+- **`{Bot}` sees a different status than the crawl** — crawl widzi 200,
+  a bot AI błąd. Typowo rate limiting albo ochrona antybotowa uderzająca w AI.
+- **AI bots hitting errors / redirects** (logi) — to samo od strony zdarzeń;
+  część botów AI w ogóle nie podąża za przekierowaniami.
+- **`{Źródło}` sends users to a broken page** — asystent cytuje URL, który
+  zwraca błąd. Najgorszy scenariusz: AI Cię poleca, użytkownik trafia na 404.
+- **Crawled by AI bots but not by Googlebot** oraz odwrotnie — gdzie AI już
+  Cię czyta, a klasyczne wyszukiwanie nie (i vice versa).
+- **AI bots crawling thin content / noindex pages** — na co boty AI marnują
+  budżet; `noindex` ich nie zatrzymuje, potrzeba reguł robots.txt dla ich UA.
+- **AI search bots only** vs **AI training crawlers only** — rozdzielenie
+  botów zasilających odpowiedzi na żywo od tych zbierających dane treningowe.
+- **Live fetches triggered by AI users** — ktoś zapytał asystenta o Twoją
+  stronę, a ten pobrał ją na żywo.
+- **Traffic arriving from `{Źródło}`** — realne wizyty z ChatGPT / Perplexity /
+  Gemini / Claude / Mistral.
 
 Recepty są definiowane w [`oncrawl/recipes.py`](oncrawl/recipes.py) i filtrowane
 po stronie API: **pokazują się tylko te, których pola faktycznie istnieją**
 w `/fields` danego projektu i `data_type`. Kolumny są przycinane do istniejących,
 a sortowanie odpada, gdy pole nie jest sortowalne. Na koncie z pełnym crawlem
-+ logami dostępne są zwykle **41 recept dla `pages` i 4 dla `logs`**.
++ logami i pełnym zestawem botów AI dostępne są zwykle **63 recepty dla
+`pages` (w tym 44 AI) i 10 dla `logs`**.
 
 Testy pilnują niezmiennika: **każde pole użyte w OQL recepty musi być
 zadeklarowane w `needs`** — inaczej recepta mogłaby wygenerować zapytanie

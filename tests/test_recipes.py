@@ -116,3 +116,52 @@ def test_pages_recipes_cover_key_scenarios():
 def test_recipes_have_reasonable_coverage_per_group():
     groups = {r["group"] for r in RECIPES}
     assert len(groups) >= 7
+
+
+# --- AI ------------------------------------------------------------------ #
+def test_ai_recipes_exist_per_bot_family():
+    """Każda rodzina botów AI ma komplet: crawled / error / status mismatch."""
+    from oncrawl.recipes import AI_BOT_FAMILIES
+
+    ids = {r["id"] for r in RECIPES}
+    for key, _name in AI_BOT_FAMILIES:
+        assert f"ai_crawled_{key}" in ids
+        assert f"ai_errors_{key}" in ids, f"brak recepty na błędy dla {key}"
+        assert f"ai_status_mismatch_{key}" in ids
+
+
+def test_ai_answer_sources_have_traffic_and_broken_recipes():
+    from oncrawl.recipes import AI_ANSWER_SOURCES
+
+    ids = {r["id"] for r in RECIPES}
+    for key, _name in AI_ANSWER_SOURCES:
+        assert f"ai_visits_{key}" in ids
+        assert f"ai_visits_broken_{key}" in ids
+
+
+def test_ai_log_recipes_cover_errors_and_kinds():
+    ids = {r["id"] for r in RECIPES}
+    assert "log_ai_bots_errors" in ids       # boty AI dostające 404 — wprost proszone
+    assert "log_ai_bots_redirects" in ids
+    assert "log_ai_search_vs_training" in ids
+    assert "log_ai_training_bots" in ids
+    assert "log_ai_user_fetches" in ids
+
+
+def test_ai_bot_recipe_degrades_when_family_missing():
+    """Brak jednej rodziny botów nie może ukryć recept dla pozostałych."""
+    fs = _fieldset_from([
+        "url", "status_code",
+        "logs_bot_hits_openai_gpt_bot", "logs_bot_status_code_openai_gpt_bot",
+        # brak jakichkolwiek pól Claude
+    ])
+    got = {r["id"] for r in applicable_recipes(fs, "pages")}
+    assert "ai_crawled_openai_gpt_bot" in got
+    assert "ai_errors_openai_gpt_bot" in got
+    assert "ai_crawled_claude_bot" not in got
+    assert "ai_errors_claude_bot" not in got
+
+
+def test_ai_group_is_substantial():
+    ai = [r for r in RECIPES if r["group"] == "AI crawlers & answers"]
+    assert len(ai) >= 40

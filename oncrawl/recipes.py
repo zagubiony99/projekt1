@@ -28,8 +28,33 @@ GROUPS = [
     "Content quality",
     "Internal linking",
     "Performance",
-    "Bots & AI crawlers",
+    "AI crawlers & answers",
+    "Googlebot & crawl budget",
     "Logs",
+]
+
+# Rodziny botów AI obecne w polach crawla (logs_bot_hits_* / logs_bot_status_code_*).
+# Każda rodzina daje własne recepty, więc brak jednej nie ukrywa pozostałych.
+AI_BOT_FAMILIES = [
+    ("openai_gpt_bot", "OpenAI GPTBot"),
+    ("openai_search_bot", "OpenAI SearchBot"),
+    ("openai_chat_gpt_user", "ChatGPT-User"),
+    ("claude_bot", "ClaudeBot"),
+    ("claude_search_bot", "Claude-SearchBot"),
+    ("claude_user", "Claude-User"),
+    ("perplexity_bot", "PerplexityBot"),
+    ("perplexity_user", "Perplexity-User"),
+    ("google_gemini_deep_research", "Gemini Deep Research"),
+    ("mistral_user", "Mistral-User"),
+]
+
+# Źródła ruchu z asystentów AI (logs_seo_visits_*).
+AI_ANSWER_SOURCES = [
+    ("openai", "ChatGPT"),
+    ("perplexity", "Perplexity"),
+    ("gemini", "Gemini"),
+    ("claude", "Claude"),
+    ("mistral", "Mistral"),
 ]
 
 
@@ -454,12 +479,12 @@ RECIPES: list[dict] = [
     ),
 
     # ------------------------------------------------------------------ #
-    # Bots & AI crawlers (dane z crawla wzbogacone logami)
+    # Googlebot & crawl budget
     # ------------------------------------------------------------------ #
     _r(
         id="not_crawled_by_google",
         label="Not crawled by Googlebot",
-        group="Bots & AI crawlers",
+        group="Googlebot & crawl budget",
         why="Pages Googlebot did not visit during the analysed period.",
         needs=["url", "crawled_by_googlebot"],
         oql={"field": ["crawled_by_googlebot", "equals", False]},
@@ -469,7 +494,7 @@ RECIPES: list[dict] = [
     _r(
         id="googlebot_status_mismatch",
         label="Googlebot sees a different status",
-        group="Bots & AI crawlers",
+        group="Googlebot & crawl budget",
         why="The status Googlebot sees differs from the crawl — possible cloaking or instability.",
         needs=["url", "googlebot_status_code_differ_from_oncrawl"],
         oql={"field": ["googlebot_status_code_differ_from_oncrawl", "equals", True]},
@@ -479,46 +504,14 @@ RECIPES: list[dict] = [
     _r(
         id="most_crawled",
         label="Most crawled by Googlebot",
-        group="Bots & AI crawlers",
+        group="Googlebot & crawl budget",
         why="Where your crawl budget actually goes.",
         needs=["url", "googlebot_hits"],
         oql={"field": ["googlebot_hits", "gt", 0]},
         columns=["url", "googlebot_hits", "googlebot_hits_per_day", "seo_visits", "depth", "status_code"],
         sort="googlebot_hits:desc",
     ),
-    _r(
-        id="ai_crawlers_openai",
-        label="Pages crawled by OpenAI bots",
-        group="Bots & AI crawlers",
-        why="Which pages OpenAI collects (GPTBot / SearchBot / ChatGPT-User) — visibility in AI answers.",
-        needs=["url", "logs_bot_hits_openai_gpt_bot"],
-        oql={"field": ["logs_bot_hits_openai_gpt_bot", "gt", 0]},
-        columns=["url", "logs_bot_hits_openai_gpt_bot", "logs_bot_hits_openai_search_bot",
-                 "logs_bot_hits_openai_chat_gpt_user", "seo_visits", "status_code"],
-        sort="logs_bot_hits_openai_gpt_bot:desc",
-    ),
-    _r(
-        id="ai_crawlers_anthropic",
-        label="Pages crawled by Claude bots",
-        group="Bots & AI crawlers",
-        why="Activity of Anthropic bots (ClaudeBot / Claude-SearchBot / Claude-User).",
-        needs=["url", "logs_bot_hits_claude_bot"],
-        oql={"field": ["logs_bot_hits_claude_bot", "gt", 0]},
-        columns=["url", "logs_bot_hits_claude_bot", "logs_bot_hits_claude_search_bot",
-                 "logs_bot_hits_claude_user", "seo_visits", "status_code"],
-        sort="logs_bot_hits_claude_bot:desc",
-    ),
-    _r(
-        id="ai_visits",
-        label="Traffic coming from AI assistants",
-        group="Bots & AI crawlers",
-        why="Visits arriving from ChatGPT / Perplexity / Gemini — a new traffic channel.",
-        needs=["url", "logs_seo_visits_openai"],
-        oql={"field": ["logs_seo_visits_openai", "gt", 0]},
-        columns=["url", "logs_seo_visits_openai", "logs_seo_visits_perplexity", "logs_seo_visits_gemini",
-                 "logs_seo_visits_claude", "seo_visits"],
-        sort="logs_seo_visits_openai:desc",
-    ),
+    # (recepty per bot AI dokładane niżej przez _ai_recipes())
 
     # ------------------------------------------------------------------ #
     # Logs (data_type = logs)
@@ -574,7 +567,258 @@ RECIPES: list[dict] = [
         columns=["event_url", "event_time_in_ms", "event_status_code", "event_bot_name", "event_day"],
         sort="event_time_in_ms:desc",
     ),
+
+    # ------------------------------------------------------------------ #
+    # AI crawlers & answers — analizy z logów (data_type = logs)
+    # ------------------------------------------------------------------ #
+    _r(
+        id="log_ai_bots_errors",
+        label="AI bots hitting errors (4xx/5xx)",
+        group="AI crawlers & answers",
+        data_type="logs",
+        why="AI crawlers receiving errors instead of content. Every such hit is a page that "
+            "will not make it into AI answers — and it burns their crawl budget on your site.",
+        needs=["event_url", "event_bot_kind", "event_status_code"],
+        oql={"and": [
+            {"or": [
+                {"field": ["event_bot_kind", "equals", "ai search"]},
+                {"field": ["event_bot_kind", "equals", "ai training"]},
+                {"field": ["event_bot_kind", "equals", "ai user"]},
+            ]},
+            {"field": ["event_status_code", "gte", 400]},
+        ]},
+        columns=["event_url", "event_status_code", "event_bot_name", "event_bot_kind", "event_day"],
+        sort="event_day:desc",
+    ),
+    _r(
+        id="log_ai_bots_redirects",
+        label="AI bots hitting redirects",
+        group="AI crawlers & answers",
+        data_type="logs",
+        why="AI crawlers following redirects instead of getting content directly — "
+            "some AI bots do not follow redirects at all, so the page may never be read.",
+        needs=["event_url", "event_bot_kind", "event_status_code"],
+        oql={"and": [
+            {"or": [
+                {"field": ["event_bot_kind", "equals", "ai search"]},
+                {"field": ["event_bot_kind", "equals", "ai training"]},
+                {"field": ["event_bot_kind", "equals", "ai user"]},
+            ]},
+            {"field": ["event_status_code", "gte", 300]},
+            {"field": ["event_status_code", "lt", 400]},
+        ]},
+        columns=["event_url", "event_status_code", "event_bot_name", "event_bot_kind", "event_day"],
+        sort="event_day:desc",
+    ),
+    _r(
+        id="log_ai_search_vs_training",
+        label="AI search bots only (answer engines)",
+        group="AI crawlers & answers",
+        data_type="logs",
+        why="Bots that feed live answer engines ('ai search'), as opposed to training crawlers. "
+            "These drive your visibility in AI answers right now.",
+        needs=["event_url", "event_bot_kind"],
+        oql={"field": ["event_bot_kind", "equals", "ai search"]},
+        columns=["event_url", "event_bot_name", "event_status_code", "event_day", "event_urlpath"],
+        sort="event_day:desc",
+    ),
+    _r(
+        id="log_ai_training_bots",
+        label="AI training crawlers only",
+        group="AI crawlers & answers",
+        data_type="logs",
+        why="Crawlers collecting data for model training. Useful if you need to decide what to "
+            "allow or block in robots.txt.",
+        needs=["event_url", "event_bot_kind"],
+        oql={"field": ["event_bot_kind", "equals", "ai training"]},
+        columns=["event_url", "event_bot_name", "event_status_code", "event_day"],
+        sort="event_day:desc",
+    ),
+    _r(
+        id="log_ai_slow",
+        label="Slow responses served to AI bots",
+        group="AI crawlers & answers",
+        data_type="logs",
+        why="AI crawlers often use short timeouts. Slow responses mean the content may be "
+            "skipped even though the URL returns 200.",
+        needs=["event_url", "event_bot_kind", "event_time_in_ms"],
+        oql={"and": [
+            {"or": [
+                {"field": ["event_bot_kind", "equals", "ai search"]},
+                {"field": ["event_bot_kind", "equals", "ai training"]},
+                {"field": ["event_bot_kind", "equals", "ai user"]},
+            ]},
+            {"field": ["event_time_in_ms", "gt", 1000]},
+        ]},
+        columns=["event_url", "event_time_in_ms", "event_bot_name", "event_status_code", "event_day"],
+        sort="event_time_in_ms:desc",
+    ),
+    _r(
+        id="log_ai_user_fetches",
+        label="Live fetches triggered by AI users",
+        group="AI crawlers & answers",
+        data_type="logs",
+        why="'ai user' hits happen when someone asks an assistant about a page and it fetches "
+            "it live. Direct evidence that your content is being consulted in conversations.",
+        needs=["event_url", "event_bot_kind"],
+        oql={"field": ["event_bot_kind", "equals", "ai user"]},
+        columns=["event_url", "event_bot_name", "event_status_code", "event_day", "event_referer"],
+        sort="event_day:desc",
+    ),
 ]
+
+
+# --------------------------------------------------------------------------- #
+# Recepty generowane per bot AI — dzięki temu brak jednej rodziny botów
+# nie ukrywa pozostałych (pola różnią się między kontami i okresami).
+# --------------------------------------------------------------------------- #
+def _ai_recipes() -> list[dict]:
+    out: list[dict] = []
+
+    for key, name in AI_BOT_FAMILIES:
+        hits = f"logs_bot_hits_{key}"
+        status = f"logs_bot_status_code_{key}"
+
+        out.append(_r(
+            id=f"ai_crawled_{key}",
+            label=f"Pages crawled by {name}",
+            group="AI crawlers & answers",
+            why=f"Which of your pages {name} actually fetched — the raw material for AI answers.",
+            needs=["url", hits],
+            oql={"field": [hits, "gt", 0]},
+            columns=["url", hits, f"logs_bot_hits_per_day_{key}", status,
+                     "status_code", "word_count", "seo_visits"],
+            sort=f"{hits}:desc",
+        ))
+
+        # Kluczowa analiza: bot AI dostał błąd zamiast treści.
+        out.append(_r(
+            id=f"ai_errors_{key}",
+            label=f"{name} received an error",
+            group="AI crawlers & answers",
+            why=f"Pages where {name} got a 4xx/5xx instead of content — these can never appear "
+                f"in AI answers, and the bot wastes its budget on them.",
+            needs=["url", status],
+            oql={"field": [status, "gte", 400]},
+            columns=["url", status, f"logs_bot_hits_{key}", "status_code",
+                     "nb_inlinks", "seo_visits"],
+            sort=f"logs_bot_hits_{key}:desc",
+        ))
+
+        # Rozbieżność: bot AI widzi co innego niż crawler.
+        out.append(_r(
+            id=f"ai_status_mismatch_{key}",
+            label=f"{name} sees a different status than the crawl",
+            group="AI crawlers & answers",
+            why=f"The status {name} received differs from what the crawl saw — often rate "
+                f"limiting, bot protection or geo/UA-based blocking aimed at AI crawlers.",
+            needs=["url", status, "status_code"],
+            oql={"and": [
+                {"field": [status, "has_value"]},
+                {"field": ["status_code", "equals", 200]},
+                {"field": [status, "gte", 400]},
+            ]},
+            columns=["url", "status_code", status, f"logs_bot_hits_{key}", "seo_visits"],
+            sort=f"logs_bot_hits_{key}:desc",
+        ))
+
+    # Ruch przychodzący z asystentów AI (odpowiedniki wizyt SEO).
+    for key, name in AI_ANSWER_SOURCES:
+        visits = f"logs_seo_visits_{key}"
+        vstatus = f"logs_seo_visits_status_code_{key}"
+
+        out.append(_r(
+            id=f"ai_visits_{key}",
+            label=f"Traffic arriving from {name}",
+            group="AI crawlers & answers",
+            why=f"Real visits that came to your site from {name} — proof your content is being "
+                f"cited in its answers.",
+            needs=["url", visits],
+            oql={"field": [visits, "gt", 0]},
+            columns=["url", visits, vstatus, "seo_visits", "status_code", "title"],
+            sort=f"{visits}:desc",
+        ))
+
+        out.append(_r(
+            id=f"ai_visits_broken_{key}",
+            label=f"{name} sends users to a broken page",
+            group="AI crawlers & answers",
+            why=f"{name} cites a URL that returns an error — the worst case: the assistant "
+                f"recommends you and the user lands on a broken page.",
+            needs=["url", visits, "status_code"],
+            oql={"and": [
+                {"field": [visits, "gt", 0]},
+                {"field": ["status_code", "gte", 400]},
+            ]},
+            columns=["url", visits, "status_code", "redirect_location", "seo_visits"],
+            sort=f"{visits}:desc",
+        ))
+
+    # Analizy przekrojowe — wymagają GPTBota jako reprezentanta rodziny AI,
+    # bo pole per-bot musi istnieć, by dało się zbudować filtr.
+    out.append(_r(
+        id="ai_crawled_not_google",
+        label="Crawled by AI bots but not by Googlebot",
+        group="AI crawlers & answers",
+        why="Pages that AI crawlers found but Googlebot did not — content already feeding AI "
+            "answers while remaining weak in classic search.",
+        needs=["url", "logs_bot_hits_openai_gpt_bot", "crawled_by_googlebot"],
+        oql={"and": [
+            {"field": ["logs_bot_hits_openai_gpt_bot", "gt", 0]},
+            {"field": ["crawled_by_googlebot", "equals", False]},
+        ]},
+        columns=["url", "logs_bot_hits_openai_gpt_bot", "crawled_by_googlebot",
+                 "googlebot_hits", "depth", "word_count"],
+        sort="logs_bot_hits_openai_gpt_bot:desc",
+    ))
+    out.append(_r(
+        id="ai_ignoring_good_pages",
+        label="Googlebot crawls them, AI bots ignore them",
+        group="AI crawlers & answers",
+        why="Pages Google fetches often but AI crawlers never touched — candidates for improving "
+            "AI visibility (structure, clarity, robots.txt rules for AI agents).",
+        needs=["url", "googlebot_hits", "logs_bot_hits_openai_gpt_bot"],
+        oql={"and": [
+            {"field": ["googlebot_hits", "gt", 0]},
+            {"field": ["logs_bot_hits_openai_gpt_bot", "equals", 0]},
+        ]},
+        columns=["url", "googlebot_hits", "logs_bot_hits_openai_gpt_bot",
+                 "word_count", "seo_visits", "status_code"],
+        sort="googlebot_hits:desc",
+    ))
+    out.append(_r(
+        id="ai_crawling_thin_content",
+        label="AI bots crawling thin content",
+        group="AI crawlers & answers",
+        why="AI crawlers spending their budget on pages with almost no content — you are "
+            "teaching assistants your weakest material.",
+        needs=["url", "logs_bot_hits_openai_gpt_bot", "word_count"],
+        oql={"and": [
+            {"field": ["logs_bot_hits_openai_gpt_bot", "gt", 0]},
+            {"field": ["word_count", "lt", 300]},
+        ]},
+        columns=["url", "logs_bot_hits_openai_gpt_bot", "word_count", "status_code", "title"],
+        sort="logs_bot_hits_openai_gpt_bot:desc",
+    ))
+    out.append(_r(
+        id="ai_crawling_noindex",
+        label="AI bots crawling noindex pages",
+        group="AI crawlers & answers",
+        why="Pages you exclude from search but AI crawlers still read — noindex does not stop "
+            "AI agents; that needs robots.txt rules for their user agents.",
+        needs=["url", "logs_bot_hits_openai_gpt_bot", "meta_robots_index"],
+        oql={"and": [
+            {"field": ["logs_bot_hits_openai_gpt_bot", "gt", 0]},
+            {"field": ["meta_robots_index", "equals", False]},
+        ]},
+        columns=["url", "logs_bot_hits_openai_gpt_bot", "meta_robots", "status_code", "word_count"],
+        sort="logs_bot_hits_openai_gpt_bot:desc",
+    ))
+
+    return out
+
+
+RECIPES.extend(_ai_recipes())
 
 
 def _fields_in_oql(node: Any) -> Iterable[str]:
