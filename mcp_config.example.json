@@ -1,0 +1,19 @@
+{
+  "_comment": [
+    "Przykładowa konfiguracja serwera MCP dla Oncrawl.",
+    "Skopiuj blok 'oncrawl' do configu swojego klienta MCP:",
+    "  Claude Desktop (Windows): %APPDATA%\\Claude\\claude_desktop_config.json",
+    "  Claude Desktop (macOS):   ~/Library/Application Support/Claude/claude_desktop_config.json",
+    "  Claude Code:              claude mcp add oncrawl -- python C:\\sciezka\\do\\mcp_server.py",
+    "  Cursor:                   .cursor/mcp.json w projekcie",
+    "WAŻNE: 'cwd' musi wskazywać folder z .env oraz capabilities.json.",
+    "Token czytany jest z .env — NIE wpisuj go tutaj."
+  ],
+  "mcpServers": {
+    "oncrawl": {
+      "command": "python",
+      "args": ["C:\\Users\\TWOJ_USER\\Downloads\\OnCrawl\\mcp_server.py"],
+      "cwd": "C:\\Users\\TWOJ_USER\\Downloads\\OnCrawl"
+    }
+  }
+}

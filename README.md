@@ -145,6 +145,61 @@ Endpointy backendu: `GET /api/projects`, `GET /api/projects/{id}/crawls`,
 `GET /api/fields`, `POST /api/query` (waliduje OQL wzgl. capabilities),
 `POST /api/export`, `GET|POST|DELETE /api/presets`.
 
+### Szybkie widoki (quick views)
+
+Nad tabelą są gotowe widoki SEO, budujące OQL i dobierające kolumny jednym
+kliknięciem: **Fetched only, Errors 4xx/5xx, Redirects 3xx, Non-indexable,
+Slow pages, Thin content, Bot hits**. Widok pojawia się tylko wtedy, gdy jego
+pola istnieją w schemacie danego `data_type` (sprawdzane wzgl. `/fields`).
+Dotknięcie dowolnego filtra w panelu unieważnia widok — panel ma pierwszeństwo.
+
+> Przydatne, bo bez sortowania pierwsza strona wyników to zwykle niepobrane
+> URL-e (404, ścieżki-sondy z logów) z pustymi metrykami. „Fetched only"
+> albo „Errors 4xx/5xx" od razu pokazuje sensowne dane.
+
+## MCP — dane Oncrawl jako narzędzia dla asystenta
+
+`mcp_server.py` wystawia dane przez [Model Context Protocol](https://modelcontextprotocol.io),
+więc klient MCP (Claude Desktop, Claude Code, Cursor) może **sam** odpytywać
+Oncrawl — np. „ile stron IQOS ma status 404 i jaki mają depth".
+
+Narzędzia: `list_projects`, `list_crawls`, `list_fields`, `query_data`,
+`aggregate_data`, `export_data`.
+
+```bash
+pip install "mcp>=1.2"
+python mcp_server.py          # transport stdio
+```
+
+Konfiguracja klienta — skopiuj blok z [`mcp_config.example.json`](mcp_config.example.json):
+
+```json
+{
+  "mcpServers": {
+    "oncrawl": {
+      "command": "python",
+      "args": ["C:\\sciezka\\do\\OnCrawl\\mcp_server.py"],
+      "cwd": "C:\\sciezka\\do\\OnCrawl"
+    }
+  }
+}
+```
+
+- Claude Desktop (Windows): `%APPDATA%\Claude\claude_desktop_config.json`
+- Claude Desktop (macOS): `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Claude Code: `claude mcp add oncrawl -- python /sciezka/do/mcp_server.py`
+- Cursor: `.cursor/mcp.json` w projekcie
+
+`cwd` musi wskazywać folder z `.env` i `capabilities.json`. **Tokena nie wpisuje
+się do configu** — jest czytany z `.env`, tak jak w reszcie narzędzia.
+`query_data` zwraca maks. 200 wierszy (to podgląd dla modelu); pełne zbiory
+idą przez `export_data`, które strumieniuje CSV prosto na dysk.
+
+> Uwaga: MCP wymaga **klienta MCP zainstalowanego lokalnie**. Jeśli polityka
+> firmowa na to nie pozwala, używaj web explorera (`python cli.py serve`) —
+> działa w przeglądarce, bez instalacji. Alternatywa dla zespołów: wystawić
+> serwer po HTTP i dodać go w claude.ai jako custom connector (wymaga admina).
+
 ## CLI (`cli.py`, typer)
 
 ```bash
@@ -174,6 +229,7 @@ discovery.py            # Etap 1 — kolektor + renderer CAPABILITIES.md
 cli.py                  # CLI (typer): discover / serve / projects / fields / query / export
 app.py                  # Etap 3 — backend FastAPI
 web/index.html          # Etap 3 — frontend (jeden plik, Tabulator z CDN)
+mcp_server.py           # serwer MCP (opcjonalny) — dane jako narzędzia asystenta
 oncrawl/
   config.py             # ładowanie tokena/ustawień z .env, maskowanie sekretu
   errors.py             # typowane wyjątki mapujące formaty błędów Oncrawl

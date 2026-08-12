@@ -95,6 +95,7 @@
   <main>
     <div class="toolbar">
       <button class="primary" onclick="app.run()">▶ Run</button>
+      <span id="quickViews"></span>
       <span class="grow"></span>
       <span class="pill" id="totalHits">—</span>
       <button onclick="app.prevPage()" title="previous page">◀</button>
@@ -120,6 +121,32 @@ const NEEDS_CRAWL = new Set(["pages","links","clusters","structured_data"]);
 const NUMERIC_TYPES = new Set(["int","integer","natural","long","float","double","decimal","number","percentage"]);
 const DATE_TYPES = new Set(["date","datetime"]);
 const BOOL_TYPES = new Set(["bool","boolean"]);
+
+// Gotowe widoki SEO. Każdy deklaruje wymagane pola — pokazujemy tylko te,
+// które faktycznie istnieją w schemacie danego data_type (z /fields).
+const QUICK_VIEWS = [
+  { label:"Fetched only", needs:["fetched"],
+    oql:()=>({field:["fetched","equals",true]}),
+    cols:["url","status_code","title","depth","inrank","word_count"] },
+  { label:"Errors 4xx/5xx", needs:["status_code"],
+    oql:()=>({field:["status_code","gte",400]}),
+    cols:["url","status_code","depth","nb_inlinks"], sort:"status_code:desc" },
+  { label:"Redirects 3xx", needs:["status_code"],
+    oql:()=>({and:[{field:["status_code","gte",300]},{field:["status_code","lt",400]}]}),
+    cols:["url","status_code","redirect_location","depth"] },
+  { label:"Non-indexable", needs:["indexable"],
+    oql:()=>({field:["indexable","has_value"]}),
+    cols:["url","indexable","status_code","meta_robots","rel_canonical"] },
+  { label:"Slow pages", needs:["load_time"],
+    oql:()=>({field:["load_time","gte",1000]}),
+    cols:["url","load_time","status_code","weight"], sort:"load_time:desc" },
+  { label:"Thin content", needs:["word_count"],
+    oql:()=>({field:["word_count","lt",300]}),
+    cols:["url","word_count","title","status_code"], sort:"word_count:asc" },
+  { label:"Bot hits", needs:["event_bot_kind"],
+    oql:()=>({field:["event_is_bot_hit","equals",true]}),
+    cols:["event_url","event_bot_name","event_bot_kind","event_status_code","event_day"] },
+];
 
 const app = {
   projects: [], project: null, crawls: [], crawlId: null,
@@ -179,8 +206,30 @@ const app = {
     const r = await fetch(`/api/fields?project_id=${this.project.id}&data_type=${dt}`).then(x=>x.json());
     this.schema = r.fields || [];
     this.selected = new Set(r.default_display || this.schema.filter(f=>f.can_display).slice(0,12).map(f=>f.name));
-    this.renderColumns(); this.renderFilters();
+    this.renderColumns(); this.renderFilters(); this.renderQuickViews();
     await this.run();
+  },
+
+  renderQuickViews() {
+    const names = new Set(this.schema.map(f=>f.name));
+    const usable = QUICK_VIEWS.filter(v => v.needs.every(n => names.has(n)));
+    document.getElementById("quickViews").innerHTML = usable.length
+      ? '<span class="muted" style="margin:0 6px">views:</span>' + usable.map((v,i) =>
+          `<button onclick="app.applyQuickView(${QUICK_VIEWS.indexOf(v)})">${escapeHtml(v.label)}</button>`).join(" ")
+      : "";
+  },
+
+  applyQuickView(idx) {
+    const v = QUICK_VIEWS[idx]; if (!v) return;
+    const names = new Set(this.schema.map(f=>f.name));
+    // Kolumny widoku + pozostaw tylko istniejące w tym data_type.
+    const cols = v.cols.filter(c => names.has(c));
+    if (cols.length) { this.selected = new Set(cols); this.renderColumns(); }
+    this.pendingOQL = v.oql();       // omija panel filtrów — ustawiamy OQL wprost
+    this.sort = null;
+    if (v.sort) { const [f,d] = v.sort.split(":"); if (names.has(f)) this.sort = {field:f, dir:d}; }
+    this.page = 0;
+    this.run();
   },
 
   renderColumns() {
@@ -205,6 +254,8 @@ const app = {
   renderFilters() {
     const box = document.getElementById("filters");
     box.innerHTML = this.schema.filter(f=>f.can_filter).map(f => this.filterControl(f)).join("");
+    // Ręczne dotknięcie filtra unieważnia szybki widok.
+    box.oninput = () => { this.pendingOQL = null; };
   },
 
   filterControl(f) {
@@ -286,10 +337,13 @@ const app = {
   },
 
   currentQuery(extra={}) {
+    // Filtry z panelu mają pierwszeństwo; pendingOQL to szybki widok.
+    const panelOQL = this.buildOQL();
+    const oql = panelOQL || this.pendingOQL || null;
     return Object.assign({
       project_id:this.project.id, data_type:this.dataType,
       crawl_id: NEEDS_CRAWL.has(this.dataType)?this.crawlId:null,
-      fields:Array.from(this.selected), oql:this.buildOQL(),
+      fields:Array.from(this.selected), oql,
       sort:this.sort?`${this.sort.field}:${this.sort.dir}`:null,
     }, extra);
   },

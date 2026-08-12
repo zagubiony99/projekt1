@@ -11,5 +11,8 @@ fastapi>=0.110
 uvicorn[standard]>=0.29
 openpyxl>=3.1          # eksport XLSX
 
+# Serwer MCP (opcjonalny — tylko jeśli chcesz podpiąć dane pod klienta MCP)
+mcp>=1.2,<2
+
 # Dev / testy
 pytest>=8.0            # mocki przez httpx.MockTransport (bez dodatkowych zależności)
