@@ -46,6 +46,7 @@ from oncrawl import mcp_status as mcp_status_mod
 from oncrawl.config import load_settings
 from oncrawl.errors import OncrawlAPIError, OncrawlError, OncrawlNetworkError
 from oncrawl.oql import OQLError, validate_tree
+from oncrawl.datasources import applicable_sources, probe_oql, sources_for
 from oncrawl.recipes import applicable_recipes
 
 logger = logging.getLogger("oncrawl.app")
@@ -210,6 +211,56 @@ def create_app(
         """Gotowe recepty SEO wykonalne dla tego projektu i data_type."""
         fs = get_caps().fieldset(project_id, data_type)
         return {"recipes": applicable_recipes(fs, data_type)}
+
+    @app.post("/api/datasources")
+    def datasources(req: CountsRequest) -> dict:
+        """Sprawdza empirycznie, które źródła danych są w tym crawlu wypełnione.
+
+        Zamiast wnioskować z konfiguracji konta — jedno zapytanie na źródło
+        (limit=1, liczy się total_hits). Dzięki temu użytkownik od razu wie,
+        że np. brak analityki oznacza puste 'Money pages'.
+        """
+        fs = get_caps().fieldset(req.project_id, req.data_type)
+        sources = applicable_sources(fs, req.data_type)
+        cli = get_client()
+
+        def probe(src: dict) -> dict:
+            entry = {
+                "id": src["id"], "label": src["label"], "requires": src["requires"],
+                "unlocks": src["unlocks"], "field": src["probe_field"],
+            }
+            try:
+                q = QueryRequest(
+                    project_id=req.project_id, data_type=req.data_type,
+                    crawl_id=req.crawl_id, fields=[src["probe_field"]],
+                    oql=probe_oql(src), limit=1,
+                )
+                res = cli.search(_data_path(q), fields=q.fields, oql=q.oql, limit=1)
+                total = res.get("total_hits") or 0
+                entry["rows"] = total
+                entry["available"] = total > 0
+            except OncrawlAPIError as exc:
+                entry["available"] = False
+                entry["error"] = exc.short_reason()
+            except Exception as exc:
+                entry["available"] = False
+                entry["error"] = f"{type(exc).__name__}: {exc}"
+            return entry
+
+        workers = max(1, min(6, len(sources) or 1))
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            results = list(pool.map(probe, sources))
+
+        # Źródła, których pola w ogóle nie ma w schemacie — też warto pokazać.
+        present = {s["probe_field"] for s in sources}
+        for src in sources_for(req.data_type):
+            if src["probe_field"] not in present:
+                results.append({
+                    "id": src["id"], "label": src["label"], "requires": src["requires"],
+                    "unlocks": src["unlocks"], "field": src["probe_field"],
+                    "available": False, "rows": 0, "missing_field": True,
+                })
+        return {"sources": results}
 
     @app.post("/api/recipes/counts")
     def recipe_counts(req: CountsRequest) -> dict:

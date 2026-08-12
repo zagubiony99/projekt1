@@ -80,6 +80,14 @@
                         padding:1px 5px; font-size:11px; color:var(--muted); margin-right:3px; }
   #recipeBtn { background:#2a2140; border-color:#4b3a6e; }
   #mcpBtn { background:#14303a; border-color:#2a6070; }
+  #dsBtn { background:#2a2a14; border-color:#6b6b2a; }
+  /* Panel źródeł danych */
+  .ds-row { border:1px solid var(--line); border-radius:8px; padding:9px 12px; margin-bottom:6px; background:#0d1220; }
+  .ds-row.off { opacity:.75; border-color:#4a3a26; }
+  .ds-head { display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+  .ds-detail { font-size:12px; color:var(--muted); margin-top:4px; }
+  .ds-detail code { background:#171d2b; border:1px solid var(--line); border-radius:4px; padding:1px 5px; }
+  .ds-req { margin-top:4px; color:#f0c088; }
   /* Wskaźnik aktywnej recepty — bez niego nie wiadomo, co się właśnie ogląda. */
   .active-chip { display:inline-flex; align-items:center; gap:6px; background:#2a2140;
                  border:1px solid #6b54a0; border-radius:20px; padding:4px 6px 4px 12px;
@@ -132,6 +140,7 @@
   <label>Project <select id="projectSel"></select></label>
   <label id="crawlWrap">Crawl <select id="crawlSel"></select></label>
   <span class="grow" style="flex:1"></span>
+  <button id="dsBtn" onclick="app.openDataSources()" title="Which data sources are populated in this crawl">🧩 Data sources</button>
   <button id="mcpBtn" onclick="app.openMcp()" title="MCP server status & setup">🔌 MCP</button>
 </header>
 
@@ -213,6 +222,23 @@
   </div>
 </div>
 
+<div id="dsModal" class="modal" onclick="if(event.target===this)app.closeDataSources()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>🧩 Data sources <span class="muted" style="font-weight:400;font-size:13px">— what is actually populated in this crawl</span></h2>
+      <button class="link" style="font-size:20px" onclick="app.closeDataSources()">✕</button>
+    </div>
+    <p class="muted" style="font-size:12.5px;margin:0 0 12px">
+      A crawl on its own fills only part of the fields. Traffic, bot hits and
+      Core Web Vitals come from integrations connected to the Oncrawl project.
+      When one is missing, the related fields still exist and are queryable —
+      they just return <b>zero rows</b>. This check queries each source once
+      (<code>limit=1</code>) and reports what really has data.
+    </p>
+    <div id="dsBody"><p class="muted">Loading…</p></div>
+  </div>
+</div>
+
 <div id="mcpModal" class="modal" onclick="if(event.target===this)app.closeMcp()">
   <div class="modal-box">
     <div class="modal-head">
@@ -230,6 +256,19 @@ const NEEDS_CRAWL = new Set(["pages","links","clusters","structured_data"]);
 const NUMERIC_TYPES = new Set(["int","integer","natural","long","float","double","decimal","number","percentage"]);
 const DATE_TYPES = new Set(["date","datetime"]);
 const BOOL_TYPES = new Set(["bool","boolean"]);
+
+// Skrót do wyjaśniania pustych wyników — pełną, empiryczną wersję daje
+// panel "Data sources" (odpytuje API), tu wystarczy nazwać integrację.
+const DATA_SOURCE_HINTS = [
+  {prefix:"logs_seo_visits_", source:"AI assistant referrals in your logs", requires:"server logs with AI referrers"},
+  {prefix:"logs_bot_",  source:"log monitoring", requires:"server logs, and AI bots actually visiting"},
+  {prefix:"googlebot_", source:"log monitoring", requires:"server log files ingested into the project"},
+  {prefix:"crawled_by_googlebot", source:"log monitoring", requires:"server log files ingested into the project"},
+  {prefix:"seo_visits", source:"an analytics integration", requires:"Google Analytics (or similar) connected to the project"},
+  {prefix:"cwv_", source:"the Core Web Vitals feature", requires:"CWV/JS enabled in the crawl configuration"},
+  {prefix:"sitemaps_", source:"sitemap discovery", requires:"sitemaps found or declared in the crawl configuration"},
+  {prefix:"event_", source:"log monitoring", requires:"log monitoring enabled and processed"},
+];
 
 const app = {
   projects: [], project: null, crawls: [], crawlId: null,
@@ -416,6 +455,46 @@ const app = {
 
   openRecipes(){ document.getElementById("recipeModal").style.display="flex"; document.getElementById("recipeSearch").focus(); },
   closeRecipes(){ document.getElementById("recipeModal").style.display="none"; },
+
+  // --- panel źródeł danych --------------------------------------------
+  async openDataSources() {
+    document.getElementById("dsModal").style.display = "flex";
+    const box = document.getElementById("dsBody");
+    box.innerHTML = '<p class="muted">Checking each source…</p>';
+    try {
+      const r = await postJSON("/api/datasources", {
+        project_id: this.project.id,
+        data_type: this.dataType,
+        crawl_id: NEEDS_CRAWL.has(this.dataType) ? this.crawlId : null,
+      });
+      this.dataSources = r.sources || [];
+      const ok = this.dataSources.filter(s => s.available).length;
+      box.innerHTML = `
+        <div class="mcp-status ${ok ? 'ok' : 'warn'}">
+          ${ok} of ${this.dataSources.length} sources have data in this crawl.
+        </div>
+        ${this.dataSources.map(s => `
+          <div class="ds-row ${s.available ? 'on' : 'off'}">
+            <div class="ds-head">
+              <span>${s.available ? "✅" : "⛔"} <b>${escapeHtml(s.label)}</b></span>
+              <span class="muted" style="font-size:12px">
+                ${s.missing_field ? "field not in this data set"
+                  : s.error ? escapeHtml(s.error)
+                  : `${Number(s.rows||0).toLocaleString()} rows`}
+              </span>
+            </div>
+            <div class="ds-detail">
+              <div><code>${escapeHtml(s.field)}</code> · unlocks: ${escapeHtml(s.unlocks)}</div>
+              ${s.available ? "" :
+                `<div class="ds-req">Needs: ${escapeHtml(s.requires)}</div>`}
+            </div>
+          </div>`).join("")}
+      `;
+    } catch (e) {
+      box.innerHTML = `<p class="muted">Check failed: ${escapeHtml(e.message)}</p>`;
+    }
+  },
+  closeDataSources(){ document.getElementById("dsModal").style.display="none"; },
 
   // --- panel MCP -------------------------------------------------------
   async openMcp() {
@@ -678,11 +757,14 @@ const app = {
     // (np. brak podpiętych logów/analityki), wynik będzie pusty.
     const fields = [...new Set(JSON.stringify(r.oql).match(/"([a-z_0-9]+)"/g)?.map(s=>s.slice(1,-1)) || [])]
       .filter(f => this.schema.some(x => x.name === f));
+    const need = fields.map(f => DATA_SOURCE_HINTS.find(h => f.startsWith(h.prefix)))
+                       .filter(Boolean)[0];
     this.banner(
-      `Recipe "${r.label}" returned 0 rows — the filter is valid, nothing matches it in this crawl. ` +
+      `Recipe "${r.label}" returned 0 rows — the filter is valid, nothing in this crawl matches it. ` +
       (fields.length ? `It relies on: ${fields.join(", ")}. ` : "") +
-      `If a field is not populated for this crawl (e.g. no analytics or log data linked), the result is empty. ` +
-      `Tip: clear the recipe (✕) and check that field as a column first.`
+      (need ? `That data comes from ${need.source}, which needs ${need.requires}. `
+            : `If a field is not populated for this crawl, the result is empty. `) +
+      `Open 🧩 Data sources to see exactly what is populated here.`
     );
   },
 

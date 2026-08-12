@@ -120,8 +120,10 @@ Moduły, na których stoi CLI i explorer:
   - `export_lines(...)` — surowy strumień CSV/JSONL;
   - `aggregate(...)` oraz `aggregate_ranking_performance(...)` (osobny format body).
 
-> **Format `sort` w body zapytania o dane.** Dokumentacja precyzuje
-> `{name}:{asc|desc}` dla paginacji *zasobów*, ale nie dla search body.
+> **Format `sort` w body zapytania o dane.** Specyfikacja, na której oparty
+> jest ten projekt, precyzuje `{name}:{asc|desc}` dla paginacji *zasobów*, ale
+> nie dla search body; dokumentacji online nie dało się sprawdzić z środowiska
+> budowy (egress do `developer.oncrawl.com` zablokowany — zweryfikowane).
 > Klient wysyła więc formę listową `[{"field": …, "order": …}]`, a jeśli API
 > odrzuci ją jako niepoprawny parametr (400/422) — automatycznie ponawia
 > z formą tekstową i zapamiętuje, który wariant działa. Błędy inne niż
@@ -208,6 +210,31 @@ a sortowanie odpada, gdy pole nie jest sortowalne. Na koncie z pełnym crawlem
 Testy pilnują niezmiennika: **każde pole użyte w OQL recepty musi być
 zadeklarowane w `needs`** — inaczej recepta mogłaby wygenerować zapytanie
 o nieistniejące pole (ten test od razu wyłapał dwa takie przypadki).
+
+### 🧩 Data sources — dlaczego część analiz bywa pusta
+
+Crawl sam z siebie wypełnia tylko część pól. Ruch, odwiedziny botów i Core Web
+Vitals pochodzą z **integracji podpiętych do projektu w Oncrawl**. Gdy któraś
+nie jest podłączona, powiązane pola **nadal istnieją w `/fields`, dają się
+odpytać i zwracają zero wierszy** — z zewnątrz wygląda to jak zepsute narzędzie.
+
+Przycisk **🧩 Data sources** sprawdza to **empirycznie**: jedno zapytanie na
+źródło (`limit=1`, liczy się tylko `total_hits`) i raport, co realnie ma dane:
+
+| źródło | pole-sonda | odblokowuje | wymaga |
+|--------|-----------|-------------|--------|
+| Crawl data | `url` | strony, statusy, treść, linkowanie | zakończonego crawla |
+| Analytics (traffic) | `seo_visits` | recepty **Money pages** | Google Analytics podpiętej do projektu |
+| Log monitoring (Googlebot) | `googlebot_hits` | analizy budżetu crawlowania | logów serwera wgranych do projektu |
+| Log monitoring (AI bots) | `logs_bot_hits_openai_gpt_bot` | recepty **AI crawlers** | logów + realnych wizyt botów AI |
+| Traffic from AI assistants | `logs_seo_visits_openai` | ruch z ChatGPT/Perplexity/… | logów z referrerami AI |
+| Core Web Vitals | `cwv_lcp` | recepty **Performance** | funkcji CWV/JS w konfiguracji crawla |
+| Sitemaps | `sitemaps_file_origin` | recepty **Sitemaps** | sitemap wykrytych/zadeklarowanych w crawlu |
+| Raw log events | `event_url` | całą zakładkę **logs** | log monitoringu przetworzonego |
+
+Gdy recepta zwróci zero wierszy, komunikat **nazywa brakującą integrację**
+zamiast ogólnikowego „brak wyników" — np. *„That data comes from an analytics
+integration, which needs Google Analytics connected to the project."*
 
 ### Szukanie i filtry
 
