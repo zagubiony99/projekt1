@@ -145,17 +145,42 @@ Endpointy backendu: `GET /api/projects`, `GET /api/projects/{id}/crawls`,
 `GET /api/fields`, `POST /api/query` (waliduje OQL wzgl. capabilities),
 `POST /api/export`, `GET|POST|DELETE /api/presets`.
 
-### Szybkie widoki (quick views)
+### 📋 Recipes — gotowe analizy SEO
 
-Nad tabelą są gotowe widoki SEO, budujące OQL i dobierające kolumny jednym
-kliknięciem: **Fetched only, Errors 4xx/5xx, Redirects 3xx, Non-indexable,
-Slow pages, Thin content, Bot hits**. Widok pojawia się tylko wtedy, gdy jego
-pola istnieją w schemacie danego `data_type` (sprawdzane wzgl. `/fields`).
-Dotknięcie dowolnego filtra w panelu unieważnia widok — panel ma pierwszeństwo.
+Przycisk **Recipes** nad tabelą otwiera bibliotekę **45 gotowych analiz**.
+Klik = gotowe OQL + właściwe kolumny + sortowanie. Grupy:
 
-> Przydatne, bo bez sortowania pierwsza strona wyników to zwykle niepobrane
-> URL-e (404, ścieżki-sondy z logów) z pustymi metrykami. „Fetched only"
-> albo „Errors 4xx/5xx" od razu pokazuje sensowne dane.
+| grupa | przykłady |
+|-------|-----------|
+| **Money pages** | strony z największym ruchem SEO, money pages z błędami, wysoki InRank bez ruchu |
+| **Status & redirects** | błędy 4xx/5xx, **404-ki linkowane wewnętrznie**, łańcuchy i pętle przekierowań |
+| **Indexability** | noindex, blokada robots.txt, skanonikalizowane, problemy canonical, błędy hreflang |
+| **Sitemaps** | **błędy w sitemapie**, przekierowania w sitemapie, noindex w sitemapie, sieroty w sitemapie, indeksowalne strony spoza sitemapy |
+| **Content quality** | brak title/description/H1, duplikaty, thin content, near-duplicates, brakujące alty |
+| **Internal linking** | strony osierocone, głębokie strony, tylko linki nofollow |
+| **Performance** | wolne strony, słabe LCP/CLS, niski performance score |
+| **Bots & AI crawlers** | nieodwiedzone przez Googlebota, rozbieżny status, **strony zbierane przez boty OpenAI/Claude**, ruch z asystentów AI |
+| **Logs** | boty trafiające na błędy, aktywność botów AI, wizyty SEO, wolne odpowiedzi serwera |
+
+Recepty są definiowane w [`oncrawl/recipes.py`](oncrawl/recipes.py) i filtrowane
+po stronie API: **pokazują się tylko te, których pola faktycznie istnieją**
+w `/fields` danego projektu i `data_type`. Kolumny są przycinane do istniejących,
+a sortowanie odpada, gdy pole nie jest sortowalne. Na koncie z pełnym crawlem
++ logami dostępne są zwykle **41 recept dla `pages` i 4 dla `logs`**.
+
+Testy pilnują niezmiennika: **każde pole użyte w OQL recepty musi być
+zadeklarowane w `needs`** — inaczej recepta mogłaby wygenerować zapytanie
+o nieistniejące pole (ten test od razu wyłapał dwa takie przypadki).
+
+### Szukanie i filtry
+
+- **🔎 search in URLs…** (pasek narzędzi) — szuka **w danych**, po URL-ach;
+  buduje `{"field":["url","contains",…,{"ci":true}]}` i łączy się (AND)
+  z filtrami oraz receptą.
+- **FILTERS → OQL** (panel po lewej) — filtr po dowolnym polu, kontrolki
+  dobierane do typu (tekst + operator, zakresy liczbowe i dat, bool, enum).
+- **filter fields…** (pod COLUMNS) — to tylko wyszukiwarka **nazw pól**,
+  nie szuka w danych.
 
 ## MCP — dane Oncrawl jako narzędzia dla asystenta
 

@@ -45,6 +45,7 @@ from oncrawl.client import (
 from oncrawl.config import load_settings
 from oncrawl.errors import OncrawlAPIError, OncrawlError, OncrawlNetworkError
 from oncrawl.oql import OQLError, validate_tree
+from oncrawl.recipes import applicable_recipes
 
 WEB_DIR = Path(__file__).parent / "web"
 DEFAULT_PRESETS_PATH = Path("presets.json")
@@ -180,6 +181,12 @@ def create_app(
             "crawls": proj.get("crawls", []),
             "last_finished_crawl_id": proj.get("last_finished_crawl_id"),
         }
+
+    @app.get("/api/recipes")
+    def recipes(project_id: str, data_type: str) -> dict:
+        """Gotowe recepty SEO wykonalne dla tego projektu i data_type."""
+        fs = get_caps().fieldset(project_id, data_type)
+        return {"recipes": applicable_recipes(fs, data_type)}
 
     @app.get("/api/fields")
     def fields(project_id: str, data_type: str) -> dict:

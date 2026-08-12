@@ -50,6 +50,26 @@
   .banner { background:#3a2417; border:1px solid #7a4a26; color:#f0c088; padding:8px 16px; font-size:13px; display:none; }
   .banner.show { display:block; }
   .count { font-size:11px; color:var(--muted); margin-bottom:6px; }
+  /* Modal recept */
+  .modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:100;
+           align-items:flex-start; justify-content:center; padding:40px 20px; }
+  .modal-box { background:var(--panel); border:1px solid var(--line); border-radius:12px;
+               width:min(920px,100%); max-height:85vh; overflow:auto; padding:18px; }
+  .modal-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .modal-head h2 { margin:0; font-size:17px; }
+  #recipeSearch { width:100%; margin-bottom:14px; }
+  .rgroup h4 { margin:16px 0 8px; font-size:12px; text-transform:uppercase;
+               letter-spacing:.05em; color:var(--accent); border-bottom:1px solid var(--line); padding-bottom:4px; }
+  .recipe { border:1px solid var(--line); border-radius:8px; padding:10px 12px; margin-bottom:6px;
+            background:#0d1220; cursor:pointer; }
+  .recipe:hover { border-color:var(--accent); background:#131c30; }
+  .recipe .rlabel { font-weight:600; margin-bottom:3px; }
+  .recipe .rwhy { color:var(--muted); font-size:12px; line-height:1.45; }
+  .recipe .rcols { margin-top:6px; }
+  .recipe .rcols code { background:#171d2b; border:1px solid var(--line); border-radius:4px;
+                        padding:1px 5px; font-size:11px; color:var(--muted); margin-right:3px; }
+  #recipeBtn { background:#2a2140; border-color:#4b3a6e; }
+
   .tabulator { background:var(--bg); border:none; font-size:13px; max-width:100%; }
   .tabulator .tabulator-row { background:var(--panel); color:var(--fg); border-color:var(--line); }
   /* Nagłówki: jaśniejsze tło + wymuszony kolor tekstu (domyślny Tabulatora
@@ -111,10 +131,10 @@
   <main>
     <div class="toolbar">
       <button class="primary" onclick="app.run()">▶ Run</button>
+      <button id="recipeBtn" onclick="app.openRecipes()" title="Ready-made SEO analyses">📋 Recipes</button>
       <input id="urlSearch" placeholder="🔎 search in URLs…" style="width:200px"
              title="Filters rows where the URL contains this text (case-insensitive)"
              onkeydown="if(event.key==='Enter'){app.page=0;app.run();}" />
-      <span id="quickViews"></span>
       <span class="grow"></span>
       <span class="pill" id="totalHits">—</span>
       <button onclick="app.prevPage()" title="previous page">◀</button>
@@ -133,6 +153,17 @@
   </main>
 </div>
 
+<div id="recipeModal" class="modal" onclick="if(event.target===this)app.closeRecipes()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>📋 Recipes <span class="muted" style="font-weight:400;font-size:13px">— ready-made SEO analyses for this data set</span></h2>
+      <button class="link" style="font-size:20px" onclick="app.closeRecipes()">✕</button>
+    </div>
+    <input id="recipeSearch" placeholder="search recipes…" oninput="app.renderRecipes(this.value)" />
+    <div id="recipeList"></div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/js/tabulator.min.js"></script>
 <script>
 const DATA_TYPES = ["pages","links","clusters","structured_data","logs","ranking_performance"];
@@ -140,32 +171,6 @@ const NEEDS_CRAWL = new Set(["pages","links","clusters","structured_data"]);
 const NUMERIC_TYPES = new Set(["int","integer","natural","long","float","double","decimal","number","percentage"]);
 const DATE_TYPES = new Set(["date","datetime"]);
 const BOOL_TYPES = new Set(["bool","boolean"]);
-
-// Gotowe widoki SEO. Każdy deklaruje wymagane pola — pokazujemy tylko te,
-// które faktycznie istnieją w schemacie danego data_type (z /fields).
-const QUICK_VIEWS = [
-  { label:"Fetched only", needs:["fetched"],
-    oql:()=>({field:["fetched","equals",true]}),
-    cols:["url","status_code","title","depth","inrank","word_count"] },
-  { label:"Errors 4xx/5xx", needs:["status_code"],
-    oql:()=>({field:["status_code","gte",400]}),
-    cols:["url","status_code","depth","nb_inlinks"], sort:"status_code:desc" },
-  { label:"Redirects 3xx", needs:["status_code"],
-    oql:()=>({and:[{field:["status_code","gte",300]},{field:["status_code","lt",400]}]}),
-    cols:["url","status_code","redirect_location","depth"] },
-  { label:"Non-indexable", needs:["indexable"],
-    oql:()=>({field:["indexable","has_value"]}),
-    cols:["url","indexable","status_code","meta_robots","rel_canonical"] },
-  { label:"Slow pages", needs:["load_time"],
-    oql:()=>({field:["load_time","gte",1000]}),
-    cols:["url","load_time","status_code","weight"], sort:"load_time:desc" },
-  { label:"Thin content", needs:["word_count"],
-    oql:()=>({field:["word_count","lt",300]}),
-    cols:["url","word_count","title","status_code"], sort:"word_count:asc" },
-  { label:"Bot hits", needs:["event_bot_kind"],
-    oql:()=>({field:["event_is_bot_hit","equals",true]}),
-    cols:["event_url","event_bot_name","event_bot_kind","event_status_code","event_day"] },
-];
 
 const app = {
   projects: [], project: null, crawls: [], crawlId: null,
@@ -225,31 +230,64 @@ const app = {
     const r = await fetch(`/api/fields?project_id=${this.project.id}&data_type=${dt}`).then(x=>x.json());
     this.schema = r.fields || [];
     this.selected = new Set(r.default_display || this.schema.filter(f=>f.can_display).slice(0,12).map(f=>f.name));
-    this.renderColumns(); this.renderFilters(); this.renderQuickViews();
+    this.renderColumns(); this.renderFilters();
+    await this.loadRecipes();
     await this.run();
   },
 
-  renderQuickViews() {
-    const names = new Set(this.schema.map(f=>f.name));
-    const usable = QUICK_VIEWS.filter(v => v.needs.every(n => names.has(n)));
-    document.getElementById("quickViews").innerHTML = usable.length
-      ? '<span class="muted" style="margin:0 6px">views:</span>' + usable.map((v,i) =>
-          `<button onclick="app.applyQuickView(${QUICK_VIEWS.indexOf(v)})">${escapeHtml(v.label)}</button>`).join(" ")
-      : "";
+  // --- recepty (gotowe analizy SEO, filtrowane po stronie API) ---------
+  async loadRecipes() {
+    const r = await fetch(`/api/recipes?project_id=${this.project.id}&data_type=${this.dataType}`)
+      .then(x=>x.json()).catch(()=>({recipes:[]}));
+    this.recipes = r.recipes || [];
+    document.getElementById("recipeBtn").textContent = `📋 Recipes (${this.recipes.length})`;
+    this.renderRecipes();
   },
 
-  applyQuickView(idx) {
-    const v = QUICK_VIEWS[idx]; if (!v) return;
-    const names = new Set(this.schema.map(f=>f.name));
-    // Kolumny widoku + pozostaw tylko istniejące w tym data_type.
-    const cols = v.cols.filter(c => names.has(c));
-    if (cols.length) { this.selected = new Set(cols); this.renderColumns(); }
-    this.pendingOQL = v.oql();       // omija panel filtrów — ustawiamy OQL wprost
+  renderRecipes(term="") {
+    const box = document.getElementById("recipeList");
+    term = term.toLowerCase();
+    const shown = this.recipes.filter(r =>
+      !term || r.label.toLowerCase().includes(term) || r.why.toLowerCase().includes(term));
+    if (!shown.length) { box.innerHTML = '<p class="muted">No recipes match.</p>'; return; }
+    const groups = {};
+    shown.forEach(r => { (groups[r.group] = groups[r.group] || []).push(r); });
+    box.innerHTML = Object.entries(groups).map(([g, items]) => `
+      <div class="rgroup"><h4>${escapeHtml(g)}</h4>
+        ${items.map(r => `
+          <div class="recipe" onclick="app.applyRecipe('${escapeAttr(r.id)}')">
+            <div class="rlabel">${escapeHtml(r.label)}</div>
+            <div class="rwhy">${escapeHtml(r.why)}</div>
+            <div class="rcols">${r.columns.slice(0,6).map(c=>`<code>${escapeHtml(c)}</code>`).join(" ")}</div>
+          </div>`).join("")}
+      </div>`).join("");
+  },
+
+  applyRecipe(id) {
+    const r = this.recipes.find(x=>x.id===id); if (!r) return;
+    this.selected = new Set(r.columns); this.renderColumns();
+    this.clearFilterPanel();
+    this.pendingOQL = r.oql;
     this.sort = null;
-    if (v.sort) { const [f,d] = v.sort.split(":"); if (names.has(f)) this.sort = {field:f, dir:d}; }
+    if (r.sort) { const [f,d] = r.sort.split(":"); this.sort = {field:f, dir:d}; }
     this.page = 0;
+    this.closeRecipes();
     this.run();
   },
+
+  // Recepta zastępuje ręczne filtry — inaczej panel nadpisałby jej OQL.
+  clearFilterPanel() {
+    document.querySelectorAll('#filters input').forEach(el => {
+      if (el.type === "checkbox") el.checked = false; else el.value = "";
+    });
+    document.querySelectorAll('#filters select').forEach(el => {
+      if (el.multiple) Array.from(el.options).forEach(o => o.selected = false);
+      else if (el.dataset.role === "bool") el.value = "";
+    });
+  },
+
+  openRecipes(){ document.getElementById("recipeModal").style.display="flex"; document.getElementById("recipeSearch").focus(); },
+  closeRecipes(){ document.getElementById("recipeModal").style.display="none"; },
 
   renderColumns() {
     const box = document.getElementById("cols");
