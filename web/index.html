@@ -630,6 +630,20 @@ const app = {
   },
 };
 
+// FastAPI zwraca dla 422 listę obiektów [{loc, msg, type}] — spłaszczamy
+// ją do czytelnego zdania zamiast wyrzucać surowy JSON.
+function formatDetail(detail){
+  if (Array.isArray(detail)) {
+    return detail.map(d => {
+      if (d && typeof d === "object") {
+        const where = Array.isArray(d.loc) ? d.loc.filter(x=>x!=="body").join(".") : "";
+        return where ? `${where}: ${d.msg||JSON.stringify(d)}` : (d.msg||JSON.stringify(d));
+      }
+      return String(d);
+    }).join(" · ");
+  }
+  return JSON.stringify(detail);
+}
 function escapeHtml(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function escapeAttr(s){ return String(s).replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
 function cssEsc(s){ return String(s).replace(/["\\]/g,'\\$&'); }
@@ -638,13 +652,19 @@ function coerce(v){ if(v==="true")return true; if(v==="false")return false; cons
 async function postJSON(url,body){
   const r=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
   if(!r.ok){
-    // Backend zwraca {detail, type, code, fields} — pokaż powód, nie "500".
+    // Czytamy TEKST raz, potem próbujemy sparsować. Wywołanie r.json() a potem
+    // r.text() nie zadziała — strumień ciała da się przeczytać tylko raz,
+    // przez co prawdziwy komunikat ginął i zostawało gołe "HTTP 422".
+    let raw = "";
+    try { raw = await r.text(); } catch(_) {}
     let msg = `HTTP ${r.status}`;
     try {
-      const j = await r.json();
-      if (j.detail) msg = typeof j.detail === "string" ? j.detail : JSON.stringify(j.detail);
+      const j = JSON.parse(raw);
+      if (j.detail !== undefined && j.detail !== null) {
+        msg = typeof j.detail === "string" ? j.detail : formatDetail(j.detail);
+      } else if (raw) { msg = raw; }
       if (j.fields) msg += ` — fields: ${JSON.stringify(j.fields)}`;
-    } catch(e) { try { msg = (await r.text()) || msg; } catch(_) {} }
+    } catch(_) { if (raw) msg = `${msg}: ${raw.slice(0, 400)}`; }
     throw new Error(msg);
   }
   return r.json();

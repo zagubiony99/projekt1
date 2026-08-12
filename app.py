@@ -83,13 +83,13 @@ def _data_path(req: QueryRequest | ExportRequest) -> str:
     dt = req.data_type
     if dt in CRAWL_DATA_TYPES:
         if not req.crawl_id:
-            raise HTTPException(400, f"data_type={dt} wymaga crawl_id.")
+            raise HTTPException(400, f"data_type={dt} requires a crawl_id.")
         return crawl_data_path(req.crawl_id, dt)
     if dt == LOG_DATA_TYPE:
         return logs_events_path(req.project_id)
     if dt == RANKING_DATA_TYPE:
         return ranking_path(req.project_id)
-    raise HTTPException(400, f"Nieznany data_type: {dt}")
+    raise HTTPException(400, f"Unknown data_type: {dt}")
 
 
 def _validate_oql(app: FastAPI, req: QueryRequest | ExportRequest) -> None:
@@ -102,7 +102,7 @@ def _validate_oql(app: FastAPI, req: QueryRequest | ExportRequest) -> None:
     try:
         validate_tree(req.oql, fs)
     except OQLError as exc:
-        raise HTTPException(422, f"Niepoprawne OQL: {exc}") from exc
+        raise HTTPException(422, f"Invalid OQL: {exc}") from exc
 
 
 # --- fabryka aplikacji ----------------------------------------------------- #
@@ -149,7 +149,7 @@ def create_app(
         if app.state.capabilities is None:
             raise HTTPException(
                 503,
-                "Brak capabilities.json — uruchom najpierw `python discovery.py`.",
+                "capabilities.json is missing - run `python cli.py discover` first.",
             )
         return app.state.capabilities
 
@@ -157,7 +157,7 @@ def create_app(
         if app.state.client is None and app.state.lazy:
             app.state.client = OncrawlClient.from_settings(load_settings())
         if app.state.client is None:
-            raise HTTPException(503, "Klient API niedostępny.")
+            raise HTTPException(503, "Oncrawl API client is not available.")
         return app.state.client
 
     # --- statyka ---------------------------------------------------------
@@ -165,7 +165,7 @@ def create_app(
     def index() -> str:
         html = WEB_DIR / "index.html"
         if not html.exists():
-            raise HTTPException(404, "web/index.html nie istnieje.")
+            raise HTTPException(404, "web/index.html not found.")
         return html.read_text("utf-8")
 
     # --- metadane --------------------------------------------------------
@@ -177,7 +177,7 @@ def create_app(
     def crawls(project_id: str) -> dict:
         proj = get_caps().project(project_id)
         if proj is None:
-            raise HTTPException(404, f"Projekt {project_id} nieznany.")
+            raise HTTPException(404, f"Unknown project: {project_id}")
         return {
             "crawls": proj.get("crawls", []),
             "last_finished_crawl_id": proj.get("last_finished_crawl_id"),
