@@ -525,7 +525,18 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     if args.from_json:
-        cap = json.loads(Path(args.from_json).read_text("utf-8"))
+        src = Path(args.from_json)
+        try:
+            cap = json.loads(src.read_text("utf-8"))
+        except FileNotFoundError:
+            print(f"BŁĄD: nie ma pliku {src}", file=sys.stderr)
+            return 2
+        except json.JSONDecodeError as exc:
+            print(f"BŁĄD: {src} to niepoprawny JSON ({exc})", file=sys.stderr)
+            return 2
+        except OSError as exc:
+            print(f"BŁĄD: nie mogę odczytać {src}: {exc}", file=sys.stderr)
+            return 2
         Path(args.out_md).write_text(render_markdown(cap), "utf-8")
         logger.info("przerenderowano %s z %s", args.out_md, args.from_json)
         return 0
