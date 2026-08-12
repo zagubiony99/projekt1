@@ -19,6 +19,7 @@ import csv
 import io
 import json
 import logging
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Any
 
@@ -74,6 +75,12 @@ class ExportRequest(BaseModel):
     fields: list[str] = Field(default_factory=list)
     oql: dict | None = None
     file_type: str = "csv"  # csv | xlsx
+
+
+class CountsRequest(BaseModel):
+    project_id: str
+    data_type: str
+    crawl_id: str | None = None
 
 
 class Preset(BaseModel):
@@ -205,6 +212,47 @@ def create_app(
         """Gotowe recepty SEO wykonalne dla tego projektu i data_type."""
         fs = get_caps().fieldset(project_id, data_type)
         return {"recipes": applicable_recipes(fs, data_type)}
+
+    @app.post("/api/recipes/counts")
+    def recipe_counts(req: CountsRequest) -> dict:
+        """Liczy wiersze dla każdej recepty — które analizy mają w ogóle dane.
+
+        Każde zapytanie idzie z limit=1: interesuje nas wyłącznie total_hits,
+        więc payload jest minimalny. Wywołania lecą równolegle, ale z limitem,
+        żeby nie zalać API. Uwaga: to N zapytań, więc zużywa quotę.
+        """
+        fs = get_caps().fieldset(req.project_id, req.data_type)
+        recs = applicable_recipes(fs, req.data_type)
+        cli = get_client()
+
+        def count_one(rec: dict) -> tuple[str, dict]:
+            try:
+                probe = QueryRequest(
+                    project_id=req.project_id,
+                    data_type=req.data_type,
+                    crawl_id=req.crawl_id,
+                    fields=rec["columns"][:1],
+                    oql=rec["oql"],
+                    limit=1,
+                )
+                res = cli.search(
+                    _data_path(probe),
+                    fields=probe.fields,
+                    oql=probe.oql,
+                    limit=1,
+                )
+                return rec["id"], {"count": res.get("total_hits")}
+            except OncrawlAPIError as exc:
+                return rec["id"], {"error": exc.short_reason()}
+            except Exception as exc:  # nie przerywaj całej partii przez jedną receptę
+                return rec["id"], {"error": f"{type(exc).__name__}: {exc}"}
+
+        counts: dict[str, Any] = {}
+        workers = max(1, min(8, len(recs)))
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            for rec_id, result in pool.map(count_one, recs):
+                counts[rec_id] = result
+        return {"counts": counts}
 
     @app.get("/api/fields")
     def fields(project_id: str, data_type: str) -> dict:

@@ -57,7 +57,15 @@
                width:min(920px,100%); max-height:85vh; overflow:auto; padding:18px; }
   .modal-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
   .modal-head h2 { margin:0; font-size:17px; }
-  #recipeSearch { width:100%; margin-bottom:14px; }
+  .recipe-tools { display:flex; gap:8px; align-items:center; margin-bottom:8px; }
+  #recipeSearch { flex:1; }
+  #countBtn { white-space:nowrap; background:#14303a; border-color:#2a6070; }
+  #countBtn:disabled { opacity:.5; cursor:wait; }
+  .rbadge { font-size:11px; padding:1px 7px; border-radius:10px; margin-left:6px; font-weight:600; }
+  .rbadge.has { background:#12301d; border:1px solid #2c6b41; color:#8fe0ad; }
+  .rbadge.zero { background:#2a2a2a; border:1px solid #444; color:#888; }
+  .rbadge.err { background:#3a1a1a; border:1px solid #7a2626; color:#e59090; cursor:help; }
+  .recipe.empty { opacity:.45; }
   .rgroup h4 { margin:16px 0 8px; font-size:12px; text-transform:uppercase;
                letter-spacing:.05em; color:var(--accent); border-bottom:1px solid var(--line); padding-bottom:4px; }
   .recipe { border:1px solid var(--line); border-radius:8px; padding:10px 12px; margin-bottom:6px;
@@ -187,7 +195,18 @@
       <h2>📋 Recipes <span class="muted" style="font-weight:400;font-size:13px">— ready-made SEO analyses for this data set</span></h2>
       <button class="link" style="font-size:20px" onclick="app.closeRecipes()">✕</button>
     </div>
-    <input id="recipeSearch" placeholder="search recipes…" oninput="app.renderRecipes(this.value)" />
+    <div class="recipe-tools">
+      <input id="recipeSearch" placeholder="search recipes…" oninput="app.renderRecipes(this.value)" />
+      <button id="countBtn" onclick="app.countRecipes()"
+              title="Runs every recipe with limit=1 to read total_hits. Uses Oncrawl quota.">
+        🔢 Count rows
+      </button>
+      <label class="muted" style="font-size:12px; white-space:nowrap">
+        <input type="checkbox" id="hideEmpty" onchange="app.renderRecipes(document.getElementById('recipeSearch').value)">
+        hide empty
+      </label>
+    </div>
+    <div id="countStatus" class="muted" style="font-size:12px; margin-bottom:8px"></div>
     <div id="recipeList"></div>
   </div>
 </div>
@@ -287,20 +306,60 @@ const app = {
   renderRecipes(term="") {
     const box = document.getElementById("recipeList");
     term = term.toLowerCase();
-    const shown = this.recipes.filter(r =>
+    const counts = this.recipeCounts || {};
+    const hideEmpty = document.getElementById("hideEmpty")?.checked;
+    let shown = this.recipes.filter(r =>
       !term || r.label.toLowerCase().includes(term) || r.why.toLowerCase().includes(term));
+    if (hideEmpty) shown = shown.filter(r => (counts[r.id]?.count ?? 1) > 0);
     if (!shown.length) { box.innerHTML = '<p class="muted">No recipes match.</p>'; return; }
     const groups = {};
     shown.forEach(r => { (groups[r.group] = groups[r.group] || []).push(r); });
     box.innerHTML = Object.entries(groups).map(([g, items]) => `
       <div class="rgroup"><h4>${escapeHtml(g)}</h4>
-        ${items.map(r => `
-          <div class="recipe" onclick="app.applyRecipe('${escapeAttr(r.id)}')">
-            <div class="rlabel">${escapeHtml(r.label)}</div>
+        ${items.map(r => {
+          const c = counts[r.id];
+          const empty = c && c.count === 0;
+          return `
+          <div class="recipe${empty?" empty":""}" onclick="app.applyRecipe('${escapeAttr(r.id)}')">
+            <div class="rlabel">${escapeHtml(r.label)} ${this.countBadge(c)}</div>
             <div class="rwhy">${escapeHtml(r.why)}</div>
             <div class="rcols">${r.columns.slice(0,6).map(c=>`<code>${escapeHtml(c)}</code>`).join(" ")}</div>
-          </div>`).join("")}
+          </div>`;
+        }).join("")}
       </div>`).join("");
+  },
+
+  countBadge(c) {
+    if (!c) return "";
+    if (c.error) return `<span class="rbadge err" title="${escapeAttr(c.error)}">error</span>`;
+    if (c.count === 0) return '<span class="rbadge zero">0 rows</span>';
+    return `<span class="rbadge has">${Number(c.count).toLocaleString()} rows</span>`;
+  },
+
+  // Które recepty w ogóle mają dane — jedno kliknięcie zamiast klikania w 80.
+  async countRecipes() {
+    const btn = document.getElementById("countBtn");
+    const status = document.getElementById("countStatus");
+    btn.disabled = true;
+    status.textContent = `Counting ${this.recipes.length} recipes… (this issues one query per recipe)`;
+    try {
+      const r = await postJSON("/api/recipes/counts", {
+        project_id: this.project.id,
+        data_type: this.dataType,
+        crawl_id: NEEDS_CRAWL.has(this.dataType) ? this.crawlId : null,
+      });
+      this.recipeCounts = r.counts || {};
+      const vals = Object.values(this.recipeCounts);
+      const withData = vals.filter(v => (v.count ?? 0) > 0).length;
+      const errored = vals.filter(v => v.error).length;
+      status.textContent =
+        `${withData} of ${vals.length} recipes have data` + (errored ? ` · ${errored} failed` : "");
+      this.renderRecipes(document.getElementById("recipeSearch").value);
+    } catch(e) {
+      status.textContent = "Counting failed: " + e.message;
+    } finally {
+      btn.disabled = false;
+    }
   },
 
   applyRecipe(id) {

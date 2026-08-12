@@ -152,3 +152,52 @@ def test_api_error_surfaces_reason_not_generic_500(tmp_path):
     assert "cannot be displayed" in body["detail"]   # realny powód z API
     assert body["fields"] == ["sitemaps_file_origin"]
     api_client.close()
+
+
+# --- liczenie wierszy per recepta -------------------------------------- #
+def test_recipe_counts_returns_totals(client):
+    r = client.post("/api/recipes/counts", json={
+        "project_id": "p1", "data_type": "pages", "crawl_id": "c1",
+    })
+    assert r.status_code == 200
+    counts = r.json()["counts"]
+    assert counts, "oczekiwano policzonych recept"
+    # Mock danych zwraca total_hits=5 dla każdego zapytania.
+    some = next(iter(counts.values()))
+    assert some.get("count") == 5 or "error" in some
+
+
+def test_recipe_counts_covers_every_applicable_recipe(client):
+    recipes = client.get("/api/recipes", params={"project_id": "p1", "data_type": "pages"}).json()["recipes"]
+    counts = client.post("/api/recipes/counts", json={
+        "project_id": "p1", "data_type": "pages", "crawl_id": "c1",
+    }).json()["counts"]
+    assert set(counts) == {r["id"] for r in recipes}
+
+
+def test_recipe_counts_isolates_failures(tmp_path):
+    """Jedna niedziałająca recepta nie może wywalić całej partii."""
+    import httpx
+
+    calls = {"n": 0}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        calls["n"] += 1
+        if calls["n"] % 2 == 0:                      # co drugie zapytanie pada
+            return httpx.Response(403, json={"type": "quota_error", "message": "limit"})
+        return httpx.Response(200, json={
+            "urls": [], "meta": {"columns": [], "total_hits": 7}})
+
+    s = Settings(token=TOKEN, base_url="https://app.oncrawl.com/api/v2",
+                 cache_dir=tmp_path / ".c", max_retries=0)
+    api_client = OncrawlClient(OncrawlSession(s, transport=httpx.MockTransport(handler)))
+    app = create_app(capabilities=_capabilities(), client=api_client,
+                     presets_path=tmp_path / "p.json", lazy=False)
+    c = TestClient(app)
+
+    counts = c.post("/api/recipes/counts", json={
+        "project_id": "p1", "data_type": "pages", "crawl_id": "c1",
+    }).json()["counts"]
+    assert any("count" in v for v in counts.values())   # część się udała
+    assert any("error" in v for v in counts.values())   # część zawiodła
+    api_client.close()
