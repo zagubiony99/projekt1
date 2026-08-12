@@ -396,7 +396,7 @@ def render_markdown(cap: dict) -> str:
         for ws in cap.get("workspaces", [])
         for p in ws.get("projects", [])
     ]
-    out.append(f"## Podsumowanie\n")
+    out.append("## Podsumowanie\n")
     out.append(f"- Workspace'ów: {len(cap.get('workspaces', []))}")
     out.append(f"- Projektów: {len(all_projects)}\n")
 

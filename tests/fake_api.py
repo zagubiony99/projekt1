@@ -11,8 +11,6 @@ Scenariusze braku dostępu są celowo wplecione, by testować graceful degradati
 
 from __future__ import annotations
 
-import json
-
 import httpx
 
 TOKEN = "SECRET-TEST-TOKEN-should-never-leak"

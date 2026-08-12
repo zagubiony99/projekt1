@@ -201,3 +201,37 @@ def test_recipe_counts_isolates_failures(tmp_path):
     assert any("count" in v for v in counts.values())   # część się udała
     assert any("error" in v for v in counts.values())   # część zawiodła
     api_client.close()
+
+
+def test_presets_survive_special_characters(client):
+    """Nazwy i wartości z apostrofami/cudzysłowami muszą przechodzić w obie strony."""
+    tricky = "L'Oreal \"quoted\" & <tag>"
+    query = {
+        "project_id": "p1", "data_type": "pages", "fields": ["url"],
+        "oql": {"field": ["url", "contains", "l'oreal", {"ci": True}]},
+        "url_search": "l'oreal",
+    }
+    saved = client.post("/api/presets", json={"name": tricky, "query": query}).json()["presets"]
+    assert saved[0]["name"] == tricky
+    assert saved[0]["query"]["oql"]["field"][2] == "l'oreal"
+
+    reloaded = client.get("/api/presets").json()["presets"]
+    assert reloaded[0]["name"] == tricky
+    assert reloaded[0]["query"] == query          # pełny round-trip przez dysk
+
+    left = client.delete(f"/api/presets/{tricky}").json()["presets"]
+    assert left == []
+
+
+def test_preset_query_keeps_oql_for_restore(client):
+    """Preset musi nieść OQL — bez tego po wczytaniu gubił filtr."""
+    query = {
+        "project_id": "p1", "data_type": "pages", "crawl_id": "c1",
+        "fields": ["url", "status_code"],
+        "oql": {"field": ["status_code", "gte", 400]},
+        "sort": "status_code:desc", "pageSize": 100,
+    }
+    client.post("/api/presets", json={"name": "errors", "query": query})
+    got = client.get("/api/presets").json()["presets"][0]["query"]
+    assert got["oql"] == {"field": ["status_code", "gte", 400]}
+    assert got["sort"] == "status_code:desc"

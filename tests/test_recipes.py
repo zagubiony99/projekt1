@@ -5,8 +5,6 @@ w `needs` — bez tego recepta mogłaby wygenerować zapytanie o pole, którego
 w danym projekcie nie ma (dokładnie ten błąd, którego chcemy uniknąć).
 """
 
-import pytest
-
 from oncrawl.capabilities import FieldSet
 from oncrawl.oql import validate_tree
 from oncrawl.recipes import GROUPS, RECIPES, _fields_in_oql, applicable_recipes

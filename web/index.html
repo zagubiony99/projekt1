@@ -320,13 +320,18 @@ const app = {
           const c = counts[r.id];
           const empty = c && c.count === 0;
           return `
-          <div class="recipe${empty?" empty":""}" onclick="app.applyRecipe('${escapeAttr(r.id)}')">
+          <div class="recipe${empty?" empty":""}" data-recipe="${escapeAttr(r.id)}">
             <div class="rlabel">${escapeHtml(r.label)} ${this.countBadge(c)}</div>
             <div class="rwhy">${escapeHtml(r.why)}</div>
             <div class="rcols">${r.columns.slice(0,6).map(c=>`<code>${escapeHtml(c)}</code>`).join(" ")}</div>
           </div>`;
         }).join("")}
       </div>`).join("");
+    // Dispatch po data-* zamiast inline onclick — odporne na apostrofy w id.
+    box.onclick = (e) => {
+      const card = e.target.closest("[data-recipe]");
+      if (card) this.applyRecipe(card.dataset.recipe);
+    };
   },
 
   countBadge(c) {
@@ -602,10 +607,14 @@ const app = {
     return {field:[field, "contains", term, {ci:true}]};
   },
 
+  // OQL bez frazy z szukajki — to jest stan, który zapisujemy w presecie
+  // (fraza jest zapisywana osobno, żeby nie doklejać jej dwa razy).
+  baseOQL() {
+    return this.buildOQL() || this.pendingOQL || null;  // panel > recepta
+  },
+
   currentQuery(extra={}) {
-    // Filtry z panelu mają pierwszeństwo; pendingOQL to szybki widok.
-    const panelOQL = this.buildOQL();
-    let oql = panelOQL || this.pendingOQL || null;
+    let oql = this.baseOQL();
     // Szukajka URL łączy się (AND) z tym, co już jest.
     const search = this.urlSearchLeaf();
     if (search) oql = oql ? {and:[oql, search]} : search;
@@ -618,6 +627,7 @@ const app = {
   },
 
   async run() {
+    if (this._suppressRun) return;   // odtwarzanie presetu w toku
     if (!this.project || !this.dataType) return;
     if (!this.selected.size) { this.banner("Select at least one column."); return; }
     if (NEEDS_CRAWL.has(this.dataType) && !this.crawlId) { this.banner("Select a crawl."); return; }
@@ -717,14 +727,31 @@ const app = {
     this.renderPresets(r.presets||[]);
   },
   renderPresets(presets){
+    // Presety trzymamy w pamięci i odwołujemy się przez indeks. Wklejanie
+    // JSON-a wprost do atrybutu onclick psuło się na apostrofie w nazwie lub
+    // w wartości filtra (np. "l'oreal") — atrybut urywał się w połowie.
+    this.presets = presets || [];
     const box=document.getElementById("presetList");
-    box.innerHTML = presets.map(p=>`<div class="p"><button class="link" onclick='app.applyPreset(${escapeAttr(JSON.stringify(p.query))})'>▷ ${escapeHtml(p.name)}</button>
-      <button class="link" style="color:var(--danger)" onclick="app.deletePreset('${escapeAttr(p.name)}')">✕</button></div>`).join("")
-      || '<span class="muted">none</span>';
+    box.innerHTML = this.presets.map((p,i)=>
+      `<div class="p">
+         <button class="link" data-preset="${i}" title="${escapeAttr(p.name)}">▷ ${escapeHtml(p.name)}</button>
+         <button class="link" data-del="${i}" style="color:var(--danger)" title="Delete">✕</button>
+       </div>`).join("") || '<span class="muted">none</span>';
+    box.onclick = (e) => {
+      const apply = e.target.closest("[data-preset]");
+      if (apply) { this.applyPreset(this.presets[+apply.dataset.preset].query); return; }
+      const del = e.target.closest("[data-del]");
+      if (del) this.deletePreset(this.presets[+del.dataset.del].name);
+    };
   },
   async savePreset(){
     const name=document.getElementById("presetName").value.trim(); if(!name) return;
-    const query=this.currentQuery({page:this.page,pageSize:this.pageSize});
+    const query=this.currentQuery({
+      oql:this.baseOQL(),          // bez frazy — ta idzie osobno
+      pageSize:this.pageSize,
+      url_search:(document.getElementById("urlSearch").value||"").trim(),
+      recipe_id:this.activeRecipe?this.activeRecipe.id:null,
+    });
     const r=await postJSON("/api/presets",{name,query}); this.renderPresets(r.presets);
     document.getElementById("presetName").value="";
   },
@@ -733,13 +760,38 @@ const app = {
     this.renderPresets(r.presets);
   },
   async applyPreset(q){
-    document.getElementById("projectSel").value=q.project_id;
-    await this.selectProject(q.project_id);
-    if (q.crawl_id){ this.crawlId=q.crawl_id; document.getElementById("crawlSel").value=q.crawl_id; }
-    await this.selectDataType(q.data_type);
-    if (q.fields){ this.selected=new Set(q.fields); this.renderColumns(); }
-    if (q.pageSize){ this.pageSize=q.pageSize; document.getElementById("pageSize").value=q.pageSize; }
-    if (q.sort){ const [f,d]=q.sort.split(":"); this.sort={field:f,dir:d||"asc"}; }
+    // Wstrzymujemy zapytania na czas odtwarzania stanu — selectProject i
+    // selectDataType same wołają run(), więc bez tego preset odpalałby
+    // 2-3 zapytania do API zamiast jednego (i to z niepełnym stanem).
+    this._suppressRun = true;
+    try {
+      document.getElementById("projectSel").value = q.project_id;
+      await this.selectProject(q.project_id);
+      if (q.crawl_id) {
+        this.crawlId = q.crawl_id;
+        document.getElementById("crawlSel").value = q.crawl_id;
+      }
+      await this.selectDataType(q.data_type);
+      if (q.fields && q.fields.length) { this.selected = new Set(q.fields); this.renderColumns(); }
+      if (q.pageSize) { this.pageSize = q.pageSize; document.getElementById("pageSize").value = q.pageSize; }
+
+      // Filtry: panel jest czyszczony przez selectDataType, więc odtwarzamy
+      // zapisane OQL jako pendingOQL. Bez tego preset gubił swój filtr.
+      this.clearFilterPanel();
+      this.pendingOQL = q.oql || null;
+      this.activeRecipe = q.recipe_id
+        ? (this.recipes || []).find(r => r.id === q.recipe_id) || null
+        : null;
+      this.renderActiveRecipe();
+
+      document.getElementById("urlSearch").value = q.url_search || "";
+
+      this.sort = null;
+      if (q.sort) { const [f, d] = q.sort.split(":"); this.sort = {field: f, dir: d || "asc"}; }
+      this.page = 0;
+    } finally {
+      this._suppressRun = false;
+    }
     this.run();
   },
 };
@@ -759,7 +811,11 @@ function formatDetail(detail){
   return JSON.stringify(detail);
 }
 function escapeHtml(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function escapeAttr(s){ return String(s).replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
+// Poprawne escapowanie do atrybutu HTML — encje, nie backslashe. Backslash
+// nie jest escapem w atrybucie, więc apostrof i tak kończył wartość.
+function escapeAttr(s){
+  return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
 function cssEsc(s){ return String(s).replace(/["\\]/g,'\\$&'); }
 function num(v){ const n=Number(v); return Number.isNaN(n)?v:n; }
 function coerce(v){ if(v==="true")return true; if(v==="false")return false; const n=Number(v); return (v!==""&&!Number.isNaN(n))?n:v; }

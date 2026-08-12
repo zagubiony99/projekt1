@@ -15,7 +15,6 @@ dzięki czemu testy jadą bez sieci i bez quoty.
 
 from __future__ import annotations
 
-import csv
 import io
 import json
 import logging
@@ -25,7 +24,6 @@ from typing import Any
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import (
-    FileResponse,
     HTMLResponse,
     JSONResponse,
     StreamingResponse,
@@ -343,7 +341,7 @@ def _build_xlsx(client: OncrawlClient, path: str, req: ExportRequest) -> bytes:
             header_written = True
         ws.append([row.get(col) for col in header])
     if not header_written:
-        ws.append(header or ["(brak danych)"])
+        ws.append(header or ["(no data)"])
     buf = io.BytesIO()
     wb.save(buf)
     return buf.getvalue()

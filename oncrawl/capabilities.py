@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any, Iterator
+from typing import Iterator
 
 # Kanoniczne nazwy data_type i gdzie szukać ich pól w capabilities.json.
 CRAWL_DATA_TYPES = ("pages", "links", "clusters", "structured_data")
