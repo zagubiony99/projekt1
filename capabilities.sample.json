@@ -1,0 +1,310 @@
+{
+  "generated_at": "(PRZYKŁAD z fixtur — nie z żywego konta)",
+  "base_url": "https://app.oncrawl.com/api/v2",
+  "workspaces": [
+    {
+      "id": "ws1",
+      "name": "Main",
+      "raw": {
+        "id": "ws1",
+        "name": "Main"
+      },
+      "projects": [
+        {
+          "id": "p1",
+          "name": "example.com",
+          "error": null,
+          "features": {
+            "crawl": true,
+            "log_monitoring": true,
+            "ranking_performance": true
+          },
+          "limits": {
+            "max_urls": 500000
+          },
+          "log_monitoring_ready": true,
+          "log_monitoring_data_ready": true,
+          "crawl_config_ids": [
+            "cfg1"
+          ],
+          "crawl_ids": [
+            "c1",
+            "c0"
+          ],
+          "crawl_over_crawl_ids": [
+            "coc1"
+          ],
+          "crawl_configs": [
+            {
+              "id": "cfg1",
+              "name": "Full crawl",
+              "user_agent": "Oncrawl"
+            }
+          ],
+          "crawls": [
+            {
+              "id": "c1",
+              "status": "done",
+              "end_reason": "success",
+              "created_at": "2026-08-01",
+              "ready": true
+            },
+            {
+              "id": "c0",
+              "status": "crawling",
+              "end_reason": null,
+              "created_at": "2026-08-10",
+              "ready": false
+            }
+          ],
+          "last_finished_crawl_id": "c1",
+          "data_types": {
+            "pages": {
+              "available": true,
+              "reason": null,
+              "fields": [
+                {
+                  "name": "url",
+                  "type": "string",
+                  "arity": "one",
+                  "values": null,
+                  "actions": [],
+                  "agg_dimension": false,
+                  "agg_metric_methods": [],
+                  "can_display": true,
+                  "can_filter": true,
+                  "can_sort": true
+                },
+                {
+                  "name": "status_code",
+                  "type": "int",
+                  "arity": "one",
+                  "values": [
+                    200,
+                    301,
+                    404
+                  ],
+                  "actions": [],
+                  "agg_dimension": false,
+                  "agg_metric_methods": [
+                    "min",
+                    "max",
+                    "avg"
+                  ],
+                  "can_display": true,
+                  "can_filter": true,
+                  "can_sort": true
+                },
+                {
+                  "name": "fetch_date",
+                  "type": "date",
+                  "arity": "one",
+                  "values": null,
+                  "actions": [],
+                  "agg_dimension": false,
+                  "agg_metric_methods": [],
+                  "can_display": true,
+                  "can_filter": true,
+                  "can_sort": true
+                },
+                {
+                  "name": "depth",
+                  "type": "int",
+                  "arity": "one",
+                  "values": null,
+                  "actions": [],
+                  "agg_dimension": false,
+                  "agg_metric_methods": [
+                    "min",
+                    "max",
+                    "avg",
+                    "sum"
+                  ],
+                  "can_display": true,
+                  "can_filter": true,
+                  "can_sort": true
+                },
+                {
+                  "name": "indexable",
+                  "type": "bool",
+                  "arity": "one",
+                  "values": [
+                    true,
+                    false
+                  ],
+                  "actions": [],
+                  "agg_dimension": false,
+                  "agg_metric_methods": [],
+                  "can_display": true,
+                  "can_filter": true,
+                  "can_sort": true
+                }
+              ]
+            },
+            "links": {
+              "available": true,
+              "reason": null,
+              "fields": [
+                {
+                  "name": "source",
+                  "type": "string",
+                  "arity": "one",
+                  "values": null,
+                  "actions": [],
+                  "agg_dimension": false,
+                  "agg_metric_methods": [],
+                  "can_display": true,
+                  "can_filter": true,
+                  "can_sort": true
+                },
+                {
+                  "name": "target",
+                  "type": "string",
+                  "arity": "one",
+                  "values": null,
+                  "actions": [],
+                  "agg_dimension": false,
+                  "agg_metric_methods": [],
+                  "can_display": true,
+                  "can_filter": true,
+                  "can_sort": true
+                },
+                {
+                  "name": "follow",
+                  "type": "bool",
+                  "arity": "one",
+                  "values": null,
+                  "actions": [],
+                  "agg_dimension": false,
+                  "agg_metric_methods": [],
+                  "can_display": true,
+                  "can_filter": true,
+                  "can_sort": true
+                }
+              ]
+            },
+            "clusters": {
+              "available": false,
+              "reason": "HTTP 403 · forbidden · feature_not_available · Clusters niedostępne w tym planie",
+              "fields": []
+            },
+            "structured_data": {
+              "available": true,
+              "reason": null,
+              "fields": [
+                {
+                  "name": "type",
+                  "type": "string",
+                  "arity": "one",
+                  "values": null,
+                  "actions": [],
+                  "agg_dimension": false,
+                  "agg_metric_methods": [],
+                  "can_display": true,
+                  "can_filter": true,
+                  "can_sort": true
+                },
+                {
+                  "name": "url",
+                  "type": "string",
+                  "arity": "one",
+                  "values": null,
+                  "actions": [],
+                  "agg_dimension": false,
+                  "agg_metric_methods": [],
+                  "can_display": true,
+                  "can_filter": true,
+                  "can_sort": true
+                }
+              ]
+            }
+          },
+          "log_monitoring": {
+            "log_monitoring_ready": true,
+            "log_monitoring_data_ready": true,
+            "available": true,
+            "events_fields": {
+              "available": true,
+              "reason": null,
+              "fields": [
+                {
+                  "name": "bot",
+                  "type": "string",
+                  "arity": "one",
+                  "values": [
+                    "googlebot",
+                    "bingbot"
+                  ],
+                  "actions": [],
+                  "agg_dimension": false,
+                  "agg_metric_methods": [],
+                  "can_display": true,
+                  "can_filter": true,
+                  "can_sort": true
+                },
+                {
+                  "name": "hits",
+                  "type": "int",
+                  "arity": "one",
+                  "values": null,
+                  "actions": [],
+                  "agg_dimension": false,
+                  "agg_metric_methods": [
+                    "sum",
+                    "avg"
+                  ],
+                  "can_display": true,
+                  "can_filter": true,
+                  "can_sort": true
+                },
+                {
+                  "name": "date",
+                  "type": "date",
+                  "arity": "one",
+                  "values": null,
+                  "actions": [],
+                  "agg_dimension": false,
+                  "agg_metric_methods": [],
+                  "can_display": true,
+                  "can_filter": true,
+                  "can_sort": true
+                }
+              ]
+            },
+            "events_metadata": {
+              "available": true,
+              "reason": null,
+              "metadata": {
+                "bot_kinds": [
+                  "googlebot",
+                  "bingbot"
+                ],
+                "dates": {
+                  "first": "2026-01-01",
+                  "last": "2026-08-01"
+                },
+                "search_engines": [
+                  "google",
+                  "bing"
+                ],
+                "week_definition": "monday"
+              }
+            }
+          },
+          "ranking_performance": {
+            "available": false,
+            "reason": "HTTP 403 · quota_error · Dzienne quota wyczerpane",
+            "fields": []
+          }
+        },
+        {
+          "id": "p2",
+          "name": "locked.com",
+          "error": "HTTP 403 · forbidden · unauthorized · Brak dostępu do projektu"
+        }
+      ],
+      "error": null
+    }
+  ],
+  "errors": []
+}

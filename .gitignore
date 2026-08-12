@@ -1,0 +1,25 @@
+# Secrets — never commit the token
+.env
+
+# Response cache (daily quotas)
+.cache/
+
+# Discovery output is regenerated locally; keep out of VCS by default.
+# (Comment these out if you want to version a snapshot.)
+capabilities.json
+CAPABILITIES.md
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
