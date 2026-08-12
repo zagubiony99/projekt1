@@ -70,6 +70,12 @@
                         padding:1px 5px; font-size:11px; color:var(--muted); margin-right:3px; }
   #recipeBtn { background:#2a2140; border-color:#4b3a6e; }
   #mcpBtn { background:#14303a; border-color:#2a6070; }
+  /* Wskaźnik aktywnej recepty — bez niego nie wiadomo, co się właśnie ogląda. */
+  .active-chip { display:inline-flex; align-items:center; gap:6px; background:#2a2140;
+                 border:1px solid #6b54a0; border-radius:20px; padding:4px 6px 4px 12px;
+                 font-size:12px; color:#d9ccff; cursor:help; }
+  .active-chip button { color:#d9ccff; font-size:14px; line-height:1; padding:0 4px; }
+  .active-chip button:hover { color:var(--danger); }
 
   /* Panel MCP */
   .mcp-status { padding:10px 12px; border-radius:8px; margin-bottom:12px; font-size:13px; }
@@ -153,6 +159,7 @@
     <div class="toolbar">
       <button class="primary" onclick="app.run()">▶ Run</button>
       <button id="recipeBtn" onclick="app.openRecipes()" title="Ready-made SEO analyses">📋 Recipes</button>
+      <span id="activeRecipe"></span>
       <input id="urlSearch" placeholder="🔎 search in URLs…" style="width:200px"
              title="Filters rows where the URL contains this text (case-insensitive)"
              onkeydown="if(event.key==='Enter'){app.page=0;app.run();}" />
@@ -257,6 +264,8 @@ const app = {
 
   async selectDataType(dt) {
     this.dataType = dt; this.sort = null; this.page = 0;
+    this.activeRecipe = null; this.pendingOQL = null;
+    this.renderActiveRecipe();
     this.renderTabs();
     const r = await fetch(`/api/fields?project_id=${this.project.id}&data_type=${dt}`).then(x=>x.json());
     this.schema = r.fields || [];
@@ -299,10 +308,32 @@ const app = {
     this.selected = new Set(r.columns); this.renderColumns();
     this.clearFilterPanel();
     this.pendingOQL = r.oql;
+    this.activeRecipe = r;
     this.sort = null;
     if (r.sort) { const [f,d] = r.sort.split(":"); this.sort = {field:f, dir:d}; }
     this.page = 0;
+    this.renderActiveRecipe();
     this.closeRecipes();
+    this.run();
+  },
+
+  // Bez tego nie widać, która analiza jest właśnie uruchomiona.
+  renderActiveRecipe() {
+    const box = document.getElementById("activeRecipe");
+    const r = this.activeRecipe;
+    if (!r) { box.innerHTML = ""; return; }
+    box.innerHTML =
+      `<span class="active-chip" title="${escapeAttr(r.why)}&#10;&#10;OQL: ${escapeAttr(JSON.stringify(r.oql))}">
+         <b>${escapeHtml(r.label)}</b>
+         <button class="link" onclick="app.clearRecipe()" title="Clear this recipe">✕</button>
+       </span>`;
+  },
+
+  clearRecipe() {
+    this.activeRecipe = null;
+    this.pendingOQL = null;
+    this.renderActiveRecipe();
+    this.page = 0;
     this.run();
   },
 
@@ -415,8 +446,12 @@ const app = {
   renderFilters() {
     const box = document.getElementById("filters");
     box.innerHTML = this.schema.filter(f=>f.can_filter).map(f => this.filterControl(f)).join("");
-    // Ręczne dotknięcie filtra unieważnia szybki widok.
-    box.oninput = () => { this.pendingOQL = null; };
+    // Ręczne dotknięcie filtra unieważnia receptę — panel ma pierwszeństwo.
+    box.oninput = () => {
+      if (this.pendingOQL || this.activeRecipe) {
+        this.pendingOQL = null; this.activeRecipe = null; this.renderActiveRecipe();
+      }
+    };
   },
 
   filterControl(f) {
@@ -534,6 +569,7 @@ const app = {
     this.banner("");
     this.total = res.total_hits ?? 0;
     document.getElementById("totalHits").textContent = `${this.total.toLocaleString()} results`;
+    if (this.total === 0) this.explainNoResults();
     document.getElementById("pageInfo").textContent =
       `${this.page+1} / ${Math.max(1,Math.ceil(Math.min(this.total,10000)/this.pageSize))}`;
     this.renderTable(res.rows||[]);
@@ -558,6 +594,25 @@ const app = {
       placeholder:"No rows (adjust filters or columns).",
     });
     this.maybeEmptyHint(rows);
+  },
+
+  // Zero wyników samo w sobie nic nie mówi — wyjaśnij, co to znaczy.
+  explainNoResults() {
+    const r = this.activeRecipe;
+    if (!r) {
+      this.banner("No rows match the current filters. Clear a filter or widen the range.");
+      return;
+    }
+    // Pola, na których opiera się recepta — jeśli crawl ich nie wypełnia
+    // (np. brak podpiętych logów/analityki), wynik będzie pusty.
+    const fields = [...new Set(JSON.stringify(r.oql).match(/"([a-z_0-9]+)"/g)?.map(s=>s.slice(1,-1)) || [])]
+      .filter(f => this.schema.some(x => x.name === f));
+    this.banner(
+      `Recipe "${r.label}" returned 0 rows — the filter is valid, nothing matches it in this crawl. ` +
+      (fields.length ? `It relies on: ${fields.join(", ")}. ` : "") +
+      `If a field is not populated for this crawl (e.g. no analytics or log data linked), the result is empty. ` +
+      `Tip: clear the recipe (✕) and check that field as a column first.`
+    );
   },
 
   // Gdy wszystkie metryki poza URL są puste, to zwykle niepobrane URL-e —

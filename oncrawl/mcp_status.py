@@ -31,25 +31,25 @@ def requirements() -> list[dict]:
     return [
         {
             "id": "mcp_package",
-            "label": "Pakiet 'mcp' zainstalowany",
+            "label": "'mcp' package installed",
             "ok": mcp_installed,
             "hint": 'pip install "mcp>=1.2"',
         },
         {
             "id": "server_file",
-            "label": f"Plik {SERVER_FILE} obecny",
+            "label": f"{SERVER_FILE} present",
             "ok": (root / SERVER_FILE).exists(),
-            "hint": "Rozpakuj pełne archiwum projektu.",
+            "hint": "Unzip the full project archive.",
         },
         {
             "id": "env_token",
-            "label": "Token w .env (ONCRAWL_TOKEN)",
+            "label": "Token in .env (ONCRAWL_TOKEN)",
             "ok": bool(os.environ.get("ONCRAWL_TOKEN")) or _env_has_token(root),
-            "hint": "Skopiuj .env.example do .env i wpisz ONCRAWL_TOKEN.",
+            "hint": "Copy .env.example to .env and set ONCRAWL_TOKEN.",
         },
         {
             "id": "capabilities",
-            "label": "capabilities.json wygenerowany",
+            "label": "capabilities.json generated",
             "ok": (root / "capabilities.json").exists(),
             "hint": "python cli.py discover",
         },
@@ -81,13 +81,13 @@ def client_configs() -> list[dict]:
         {
             "id": "vscode",
             "name": "VS Code",
-            "path": ".vscode/mcp.json  (w folderze projektu)",
+            "path": ".vscode/mcp.json  (in the project folder)",
             "steps": [
-                "Otwórz ten folder w VS Code.",
-                "Ctrl+Shift+P → 'MCP: List Servers' → oncrawl → Start.",
-                "W Copilot Chat przełącz na tryb Agent.",
+                "Open this folder in VS Code.",
+                "Ctrl+Shift+P -> 'MCP: List Servers' -> oncrawl -> Start.",
+                "Switch Copilot Chat to Agent mode.",
             ],
-            "note": "Wymaga VS Code 1.102+ i GitHub Copilot. Plik jest już w projekcie.",
+            "note": "Requires VS Code 1.102+ and GitHub Copilot. The file already ships with this project.",
             "config": json.dumps(
                 {"servers": {"oncrawl": {
                     "type": "stdio", "command": "python",
@@ -104,11 +104,11 @@ def client_configs() -> list[dict]:
                 else "~/Library/Application Support/Claude/claude_desktop_config.json"
             ),
             "steps": [
-                "Wklej poniższy blok do pliku konfiguracyjnego.",
-                "Zrestartuj Claude Desktop.",
-                "Narzędzia Oncrawl pojawią się w rozmowie.",
+                "Paste the block below into the config file.",
+                "Restart Claude Desktop.",
+                "The Oncrawl tools will appear in the conversation.",
             ],
-            "note": "Wymaga zainstalowanej aplikacji Claude Desktop.",
+            "note": "Requires the Claude Desktop app to be installed.",
             "config": json.dumps(
                 {"mcpServers": {"oncrawl": {
                     "command": python, "args": [server_abs], "cwd": root_str}}},
@@ -118,9 +118,9 @@ def client_configs() -> list[dict]:
         {
             "id": "cursor",
             "name": "Cursor",
-            "path": ".cursor/mcp.json  (w folderze projektu)",
-            "steps": ["Utwórz plik z poniższą treścią.", "Zrestartuj Cursor."],
-            "note": "Działa też globalnie: ~/.cursor/mcp.json",
+            "path": ".cursor/mcp.json  (in the project folder)",
+            "steps": ["Create the file with the content below.", "Restart Cursor."],
+            "note": "Also works globally: ~/.cursor/mcp.json",
             "config": json.dumps(
                 {"mcpServers": {"oncrawl": {
                     "command": python, "args": [SERVER_FILE], "cwd": root_str}}},
@@ -130,9 +130,9 @@ def client_configs() -> list[dict]:
         {
             "id": "claude_code",
             "name": "Claude Code (CLI)",
-            "path": "— (komenda, nie plik)",
-            "steps": ["Uruchom w terminalu, w tym folderze:"],
-            "note": "Konfiguracja zapisuje się automatycznie.",
+            "path": "- (a command, not a file)",
+            "steps": ["Run this in a terminal, in this folder:"],
+            "note": "The configuration is saved automatically.",
             "config": f"claude mcp add oncrawl -- {python} {SERVER_FILE}",
         },
     ]
@@ -141,12 +141,12 @@ def client_configs() -> list[dict]:
 def tools_reference() -> list[dict]:
     """Opis narzędzi wystawianych przez serwer (do panelu)."""
     return [
-        {"name": "list_projects", "desc": "Lista projektów i dostępnych typów danych."},
-        {"name": "list_crawls", "desc": "Crawle projektu wraz ze statusem."},
-        {"name": "list_fields", "desc": "Pola data_type z flagami i agregacjami (z wyszukiwaniem)."},
-        {"name": "query_data", "desc": "Wiersze danych z filtrem OQL (do 200 wierszy)."},
-        {"name": "aggregate_data", "desc": "Agregacje liczone po stronie API na całym zbiorze."},
-        {"name": "export_data", "desc": "Eksport pełnego wyniku do pliku CSV (omija limit 10k)."},
+        {"name": "list_projects", "desc": "List of projects and their available data types."},
+        {"name": "list_crawls", "desc": "Crawls of a project together with their status."},
+        {"name": "list_fields", "desc": "Fields of a data_type, searchable; flags and aggregations on demand."},
+        {"name": "query_data", "desc": "Data rows with an OQL filter (up to 200 rows)."},
+        {"name": "aggregate_data", "desc": "Aggregations computed API-side over the whole data set."},
+        {"name": "export_data", "desc": "Export the full result to a CSV file (bypasses the 10k limit)."},
     ]
 
 
@@ -154,9 +154,9 @@ async def run_selftest() -> dict:
     """Uruchamia mcp_server.py i wykonuje handshake + tools/list po stdio."""
     root = _project_dir()
     if not (root / SERVER_FILE).exists():
-        return {"ok": False, "error": f"Brak pliku {SERVER_FILE} w {root}"}
+        return {"ok": False, "error": f"{SERVER_FILE} not found in {root}"}
     if find_spec("mcp") is None:
-        return {"ok": False, "error": 'Brak pakietu mcp. Zainstaluj: pip install "mcp>=1.2"'}
+        return {"ok": False, "error": 'The mcp package is missing. Install it: pip install "mcp>=1.2"'}
 
     try:
         proc = await asyncio.create_subprocess_exec(
@@ -167,7 +167,7 @@ async def run_selftest() -> dict:
             cwd=str(root),
         )
     except OSError as exc:
-        return {"ok": False, "error": f"Nie udało się uruchomić serwera: {exc}"}
+        return {"ok": False, "error": f"Could not start the server: {exc}"}
 
     def send(obj):
         proc.stdin.write((json.dumps(obj) + "\n").encode())
@@ -188,7 +188,7 @@ async def run_selftest() -> dict:
 
         return {"ok": True, "server": server_info, "tools": tools}
     except asyncio.TimeoutError:
-        return {"ok": False, "error": "Serwer nie odpowiedział w czasie.",
+        return {"ok": False, "error": "The server did not respond in time.",
                 "stderr": await _drain(proc.stderr)}
     except Exception as exc:
         return {"ok": False, "error": f"{type(exc).__name__}: {exc}",
