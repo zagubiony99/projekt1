@@ -17,21 +17,24 @@ _Baza API: https://app.oncrawl.com/api/v2_
 
 | właściwość | wartość |
 |------------|---------|
-| features | {"crawl": true, "log_monitoring": true, "ranking_performance": true} |
-| limits | {"max_urls": 500000} |
+| domain | example.com |
+| start_url | https://example.com |
+| features | ["log_monitoring", "advanced_project"] |
+| limits | {"max_group_count": 40} |
 | log_monitoring_ready | ✅ |
 | log_monitoring_data_ready | ✅ |
 | crawl_config_ids | 1 |
 | crawl_ids | 2 |
-| crawl_over_crawl_ids | 1 |
-| ostatni zakończony crawl | `c1` |
+| crawl_over_crawl_ids | 0 |
+| last_crawl_id | `c1` |
+| crawl użyty do pól | `c1` |
 
 <details><summary>Crawle (status / end_reason)</summary>
 
-| crawl_id | status | end_reason | ready |
-|----------|--------|-----------|:-----:|
-| `c1` | done | success | ✅ |
-| `c0` | crawling |  | — |
+| crawl_id | status | end_reason | created_at |
+|----------|--------|-----------|-----------|
+| `c1` | done | success | 2026-08-01 |
+| `c0` | crawling |  | 2026-08-10 |
 
 </details>
 

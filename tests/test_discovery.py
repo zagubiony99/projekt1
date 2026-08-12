@@ -39,7 +39,28 @@ def test_project_detail_and_flags(capabilities):
     assert p1["id"] == "p1"
     assert p1["log_monitoring_ready"] is True
     assert p1["crawl_config_ids"] == ["cfg1"]
-    assert p1["last_finished_crawl_id"] == "c1"  # nie "c0" które ma status crawling
+    assert p1["domain"] == "example.com"
+    assert p1["last_crawl_id"] == "c1"
+    # crawl do sondowania pól bierze się z last_crawl_id (dane odpytywalne).
+    assert p1["last_finished_crawl_id"] == "c1"
+
+
+def test_crawls_fetched_with_status(capabilities):
+    # /projects/{id} zwraca tylko crawl_ids — szczegóły (status) dociągane z /crawls/{id}.
+    p1 = capabilities["workspaces"][0]["projects"][0]
+    by_id = {c["id"]: c for c in p1["crawls"]}
+    assert by_id["c1"]["status"] == "done"
+    assert by_id["c1"]["end_reason"] == "success"
+    assert by_id["c0"]["status"] == "crawling"
+
+
+def test_candidate_crawl_ids_ordering():
+    from discovery import DiscoveryCollector
+
+    order = DiscoveryCollector._candidate_crawl_ids("c9", ["c1", "c9", "c2"], cap=6)
+    assert order[0] == "c9"                 # last_crawl_id zawsze pierwszy
+    assert order == ["c9", "c1", "c2"]      # bez duplikatu c9
+    assert DiscoveryCollector._candidate_crawl_ids(None, ["a", "b", "c"], cap=2) == ["a", "b"]
 
 
 def test_pages_fields_come_from_api_not_guessed(capabilities):
@@ -100,3 +121,31 @@ def test_json_output_has_no_secret(capabilities):
 def test_targeted_project_mode(session):
     cap = DiscoveryCollector(session, cache=False).collect(project_ids=["p1"])
     assert cap["workspaces"][0]["projects"][0]["id"] == "p1"
+
+
+def test_probe_falls_back_when_last_crawl_not_ready(tmp_path):
+    """last_crawl_id=cA nie ma odpytywalnych stron (404) -> wybór cB."""
+    import httpx
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        path = request.url.path.replace("/api/v2", "")
+        if path == "/projects/pX":
+            return httpx.Response(200, json={"project": {
+                "id": "pX", "crawl_ids": ["cA", "cB"], "last_crawl_id": "cA",
+                "log_monitoring_ready": False,
+            }})
+        if path in ("/crawls/cA", "/crawls/cB"):
+            return httpx.Response(200, json={"crawl": {"id": path.rsplit("/", 1)[1], "status": "done"}})
+        if path == "/data/crawl/cA/pages/fields":
+            return httpx.Response(404, json={"type": "resource_not_found", "message": "crawl nie gotowy"})
+        if path.startswith("/data/crawl/cB/") and path.endswith("/fields"):
+            return httpx.Response(200, json={"fields": [{"name": "url", "type": "string", "can_filter": True}]})
+        return httpx.Response(404, json={"type": "resource_not_found"})
+
+    settings = Settings(token=TOKEN, base_url="https://app.oncrawl.com/api/v2",
+                        cache_dir=tmp_path / ".cache", max_retries=0)
+    with OncrawlSession(settings, transport=httpx.MockTransport(handler)) as s:
+        cap = DiscoveryCollector(s, cache=False).collect(project_ids=["pX"])
+    px = cap["workspaces"][0]["projects"][0]
+    assert px["last_finished_crawl_id"] == "cB"           # przeszło z cA na cB
+    assert px["data_types"]["pages"]["available"] is True

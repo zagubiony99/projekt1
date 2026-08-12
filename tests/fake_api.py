@@ -68,23 +68,30 @@ LOG_METADATA = {
     "week_definition": "monday",
 }
 
+# Realny kształt: pojedynczy klucz "project", crawle jako crawl_ids + last_crawl_id
+# (NIE pełne obiekty). Szczegóły crawla dostępne osobno pod /crawls/{id}.
 PROJECT_P1 = {
     "project": {
         "id": "p1",
         "name": "example.com",
-        "features": {"crawl": True, "log_monitoring": True, "ranking_performance": True},
-        "limits": {"max_urls": 500000},
+        "domain": "example.com",
+        "start_url": "https://example.com",
+        "features": ["log_monitoring", "advanced_project"],
+        "limits": {"max_group_count": 40},
         "log_monitoring_ready": True,
         "log_monitoring_data_ready": True,
         "crawl_config_ids": ["cfg1"],
         "crawl_ids": ["c1", "c0"],
-        "crawl_over_crawl_ids": ["coc1"],
+        "crawl_over_crawl_ids": [],
+        "last_crawl_id": "c1",
+        "last_crawl_created_at": "2026-08-01",
     },
     "crawl_configs": [{"id": "cfg1", "name": "Full crawl", "user_agent": "Oncrawl"}],
-    "crawls": [
-        {"id": "c1", "status": "done", "end_reason": "success", "created_at": "2026-08-01", "ready": True},
-        {"id": "c0", "status": "crawling", "end_reason": None, "created_at": "2026-08-10", "ready": False},
-    ],
+}
+
+CRAWL_DETAILS = {
+    "c1": {"crawl": {"id": "c1", "status": "done", "end_reason": "success", "created_at": "2026-08-01"}},
+    "c0": {"crawl": {"id": "c0", "status": "crawling", "end_reason": None, "created_at": "2026-08-10"}},
 }
 
 
@@ -107,6 +114,8 @@ def handler(request: httpx.Request) -> httpx.Response:
         ),
         "/projects/p1": lambda: httpx.Response(200, json=PROJECT_P1),
         "/projects/p2": lambda: _err(403, "forbidden", "unauthorized", "Brak dostępu do projektu"),
+        "/crawls/c1": lambda: httpx.Response(200, json=CRAWL_DETAILS["c1"]),
+        "/crawls/c0": lambda: httpx.Response(200, json=CRAWL_DETAILS["c0"]),
         "/data/crawl/c1/pages/fields": lambda: httpx.Response(200, json=PAGES_FIELDS),
         "/data/crawl/c1/links/fields": lambda: httpx.Response(200, json=LINKS_FIELDS),
         "/data/crawl/c1/clusters/fields": lambda: _err(

@@ -27,7 +27,7 @@ import logging
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Callable, Iterable
+from typing import Any
 
 from oncrawl.config import MissingTokenError, load_settings
 from oncrawl.errors import (
@@ -42,10 +42,6 @@ logger = logging.getLogger("discovery")
 
 # Data-type'y crawla, o których pola pytamy (dopisując /fields do ścieżki danych).
 CRAWL_DATA_TYPES = ["pages", "links", "clusters", "structured_data"]
-
-# Statusy crawla, które traktujemy jako "zakończony i odpytywalny".
-FINISHED_CRAWL_STATES = {"done", "archived", "finished", "success", "live"}
-
 
 # --------------------------------------------------------------------------- #
 # Pomocnicze wyciąganie kształtów odpowiedzi (API bywa opakowane różnie)
@@ -75,28 +71,6 @@ def _fields_from(data: Any) -> list[dict]:
     """Normalizuje odpowiedź /fields do listy dictów pól."""
     fields = _as_list(data, "fields", "columns")
     return [f for f in fields if isinstance(f, dict)]
-
-
-def _pick_last_finished_crawl(crawls: Iterable[dict]) -> dict | None:
-    """Wybiera najświeższy zakończony crawl, po którym da się odpytać dane."""
-    def sort_key(c: dict):
-        for k in ("ended_at", "created_at", "date", "updated_at", "id"):
-            if c.get(k) is not None:
-                return str(c[k])
-        return ""
-
-    candidates = [
-        c
-        for c in crawls
-        if isinstance(c, dict)
-        and (
-            str(c.get("status", "")).lower() in FINISHED_CRAWL_STATES
-            or c.get("ready") is True
-        )
-    ]
-    if not candidates:
-        return None
-    return sorted(candidates, key=sort_key, reverse=True)[0]
 
 
 # --------------------------------------------------------------------------- #
@@ -202,63 +176,115 @@ class DiscoveryCollector:
             entry["error"] = f"network: {exc}"
             return entry
 
+        # Odpowiedź /projects/{id} ma jeden klucz najwyższego poziomu: "project".
+        # Crawle NIE są tu jako pełne obiekty — jest tylko lista crawl_ids oraz
+        # last_crawl_id. Szczegóły crawli dociągamy osobno (GET /crawls/{id}).
         project = _as_obj(data, "project")
         crawl_configs = _as_list(data, "crawl_configs") or _as_list(project, "crawl_configs")
-        crawls = _as_list(data, "crawls") or _as_list(project, "crawls")
 
         entry["name"] = project.get("name") or entry["name"]
+        entry["domain"] = project.get("domain")
+        entry["start_url"] = project.get("start_url")
         entry["features"] = project.get("features")
         entry["limits"] = project.get("limits")
         entry["log_monitoring_ready"] = project.get("log_monitoring_ready")
         entry["log_monitoring_data_ready"] = project.get("log_monitoring_data_ready")
-        entry["crawl_config_ids"] = project.get("crawl_config_ids") or [
-            c.get("id") for c in crawl_configs if isinstance(c, dict)
-        ]
-        entry["crawl_ids"] = project.get("crawl_ids") or [
-            c.get("id") for c in crawls if isinstance(c, dict)
-        ]
-        entry["crawl_over_crawl_ids"] = project.get("crawl_over_crawl_ids")
+        entry["crawl_config_ids"] = project.get("crawl_config_ids") or []
+        entry["crawl_ids"] = project.get("crawl_ids") or []
+        entry["crawl_over_crawl_ids"] = project.get("crawl_over_crawl_ids") or []
+        entry["last_crawl_id"] = project.get("last_crawl_id")
+        entry["last_crawl_created_at"] = project.get("last_crawl_created_at")
 
         entry["crawl_configs"] = [
-            {
-                "id": c.get("id"),
-                "name": c.get("name"),
-                "user_agent": c.get("user_agent"),
-            }
+            {"id": c.get("id"), "name": c.get("name"), "user_agent": c.get("user_agent")}
             for c in crawl_configs
             if isinstance(c, dict)
         ]
-        entry["crawls"] = [
-            {
-                "id": c.get("id"),
-                "status": c.get("status"),
-                "end_reason": c.get("end_reason"),
-                "created_at": c.get("created_at"),
-                "ready": c.get("ready"),
-            }
-            for c in crawls
-            if isinstance(c, dict)
-        ]
 
-        last = _pick_last_finished_crawl(crawls)
-        entry["last_finished_crawl_id"] = last.get("id") if last else None
-        entry["data_types"] = self._collect_crawl_data_types(entry["last_finished_crawl_id"])
+        # Dociągnij realne crawle (status/end_reason wg specyfikacji Oncrawl).
+        entry["crawls"], entry["crawls_truncated"] = self._collect_crawls(entry["crawl_ids"])
+
+        # Wybór crawla do sondowania pól: last_crawl_id, potem crawl_ids (od
+        # najnowszego), aż /pages/fields odpowie 200.
+        candidates = self._candidate_crawl_ids(entry["last_crawl_id"], entry["crawl_ids"])
+        probed_id, data_types = self._collect_crawl_data_types(candidates)
+        entry["last_finished_crawl_id"] = probed_id  # crawl, po którym pobrano pola
+        entry["data_types"] = data_types
+
         entry["log_monitoring"] = self._collect_log_monitoring(project_id, project)
         entry["ranking_performance"] = self._probe_fields(
             f"/data/project/{project_id}/ranking_performance/fields"
         )
         return entry
 
-    def _collect_crawl_data_types(self, crawl_id: str | None) -> dict:
-        if not crawl_id:
-            return {
-                dt: {"available": False, "reason": "brak zakończonego crawla", "fields": []}
+    @staticmethod
+    def _candidate_crawl_ids(
+        last_crawl_id: str | None, crawl_ids: list[str], *, cap: int = 6
+    ) -> list[str]:
+        order: list[str] = []
+        if last_crawl_id:
+            order.append(last_crawl_id)
+        for cid in crawl_ids or []:
+            if cid and cid not in order:
+                order.append(cid)
+        return order[:cap]
+
+    def _collect_crawls(self, crawl_ids: list[str], *, cap: int = 15) -> tuple[list[dict], bool]:
+        """Dociąga szczegóły crawli (GET /crawls/{id}) do selektora w explorerze."""
+        out: list[dict] = []
+        ids = crawl_ids or []
+        for cid in ids[:cap]:
+            try:
+                data = self._get(f"/crawls/{cid}")
+            except OncrawlAPIError as exc:
+                out.append({"id": cid, "status": None, "error": exc.short_reason()})
+                continue
+            except OncrawlNetworkError as exc:
+                out.append({"id": cid, "status": None, "error": f"network: {exc}"})
+                continue
+            crawl = _as_obj(data, "crawl")
+            out.append(
+                {
+                    "id": crawl.get("id") or cid,
+                    "status": crawl.get("status"),
+                    "end_reason": crawl.get("end_reason"),
+                    "created_at": crawl.get("created_at"),
+                }
+            )
+        return out, len(ids) > cap
+
+    def _collect_crawl_data_types(self, candidate_ids: list[str]) -> tuple[str | None, dict]:
+        """Znajduje pierwszy crawl z odpytywalnymi danymi i sonduje wszystkie data_type."""
+        if not candidate_ids:
+            empty = {
+                dt: {"available": False, "reason": "brak crawli w projekcie", "fields": []}
                 for dt in CRAWL_DATA_TYPES
             }
-        out = {}
+            return None, empty
+
+        chosen: str | None = None
+        pages_probe: dict | None = None
+        for cid in candidate_ids:
+            probe = self._probe_fields(f"/data/crawl/{cid}/pages/fields")
+            if probe["available"]:
+                chosen, pages_probe = cid, probe
+                break
+
+        if chosen is None:
+            # Żaden crawl nie ma odpytywalnych stron — raportujemy powód per data_type
+            # na najnowszym kandydacie (najczęściej ten sam powód: crawl nie gotowy).
+            cid = candidate_ids[0]
+            return cid, {
+                dt: self._probe_fields(f"/data/crawl/{cid}/{dt}/fields")
+                for dt in CRAWL_DATA_TYPES
+            }
+
+        out = {"pages": pages_probe}
         for dt in CRAWL_DATA_TYPES:
-            out[dt] = self._probe_fields(f"/data/crawl/{crawl_id}/{dt}/fields")
-        return out
+            if dt == "pages":
+                continue
+            out[dt] = self._probe_fields(f"/data/crawl/{chosen}/{dt}/fields")
+        return chosen, out
 
     def _collect_log_monitoring(self, project_id: str, project: dict) -> dict:
         ready = project.get("log_monitoring_ready")
@@ -396,6 +422,8 @@ def _project_section(proj: dict) -> str:
     lm_ready = proj.get("log_monitoring_ready")
     out.append("| właściwość | wartość |")
     out.append("|------------|---------|")
+    out.append(f"| domain | {proj.get('domain') or '—'} |")
+    out.append(f"| start_url | {proj.get('start_url') or '—'} |")
     out.append(f"| features | {_compact(proj.get('features'))} |")
     out.append(f"| limits | {_compact(proj.get('limits'))} |")
     out.append(f"| log_monitoring_ready | {_bool_cell(lm_ready)} |")
@@ -403,17 +431,19 @@ def _project_section(proj: dict) -> str:
     out.append(f"| crawl_config_ids | {_count(proj.get('crawl_config_ids'))} |")
     out.append(f"| crawl_ids | {_count(proj.get('crawl_ids'))} |")
     out.append(f"| crawl_over_crawl_ids | {_count(proj.get('crawl_over_crawl_ids'))} |")
-    out.append(f"| ostatni zakończony crawl | `{proj.get('last_finished_crawl_id')}` |")
+    out.append(f"| last_crawl_id | `{proj.get('last_crawl_id')}` |")
+    out.append(f"| crawl użyty do pól | `{proj.get('last_finished_crawl_id')}` |")
     out.append("")
 
     crawls = proj.get("crawls") or []
     if crawls:
-        out.append("<details><summary>Crawle (status / end_reason)</summary>\n")
-        out.append("| crawl_id | status | end_reason | ready |")
-        out.append("|----------|--------|-----------|:-----:|")
+        extra = " (pierwsze 15)" if proj.get("crawls_truncated") else ""
+        out.append(f"<details><summary>Crawle{extra} (status / end_reason)</summary>\n")
+        out.append("| crawl_id | status | end_reason | created_at |")
+        out.append("|----------|--------|-----------|-----------|")
         for c in crawls[:20]:
             out.append(
-                f"| `{c.get('id')}` | {c.get('status')} | {c.get('end_reason') or ''} | {_bool_cell(c.get('ready'))} |"
+                f"| `{c.get('id')}` | {c.get('status') or ''} | {c.get('end_reason') or ''} | {c.get('created_at') or ''} |"
             )
         out.append("\n</details>\n")
 

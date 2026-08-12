@@ -71,6 +71,11 @@ Każda tabela pól ma kolumny: nazwa, typ, arity, **filtrowalne** (`can_filter`)
 **Nic nie jest zgadywane** — listy pól pochodzą wyłącznie z odpowiedzi `/fields`.
 Wszystko, co budujemy w Etapach 2–3, opiera się o `capabilities.json`.
 
+> Uwaga o crawlach: `GET /projects/{id}` zwraca tylko `crawl_ids` + `last_crawl_id`
+> (nie pełne obiekty crawli). Discovery dociąga szczegóły przez `GET /crawls/{id}`
+> i sonduje pola crawla zaczynając od `last_crawl_id`; jeśli jego dane nie są jeszcze
+> odpytywalne, przechodzi po `crawl_ids` (od najnowszego) aż `/pages/fields` odpowie 200.
+
 ### Graceful degradation
 
 Brak uprawnień, brak feature'a w planie albo wyczerpane dzienne quota **nie wywalają
