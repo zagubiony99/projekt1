@@ -69,6 +69,26 @@
   .recipe .rcols code { background:#171d2b; border:1px solid var(--line); border-radius:4px;
                         padding:1px 5px; font-size:11px; color:var(--muted); margin-right:3px; }
   #recipeBtn { background:#2a2140; border-color:#4b3a6e; }
+  #mcpBtn { background:#14303a; border-color:#2a6070; }
+
+  /* Panel MCP */
+  .mcp-status { padding:10px 12px; border-radius:8px; margin-bottom:12px; font-size:13px; }
+  .mcp-status.ok { background:#12301d; border:1px solid #2c6b41; color:#8fe0ad; }
+  .mcp-status.warn { background:#3a2417; border:1px solid #7a4a26; color:#f0c088; }
+  .mcp-req { width:100%; border-collapse:collapse; font-size:13px; margin-bottom:12px; }
+  .mcp-req td { padding:5px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+  .mcp-req td:first-child { width:24px; }
+  .mcp-actions { display:flex; align-items:center; gap:10px; margin:14px 0 8px; flex-wrap:wrap; }
+  .mcp-result { background:#0d1220; border:1px solid var(--line); border-radius:8px; padding:10px;
+                font-size:12px; white-space:pre-wrap; margin:0 0 12px; max-height:220px; overflow:auto; }
+  .mcp-h { font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--accent);
+           border-bottom:1px solid var(--line); padding-bottom:4px; margin:18px 0 8px; }
+  .mcp-client { border:1px solid var(--line); border-radius:8px; padding:10px 12px; margin-bottom:8px; background:#0d1220; }
+  .mcp-client-head { display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .mcp-conf { position:relative; }
+  .mcp-conf pre { background:#171d2b; border:1px solid var(--line); border-radius:6px; padding:8px 10px;
+                  font-size:11.5px; overflow-x:auto; margin:0; }
+  .mcp-conf button { position:absolute; top:4px; right:4px; background:#0d1220; border:1px solid var(--line); border-radius:4px; }
 
   .tabulator { background:var(--bg); border:none; font-size:13px; max-width:100%; }
   .tabulator .tabulator-row { background:var(--panel); color:var(--fg); border-color:var(--line); }
@@ -96,6 +116,7 @@
   <label>Project <select id="projectSel"></select></label>
   <label id="crawlWrap">Crawl <select id="crawlSel"></select></label>
   <span class="grow" style="flex:1"></span>
+  <button id="mcpBtn" onclick="app.openMcp()" title="MCP server status & setup">🔌 MCP</button>
 </header>
 
 <div id="banner" class="banner"></div>
@@ -161,6 +182,16 @@
     </div>
     <input id="recipeSearch" placeholder="search recipes…" oninput="app.renderRecipes(this.value)" />
     <div id="recipeList"></div>
+  </div>
+</div>
+
+<div id="mcpModal" class="modal" onclick="if(event.target===this)app.closeMcp()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>🔌 MCP server <span class="muted" style="font-weight:400;font-size:13px">— expose this data as tools for an AI assistant</span></h2>
+      <button class="link" style="font-size:20px" onclick="app.closeMcp()">✕</button>
+    </div>
+    <div id="mcpBody"><p class="muted">Loading…</p></div>
   </div>
 </div>
 
@@ -288,6 +319,79 @@ const app = {
 
   openRecipes(){ document.getElementById("recipeModal").style.display="flex"; document.getElementById("recipeSearch").focus(); },
   closeRecipes(){ document.getElementById("recipeModal").style.display="none"; },
+
+  // --- panel MCP -------------------------------------------------------
+  async openMcp() {
+    document.getElementById("mcpModal").style.display = "flex";
+    const box = document.getElementById("mcpBody");
+    box.innerHTML = '<p class="muted">Loading…</p>';
+    let s;
+    try { s = await fetch("/api/mcp/status").then(x=>x.json()); }
+    catch(e) { box.innerHTML = `<p class="muted">Could not load MCP status: ${escapeHtml(e.message)}</p>`; return; }
+    this.mcpStatus = s;
+    box.innerHTML = `
+      <div class="mcp-status ${s.ready?'ok':'warn'}">
+        ${s.ready ? "✅ Everything needed is in place." : "⚠️ Some requirements are missing (see below)."}
+      </div>
+      <table class="mcp-req">
+        ${s.requirements.map(r=>`<tr>
+            <td>${r.ok?"✅":"❌"}</td><td>${escapeHtml(r.label)}</td>
+            <td class="muted">${r.ok?"":`<code>${escapeHtml(r.hint)}</code>`}</td></tr>`).join("")}
+      </table>
+      <div class="mcp-actions">
+        <button class="primary" onclick="app.runMcpSelftest()">▶ Run self-test</button>
+        <span class="muted" style="font-size:12px">Starts the server and performs a real MCP handshake — no client needed.</span>
+      </div>
+      <pre id="mcpResult" class="mcp-result" style="display:none"></pre>
+
+      <h3 class="mcp-h">Tools exposed</h3>
+      <table class="mcp-req">
+        ${s.tools.map(t=>`<tr><td><code>${escapeHtml(t.name)}</code></td><td class="muted">${escapeHtml(t.desc)}</td></tr>`).join("")}
+      </table>
+
+      <h3 class="mcp-h">Client setup</h3>
+      <p class="muted" style="font-size:12px;margin:0 0 10px">
+        Project folder: <code>${escapeHtml(s.project_dir)}</code><br>
+        The token is read from <code>.env</code> — it never goes into these config files.
+      </p>
+      ${s.clients.map((c,i)=>`
+        <div class="mcp-client">
+          <div class="mcp-client-head">
+            <b>${escapeHtml(c.name)}</b>
+            <span class="muted" style="font-size:12px">${escapeHtml(c.path)}</span>
+          </div>
+          <ol class="muted" style="font-size:12px;margin:6px 0 8px 18px">
+            ${c.steps.map(st=>`<li>${escapeHtml(st)}</li>`).join("")}
+          </ol>
+          <div class="mcp-conf">
+            <pre id="mcpconf${i}">${escapeHtml(c.config)}</pre>
+            <button class="link" onclick="app.copyMcp(${i})">📋 copy</button>
+          </div>
+          <div class="muted" style="font-size:11px;margin-top:4px">${escapeHtml(c.note)}</div>
+        </div>`).join("")}
+    `;
+  },
+
+  async runMcpSelftest() {
+    const out = document.getElementById("mcpResult");
+    out.style.display = "block";
+    out.textContent = "Running…";
+    try {
+      const r = await fetch("/api/mcp/selftest", {method:"POST"}).then(x=>x.json());
+      out.textContent = r.ok
+        ? `✅ Handshake OK\nserver: ${r.server.name} (MCP ${r.server.version||"?"})\ntools (${r.tools.length}): ${r.tools.join(", ")}\n\nThe server works. Point your MCP client at it using the config below.`
+        : `❌ ${r.error}\n${r.stderr||""}`;
+    } catch(e) { out.textContent = "❌ " + e.message; }
+  },
+
+  copyMcp(i) {
+    const text = document.getElementById("mcpconf"+i).textContent;
+    navigator.clipboard.writeText(text).then(
+      ()=>this.banner("Config copied to clipboard."),
+      ()=>this.banner("Copy failed — select the text manually."));
+  },
+
+  closeMcp(){ document.getElementById("mcpModal").style.display="none"; },
 
   renderColumns() {
     const box = document.getElementById("cols");

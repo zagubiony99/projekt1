@@ -42,6 +42,7 @@ from oncrawl.client import (
     logs_events_path,
     ranking_path,
 )
+from oncrawl import mcp_status as mcp_status_mod
 from oncrawl.config import load_settings
 from oncrawl.errors import OncrawlAPIError, OncrawlError, OncrawlNetworkError
 from oncrawl.oql import OQLError, validate_tree
@@ -181,6 +182,17 @@ def create_app(
             "crawls": proj.get("crawls", []),
             "last_finished_crawl_id": proj.get("last_finished_crawl_id"),
         }
+
+    # --- MCP: status, konfiguracja, self-test ---------------------------
+    @app.get("/api/mcp/status")
+    def mcp_status() -> dict:
+        """Czy MCP jest gotowy + gotowe wpisy konfiguracyjne per klient."""
+        return mcp_status_mod.status()
+
+    @app.post("/api/mcp/selftest")
+    async def mcp_selftest() -> dict:
+        """Uruchamia serwer MCP i sprawdza handshake — bez żadnego klienta."""
+        return await mcp_status_mod.run_selftest()
 
     @app.get("/api/recipes")
     def recipes(project_id: str, data_type: str) -> dict:
