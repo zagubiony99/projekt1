@@ -57,7 +57,33 @@ class FieldSet:
         return f.get("type") if f else None
 
     def default_display_fields(self, limit: int = 12) -> list[str]:
-        return [n for n in self._by_name if self.can_display(n)][:limit]
+        """Sensowne kolumny startowe: najpierw popularne, potem reszta.
+
+        Bez tego domyślnie wpadałyby pierwsze alfabetycznie (rzadkie, puste)
+        pola i tabela wyglądałaby na pustą.
+        """
+        chosen = [n for n in COMMON_DISPLAY_PRIORITY if self.can_display(n)]
+        for n in self._by_name:
+            if len(chosen) >= limit:
+                break
+            if self.can_display(n) and n not in chosen:
+                chosen.append(n)
+        return chosen[:limit]
+
+
+# Popularne, „gęste" pola pokazywane domyślnie (crawl pages + logi). Bierzemy
+# tylko te, które faktycznie istnieją w danym data_type.
+COMMON_DISPLAY_PRIORITY = [
+    # crawl / pages
+    "url", "status_code", "status_code_range", "title", "title_length",
+    "meta_description", "description_length", "h1", "depth", "indexable",
+    "inrank", "word_count", "fetch_date", "load_time", "nb_inlinks",
+    "internal_outlinks", "seo_visits", "googlebot_hits",
+    # logi
+    "event_url", "event_status_code", "event_status_code_range",
+    "event_bot_kind", "event_bot_name", "event_day", "event_urlpath",
+    "event_visit_device",
+]
 
 
 class Capabilities:

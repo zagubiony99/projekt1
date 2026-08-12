@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,52 +10,53 @@
   * { box-sizing:border-box; }
   body { margin:0; font:14px/1.4 system-ui,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--fg); }
   header { display:flex; align-items:center; gap:16px; padding:10px 16px; background:var(--panel); border-bottom:1px solid var(--line); }
-  header h1 { font-size:16px; margin:0; font-weight:600; }
-  header .grow { flex:1; }
+  header h1 { font-size:16px; margin:0; font-weight:600; white-space:nowrap; }
   select, input, button { background:#0d1220; color:var(--fg); border:1px solid var(--line); border-radius:6px; padding:6px 8px; font:inherit; }
   button { cursor:pointer; }
   button:hover { border-color:var(--accent); }
   button.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
   button.ok { background:var(--accent2); border-color:var(--accent2); color:#04210f; }
   button.link { background:none; border:none; color:var(--muted); padding:2px 4px; }
-  .tabs { display:flex; gap:4px; padding:8px 16px 0; background:var(--panel); }
+  .tabs { display:flex; gap:4px; padding:8px 16px 0; background:var(--panel); flex-wrap:wrap; }
   .tab { padding:8px 14px; border:1px solid var(--line); border-bottom:none; border-radius:8px 8px 0 0; background:#0d1220; color:var(--muted); cursor:pointer; }
   .tab.active { background:var(--bg); color:var(--fg); font-weight:600; }
   .tab.disabled { opacity:.35; cursor:not-allowed; }
-  .wrap { display:grid; grid-template-columns:300px 1fr; gap:0; height:calc(100vh - 108px); }
+  .wrap { display:grid; grid-template-columns:320px 1fr; height:calc(100vh - 108px); }
   aside { border-right:1px solid var(--line); padding:12px; overflow:auto; background:var(--panel); }
   main { display:flex; flex-direction:column; min-width:0; }
   .toolbar { display:flex; align-items:center; gap:8px; padding:10px 16px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
   .toolbar .grow { flex:1; }
-  #table { flex:1; }
-  .section { margin-bottom:16px; }
+  #table { flex:1; min-height:0; }
+  .section { margin-bottom:18px; }
   .section h3 { font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin:0 0 8px; }
+  .search { width:100%; margin-bottom:8px; }
   .filter-row { border:1px solid var(--line); border-radius:8px; padding:8px; margin-bottom:8px; background:#0d1220; }
-  .filter-row .fname { font-weight:600; font-size:13px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center; }
+  .filter-row .fname { font-weight:600; font-size:13px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center; gap:6px; }
   .filter-row .fname .ftype { color:var(--muted); font-weight:400; font-size:11px; }
   .filter-row .controls { display:flex; gap:6px; flex-wrap:wrap; }
-  .filter-row input, .filter-row select { flex:1; min-width:80px; }
-  .cols label { display:block; padding:2px 0; font-size:13px; }
+  .filter-row input, .filter-row select { flex:1; min-width:70px; }
+  .cols label { display:block; padding:2px 0; font-size:13px; cursor:pointer; }
+  .cols label .ftype { color:var(--muted); font-size:11px; }
   .muted { color:var(--muted); }
-  .pill { background:#0d1220; border:1px solid var(--line); border-radius:20px; padding:3px 10px; font-size:12px; }
-  .status-code-ok { color:var(--accent2); }
+  .pill { background:#0d1220; border:1px solid var(--line); border-radius:20px; padding:3px 10px; font-size:12px; white-space:nowrap; }
   #presetList { display:flex; flex-direction:column; gap:4px; }
   #presetList .p { display:flex; justify-content:space-between; align-items:center; gap:6px; }
   .banner { background:#3a2417; border:1px solid #7a4a26; color:#f0c088; padding:8px 16px; font-size:13px; display:none; }
   .banner.show { display:block; }
+  .count { font-size:11px; color:var(--muted); margin-bottom:6px; }
   .tabulator { background:var(--bg); border:none; font-size:13px; }
   .tabulator .tabulator-header, .tabulator .tabulator-col, .tabulator .tabulator-row { background:var(--panel); color:var(--fg); border-color:var(--line); }
   .tabulator-row.tabulator-row-even { background:#131a28; }
-  .tabulator .tabulator-col.sortable:hover { cursor:pointer; color:var(--accent); }
+  .tabulator .tabulator-col.sortable .tabulator-col-title { cursor:pointer; }
+  .tabulator .tabulator-col.sortable:hover { color:var(--accent); }
 </style>
 </head>
 <body>
 <header>
   <h1>🕷️ Oncrawl API Explorer</h1>
-  <label>Projekt <select id="projectSel"></select></label>
+  <label>Project <select id="projectSel"></select></label>
   <label id="crawlWrap">Crawl <select id="crawlSel"></select></label>
-  <span class="grow"></span>
-  <span id="whoami" class="muted"></span>
+  <span class="grow" style="flex:1"></span>
 </header>
 
 <div id="banner" class="banner"></div>
@@ -64,21 +65,24 @@
 <div class="wrap">
   <aside>
     <div class="section">
-      <h3>Kolumny</h3>
+      <h3>Columns</h3>
+      <input id="colSearch" class="search" placeholder="filter fields…" oninput="app.filterList('cols', this.value)" />
       <div style="display:flex; gap:6px; margin-bottom:6px;">
-        <button class="link" onclick="app.allColumns(true)">wszystkie</button>
-        <button class="link" onclick="app.allColumns(false)">żadne</button>
+        <button class="link" onclick="app.allColumns(true)">select all</button>
+        <button class="link" onclick="app.allColumns(false)">clear</button>
       </div>
+      <div id="colCount" class="count"></div>
       <div id="cols" class="cols"></div>
     </div>
     <div class="section">
-      <h3>Filtry → OQL</h3>
+      <h3>Filters → OQL</h3>
+      <input id="filterSearch" class="search" placeholder="filter fields…" oninput="app.filterList('filters', this.value)" />
       <div id="filters"></div>
     </div>
     <div class="section">
-      <h3>Presety</h3>
+      <h3>Saved presets</h3>
       <div style="display:flex; gap:6px; margin-bottom:6px;">
-        <input id="presetName" placeholder="nazwa presetu" style="flex:1" />
+        <input id="presetName" placeholder="preset name" style="flex:1" />
         <button onclick="app.savePreset()">💾</button>
       </div>
       <div id="presetList"></div>
@@ -87,15 +91,17 @@
 
   <main>
     <div class="toolbar">
-      <button class="primary" onclick="app.run()">▶ Uruchom</button>
+      <button class="primary" onclick="app.run()">▶ Run</button>
       <span class="grow"></span>
       <span class="pill" id="totalHits">—</span>
-      <button onclick="app.prevPage()">◀</button>
+      <button onclick="app.prevPage()" title="previous page">◀</button>
       <span id="pageInfo" class="muted">1</span>
-      <button onclick="app.nextPage()">▶</button>
-      <select id="pageSize" onchange="app.setPageSize(this.value)">
-        <option>50</option><option selected>100</option><option>250</option><option>500</option>
-      </select>
+      <button onclick="app.nextPage()" title="next page">▶</button>
+      <label class="muted">rows
+        <select id="pageSize" onchange="app.setPageSize(this.value)">
+          <option>50</option><option selected>100</option><option>250</option><option>500</option>
+        </select>
+      </label>
       <span style="width:12px"></span>
       <button class="ok" onclick="app.export('csv')">⬇ CSV</button>
       <button class="ok" onclick="app.export('xlsx')">⬇ XLSX</button>
@@ -108,6 +114,9 @@
 <script>
 const DATA_TYPES = ["pages","links","clusters","structured_data","logs","ranking_performance"];
 const NEEDS_CRAWL = new Set(["pages","links","clusters","structured_data"]);
+const NUMERIC_TYPES = new Set(["int","integer","natural","long","float","double","decimal","number","percentage"]);
+const DATE_TYPES = new Set(["date","datetime"]);
+const BOOL_TYPES = new Set(["bool","boolean"]);
 
 const app = {
   projects: [], project: null, crawls: [], crawlId: null,
@@ -117,7 +126,7 @@ const app = {
 
   async init() {
     const r = await fetch("/api/projects").then(x=>x.json()).catch(()=>null);
-    if (!r) { this.banner("Nie mogę pobrać /api/projects. Czy backend działa i istnieje capabilities.json?"); return; }
+    if (!r) { this.banner("Could not load /api/projects. Is the backend running and capabilities.json present?"); return; }
     this.projects = r.projects || [];
     const sel = document.getElementById("projectSel");
     sel.innerHTML = this.projects.map(p =>
@@ -130,23 +139,21 @@ const app = {
 
   banner(msg) {
     const b = document.getElementById("banner");
-    b.textContent = msg; b.classList.toggle("show", !!msg);
+    b.textContent = msg || ""; b.classList.toggle("show", !!msg);
   },
 
   async selectProject(pid) {
     this.project = this.projects.find(p=>p.id===pid);
-    this.banner(this.project && this.project.error ? `Projekt: ${this.project.error}` : "");
-    // crawle
+    this.banner(this.project && this.project.error ? `Project: ${this.project.error}` : "");
     const cr = await fetch(`/api/projects/${pid}/crawls`).then(x=>x.json()).catch(()=>({crawls:[]}));
     this.crawls = cr.crawls || [];
     const csel = document.getElementById("crawlSel");
     csel.innerHTML = this.crawls.map(c =>
-      `<option value="${c.id}">${c.id} · ${c.status||""}${c.end_reason?" / "+c.end_reason:""}</option>`).join("");
+      `<option value="${c.id}">${c.id}${c.status?" · "+c.status:""}${c.end_reason?" / "+c.end_reason:""}</option>`).join("");
     this.crawlId = cr.last_finished_crawl_id || (this.crawls[0]||{}).id || null;
     if (this.crawlId) csel.value = this.crawlId;
     csel.onchange = () => { this.crawlId = csel.value; this.run(); };
     this.renderTabs();
-    // pierwsza dostępna zakładka
     const avail = this.project.available_data_types || {};
     const first = DATA_TYPES.find(dt => avail[dt]);
     if (first) await this.selectDataType(first);
@@ -175,12 +182,18 @@ const app = {
 
   renderColumns() {
     const box = document.getElementById("cols");
-    box.innerHTML = this.schema.filter(f=>f.can_display).map(f =>
-      `<label><input type="checkbox" ${this.selected.has(f.name)?"checked":""}
-         onchange="app.toggleColumn('${f.name}',this.checked)"> ${escapeHtml(f.name)}
-         <span class="muted">${f.type||""}</span></label>`).join("");
+    const displayable = this.schema.filter(f=>f.can_display);
+    document.getElementById("colCount").textContent = `${displayable.length} fields · ${this.selected.size} shown`;
+    box.innerHTML = displayable.map(f =>
+      `<label data-fname="${escapeHtml(f.name.toLowerCase())}"><input type="checkbox" ${this.selected.has(f.name)?"checked":""}
+         onchange="app.toggleColumn('${escapeAttr(f.name)}',this.checked)"> ${escapeHtml(f.name)}
+         <span class="ftype">${f.type||""}</span></label>`).join("");
   },
-  toggleColumn(name, on) { on ? this.selected.add(name) : this.selected.delete(name); },
+  toggleColumn(name, on) {
+    on ? this.selected.add(name) : this.selected.delete(name);
+    document.getElementById("colCount").textContent =
+      `${this.schema.filter(f=>f.can_display).length} fields · ${this.selected.size} shown`;
+  },
   allColumns(on) {
     this.selected = new Set(on ? this.schema.filter(f=>f.can_display).map(f=>f.name) : []);
     this.renderColumns();
@@ -188,75 +201,77 @@ const app = {
 
   renderFilters() {
     const box = document.getElementById("filters");
-    const filterable = this.schema.filter(f=>f.can_filter);
-    box.innerHTML = filterable.map(f => this.filterControl(f)).join("");
+    box.innerHTML = this.schema.filter(f=>f.can_filter).map(f => this.filterControl(f)).join("");
   },
 
   filterControl(f) {
-    const id = "flt_"+f.name;
     const t = (f.type||"string").toLowerCase();
     const hasEnum = Array.isArray(f.values) && f.values.length;
     let controls = "";
     if (hasEnum) {
       const opts = f.values.map(v=>`<option value="${escapeHtml(String(v))}">${escapeHtml(String(v))}</option>`).join("");
-      controls = `<select multiple size="${Math.min(4,f.values.length)}" data-role="enum" data-field="${f.name}" style="flex:1">${opts}</select>`;
-    } else if (["int","float","number","double","long"].includes(t)) {
-      controls = `<input type="number" placeholder="min" data-role="min" data-field="${f.name}">
-                  <input type="number" placeholder="max" data-role="max" data-field="${f.name}">`;
-    } else if (t==="bool"||t==="boolean") {
-      controls = `<select data-role="bool" data-field="${f.name}"><option value="">(dowolne)</option>
+      controls = `<select multiple size="${Math.min(4,f.values.length)}" data-role="enum" data-field="${escapeAttr(f.name)}" style="flex:1">${opts}</select>`;
+    } else if (NUMERIC_TYPES.has(t)) {
+      controls = `<input type="number" step="any" placeholder="min" data-role="min" data-field="${escapeAttr(f.name)}">
+                  <input type="number" step="any" placeholder="max" data-role="max" data-field="${escapeAttr(f.name)}">`;
+    } else if (BOOL_TYPES.has(t)) {
+      controls = `<select data-role="bool" data-field="${escapeAttr(f.name)}"><option value="">(any)</option>
                   <option value="true">true</option><option value="false">false</option></select>`;
-    } else if (t==="date"||t==="datetime") {
-      controls = `<input type="date" data-role="dmin" data-field="${f.name}">
-                  <input type="date" data-role="dmax" data-field="${f.name}">`;
+    } else if (DATE_TYPES.has(t)) {
+      controls = `<input type="date" data-role="dmin" data-field="${escapeAttr(f.name)}">
+                  <input type="date" data-role="dmax" data-field="${escapeAttr(f.name)}">`;
     } else {
-      controls = `<select data-role="op" data-field="${f.name}">
+      controls = `<select data-role="op" data-field="${escapeAttr(f.name)}">
                     <option value="contains">contains</option><option value="equals">equals</option>
-                    <option value="startswith">startswith</option><option value="endswith">endswith</option>
-                    <option value="has_value">ma wartość</option><option value="has_no_value">brak wartości</option>
+                    <option value="startswith">starts with</option><option value="endswith">ends with</option>
+                    <option value="has_value">has value</option><option value="has_no_value">no value</option>
                   </select>
-                  <input type="text" placeholder="wartość" data-role="val" data-field="${f.name}">
-                  <label class="muted" style="font-size:11px"><input type="checkbox" data-role="ci" data-field="${f.name}"> ci</label>`;
+                  <input type="text" placeholder="value" data-role="val" data-field="${escapeAttr(f.name)}">
+                  <label class="muted" style="font-size:11px"><input type="checkbox" data-role="ci" data-field="${escapeAttr(f.name)}"> ci</label>`;
     }
-    return `<div class="filter-row" id="${id}">
+    return `<div class="filter-row" data-fname="${escapeHtml(f.name.toLowerCase())}">
       <div class="fname">${escapeHtml(f.name)} <span class="ftype">${f.type||""}</span></div>
       <div class="controls">${controls}</div></div>`;
+  },
+
+  filterList(which, term) {
+    term = (term||"").toLowerCase();
+    const sel = which === "cols" ? "#cols label" : "#filters .filter-row";
+    document.querySelectorAll(sel).forEach(el => {
+      const name = el.getAttribute("data-fname") || "";
+      el.style.display = name.includes(term) ? "" : "none";
+    });
   },
 
   buildOQL() {
     const leaves = [];
     const q = sel => Array.from(document.querySelectorAll(sel));
-    // string op
     q('[data-role="op"]').forEach(op => {
       const field = op.dataset.field, o = op.value;
-      const val = document.querySelector(`[data-role="val"][data-field="${field}"]`);
-      const ci = document.querySelector(`[data-role="ci"][data-field="${field}"]`);
+      const val = document.querySelector(`[data-role="val"][data-field="${cssEsc(field)}"]`);
+      const ci = document.querySelector(`[data-role="ci"][data-field="${cssEsc(field)}"]`);
       if (o==="has_value"||o==="has_no_value") { leaves.push({field:[field,o]}); return; }
       if (val && val.value!=="") {
         const leaf=[field,o,val.value]; if (ci && ci.checked) leaf.push({ci:true});
         leaves.push({field:leaf});
       }
     });
-    // numeric min/max
     q('[data-role="min"]').forEach(min => {
       const field=min.dataset.field;
-      const max=document.querySelector(`[data-role="max"][data-field="${field}"]`);
+      const max=document.querySelector(`[data-role="max"][data-field="${cssEsc(field)}"]`);
       if (min.value!=="" && max && max.value!=="") leaves.push({field:[field,"between",[num(min.value),num(max.value)]]});
       else if (min.value!=="") leaves.push({field:[field,"gte",num(min.value)]});
       else if (max && max.value!=="") leaves.push({field:[field,"lte",num(max.value)]});
     });
-    // date min/max
     q('[data-role="dmin"]').forEach(min => {
       const field=min.dataset.field;
-      const max=document.querySelector(`[data-role="dmax"][data-field="${field}"]`);
+      const max=document.querySelector(`[data-role="dmax"][data-field="${cssEsc(field)}"]`);
       if (min.value) leaves.push({field:[field,"gte",min.value]});
       if (max && max.value) leaves.push({field:[field,"lte",max.value]});
     });
-    // bool
     q('[data-role="bool"]').forEach(b => {
       if (b.value!=="") leaves.push({field:[b.dataset.field,"equals",b.value==="true"]});
     });
-    // enum (multiselect -> OR equals)
     q('[data-role="enum"]').forEach(en => {
       const chosen=Array.from(en.selectedOptions).map(o=>o.value);
       if (chosen.length===1) leaves.push({field:[en.dataset.field,"equals",coerce(chosen[0])]});
@@ -278,14 +293,15 @@ const app = {
 
   async run() {
     if (!this.project || !this.dataType) return;
-    if (NEEDS_CRAWL.has(this.dataType) && !this.crawlId) { this.banner("Wybierz crawl."); return; }
+    if (!this.selected.size) { this.banner("Select at least one column."); return; }
+    if (NEEDS_CRAWL.has(this.dataType) && !this.crawlId) { this.banner("Select a crawl."); return; }
     const body = this.currentQuery({limit:this.pageSize, offset:this.page*this.pageSize});
     let res;
     try { res = await postJSON("/api/query", body); }
-    catch(e) { this.banner("Zapytanie: "+e.message); return; }
+    catch(e) { this.banner("Query failed: "+e.message); return; }
     this.banner("");
     this.total = res.total_hits ?? 0;
-    document.getElementById("totalHits").textContent = `${this.total.toLocaleString()} wyników`;
+    document.getElementById("totalHits").textContent = `${this.total.toLocaleString()} results`;
     document.getElementById("pageInfo").textContent =
       `${this.page+1} / ${Math.max(1,Math.ceil(Math.min(this.total,10000)/this.pageSize))}`;
     this.renderTable(res.rows||[]);
@@ -294,19 +310,20 @@ const app = {
   renderTable(rows) {
     const cols = Array.from(this.selected).map(name => ({
       title:name + (this.sort&&this.sort.field===name?(this.sort.dir==="asc"?" ▲":" ▼"):""),
-      field:name, headerSort:false, cssClass:"sortable",
+      field:name, headerSort:false, cssClass:"sortable", maxInitialWidth:360,
       headerClick:(e,col)=>this.toggleSort(col.getField()),
+      formatter:(cell)=>{ const v=cell.getValue(); return v===null||v===undefined?"":escapeHtml(String(v)); },
     }));
     if (this.table) { this.table.destroy(); }
     this.table = new Tabulator("#table", {
-      data:rows, columns:cols, layout:"fitDataStretch",
-      height:"100%", placeholder:"Brak danych",
+      data:rows, columns:cols, layout:"fitData", height:"100%",
+      placeholder:"No data (adjust filters or columns).",
     });
   },
 
   toggleSort(field) {
     const f = this.schema.find(x=>x.name===field);
-    if (!f || !f.can_sort) { this.banner(`Pole ${field} nie jest sortowalne.`); return; }
+    if (!f || !f.can_sort) { this.banner(`Field "${field}" is not sortable.`); return; }
     if (this.sort && this.sort.field===field) this.sort.dir = this.sort.dir==="asc"?"desc":"asc";
     else this.sort = {field, dir:"asc"};
     this.page = 0; this.run();
@@ -318,28 +335,31 @@ const app = {
 
   async export(fileType) {
     const body = this.currentQuery({file_type:fileType});
+    this.banner("Exporting…");
     const res = await fetch("/api/export",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
-    if (!res.ok) { this.banner("Eksport nieudany: "+res.status); return; }
+    if (!res.ok) { this.banner("Export failed: "+res.status); return; }
+    this.banner("");
     const blob = await res.blob();
     const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
     a.download=`${this.dataType}.${fileType}`; a.click(); URL.revokeObjectURL(a.href);
   },
 
-  // --- presety ---
+  // --- presets ---
   async loadPresets(){
     const r = await fetch("/api/presets").then(x=>x.json()).catch(()=>({presets:[]}));
     this.renderPresets(r.presets||[]);
   },
   renderPresets(presets){
     const box=document.getElementById("presetList");
-    box.innerHTML = presets.map(p=>`<div class="p"><button class="link" onclick='app.applyPreset(${JSON.stringify(p.query)})'>▷ ${escapeHtml(p.name)}</button>
-      <button class="link" style="color:var(--danger)" onclick="app.deletePreset('${escapeHtml(p.name)}')">✕</button></div>`).join("")
-      || '<span class="muted">brak</span>';
+    box.innerHTML = presets.map(p=>`<div class="p"><button class="link" onclick='app.applyPreset(${escapeAttr(JSON.stringify(p.query))})'>▷ ${escapeHtml(p.name)}</button>
+      <button class="link" style="color:var(--danger)" onclick="app.deletePreset('${escapeAttr(p.name)}')">✕</button></div>`).join("")
+      || '<span class="muted">none</span>';
   },
   async savePreset(){
     const name=document.getElementById("presetName").value.trim(); if(!name) return;
     const query=this.currentQuery({page:this.page,pageSize:this.pageSize});
     const r=await postJSON("/api/presets",{name,query}); this.renderPresets(r.presets);
+    document.getElementById("presetName").value="";
   },
   async deletePreset(name){
     const r=await fetch("/api/presets/"+encodeURIComponent(name),{method:"DELETE"}).then(x=>x.json());
@@ -352,13 +372,14 @@ const app = {
     await this.selectDataType(q.data_type);
     if (q.fields){ this.selected=new Set(q.fields); this.renderColumns(); }
     if (q.pageSize){ this.pageSize=q.pageSize; document.getElementById("pageSize").value=q.pageSize; }
-    // sort z stringa "field:dir"
     if (q.sort){ const [f,d]=q.sort.split(":"); this.sort={field:f,dir:d||"asc"}; }
     this.run();
   },
 };
 
 function escapeHtml(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function escapeAttr(s){ return String(s).replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
+function cssEsc(s){ return String(s).replace(/["\\]/g,'\\$&'); }
 function num(v){ const n=Number(v); return Number.isNaN(n)?v:n; }
 function coerce(v){ if(v==="true")return true; if(v==="false")return false; const n=Number(v); return (v!==""&&!Number.isNaN(n))?n:v; }
 async function postJSON(url,body){

@@ -49,6 +49,20 @@ def test_fieldset_for_logs():
     assert "bot" in fs.names()
 
 
+def test_default_display_prioritizes_common_fields():
+    # url/status_code powinny wyprzedzić rzadkie pola alfabetyczne.
+    fs = FieldSet([
+        {"name": "aaa_rare", "can_display": True},
+        {"name": "url", "can_display": True},
+        {"name": "status_code", "can_display": True},
+        {"name": "zzz_rare", "can_display": True},
+    ])
+    top = fs.default_display_fields(limit=3)
+    assert top[0] == "url"
+    assert "status_code" in top
+    assert "zzz_rare" not in top
+
+
 def test_project_summaries():
     cap = Capabilities(_capabilities_dict())
     summaries = cap.project_summaries()
