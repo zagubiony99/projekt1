@@ -120,6 +120,13 @@ Moduły, na których stoi CLI i explorer:
   - `export_lines(...)` — surowy strumień CSV/JSONL;
   - `aggregate(...)` oraz `aggregate_ranking_performance(...)` (osobny format body).
 
+> **Format `sort` w body zapytania o dane.** Dokumentacja precyzuje
+> `{name}:{asc|desc}` dla paginacji *zasobów*, ale nie dla search body.
+> Klient wysyła więc formę listową `[{"field": …, "order": …}]`, a jeśli API
+> odrzuci ją jako niepoprawny parametr (400/422) — automatycznie ponawia
+> z formą tekstową i zapamiętuje, który wariant działa. Błędy inne niż
+> walidacyjne (np. `quota_error`) nie powodują ponowienia.
+
 ## Etap 3 — explorer
 
 Backend FastAPI (`app.py`) + frontend to **jeden plik** `web/index.html`

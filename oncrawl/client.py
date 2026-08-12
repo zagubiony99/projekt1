@@ -17,10 +17,14 @@ Limit paginacji danych = 10 000 wyników; powyżej wymuszamy export
 from __future__ import annotations
 
 import json
+import logging
 from typing import Any, Iterator
 
 from .config import Settings
+from .errors import OncrawlAPIError
 from .http import OncrawlSession
+
+logger = logging.getLogger("oncrawl.client")
 
 # Twardy limit paginacji danych po stronie Oncrawl.
 PAGINATION_LIMIT = 10_000
@@ -51,11 +55,31 @@ def _clean_body(**kwargs) -> dict:
     return {k: v for k, v in kwargs.items() if v is not None}
 
 
+def parse_sort(sort: str) -> tuple[str, str]:
+    """'depth:desc' -> ('depth', 'desc'). Bez sufiksu zakładamy 'asc'."""
+    field, _, order = str(sort).partition(":")
+    order = (order or "asc").lower()
+    if order not in ("asc", "desc"):
+        order = "asc"
+    return field.strip(), order
+
+
+def _sort_variants(sort: str) -> list[tuple[str, Any]]:
+    """Dwa możliwe kształty `sort` w body search, w kolejności prób."""
+    field, order = parse_sort(sort)
+    return [
+        ("list", [{"field": field, "order": order}]),
+        ("string", f"{field}:{order}"),
+    ]
+
+
 class OncrawlClient:
     """Fasada nad OncrawlSession z metodami zasobów i danych."""
 
     def __init__(self, session: OncrawlSession) -> None:
         self.session = session
+        # Który format `sort` akceptuje API — ustalany przy pierwszym użyciu.
+        self._sort_style: str | None = None
 
     @classmethod
     def from_settings(cls, settings: Settings, **kwargs) -> "OncrawlClient":
@@ -136,8 +160,8 @@ class OncrawlClient:
                 f"offset+limit={offset + limit} przekracza próg {PAGINATION_LIMIT}. "
                 "Użyj iter_data()/export_lines() dla większych zbiorów."
             )
-        body = _clean_body(limit=limit, offset=offset, fields=fields, sort=sort, oql=oql)
-        data = self.session.post_json(data_path, json_body=body)
+        data = self._post_search(data_path, fields=fields, oql=oql, sort=sort,
+                                 limit=limit, offset=offset)
         meta = data.get("meta", {}) if isinstance(data, dict) else {}
         return {
             "rows": data.get("urls", []) if isinstance(data, dict) else [],
@@ -145,6 +169,42 @@ class OncrawlClient:
             "columns": meta.get("columns"),
             "oql": data.get("oql") if isinstance(data, dict) else None,
         }
+
+    def _post_search(self, data_path, *, fields, oql, sort, limit, offset):
+        """Wysyła search, radząc sobie z dwoma możliwymi formatami `sort`.
+
+        Dokumentacja opisuje format "{name}:{asc|desc}" dla paginacji ZASOBÓW,
+        ale nie precyzuje kształtu `sort` w body zapytania o dane. Próbujemy
+        więc formatu listowego [{"field": …, "order": …}], a gdy API go
+        odrzuci jako niepoprawny parametr — ponawiamy z formą tekstową.
+        Ustalony wariant zapamiętujemy na czas życia klienta.
+        """
+        base = dict(limit=limit, offset=offset, fields=fields, oql=oql)
+        if not sort:
+            return self.session.post_json(data_path, json_body=_clean_body(**base))
+
+        variants = _sort_variants(sort)
+        if self._sort_style is not None:
+            variants = sorted(variants, key=lambda v: v[0] != self._sort_style)
+
+        last_exc: OncrawlAPIError | None = None
+        for style, value in variants:
+            try:
+                data = self.session.post_json(
+                    data_path, json_body=_clean_body(**base, sort=value)
+                )
+            except OncrawlAPIError as exc:
+                # Tylko błąd walidacji żądania uzasadnia próbę innego formatu.
+                if exc.status not in (400, 422):
+                    raise
+                last_exc = exc
+                logger.debug("sort w formacie %r odrzucony: %s", style, exc.short_reason())
+                continue
+            self._sort_style = style
+            return data
+
+        assert last_exc is not None
+        raise last_exc
 
     # --- dane: pełny przebieg z auto-eksportem --------------------------
     def iter_data(

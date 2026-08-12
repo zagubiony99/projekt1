@@ -18,6 +18,7 @@ from __future__ import annotations
 import csv
 import io
 import json
+import logging
 from pathlib import Path
 from typing import Any
 
@@ -47,6 +48,8 @@ from oncrawl.config import load_settings
 from oncrawl.errors import OncrawlAPIError, OncrawlError, OncrawlNetworkError
 from oncrawl.oql import OQLError, validate_tree
 from oncrawl.recipes import applicable_recipes
+
+logger = logging.getLogger("oncrawl.app")
 
 WEB_DIR = Path(__file__).parent / "web"
 DEFAULT_PRESETS_PATH = Path("presets.json")
@@ -124,6 +127,9 @@ def create_app(
     @app.exception_handler(OncrawlAPIError)
     async def _api_error(request: Request, exc: OncrawlAPIError):
         status = exc.status if 400 <= exc.status < 600 else 502
+        # Log do terminala uvicorna — powód widać nawet gdy przeglądarka
+        # trzyma starą wersję frontendu.
+        logger.warning("%s %s -> %s", request.method, request.url.path, exc.short_reason())
         return JSONResponse(
             status_code=status,
             content={
