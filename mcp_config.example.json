@@ -1,19 +1,53 @@
 {
-  "_comment": [
-    "Przykładowa konfiguracja serwera MCP dla Oncrawl.",
-    "Skopiuj blok 'oncrawl' do configu swojego klienta MCP:",
-    "  Claude Desktop (Windows): %APPDATA%\\Claude\\claude_desktop_config.json",
-    "  Claude Desktop (macOS):   ~/Library/Application Support/Claude/claude_desktop_config.json",
-    "  Claude Code:              claude mcp add oncrawl -- python C:\\sciezka\\do\\mcp_server.py",
-    "  Cursor:                   .cursor/mcp.json w projekcie",
-    "WAŻNE: 'cwd' musi wskazywać folder z .env oraz capabilities.json.",
-    "Token czytany jest z .env — NIE wpisuj go tutaj."
+  "_README": [
+    "Konfiguracja serwera MCP dla Oncrawl. Wybierz wariant pasujący do Twojego klienta.",
+    "",
+    "ZANIM podepniesz klienta, sprawdź że serwer działa:   python cli.py mcp-test",
+    "",
+    "WAŻNE:",
+    "  * 'cwd' musi wskazywać folder z .env oraz capabilities.json,",
+    "  * tokena NIE wpisuje się tutaj — jest czytany z .env,",
+    "  * na Windows w JSON backslashe podwaja się: C:\\\\Users\\\\... ,",
+    "  * zamiast 'python' możesz podać pełną ścieżkę (np. C:\\\\Python311\\\\python.exe)",
+    "    — sprawdzisz ją komendą:  where python"
   ],
-  "mcpServers": {
-    "oncrawl": {
-      "command": "python",
-      "args": ["C:\\Users\\TWOJ_USER\\Downloads\\OnCrawl\\mcp_server.py"],
-      "cwd": "C:\\Users\\TWOJ_USER\\Downloads\\OnCrawl"
+
+  "_1_VS_CODE": {
+    "_gdzie": "Plik .vscode/mcp.json w folderze projektu (VS Code 1.102+). Potem: Command Palette → 'MCP: List Servers' → Start. Wymaga trybu Agent w Copilot Chat.",
+    "servers": {
+      "oncrawl": {
+        "type": "stdio",
+        "command": "python",
+        "args": ["mcp_server.py"],
+        "cwd": "${workspaceFolder}"
+      }
     }
+  },
+
+  "_2_CLAUDE_DESKTOP": {
+    "_gdzie": "Windows: %APPDATA%\\Claude\\claude_desktop_config.json | macOS: ~/Library/Application Support/Claude/claude_desktop_config.json. Po zapisaniu zrestartuj aplikację.",
+    "mcpServers": {
+      "oncrawl": {
+        "command": "python",
+        "args": ["C:\\Users\\TWOJ_USER\\Downloads\\OnCrawl\\mcp_server.py"],
+        "cwd": "C:\\Users\\TWOJ_USER\\Downloads\\OnCrawl"
+      }
+    }
+  },
+
+  "_3_CURSOR": {
+    "_gdzie": "Plik .cursor/mcp.json w folderze projektu (albo ~/.cursor/mcp.json globalnie).",
+    "mcpServers": {
+      "oncrawl": {
+        "command": "python",
+        "args": ["mcp_server.py"],
+        "cwd": "C:\\Users\\TWOJ_USER\\Downloads\\OnCrawl"
+      }
+    }
+  },
+
+  "_4_CLAUDE_CODE": {
+    "_gdzie": "Nie edytujesz pliku — dodajesz komendą w terminalu, w folderze projektu:",
+    "_komenda": "claude mcp add oncrawl -- python mcp_server.py"
   }
 }

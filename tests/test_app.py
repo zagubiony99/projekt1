@@ -122,3 +122,33 @@ def test_index_served(client):
     r = client.get("/")
     assert r.status_code == 200
     assert "Oncrawl API Explorer" in r.text
+
+
+def test_api_error_surfaces_reason_not_generic_500(tmp_path):
+    """Błąd z Oncrawl musi dotrzeć z powodem, a nie jako gołe 500."""
+    import httpx
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(400, json={
+            "type": "invalid_request_parameters",
+            "code": None,
+            "message": "field sitemaps_file_origin cannot be displayed",
+            "fields": ["sitemaps_file_origin"],
+        })
+
+    s = Settings(token=TOKEN, base_url="https://app.oncrawl.com/api/v2",
+                 cache_dir=tmp_path / ".c", max_retries=0)
+    api_client = OncrawlClient(OncrawlSession(s, transport=httpx.MockTransport(handler)))
+    app = create_app(capabilities=_capabilities(), client=api_client,
+                     presets_path=tmp_path / "p.json", lazy=False)
+    c = TestClient(app, raise_server_exceptions=False)
+
+    r = c.post("/api/query", json={
+        "project_id": "p1", "data_type": "pages", "crawl_id": "c1",
+        "fields": ["url", "sitemaps_file_origin"],
+    })
+    assert r.status_code == 400                      # nie 500
+    body = r.json()
+    assert "cannot be displayed" in body["detail"]   # realny powód z API
+    assert body["fields"] == ["sitemaps_file_origin"]
+    api_client.close()

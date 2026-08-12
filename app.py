@@ -22,7 +22,12 @@ from pathlib import Path
 from typing import Any
 
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import FileResponse, HTMLResponse, StreamingResponse
+from fastapi.responses import (
+    FileResponse,
+    HTMLResponse,
+    JSONResponse,
+    StreamingResponse,
+)
 from pydantic import BaseModel, Field
 
 from oncrawl.capabilities import (
@@ -38,6 +43,7 @@ from oncrawl.client import (
     ranking_path,
 )
 from oncrawl.config import load_settings
+from oncrawl.errors import OncrawlAPIError, OncrawlError, OncrawlNetworkError
 from oncrawl.oql import OQLError, validate_tree
 
 WEB_DIR = Path(__file__).parent / "web"
@@ -110,6 +116,29 @@ def create_app(
     app.state.client = client
     app.state.presets_path = Path(presets_path)
     app.state.lazy = lazy
+
+    # Błędy Oncrawl mają czytelny powód (np. "field X cannot be displayed") —
+    # bez tych handlerów wypadały jako gołe 500 "Internal Server Error".
+    @app.exception_handler(OncrawlAPIError)
+    async def _api_error(request: Request, exc: OncrawlAPIError):
+        status = exc.status if 400 <= exc.status < 600 else 502
+        return JSONResponse(
+            status_code=status,
+            content={
+                "detail": exc.short_reason(),
+                "type": exc.type,
+                "code": exc.code,
+                "fields": exc.fields,
+            },
+        )
+
+    @app.exception_handler(OncrawlNetworkError)
+    async def _net_error(request: Request, exc: OncrawlNetworkError):
+        return JSONResponse(status_code=504, content={"detail": f"Network error: {exc}"})
+
+    @app.exception_handler(OncrawlError)
+    async def _generic_error(request: Request, exc: OncrawlError):
+        return JSONResponse(status_code=502, content={"detail": str(exc)})
 
     def get_caps() -> Capabilities:
         if app.state.capabilities is None and app.state.lazy:

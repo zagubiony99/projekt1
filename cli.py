@@ -77,6 +77,68 @@ def serve(host: str = "127.0.0.1", port: int = 8000):
     uvicorn.run("app:app", host=host, port=port, reload=False)
 
 
+@cli.command("mcp-test")
+def mcp_test():
+    """Sprawdź serwer MCP bez żadnego klienta (handshake + lista narzędzi).
+
+    Uruchamia mcp_server.py jako podproces i rozmawia z nim po stdio tak, jak
+    zrobiłby to Claude Desktop / VS Code / Cursor. Jeśli to przejdzie, problem
+    z podpięciem leży w konfiguracji klienta, nie w serwerze.
+    """
+    import asyncio
+    import json as _json
+    import sys
+
+    async def probe() -> int:
+        proc = await asyncio.create_subprocess_exec(
+            sys.executable, "mcp_server.py",
+            stdin=asyncio.subprocess.PIPE,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+        )
+
+        def send(obj):
+            proc.stdin.write((_json.dumps(obj) + "\n").encode())
+
+        try:
+            send({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {
+                "protocolVersion": "2024-11-05", "capabilities": {},
+                "clientInfo": {"name": "mcp-test", "version": "1"}}})
+            await proc.stdin.drain()
+            line = await asyncio.wait_for(proc.stdout.readline(), 20)
+            info = _json.loads(line)["result"]["serverInfo"]
+            typer.secho(f"✔ handshake OK — serwer '{info['name']}' (MCP {info.get('version','?')})", fg="green")
+
+            send({"jsonrpc": "2.0", "method": "notifications/initialized"})
+            send({"jsonrpc": "2.0", "id": 2, "method": "tools/list"})
+            await proc.stdin.drain()
+            line = await asyncio.wait_for(proc.stdout.readline(), 20)
+            tools = _json.loads(line)["result"]["tools"]
+            typer.secho(f"✔ narzędzia ({len(tools)}):", fg="green")
+            for t in tools:
+                typer.echo(f"    • {t['name']}")
+            typer.secho(
+                "\nSerwer działa. Teraz wskaż go klientowi MCP — patrz "
+                "mcp_config.example.json albo sekcja MCP w README.", fg="cyan")
+            return 0
+        except asyncio.TimeoutError:
+            err = (await proc.stderr.read()).decode(errors="replace")
+            typer.secho("✖ serwer nie odpowiedział w czasie.", fg="red")
+            if err:
+                typer.echo(err[-1500:])
+            return 1
+        except Exception as exc:
+            err = (await proc.stderr.read()).decode(errors="replace")
+            typer.secho(f"✖ błąd: {exc}", fg="red")
+            if err:
+                typer.echo(err[-1500:])
+            return 1
+        finally:
+            proc.terminate()
+
+    raise typer.Exit(asyncio.run(probe()))
+
+
 @cli.command()
 def projects(capabilities: str = "capabilities.json"):
     """Wypisz projekty i dostępne data_type (offline, z capabilities.json)."""
