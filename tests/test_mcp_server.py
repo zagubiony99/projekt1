@@ -52,17 +52,42 @@ def test_list_crawls():
     assert any(c["id"] == "c1" for c in out["crawls"])
 
 
-def test_list_fields_and_search():
+def test_list_fields_compact_by_default():
+    """Domyślnie zwięźle 'nazwa:typ' — 235 pól nie może zalać kontekstu."""
     out = json.loads(_call(mcp_server.list_fields, project_id="p1", data_type="pages"))
-    assert out["count"] == 5
-    names = {f["name"] for f in out["fields"]}
-    assert "status_code" in names
+    assert out["total_matching"] == 5
+    assert all(isinstance(f, str) for f in out["fields"])
+    assert "status_code:int" in out["fields"]
 
+
+def test_list_fields_search_narrows():
     filtered = json.loads(
         _call(mcp_server.list_fields, project_id="p1", data_type="pages", search="status")
     )
-    assert filtered["count"] == 1
-    assert filtered["fields"][0]["name"] == "status_code"
+    assert filtered["total_matching"] == 1
+    assert filtered["fields"] == ["status_code:int"]
+
+
+def test_list_fields_detailed_gives_flags():
+    out = json.loads(_call(
+        mcp_server.list_fields, project_id="p1", data_type="pages",
+        search="status", detailed=True,
+    ))
+    f = out["fields"][0]
+    assert f["name"] == "status_code"
+    assert f["can_filter"] is True
+    assert f["aggs"] == ["min", "max", "avg"]
+
+
+def test_list_fields_caps_and_hints(monkeypatch):
+    """Przy przekroczeniu limitu wynik jest przycięty i podpowiada search."""
+    monkeypatch.setattr(mcp_server, "MAX_FIELDS", 2)
+    out = json.loads(_call(
+        mcp_server.list_fields, project_id="p1", data_type="pages", limit=2,
+    ))
+    assert out["total_matching"] == 5
+    assert out["returned"] == 2
+    assert "search" in out["hint"]
 
 
 def test_list_fields_unavailable_data_type():

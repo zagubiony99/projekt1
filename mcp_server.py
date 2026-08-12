@@ -46,10 +46,12 @@ mcp = FastMCP("oncrawl")
 
 CAPABILITIES_PATH = Path("capabilities.json")
 
-# Limity chroniące kontekst modelu — MCP zwraca tekst, więc nie wysyłamy
-# dziesiątek tysięcy wierszy.
+# Limity chroniące kontekst modelu — wynik narzędzia MCP trafia w całości do
+# kontekstu, więc nie wysyłamy dziesiątek tysięcy wierszy ani setek definicji
+# pól. Pełne zbiory idą przez export_data prosto na dysk.
 MAX_ROWS = 200
 DEFAULT_ROWS = 25
+MAX_FIELDS = 80
 
 
 class _State:
@@ -138,11 +140,19 @@ def list_crawls(project_id: str) -> str:
 
 
 @mcp.tool()
-def list_fields(project_id: str, data_type: str, search: str = "") -> str:
-    """Pola dostępne dla data_type — z flagami can_filter/can_sort i agregacjami.
+def list_fields(
+    project_id: str,
+    data_type: str,
+    search: str = "",
+    detailed: bool = False,
+    limit: int = MAX_FIELDS,
+) -> str:
+    """Pola dostępne dla data_type. Wywołaj PRZED query_data, by poznać nazwy pól.
 
-    Zawsze wywołaj to PRZED query_data, żeby użyć prawdziwych nazw pól.
-    `search` filtruje po fragmencie nazwy (przydatne — pages ma 200+ pól).
+    `pages` potrafi mieć 200+ pól, więc domyślnie zwracamy zwięzłą formę
+    "nazwa:typ" — to wystarcza do zbudowania zapytania i nie zalewa kontekstu.
+    Zawężaj `search` (fragment nazwy), a `detailed=True` włącz tylko dla
+    kilku pól, gdy naprawdę potrzebujesz flag i dozwolonych wartości.
     """
     try:
         fs = state.caps.fieldset(project_id, data_type)
@@ -151,22 +161,41 @@ def list_fields(project_id: str, data_type: str, search: str = "") -> str:
                 f"Brak pól dla {data_type} w projekcie {project_id} "
                 "(niedostępne w planie albo brak danych). Sprawdź list_projects."
             )
-        out = []
-        for f in fs.all():
-            name = f.get("name", "")
-            if search and search.lower() not in name.lower():
-                continue
-            out.append(
+
+        matched = [
+            f for f in fs.all()
+            if not search or search.lower() in str(f.get("name", "")).lower()
+        ]
+        total = len(matched)
+        limit = max(1, min(limit, MAX_FIELDS))
+        shown = matched[:limit]
+
+        if detailed:
+            fields: Any = [
                 {
-                    "name": name,
+                    "name": f.get("name"),
                     "type": f.get("type"),
                     "can_filter": bool(f.get("can_filter")),
                     "can_sort": bool(f.get("can_sort")),
                     "aggs": f.get("agg_metric_methods") or [],
                     "values": f.get("values") or None,
                 }
+                for f in shown
+            ]
+        else:
+            # Zwięźle: "nazwa:typ" (+ '-' gdy pole nie jest filtrowalne).
+            fields = [
+                f"{f.get('name')}:{f.get('type')}" + ("" if f.get("can_filter") else " (no-filter)")
+                for f in shown
+            ]
+
+        out: dict[str, Any] = {"total_matching": total, "returned": len(shown), "fields": fields}
+        if total > len(shown):
+            out["hint"] = (
+                f"Pokazano {len(shown)} z {total}. Zawęź parametrem search="
+                ", np. search='title' albo search='cwv'."
             )
-        return json.dumps({"count": len(out), "fields": out}, ensure_ascii=False, indent=2)
+        return json.dumps(out, ensure_ascii=False, indent=2)
     except Exception as exc:
         return _err(exc)
 
