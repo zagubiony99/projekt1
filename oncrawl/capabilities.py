@@ -74,11 +74,10 @@ class FieldSet:
 # Popularne, „gęste" pola pokazywane domyślnie (crawl pages + logi). Bierzemy
 # tylko te, które faktycznie istnieją w danym data_type.
 COMMON_DISPLAY_PRIORITY = [
-    # crawl / pages
-    "url", "status_code", "status_code_range", "title", "title_length",
-    "meta_description", "description_length", "h1", "depth", "indexable",
-    "inrank", "word_count", "fetch_date", "load_time", "nb_inlinks",
-    "internal_outlinks", "seo_visits", "googlebot_hits",
+    # crawl / pages — najgęstsze (prawie zawsze wypełnione) na początku
+    "url", "status_code", "status_code_range", "fetched", "indexable",
+    "depth", "title", "word_count", "inrank", "load_time", "fetch_date",
+    "nb_inlinks", "internal_outlinks", "seo_visits",
     # logi
     "event_url", "event_status_code", "event_status_code_range",
     "event_bot_kind", "event_bot_name", "event_day", "event_urlpath",

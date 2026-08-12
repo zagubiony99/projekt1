@@ -46,6 +46,9 @@
   .count { font-size:11px; color:var(--muted); margin-bottom:6px; }
   .tabulator { background:var(--bg); border:none; font-size:13px; }
   .tabulator .tabulator-header, .tabulator .tabulator-col, .tabulator .tabulator-row { background:var(--panel); color:var(--fg); border-color:var(--line); }
+  .tabulator .tabulator-col .tabulator-col-title { color:var(--fg); font-weight:600; }
+  .tabulator .tabulator-cell { border-color:var(--line); }
+  .tabulator-row .tabulator-cell.tabulator-frozen { background:#0d1220; border-right:2px solid var(--line); }
   .tabulator-row.tabulator-row-even { background:#131a28; }
   .tabulator .tabulator-col.sortable .tabulator-col-title { cursor:pointer; }
   .tabulator .tabulator-col.sortable:hover { color:var(--accent); }
@@ -308,17 +311,38 @@ const app = {
   },
 
   renderTable(rows) {
-    const cols = Array.from(this.selected).map(name => ({
-      title:name + (this.sort&&this.sort.field===name?(this.sort.dir==="asc"?" ▲":" ▼"):""),
-      field:name, headerSort:false, cssClass:"sortable", maxInitialWidth:360,
-      headerClick:(e,col)=>this.toggleSort(col.getField()),
-      formatter:(cell)=>{ const v=cell.getValue(); return v===null||v===undefined?"":escapeHtml(String(v)); },
-    }));
+    const cols = Array.from(this.selected).map(name => {
+      const isUrl = name === "url" || name === "event_url";
+      return {
+        title:name + (this.sort&&this.sort.field===name?(this.sort.dir==="asc"?" ▲":" ▼"):""),
+        field:name, headerSort:false, cssClass:"sortable",
+        headerClick:(e,col)=>this.toggleSort(col.getField()),
+        frozen:isUrl, width:isUrl?340:undefined,
+        minWidth:90, maxInitialWidth:isUrl?340:260, resizable:true,
+        formatter:(cell)=>{ const v=cell.getValue(); return v===null||v===undefined?"":escapeHtml(String(v)); },
+      };
+    });
     if (this.table) { this.table.destroy(); }
     this.table = new Tabulator("#table", {
       data:rows, columns:cols, layout:"fitData", height:"100%",
-      placeholder:"No data (adjust filters or columns).",
+      movableColumns:true, resizableColumns:true,
+      placeholder:"No rows (adjust filters or columns).",
     });
+    this.maybeEmptyHint(rows);
+  },
+
+  // Gdy wszystkie metryki poza URL są puste, to zwykle niepobrane URL-e —
+  // podpowiedz sortowanie/filtr zamiast zostawiać użytkownika z pustą tabelą.
+  maybeEmptyHint(rows) {
+    if (!rows.length) return;
+    const metricCols = Array.from(this.selected).filter(n => n!=="url" && n!=="event_url");
+    if (!metricCols.length) return;
+    const allEmpty = rows.every(r => metricCols.every(c => r[c]===null || r[c]===undefined || r[c]===""));
+    if (allEmpty) {
+      const sortable = this.schema.find(f=>["fetched","status_code","depth","inrank"].includes(f.name) && f.can_sort);
+      const tip = sortable ? ` Click the "${sortable.name}" header to sort, or add a filter (e.g. fetched = true).` : "";
+      this.banner("These URLs have no crawl metrics (likely non-fetched / 404 URLs)." + tip);
+    }
   },
 
   toggleSort(field) {
