@@ -8,7 +8,8 @@ Stack: Python 3.11+, httpx, pydantic, typer (CLI), FastAPI + uvicorn (backend),
 frontend to pojedynczy plik HTML + vanilla JS + Tabulator.js z CDN (bez Reacta, bez builda).
 Bez Streamlita/Gradio.
 
-> Status: **Etap 1 (discovery) gotowy.** Etapy 2 (klient) i 3 (explorer) — po akceptacji.
+> Status: **Etapy 1–3 gotowe** (discovery, klient, explorer). Live discovery/query
+> wymaga dostępu do `app.oncrawl.com` — patrz uwaga o środowisku na końcu.
 
 ---
 
@@ -82,6 +83,75 @@ skryptu** — powód jest zapisywany przy danym zasobie, np.:
 
 ---
 
+## Etap 2 — klient (`oncrawl/`)
+
+Moduły, na których stoi CLI i explorer:
+
+- **`oncrawl/http.py`** — sesja httpx: `Authorization: Bearer`, retry z backoffem na
+  429/5xx (szanuje `Retry-After`), timeouty, cache GET-ów na dysku.
+- **`oncrawl/errors.py`** — typowane wyjątki mapujące formaty błędów Oncrawl
+  (`unauthorized`, `forbidden`/`feature_not_available`/`no_active_subscription`,
+  `quota_error`, `invalid_request`, `resource_not_found`, `duplicate_entry`,
+  `invalid_state_for_request`, `internal_error`).
+- **`oncrawl/oql.py`** — builder OQL z fluent API + walidacja:
+  ```python
+  from oncrawl.oql import OQLBuilder
+  b = OQLBuilder(fieldset)                       # fieldset z capabilities.json
+  oql = b.and_(
+      b.field("status_code").equals(200),
+      b.field("url").contains("blog", ci=True),
+  ).to_tree()
+  # -> {"and": [{"field": ["status_code","equals",200]},
+  #             {"field": ["url","contains","blog",{"ci":true}]}]}
+  ```
+  `validate_tree(tree, fieldset)` sprawdza też drzewa przysłane z frontendu
+  (istnienie pola, `can_filter`, dozwolony filtr).
+- **`oncrawl/capabilities.py`** — `Capabilities.load("capabilities.json")` +
+  `FieldSet` (per projekt/data_type) używany do walidacji i budowy panelu filtrów.
+- **`oncrawl/client.py`** — `OncrawlClient`:
+  - `search(...)` — pojedyncza strona (`rows`, `total_hits`, `columns`);
+  - `iter_data(...)` — **sam wykrywa próg 10 000** i przełącza się na
+    `export=true` ze strumieniowym parsowaniem JSONL (bez całości w pamięci);
+  - `export_lines(...)` — surowy strumień CSV/JSONL;
+  - `aggregate(...)` oraz `aggregate_ranking_performance(...)` (osobny format body).
+
+## Etap 3 — explorer
+
+Backend FastAPI (`app.py`) + frontend to **jeden plik** `web/index.html`
+(vanilla JS + Tabulator.js z CDN, bez Reacta, bez builda).
+
+```bash
+python cli.py serve            # -> http://127.0.0.1:8000
+# albo:  uvicorn app:app --reload
+```
+
+Funkcje UI:
+
+- zakładki **Pages / Links / Clusters / Structured Data / Logs / Ranking Performance**,
+  widoczne tylko gdy dostępne w `capabilities.json`;
+- **panel filtrów generowany dynamicznie z `/fields`** — kontrolki dobierane do typu
+  pola (tekst + operator + `ci`, zakresy numeryczne/dat, bool, enum jako multiselect,
+  `ma wartość`/`brak wartości`) i mapowane na OQL;
+- wybór kolumn, **sortowanie i paginacja po stronie API**, licznik `total_hits`;
+- eksport widocznego zapytania do **CSV i XLSX** przez `export=true`;
+- **zapisywane presety** zapytań w lokalnym `presets.json`.
+
+Endpointy backendu: `GET /api/projects`, `GET /api/projects/{id}/crawls`,
+`GET /api/fields`, `POST /api/query` (waliduje OQL wzgl. capabilities),
+`POST /api/export`, `GET|POST|DELETE /api/presets`.
+
+## CLI (`cli.py`, typer)
+
+```bash
+python cli.py discover [--project ID]          # Etap 1
+python cli.py serve --port 8000                # Etap 3
+python cli.py projects                          # offline, z capabilities.json
+python cli.py fields PROJECT DATA_TYPE          # offline: tabela pól
+python cli.py query PROJECT pages --crawl-id C --field url --field status_code \
+             --oql '{"field":["status_code","equals",200]}' --limit 20
+python cli.py export PROJECT pages out.csv --crawl-id C --field url   # .jsonl = JSONL
+```
+
 ## Bezpieczeństwo tokena
 
 - Token czytany **tylko** z `ONCRAWL_TOKEN` (env / `.env`).
@@ -92,24 +162,26 @@ skryptu** — powód jest zapisywany przy danym zasobie, np.:
 
 ---
 
-## Architektura (na teraz)
+## Architektura
 
 ```
 discovery.py            # Etap 1 — kolektor + renderer CAPABILITIES.md
+cli.py                  # CLI (typer): discover / serve / projects / fields / query / export
+app.py                  # Etap 3 — backend FastAPI
+web/index.html          # Etap 3 — frontend (jeden plik, Tabulator z CDN)
 oncrawl/
   config.py             # ładowanie tokena/ustawień z .env, maskowanie sekretu
   errors.py             # typowane wyjątki mapujące formaty błędów Oncrawl
   http.py               # sesja httpx: auth, retry/backoff (429/5xx), cache GET na dysku
+  capabilities.py       # loader capabilities.json + FieldSet (walidacja/panel filtrów)
+  oql.py                # builder OQL (fluent) + validate_tree
+  client.py             # OncrawlClient: search / iter_data(auto-export) / aggregate / ...
 tests/
-  fake_api.py           # zamockowane API (httpx.MockTransport) — zero sieci, zero quoty
-  test_errors.py        # mapowanie błędów
-  test_discovery.py     # discovery end-to-end na mockach + brak wycieku tokena
+  fake_api.py           # zamockowane API zasobów (httpx.MockTransport) — zero sieci
+  fake_data.py          # zamockowane endpointy danych (search/export/aggs)
+  test_errors.py test_discovery.py test_oql.py
+  test_capabilities.py test_client.py test_app.py test_cli.py
 ```
-
-Warstwa `oncrawl/http.py` + `oncrawl/errors.py` to fundament, na którym w Etapie 2
-powstanie pełny `oncrawl/client.py` (iteratory paginacji, `fetch_data()` z auto-przełączaniem
-na `export=true` powyżej 10k, builder OQL walidujący pola względem `capabilities.json`,
-helper agregacji z osobną ścieżką dla `ranking_performance`).
 
 ---
 

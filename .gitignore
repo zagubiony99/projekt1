@@ -9,6 +9,9 @@
 capabilities.json
 CAPABILITIES.md
 
+# Lokalne presety zapytań explorera
+presets.json
+
 # Python
 __pycache__/
 *.py[cod]

@@ -12,5 +12,4 @@ uvicorn[standard]>=0.29
 openpyxl>=3.1          # eksport XLSX
 
 # Dev / testy
-pytest>=8.0
-respx>=0.21            # mockowanie httpx bez sieci
+pytest>=8.0            # mocki przez httpx.MockTransport (bez dodatkowych zależności)

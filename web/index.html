@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Oncrawl API Explorer</title>
+<link href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/css/tabulator.min.css" rel="stylesheet" />
+<style>
+  :root { --bg:#0f1420; --panel:#171d2b; --line:#28324a; --fg:#e6ebf5; --muted:#8a97b1; --accent:#4c8bf5; --accent2:#2ecc71; --danger:#e05260; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:14px/1.4 system-ui,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--fg); }
+  header { display:flex; align-items:center; gap:16px; padding:10px 16px; background:var(--panel); border-bottom:1px solid var(--line); }
+  header h1 { font-size:16px; margin:0; font-weight:600; }
+  header .grow { flex:1; }
+  select, input, button { background:#0d1220; color:var(--fg); border:1px solid var(--line); border-radius:6px; padding:6px 8px; font:inherit; }
+  button { cursor:pointer; }
+  button:hover { border-color:var(--accent); }
+  button.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
+  button.ok { background:var(--accent2); border-color:var(--accent2); color:#04210f; }
+  button.link { background:none; border:none; color:var(--muted); padding:2px 4px; }
+  .tabs { display:flex; gap:4px; padding:8px 16px 0; background:var(--panel); }
+  .tab { padding:8px 14px; border:1px solid var(--line); border-bottom:none; border-radius:8px 8px 0 0; background:#0d1220; color:var(--muted); cursor:pointer; }
+  .tab.active { background:var(--bg); color:var(--fg); font-weight:600; }
+  .tab.disabled { opacity:.35; cursor:not-allowed; }
+  .wrap { display:grid; grid-template-columns:300px 1fr; gap:0; height:calc(100vh - 108px); }
+  aside { border-right:1px solid var(--line); padding:12px; overflow:auto; background:var(--panel); }
+  main { display:flex; flex-direction:column; min-width:0; }
+  .toolbar { display:flex; align-items:center; gap:8px; padding:10px 16px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+  .toolbar .grow { flex:1; }
+  #table { flex:1; }
+  .section { margin-bottom:16px; }
+  .section h3 { font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin:0 0 8px; }
+  .filter-row { border:1px solid var(--line); border-radius:8px; padding:8px; margin-bottom:8px; background:#0d1220; }
+  .filter-row .fname { font-weight:600; font-size:13px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center; }
+  .filter-row .fname .ftype { color:var(--muted); font-weight:400; font-size:11px; }
+  .filter-row .controls { display:flex; gap:6px; flex-wrap:wrap; }
+  .filter-row input, .filter-row select { flex:1; min-width:80px; }
+  .cols label { display:block; padding:2px 0; font-size:13px; }
+  .muted { color:var(--muted); }
+  .pill { background:#0d1220; border:1px solid var(--line); border-radius:20px; padding:3px 10px; font-size:12px; }
+  .status-code-ok { color:var(--accent2); }
+  #presetList { display:flex; flex-direction:column; gap:4px; }
+  #presetList .p { display:flex; justify-content:space-between; align-items:center; gap:6px; }
+  .banner { background:#3a2417; border:1px solid #7a4a26; color:#f0c088; padding:8px 16px; font-size:13px; display:none; }
+  .banner.show { display:block; }
+  .tabulator { background:var(--bg); border:none; font-size:13px; }
+  .tabulator .tabulator-header, .tabulator .tabulator-col, .tabulator .tabulator-row { background:var(--panel); color:var(--fg); border-color:var(--line); }
+  .tabulator-row.tabulator-row-even { background:#131a28; }
+  .tabulator .tabulator-col.sortable:hover { cursor:pointer; color:var(--accent); }
+</style>
+</head>
+<body>
+<header>
+  <h1>🕷️ Oncrawl API Explorer</h1>
+  <label>Projekt <select id="projectSel"></select></label>
+  <label id="crawlWrap">Crawl <select id="crawlSel"></select></label>
+  <span class="grow"></span>
+  <span id="whoami" class="muted"></span>
+</header>
+
+<div id="banner" class="banner"></div>
+<div class="tabs" id="tabs"></div>
+
+<div class="wrap">
+  <aside>
+    <div class="section">
+      <h3>Kolumny</h3>
+      <div style="display:flex; gap:6px; margin-bottom:6px;">
+        <button class="link" onclick="app.allColumns(true)">wszystkie</button>
+        <button class="link" onclick="app.allColumns(false)">żadne</button>
+      </div>
+      <div id="cols" class="cols"></div>
+    </div>
+    <div class="section">
+      <h3>Filtry → OQL</h3>
+      <div id="filters"></div>
+    </div>
+    <div class="section">
+      <h3>Presety</h3>
+      <div style="display:flex; gap:6px; margin-bottom:6px;">
+        <input id="presetName" placeholder="nazwa presetu" style="flex:1" />
+        <button onclick="app.savePreset()">💾</button>
+      </div>
+      <div id="presetList"></div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="toolbar">
+      <button class="primary" onclick="app.run()">▶ Uruchom</button>
+      <span class="grow"></span>
+      <span class="pill" id="totalHits">—</span>
+      <button onclick="app.prevPage()">◀</button>
+      <span id="pageInfo" class="muted">1</span>
+      <button onclick="app.nextPage()">▶</button>
+      <select id="pageSize" onchange="app.setPageSize(this.value)">
+        <option>50</option><option selected>100</option><option>250</option><option>500</option>
+      </select>
+      <span style="width:12px"></span>
+      <button class="ok" onclick="app.export('csv')">⬇ CSV</button>
+      <button class="ok" onclick="app.export('xlsx')">⬇ XLSX</button>
+    </div>
+    <div id="table"></div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.0/dist/js/tabulator.min.js"></script>
+<script>
+const DATA_TYPES = ["pages","links","clusters","structured_data","logs","ranking_performance"];
+const NEEDS_CRAWL = new Set(["pages","links","clusters","structured_data"]);
+
+const app = {
+  projects: [], project: null, crawls: [], crawlId: null,
+  dataType: null, schema: [], selected: new Set(),
+  sort: null, // {field, dir}
+  page: 0, pageSize: 100, total: 0, table: null,
+
+  async init() {
+    const r = await fetch("/api/projects").then(x=>x.json()).catch(()=>null);
+    if (!r) { this.banner("Nie mogę pobrać /api/projects. Czy backend działa i istnieje capabilities.json?"); return; }
+    this.projects = r.projects || [];
+    const sel = document.getElementById("projectSel");
+    sel.innerHTML = this.projects.map(p =>
+      `<option value="${p.id}">${escapeHtml(p.name||p.id)}${p.error?" ⛔":""}</option>`).join("");
+    sel.onchange = () => this.selectProject(sel.value);
+    document.getElementById("pageSize").value = this.pageSize;
+    await this.loadPresets();
+    if (this.projects.length) await this.selectProject(this.projects[0].id);
+  },
+
+  banner(msg) {
+    const b = document.getElementById("banner");
+    b.textContent = msg; b.classList.toggle("show", !!msg);
+  },
+
+  async selectProject(pid) {
+    this.project = this.projects.find(p=>p.id===pid);
+    this.banner(this.project && this.project.error ? `Projekt: ${this.project.error}` : "");
+    // crawle
+    const cr = await fetch(`/api/projects/${pid}/crawls`).then(x=>x.json()).catch(()=>({crawls:[]}));
+    this.crawls = cr.crawls || [];
+    const csel = document.getElementById("crawlSel");
+    csel.innerHTML = this.crawls.map(c =>
+      `<option value="${c.id}">${c.id} · ${c.status||""}${c.end_reason?" / "+c.end_reason:""}</option>`).join("");
+    this.crawlId = cr.last_finished_crawl_id || (this.crawls[0]||{}).id || null;
+    if (this.crawlId) csel.value = this.crawlId;
+    csel.onchange = () => { this.crawlId = csel.value; this.run(); };
+    this.renderTabs();
+    // pierwsza dostępna zakładka
+    const avail = this.project.available_data_types || {};
+    const first = DATA_TYPES.find(dt => avail[dt]);
+    if (first) await this.selectDataType(first);
+  },
+
+  renderTabs() {
+    const avail = (this.project||{}).available_data_types || {};
+    const tabs = document.getElementById("tabs");
+    tabs.innerHTML = DATA_TYPES.map(dt => {
+      const on = !!avail[dt];
+      const cls = "tab" + (dt===this.dataType?" active":"") + (on?"":" disabled");
+      return `<div class="${cls}" ${on?`onclick="app.selectDataType('${dt}')"`:""}>${dt}${on?"":" ⛔"}</div>`;
+    }).join("");
+    document.getElementById("crawlWrap").style.display = NEEDS_CRAWL.has(this.dataType) ? "" : "none";
+  },
+
+  async selectDataType(dt) {
+    this.dataType = dt; this.sort = null; this.page = 0;
+    this.renderTabs();
+    const r = await fetch(`/api/fields?project_id=${this.project.id}&data_type=${dt}`).then(x=>x.json());
+    this.schema = r.fields || [];
+    this.selected = new Set(r.default_display || this.schema.filter(f=>f.can_display).slice(0,12).map(f=>f.name));
+    this.renderColumns(); this.renderFilters();
+    await this.run();
+  },
+
+  renderColumns() {
+    const box = document.getElementById("cols");
+    box.innerHTML = this.schema.filter(f=>f.can_display).map(f =>
+      `<label><input type="checkbox" ${this.selected.has(f.name)?"checked":""}
+         onchange="app.toggleColumn('${f.name}',this.checked)"> ${escapeHtml(f.name)}
+         <span class="muted">${f.type||""}</span></label>`).join("");
+  },
+  toggleColumn(name, on) { on ? this.selected.add(name) : this.selected.delete(name); },
+  allColumns(on) {
+    this.selected = new Set(on ? this.schema.filter(f=>f.can_display).map(f=>f.name) : []);
+    this.renderColumns();
+  },
+
+  renderFilters() {
+    const box = document.getElementById("filters");
+    const filterable = this.schema.filter(f=>f.can_filter);
+    box.innerHTML = filterable.map(f => this.filterControl(f)).join("");
+  },
+
+  filterControl(f) {
+    const id = "flt_"+f.name;
+    const t = (f.type||"string").toLowerCase();
+    const hasEnum = Array.isArray(f.values) && f.values.length;
+    let controls = "";
+    if (hasEnum) {
+      const opts = f.values.map(v=>`<option value="${escapeHtml(String(v))}">${escapeHtml(String(v))}</option>`).join("");
+      controls = `<select multiple size="${Math.min(4,f.values.length)}" data-role="enum" data-field="${f.name}" style="flex:1">${opts}</select>`;
+    } else if (["int","float","number","double","long"].includes(t)) {
+      controls = `<input type="number" placeholder="min" data-role="min" data-field="${f.name}">
+                  <input type="number" placeholder="max" data-role="max" data-field="${f.name}">`;
+    } else if (t==="bool"||t==="boolean") {
+      controls = `<select data-role="bool" data-field="${f.name}"><option value="">(dowolne)</option>
+                  <option value="true">true</option><option value="false">false</option></select>`;
+    } else if (t==="date"||t==="datetime") {
+      controls = `<input type="date" data-role="dmin" data-field="${f.name}">
+                  <input type="date" data-role="dmax" data-field="${f.name}">`;
+    } else {
+      controls = `<select data-role="op" data-field="${f.name}">
+                    <option value="contains">contains</option><option value="equals">equals</option>
+                    <option value="startswith">startswith</option><option value="endswith">endswith</option>
+                    <option value="has_value">ma wartość</option><option value="has_no_value">brak wartości</option>
+                  </select>
+                  <input type="text" placeholder="wartość" data-role="val" data-field="${f.name}">
+                  <label class="muted" style="font-size:11px"><input type="checkbox" data-role="ci" data-field="${f.name}"> ci</label>`;
+    }
+    return `<div class="filter-row" id="${id}">
+      <div class="fname">${escapeHtml(f.name)} <span class="ftype">${f.type||""}</span></div>
+      <div class="controls">${controls}</div></div>`;
+  },
+
+  buildOQL() {
+    const leaves = [];
+    const q = sel => Array.from(document.querySelectorAll(sel));
+    // string op
+    q('[data-role="op"]').forEach(op => {
+      const field = op.dataset.field, o = op.value;
+      const val = document.querySelector(`[data-role="val"][data-field="${field}"]`);
+      const ci = document.querySelector(`[data-role="ci"][data-field="${field}"]`);
+      if (o==="has_value"||o==="has_no_value") { leaves.push({field:[field,o]}); return; }
+      if (val && val.value!=="") {
+        const leaf=[field,o,val.value]; if (ci && ci.checked) leaf.push({ci:true});
+        leaves.push({field:leaf});
+      }
+    });
+    // numeric min/max
+    q('[data-role="min"]').forEach(min => {
+      const field=min.dataset.field;
+      const max=document.querySelector(`[data-role="max"][data-field="${field}"]`);
+      if (min.value!=="" && max && max.value!=="") leaves.push({field:[field,"between",[num(min.value),num(max.value)]]});
+      else if (min.value!=="") leaves.push({field:[field,"gte",num(min.value)]});
+      else if (max && max.value!=="") leaves.push({field:[field,"lte",num(max.value)]});
+    });
+    // date min/max
+    q('[data-role="dmin"]').forEach(min => {
+      const field=min.dataset.field;
+      const max=document.querySelector(`[data-role="dmax"][data-field="${field}"]`);
+      if (min.value) leaves.push({field:[field,"gte",min.value]});
+      if (max && max.value) leaves.push({field:[field,"lte",max.value]});
+    });
+    // bool
+    q('[data-role="bool"]').forEach(b => {
+      if (b.value!=="") leaves.push({field:[b.dataset.field,"equals",b.value==="true"]});
+    });
+    // enum (multiselect -> OR equals)
+    q('[data-role="enum"]').forEach(en => {
+      const chosen=Array.from(en.selectedOptions).map(o=>o.value);
+      if (chosen.length===1) leaves.push({field:[en.dataset.field,"equals",coerce(chosen[0])]});
+      else if (chosen.length>1) leaves.push({or:chosen.map(v=>({field:[en.dataset.field,"equals",coerce(v)]}))});
+    });
+    if (!leaves.length) return null;
+    if (leaves.length===1) return leaves[0];
+    return {and:leaves};
+  },
+
+  currentQuery(extra={}) {
+    return Object.assign({
+      project_id:this.project.id, data_type:this.dataType,
+      crawl_id: NEEDS_CRAWL.has(this.dataType)?this.crawlId:null,
+      fields:Array.from(this.selected), oql:this.buildOQL(),
+      sort:this.sort?`${this.sort.field}:${this.sort.dir}`:null,
+    }, extra);
+  },
+
+  async run() {
+    if (!this.project || !this.dataType) return;
+    if (NEEDS_CRAWL.has(this.dataType) && !this.crawlId) { this.banner("Wybierz crawl."); return; }
+    const body = this.currentQuery({limit:this.pageSize, offset:this.page*this.pageSize});
+    let res;
+    try { res = await postJSON("/api/query", body); }
+    catch(e) { this.banner("Zapytanie: "+e.message); return; }
+    this.banner("");
+    this.total = res.total_hits ?? 0;
+    document.getElementById("totalHits").textContent = `${this.total.toLocaleString()} wyników`;
+    document.getElementById("pageInfo").textContent =
+      `${this.page+1} / ${Math.max(1,Math.ceil(Math.min(this.total,10000)/this.pageSize))}`;
+    this.renderTable(res.rows||[]);
+  },
+
+  renderTable(rows) {
+    const cols = Array.from(this.selected).map(name => ({
+      title:name + (this.sort&&this.sort.field===name?(this.sort.dir==="asc"?" ▲":" ▼"):""),
+      field:name, headerSort:false, cssClass:"sortable",
+      headerClick:(e,col)=>this.toggleSort(col.getField()),
+    }));
+    if (this.table) { this.table.destroy(); }
+    this.table = new Tabulator("#table", {
+      data:rows, columns:cols, layout:"fitDataStretch",
+      height:"100%", placeholder:"Brak danych",
+    });
+  },
+
+  toggleSort(field) {
+    const f = this.schema.find(x=>x.name===field);
+    if (!f || !f.can_sort) { this.banner(`Pole ${field} nie jest sortowalne.`); return; }
+    if (this.sort && this.sort.field===field) this.sort.dir = this.sort.dir==="asc"?"desc":"asc";
+    else this.sort = {field, dir:"asc"};
+    this.page = 0; this.run();
+  },
+
+  setPageSize(v){ this.pageSize=+v; this.page=0; this.run(); },
+  nextPage(){ if ((this.page+1)*this.pageSize < Math.min(this.total,10000)) { this.page++; this.run(); } },
+  prevPage(){ if (this.page>0){ this.page--; this.run(); } },
+
+  async export(fileType) {
+    const body = this.currentQuery({file_type:fileType});
+    const res = await fetch("/api/export",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+    if (!res.ok) { this.banner("Eksport nieudany: "+res.status); return; }
+    const blob = await res.blob();
+    const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+    a.download=`${this.dataType}.${fileType}`; a.click(); URL.revokeObjectURL(a.href);
+  },
+
+  // --- presety ---
+  async loadPresets(){
+    const r = await fetch("/api/presets").then(x=>x.json()).catch(()=>({presets:[]}));
+    this.renderPresets(r.presets||[]);
+  },
+  renderPresets(presets){
+    const box=document.getElementById("presetList");
+    box.innerHTML = presets.map(p=>`<div class="p"><button class="link" onclick='app.applyPreset(${JSON.stringify(p.query)})'>▷ ${escapeHtml(p.name)}</button>
+      <button class="link" style="color:var(--danger)" onclick="app.deletePreset('${escapeHtml(p.name)}')">✕</button></div>`).join("")
+      || '<span class="muted">brak</span>';
+  },
+  async savePreset(){
+    const name=document.getElementById("presetName").value.trim(); if(!name) return;
+    const query=this.currentQuery({page:this.page,pageSize:this.pageSize});
+    const r=await postJSON("/api/presets",{name,query}); this.renderPresets(r.presets);
+  },
+  async deletePreset(name){
+    const r=await fetch("/api/presets/"+encodeURIComponent(name),{method:"DELETE"}).then(x=>x.json());
+    this.renderPresets(r.presets);
+  },
+  async applyPreset(q){
+    document.getElementById("projectSel").value=q.project_id;
+    await this.selectProject(q.project_id);
+    if (q.crawl_id){ this.crawlId=q.crawl_id; document.getElementById("crawlSel").value=q.crawl_id; }
+    await this.selectDataType(q.data_type);
+    if (q.fields){ this.selected=new Set(q.fields); this.renderColumns(); }
+    if (q.pageSize){ this.pageSize=q.pageSize; document.getElementById("pageSize").value=q.pageSize; }
+    // sort z stringa "field:dir"
+    if (q.sort){ const [f,d]=q.sort.split(":"); this.sort={field:f,dir:d||"asc"}; }
+    this.run();
+  },
+};
+
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function num(v){ const n=Number(v); return Number.isNaN(n)?v:n; }
+function coerce(v){ if(v==="true")return true; if(v==="false")return false; const n=Number(v); return (v!==""&&!Number.isNaN(n))?n:v; }
+async function postJSON(url,body){
+  const r=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+  if(!r.ok){ const t=await r.text(); throw new Error(t||r.status); }
+  return r.json();
+}
+app.init();
+</script>
+</body>
+</html>
