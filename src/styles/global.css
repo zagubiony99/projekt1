@@ -180,7 +180,7 @@ button {
 
 .section {
   position: relative;
-  padding-block: clamp(96px, 12vw, 160px);
+  padding-block: clamp(80px, 8.5vw, 124px);
 }
 .section--gray {
   background: var(--gray);

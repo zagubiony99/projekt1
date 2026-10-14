@@ -28,8 +28,8 @@ const c = t.hero.card;
           {c.url}
         </div>
         <ul class="rows">
-          {c.rows.map((r) => (
-            <li class="row" data-s={r.s}>
+          {c.rows.map((r, n) => (
+            <li class="row" data-s={r.s} style={`--n:${n}`}>
               <span class="bot">{r.bot}</span>
               <span class="res">
                 <i class="ind" aria-hidden="true">
@@ -99,8 +99,8 @@ const c = t.hero.card;
       radial-gradient(60% 70% at 20% 0%, rgb(8 148 255 / 0.25), transparent 60%),
       radial-gradient(50% 60% at 85% 10%, rgb(255 144 4 / 0.18), transparent 60%),
       var(--dark);
-    transform: scale(calc(0.8 + clamp(0, calc(var(--q) * 4), 1) * 0.2));
-    opacity: calc(0.25 + clamp(0, calc(var(--q) * 4), 1) * 0.75);
+    transform: scale(calc(0.88 + clamp(0, calc(var(--q) * 4), 1) * 0.12));
+    opacity: calc(0.6 + clamp(0, calc(var(--q) * 4), 1) * 0.4);
     transform-origin: 50% 30%;
     padding-block: clamp(20px, 4vh, 56px);
   }
@@ -200,7 +200,7 @@ const c = t.hero.card;
   }
 
   :global(.js) .row .res {
-    opacity: 0.2;
+    opacity: 0.35;
     transition: opacity 0.45s var(--ease);
   }
   :global(.js) .row .ind {
@@ -209,6 +209,9 @@ const c = t.hero.card;
     transform: scale(0.7);
     transition: background-color 0.3s, color 0.3s, transform 0.5s var(--ease-out);
   }
+  /* rows still being "checked" pulse gently, so the card looks alive before it resolves */
+  :global(.js) .row:not(.is-done) .ind { animation: scan 1.4s ease-in-out infinite; animation-delay: calc(var(--n, 0) * 0.15s); }
+  @keyframes scan { 50% { opacity: 0.35; } }
   :global(.js) .row.is-done .res { opacity: 1; }
   :global(.js) .row.is-done .ind { transform: none; background: var(--ok); color: #000; }
   :global(.js) .row.is-done[data-s='warn'] .ind { background: var(--warn); }
