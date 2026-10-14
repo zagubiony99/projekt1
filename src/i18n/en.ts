@@ -252,9 +252,17 @@ export const en: Dict = {
     bodyUrl: 'Website',
     orEmail: 'Or email me directly',
   },
+  consent: {
+    text: 'I use cookies for analytics and to measure ad performance. They are only switched on with your consent.',
+    accept: 'Accept',
+    reject: 'Essential only',
+    more: 'Privacy policy',
+    settings: 'Cookie settings',
+  },
+  privacy: { path: '/en/privacy-policy/', label: 'Privacy policy' },
   footer: {
     rights: 'All rights reserved.',
     top: 'Back to top',
-    built: 'Static HTML, zero trackers, self-hosted fonts.',
+    built: 'Static HTML, self-hosted fonts, cookies only with your consent.',
   },
 };

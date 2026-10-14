@@ -40,6 +40,9 @@ const t = getDict(Astro.props.lang);
   .sticky-cta.on {
     transform: none;
   }
+  :global(.consent-open) .sticky-cta {
+    transform: translateY(140%);
+  }
   @media (max-width: 760px) {
     .sticky-cta { display: flex; }
   }

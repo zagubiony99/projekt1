@@ -34,6 +34,12 @@ W `src/config.ts`:
 - `bookingUrl`: link do Cal.com lub Calendly. Pod formularzem pojawi się „Wolisz od razu wybrać termin?”.
 - Po udanej wysyłce strona wysyła zdarzenie `generate_lead` do `dataLayer`, jeśli podłączysz Google Tag Managera.
 
+## Pomiar i reklamy
+
+- `gtmId` w `src/config.ts` włącza Google Tag Managera z Consent Mode v2, baner zgody (PL/EN) i link „Ustawienia cookies” w stopce. Puste = brak GTM, brak banera, brak cookies.
+- Polityka prywatności: `/polityka-prywatnosci/` i `/en/privacy-policy/` (`src/components/Privacy.astro`). Przed startem reklam warto ją uzupełnić o dane firmy i dać do przejrzenia prawnikowi.
+- Kampanie Google Ads i LinkedIn Ads, konfiguracja GTM krok po kroku i plan optymalizacji: [`marketing/README.md`](marketing/README.md).
+
 ## Adresy URL
 
 - `/` to wersja polska (domyślna)
@@ -53,3 +59,5 @@ Build command: `npm run build`, output: `dist`.
 - [ ] Link do LinkedIn (pusty = ukryty)
 - [ ] Nazwa agencji z lat 2018–2019 (teraz: „Agencja SEO, Kraków”)
 - [ ] Potwierdzić, że wymienianie pracodawców (PMI, Accenture Song) na stronie jest OK
+- [ ] `formEndpoint` i `gtmId` (warunek startu kampanii, patrz `marketing/README.md`)
+- [ ] Dane firmy w polityce prywatności

@@ -15,4 +15,7 @@ export const site = {
   formAccessKey: '',
   // Booking calendar (Cal.com / Calendly). When set, a "pick a time" link appears next to the form.
   bookingUrl: '',
+  // Google Tag Manager container (e.g. 'GTM-XXXXXXX'). Empty = no tracking at all.
+  // When set, Consent Mode v2 starts with everything denied and a consent banner appears.
+  gtmId: '',
 };

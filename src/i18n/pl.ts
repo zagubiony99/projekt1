@@ -250,10 +250,18 @@ export const pl = {
     bodyUrl: 'Strona',
     orEmail: 'Albo napisz bezpośrednio',
   },
+  consent: {
+    text: 'Używam plików cookies do analityki i mierzenia skuteczności reklam. Włączę je tylko za Twoją zgodą.',
+    accept: 'Akceptuję',
+    reject: 'Tylko niezbędne',
+    more: 'Polityka prywatności',
+    settings: 'Ustawienia cookies',
+  },
+  privacy: { path: '/polityka-prywatnosci/', label: 'Polityka prywatności' },
   footer: {
     rights: 'Wszelkie prawa zastrzeżone.',
     top: 'Do góry',
-    built: 'Statyczny HTML, zero trackerów, fonty hostowane lokalnie.',
+    built: 'Statyczny HTML, fonty hostowane lokalnie, cookies tylko za zgodą.',
   },
 };
 

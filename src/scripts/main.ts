@@ -265,6 +265,23 @@ if (sticky) {
   if (contactEl) new IntersectionObserver(([e]) => { atContact = e.isIntersecting; sync(); }, { threshold: 0.05 }).observe(contactEl);
 }
 
+/* ---------- Measurement: first-touch campaign source + click events for GTM ---------- */
+const dl = (o: Record<string, unknown>) => ((window as any).dataLayer ??= []).push(o);
+const SRC = 'mz-source';
+try {
+  const q = new URLSearchParams(location.search);
+  const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'li_fat_id'];
+  const hit = keys.filter((k) => q.get(k)).map((k) => `${k}=${q.get(k)}`);
+  if (hit.length && !sessionStorage.getItem(SRC)) sessionStorage.setItem(SRC, [...hit, `landing=${location.pathname}`].join('; '));
+} catch {}
+const source = () => { try { return sessionStorage.getItem(SRC) ?? ''; } catch { return ''; } };
+document.addEventListener('click', (e) => {
+  const a = (e.target as Element).closest?.('a');
+  if (!a) return;
+  if (a.dataset.event) dl({ event: a.dataset.event, page_path: location.pathname });
+  else if (a.href.startsWith('mailto:')) dl({ event: 'email_click', page_path: location.pathname });
+});
+
 /* ---------- Contact form: POST to a form backend if configured, else open the mail app ---------- */
 const form = document.querySelector<HTMLFormElement>('[data-form]');
 form?.addEventListener('submit', async (e) => {
@@ -279,6 +296,7 @@ form?.addEventListener('submit', async (e) => {
   const body = head ? `${head}\n\n${msg}` : msg;
 
   if (!d.endpoint) {
+    dl({ event: 'email_click', form: 'contact', page_path: location.pathname });
     window.location.href = `mailto:${d.email}?subject=${encodeURIComponent(d.subject ?? '')}&body=${encodeURIComponent(body)}`;
     return;
   }
@@ -293,11 +311,12 @@ form?.addEventListener('submit', async (e) => {
     fd.forEach((v, k) => k !== 'botcheck' && payload.append(k, v));
     payload.set('topic', topics);
     payload.set('message', body);
+    if (source()) payload.set('source', source());
     const res = await fetch(d.endpoint, { method: 'POST', body: payload, headers: { Accept: 'application/json' } });
     if (!res.ok) throw new Error(String(res.status));
     form.reset();
     ok && (ok.hidden = false);
-    (window as any).dataLayer?.push({ event: 'generate_lead', form: 'contact' });
+    dl({ event: 'generate_lead', form: 'contact', lead_topic: topics || '(none)', language: document.documentElement.lang, page_path: location.pathname });
   } catch {
     err && (err.hidden = false);
   } finally {

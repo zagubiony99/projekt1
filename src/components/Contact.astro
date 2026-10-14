@@ -68,11 +68,11 @@ const c = t.contact;
           {c.orEmail}: <a class="more" href={`mailto:${site.email}`}>{site.email}</a>
         </p>
       </div>
-      <p class="fnote">{c.note}</p>
+      <p class="fnote">{c.note} <a href={t.privacy.path}>{t.privacy.label}</a>.</p>
       <p class="status ok" data-ok hidden role="status">{c.success}</p>
       <p class="status err" data-err hidden role="alert">{c.error} <a href={`mailto:${site.email}`}>{site.email}</a></p>
       {site.bookingUrl && (
-        <p class="book">{c.booking} <a class="more" href={site.bookingUrl} target="_blank" rel="noopener">{c.bookingBtn}</a></p>
+        <p class="book">{c.booking} <a class="more" href={site.bookingUrl} target="_blank" rel="noopener" data-event="book_call_click">{c.bookingBtn}</a></p>
       )}
     </form>
   </div>
@@ -251,6 +251,9 @@ const c = t.contact;
   .hp {
     position: absolute;
     left: -9999px;
+  }
+  .fnote a {
+    color: var(--link-dark);
   }
   .fnote {
     margin-top: -8px;
