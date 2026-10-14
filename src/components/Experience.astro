@@ -5,23 +5,23 @@ const t = getDict(Astro.props.lang);
 const e = t.experience;
 ---
 
-<section class="section" id="doswiadczenie" aria-labelledby="exp-h">
+<section class="section section--gray" id="doswiadczenie" aria-labelledby="exp-h">
   <div class="wrap">
-    <header class="head">
-      <p class="eyebrow">{e.label}</p>
+    <header class="center-head">
+      <p class="eyebrow" data-reveal>{e.label}</p>
       <h2 class="h2" id="exp-h" data-reveal>{e.title}</h2>
       <p class="lead" data-reveal style="--d:1">{e.intro}</p>
     </header>
 
-    <ol class="timeline">
+    <ol class="list" data-reveal>
       {e.items.map((it) => (
-        <li class:list={['job', { hl: 'highlight' in it && it.highlight }]} data-reveal>
-          <p class="when">{it.when}</p>
+        <li class:list={['job', { hl: 'highlight' in it && it.highlight }]}>
           <div class="who">
             <p class="org">{it.org}</p>
             <h3 class="role">{it.role}</h3>
           </div>
           <p class="desc">{it.desc}</p>
+          <p class="when">{it.when}</p>
         </li>
       ))}
     </ol>
@@ -29,55 +29,61 @@ const e = t.experience;
 </section>
 
 <style>
-  .timeline {
-    border-top: 1px solid var(--line);
+  .list {
+    max-width: 980px;
+    margin-inline: auto;
+    border-radius: var(--r-lg);
+    background: var(--white);
+    padding: 8px clamp(20px, 3vw, 40px);
   }
   .job {
     display: grid;
-    grid-template-columns: 9rem minmax(0, 1fr) minmax(0, 1.1fr);
-    gap: 12px 40px;
-    padding: 28px 0;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) auto;
+    gap: 8px 40px;
+    padding: 26px 0;
     border-bottom: 1px solid var(--line);
   }
-  .when {
-    color: var(--dim);
-    font-size: 0.875rem;
-    padding-top: 3px;
-    font-variant-numeric: tabular-nums;
+  .job:last-child {
+    border-bottom: 0;
   }
   .org {
-    font-size: 1.125rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
+    font-size: 1.1875rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--forest);
   }
   .role {
     margin-top: 2px;
-    color: var(--muted);
     font-size: 0.9375rem;
-    font-weight: 450;
+    font-weight: 500;
+    color: var(--ink-2);
   }
   .desc {
-    color: var(--muted);
     font-size: 0.9375rem;
+    color: var(--ink-2);
   }
-  .hl {
-    position: relative;
+  .when {
+    font-size: 0.875rem;
+    color: var(--ink-3);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    padding-top: 3px;
+  }
+  .hl .desc {
+    color: var(--ink);
   }
   .hl .org::after {
     content: '';
     display: inline-block;
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
     margin-left: 10px;
-    vertical-align: middle;
     border-radius: 50%;
-    background: var(--accent);
+    background: var(--green);
+    vertical-align: middle;
   }
-  .hl .desc {
-    color: var(--text);
-  }
-  @media (max-width: 860px) {
+  @media (max-width: 820px) {
     .job { grid-template-columns: 1fr; gap: 6px; }
-    .desc { margin-top: 6px; }
+    .when { order: -1; padding: 0; }
   }
 </style>

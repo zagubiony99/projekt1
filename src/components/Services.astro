@@ -7,19 +7,19 @@ const s = t.services;
 
 <section class="section" id="uslugi" aria-labelledby="uslugi-h">
   <div class="wrap">
-    <header class="head">
-      <p class="eyebrow">{s.label}</p>
+    <header class="center-head">
+      <p class="eyebrow" data-reveal>{s.label}</p>
       <h2 class="h2" id="uslugi-h" data-reveal>{s.title}</h2>
       <p class="lead" data-reveal style="--d:1">{s.intro}</p>
     </header>
 
-    <ul class="list">
+    <ul class="tiles">
       {s.items.map((it, i) => (
-        <li class="item" data-reveal style={`--d:${i % 2}`}>
+        <li class:list={['tile', { feature: i === 1 }]} data-reveal style={`--d:${i % 2}`}>
           <h3>{it.name}</h3>
-          <p class="desc">{it.desc}</p>
+          <p>{it.desc}</p>
           <ul class="tags">
-            {it.tags.map((tg) => <li class="tag">{tg}</li>)}
+            {it.tags.map((tg) => <li>{tg}</li>)}
           </ul>
         </li>
       ))}
@@ -28,44 +28,68 @@ const s = t.services;
 </section>
 
 <style>
-  .list {
+  .tiles {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1px;
-    border-radius: var(--r-lg);
-    border: 1px solid var(--line);
-    background: var(--line);
-    overflow: hidden;
+    gap: 20px;
   }
-  .item {
+  .tile {
     display: flex;
     flex-direction: column;
     gap: 14px;
-    padding: clamp(24px, 3vw, 40px);
-    background: var(--bg);
-    transition: background-color 0.3s;
+    min-height: 340px;
+    padding: clamp(28px, 3.4vw, 48px);
+    border-radius: var(--r-lg);
+    background: var(--gray);
+    transition: transform 0.5s var(--ease-out);
   }
-  .item:hover {
-    background: var(--bg-2);
+  .tile:hover {
+    transform: scale(1.012);
   }
   h3 {
-    font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
-    font-weight: 560;
-    letter-spacing: -0.03em;
-    line-height: 1.2;
+    font-size: clamp(1.75rem, 1.3rem + 1.4vw, 2.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.045em;
+    font-weight: 750;
+    color: var(--forest);
+    text-wrap: balance;
   }
-  .desc {
-    color: var(--muted);
-    max-width: 52ch;
+  .tile > p {
+    color: var(--ink-2);
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    max-width: 46ch;
   }
   .tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 8px;
     margin-top: auto;
-    padding-top: 10px;
+    padding-top: 12px;
+  }
+  .tags li {
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: var(--white);
+    font-size: 0.8125rem;
+    font-weight: 550;
+    color: var(--ink-2);
+  }
+  .feature {
+    background: var(--forest);
+  }
+  .feature h3 {
+    color: var(--green);
+  }
+  .feature > p {
+    color: rgb(255 255 255 / 0.82);
+  }
+  .feature .tags li {
+    background: rgb(159 232 112 / 0.16);
+    color: var(--green);
   }
   @media (max-width: 760px) {
-    .list { grid-template-columns: 1fr; }
+    .tiles { grid-template-columns: 1fr; }
+    .tile { min-height: 0; }
   }
 </style>

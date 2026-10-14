@@ -7,16 +7,14 @@ const c = t.contact;
 ---
 
 <section class="section contact" id="kontakt" aria-labelledby="kontakt-h">
-  <div class="glow" aria-hidden="true"></div>
   <div class="wrap grid">
     <div class="left">
-      <p class="eyebrow">{c.label}</p>
       <h2 class="h2" id="kontakt-h">{c.title}</h2>
       <p class="lead">{c.lead}</p>
       <div class="direct">
         <p>{c.orEmail}</p>
         <a class="mail" href={`mailto:${site.email}`}>{site.email}</a>
-        {site.linkedin && <a class="mail li" href={site.linkedin} rel="me noopener" target="_blank">LinkedIn ↗</a>}
+        {site.linkedin && <a class="mail" href={site.linkedin} rel="me noopener" target="_blank">LinkedIn ↗</a>}
       </div>
     </div>
 
@@ -50,62 +48,64 @@ const c = t.contact;
         <span>{c.msgLabel}</span>
         <textarea name="body" rows="4" placeholder={c.msgPlaceholder} required></textarea>
       </label>
-      <button class="btn btn--accent submit" type="submit">{c.submit} <span class="arrow" aria-hidden="true">→</span></button>
+      <button class="btn submit" type="submit">{c.submit}</button>
     </form>
   </div>
 </section>
 
 <style>
   .contact {
-    overflow: hidden;
+    background: var(--forest);
+    color: var(--white);
   }
-  .glow {
-    position: absolute;
-    inset: auto -10% -40% -10%;
-    height: 600px;
-    background: radial-gradient(600px 300px at 30% 60%, rgb(212 255 79 / 0.06), transparent 70%);
-    pointer-events: none;
+  .contact ::selection {
+    background: var(--green);
+    color: var(--forest);
   }
   .grid {
-    position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 48px clamp(40px, 6vw, 96px);
-    align-items: start;
+    align-items: center;
   }
   .left {
     display: grid;
-    gap: 22px;
-    justify-items: start;
+    gap: 24px;
+  }
+  .left .h2 {
+    color: var(--green);
+  }
+  .left .lead {
+    color: rgb(255 255 255 / 0.8);
+    max-width: 30ch;
   }
   .direct {
     display: grid;
-    gap: 6px;
-    margin-top: 12px;
+    gap: 4px;
+    margin-top: 8px;
   }
   .direct p {
-    color: var(--dim);
-    font-size: 0.875rem;
+    color: rgb(255 255 255 / 0.6);
+    font-size: 0.9375rem;
   }
   .mail {
     justify-self: start;
-    font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
-    font-weight: 520;
-    letter-spacing: -0.02em;
-    border-bottom: 1px solid var(--line-2);
-    transition: border-color 0.2s, color 0.2s;
+    font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.75rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    color: var(--green);
   }
   .mail:hover {
-    color: var(--accent);
-    border-color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 4px;
   }
   .form {
     display: grid;
     gap: 22px;
-    padding: clamp(22px, 3vw, 32px);
+    padding: clamp(24px, 3vw, 40px);
     border-radius: var(--r-lg);
-    border: 1px solid var(--line-2);
-    background: var(--bg-2);
+    background: var(--white);
+    color: var(--ink);
   }
   fieldset {
     border: 0;
@@ -116,14 +116,13 @@ const c = t.contact;
   .field > span {
     display: block;
     margin-bottom: 10px;
-    color: var(--muted);
-    font-size: 0.875rem;
-    font-weight: 500;
+    font-size: 0.9375rem;
+    font-weight: 600;
   }
   .chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 8px;
   }
   .chip input {
     position: absolute;
@@ -132,46 +131,47 @@ const c = t.contact;
   }
   .chip span {
     display: inline-block;
-    padding: 7px 13px;
+    padding: 8px 14px;
     border-radius: 999px;
-    box-shadow: inset 0 0 0 1px var(--line-2);
-    color: var(--muted);
-    font-size: 0.875rem;
+    background: var(--gray);
+    color: var(--ink-2);
+    font-size: 0.9375rem;
+    font-weight: 500;
     cursor: pointer;
     user-select: none;
-    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    transition: background-color 0.2s, color 0.2s;
   }
   .chip:hover span {
-    color: var(--text);
+    background: var(--gray-2);
   }
   .chip input:checked + span {
-    background: var(--accent);
-    color: var(--bg);
-    box-shadow: none;
+    background: var(--forest);
+    color: var(--green);
   }
   .chip input:focus-visible + span {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--forest);
     outline-offset: 2px;
   }
   .field input,
   .field textarea {
     width: 100%;
-    padding: 12px 14px;
-    border-radius: 10px;
-    border: 1px solid var(--line-2);
-    background: var(--bg);
-    font-size: 0.9375rem;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1.5px solid transparent;
+    background: var(--gray);
+    font-size: 1rem;
     resize: vertical;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, background-color 0.2s;
   }
   .field input::placeholder,
   .field textarea::placeholder {
-    color: var(--dim);
+    color: var(--ink-3);
   }
   .field input:focus,
   .field textarea:focus {
     outline: none;
-    border-color: var(--accent);
+    border-color: var(--forest);
+    background: var(--white);
   }
   .submit {
     justify-self: start;

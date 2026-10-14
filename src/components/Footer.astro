@@ -10,38 +10,38 @@ const year = new Date().getFullYear();
 
 <footer class="foot">
   <div class="wrap row">
-    <span>© {year} {site.name}</span>
+    <span>Copyright © {year} {site.name}. {t.footer.rights}</span>
     <nav aria-label="Footer">
       <a href={`mailto:${site.email}`}>{site.email}</a>
       {site.linkedin && <a href={site.linkedin} rel="me noopener" target="_blank">LinkedIn</a>}
       <a href={alt.path} hreflang={alt.lang}>{t.nav.switchLabel}</a>
-      <a href="#top">{t.footer.top} ↑</a>
+      <a href="#top">{t.footer.top}</a>
     </nav>
   </div>
 </footer>
 
 <style>
   .foot {
-    border-top: 1px solid var(--line);
-    padding-block: 28px;
-    color: var(--dim);
-    font-size: 0.875rem;
+    background: var(--gray);
+    padding-block: 22px;
+    color: var(--ink-3);
+    font-size: 0.75rem;
   }
   .row {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 12px 32px;
+    gap: 10px 32px;
   }
   nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px 24px;
+    gap: 6px 20px;
   }
-  a {
-    transition: color 0.2s;
+  nav a {
+    color: var(--ink-2);
   }
-  a:hover {
-    color: var(--text);
+  nav a:hover {
+    text-decoration: underline;
   }
 </style>

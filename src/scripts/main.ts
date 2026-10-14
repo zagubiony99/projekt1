@@ -18,8 +18,27 @@ burger?.addEventListener('click', () => setSheet(burger.getAttribute('aria-expan
 sheet?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setSheet(false)));
 document.addEventListener('keydown', (e) => e.key === 'Escape' && setSheet(false));
 
-const onScroll = () => nav?.classList.toggle('is-scrolled', window.scrollY > 16);
-window.addEventListener('scroll', onScroll, { passive: true });
+// Apple-style: the hero "stage" grows to full size as it scrolls into view.
+const stage = document.querySelector<HTMLElement>('[data-stage]');
+let ticking = false;
+const onScroll = () => {
+  ticking = false;
+  nav?.classList.toggle('is-scrolled', window.scrollY > 16);
+  if (stage && !reduce) {
+    const r = stage.getBoundingClientRect();
+    const k = Math.min(1, Math.max(0, (window.innerHeight - r.top) / (window.innerHeight * 0.7)));
+    stage.style.setProperty('--k', k.toFixed(3));
+  }
+};
+const requestTick = () => {
+  if (!ticking) {
+    ticking = true;
+    requestAnimationFrame(onScroll);
+  }
+};
+window.addEventListener('scroll', requestTick, { passive: true });
+window.addEventListener('resize', requestTick);
+if (reduce) stage?.style.setProperty('--k', '1');
 onScroll();
 
 /* ---------- Reveal on scroll ---------- */
