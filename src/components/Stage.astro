@@ -54,9 +54,10 @@ const c = t.hero.card;
 </section>
 
 <style>
-  /* Pinned scene: the section is tall, its content sticks while --p runs 0 -> 1 */
+  /* Pinned scene: the section is tall, its content sticks while --q runs 0 -> 1.
+     --q is set by JS on the head and the stage only (non-inherited, see global.css);
+     without JS it stays 1, so everything is visible. */
   .stage-sec {
-    --p: 0;
     position: relative;
     height: 300vh;
   }
@@ -74,8 +75,8 @@ const c = t.hero.card;
   .sticky .head {
     margin-bottom: 0;
     gap: 10px;
-    opacity: clamp(0, calc(var(--p) * 8), 1);
-    transform: translateY(calc((1 - clamp(0, var(--p) * 8, 1)) * 30px));
+    opacity: clamp(0, calc(var(--q) * 8), 1);
+    transform: translateY(calc((1 - clamp(0, var(--q) * 8, 1)) * 30px));
   }
   .sticky .h2 {
     font-size: clamp(2rem, 1.3rem + 2.8vw, 3.75rem);
@@ -84,8 +85,11 @@ const c = t.hero.card;
     font-size: clamp(1rem, 0.95rem + 0.4vw, 1.25rem);
     max-width: 52ch;
   }
+  :global(.js) .sticky .head,
+  :global(.js) .stage {
+    --q: 0;
+  }
   .stage {
-    --k: 0;
     position: relative;
     display: grid;
     place-items: center;
@@ -95,9 +99,8 @@ const c = t.hero.card;
       radial-gradient(60% 70% at 20% 0%, rgb(8 148 255 / 0.25), transparent 60%),
       radial-gradient(50% 60% at 85% 10%, rgb(255 144 4 / 0.18), transparent 60%),
       var(--dark);
-    --k: clamp(0, calc(var(--p) * 4), 1);
-    transform: scale(calc(0.8 + var(--k) * 0.2));
-    opacity: calc(0.25 + var(--k) * 0.75);
+    transform: scale(calc(0.8 + clamp(0, calc(var(--q) * 4), 1) * 0.2));
+    opacity: calc(0.25 + clamp(0, calc(var(--q) * 4), 1) * 0.75);
     transform-origin: 50% 30%;
     padding-block: clamp(20px, 4vh, 56px);
   }
@@ -105,9 +108,7 @@ const c = t.hero.card;
     width: min(100%, 660px);
     padding: clamp(18px, 2.4vw, 28px);
     border-radius: 22px;
-    background: rgb(29 29 31 / 0.72);
-    backdrop-filter: blur(24px) saturate(1.4);
-    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    background: rgb(29 29 31 / 0.8);
     border: 1px solid rgb(255 255 255 / 0.1);
     box-shadow: 0 40px 100px -30px rgb(0 0 0 / 0.8);
     color: #f5f5f7;

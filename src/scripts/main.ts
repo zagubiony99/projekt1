@@ -26,6 +26,7 @@ const scrub = document.querySelector<HTMLElement>('[data-scrub]');
 const pin = document.querySelector<HTMLElement>('[data-pin]');
 const rows = pin ? [...pin.querySelectorAll<HTMLElement>('.row')] : [];
 const sum = pin?.querySelector<HTMLElement>('[data-sum]');
+const pinParts = pin ? [...pin.querySelectorAll<HTMLElement>('.head, [data-stage]')] : [];
 const hs = document.querySelector<HTMLElement>('[data-hscroll]');
 const track = hs?.querySelector<HTMLElement>('[data-track]');
 const hbar = hs?.querySelector<HTMLElement>('[data-hbar]');
@@ -61,52 +62,70 @@ const setActive = (items: HTMLElement[], idx: number) =>
     el.classList.toggle('out', i < idx);
   });
 
-// progress of a tall pinned section: 0 when its top hits the viewport top, 1 when its bottom does
-const pinProgress = (el: HTMLElement, vh: number) => {
-  const r = el.getBoundingClientRect();
-  return clamp(-r.top / Math.max(1, r.height - vh));
+// progress of a tall pinned section from a rect read earlier in the frame:
+// 0 when its top hits the viewport top, 1 when its bottom does
+const progress = (r: DOMRect | undefined, vh: number) => (r ? clamp(-r.top / Math.max(1, r.height - vh)) : 0);
+
+// Write a CSS variable only when its value changes: unchanged writes still invalidate styles
+const vars = new WeakMap<HTMLElement, Record<string, string>>();
+const setVar = (el: HTMLElement | null | undefined, name: string, value: string) => {
+  if (!el) return;
+  const cur = vars.get(el) ?? {};
+  if (cur[name] === value) return;
+  cur[name] = value;
+  vars.set(el, cur);
+  el.style.setProperty(name, value);
 };
 
 let ticking = false;
 const onScroll = () => {
   ticking = false;
+  // 1) read: every layout query happens before any write, so the frame lays out once
   const vh = window.innerHeight;
-  nav?.classList.toggle('is-scrolled', window.scrollY > 8);
+  const y = window.scrollY;
   const overDark = darks.some((el) => {
     const r = el.getBoundingClientRect();
     return r.top <= 26 && r.bottom >= 26;
   });
-  nav?.classList.toggle('is-dark', overDark);
+  const motion = !reduce;
+  const scrubR = motion ? scrub?.getBoundingClientRect() : undefined;
+  const pinR = motion ? pin?.getBoundingClientRect() : undefined;
+  const hsR = motion && hsTravel > 0 ? hs?.getBoundingClientRect() : undefined;
+  const jobTops = motion ? jobs.map((j) => j.getBoundingClientRect().top) : [];
+  const stepsR = motion ? steps?.getBoundingClientRect() : undefined;
 
-  if (reduce) return;
-  if (hero) hero.style.setProperty('--h', clamp(window.scrollY / (vh * 0.8)).toFixed(4));
-  if (scrub) scrub.style.setProperty('--p', (pinProgress(scrub, vh) * 1.3).toFixed(4));
+  // 2) write
+  nav?.classList.toggle('is-scrolled', y > 8);
+  nav?.classList.toggle('is-dark', overDark);
+  if (!motion) return;
+  setVar(hero, '--h', clamp(y / (vh * 0.8)).toFixed(3));
+  if (scrub) setVar(scrub, '--p', (progress(scrubR, vh) * 1.3).toFixed(3));
   if (pin) {
-    const p = pinProgress(pin, vh);
-    pin.style.setProperty('--p', p.toFixed(4));
+    const p = progress(pinR, vh);
+    pinParts.forEach((el) => setVar(el, '--q', p.toFixed(3)));
     // bots resolve one by one as the scene scrolls, then the verdict appears
     rows.forEach((row, i) => row.classList.toggle('is-done', p > 0.28 + i * 0.08));
     sum?.classList.toggle('is-done', p > 0.28 + rows.length * 0.08 + 0.04);
   }
-  if (hs && track && hsTravel > 0) {
-    const p = pinProgress(hs, vh);
-    track.style.setProperty('--x', `${(-p * hsTravel).toFixed(1)}px`);
-    hbar?.style.setProperty('--hp', (0.15 + p * 0.85).toFixed(4));
+  if (hsR && track) {
+    const p = progress(hsR, vh);
+    setVar(track, '--x', `${(-p * hsTravel).toFixed(1)}px`);
+    setVar(hbar, '--hp', (0.15 + p * 0.85).toFixed(3));
   }
-  if (exp && jobs.length) {
+  if (jobTops.length) {
     // the job crossing the middle of the screen drives the big sticky years
     let idx = 0;
-    jobs.forEach((j, i) => { if (j.getBoundingClientRect().top < vh * 0.5) idx = i; });
+    jobTops.forEach((top, i) => { if (top < vh * 0.5) idx = i; });
     jobs.forEach((j, i) => j.classList.toggle('is-active', i === idx));
     setActive(slides, idx);
     dots.forEach((d, i) => d.classList.toggle('on', i === idx));
   }
-  if (steps && stepPanels.length) {
-    const p = pinProgress(steps, vh);
+  if (stepsR && stepPanels.length) {
+    const p = progress(stepsR, vh);
     const idx = Math.min(stepPanels.length - 1, Math.floor(p * stepPanels.length * 0.999));
     setActive(stepPanels, idx);
     setActive(stepNums, idx);
-    sbar?.style.setProperty('--sp', (0.08 + p * 0.92).toFixed(4));
+    setVar(sbar, '--sp', (0.08 + p * 0.92).toFixed(3));
   }
 };
 const requestTick = () => {
@@ -122,7 +141,7 @@ window.addEventListener('resize', () => {
 });
 if (reduce) {
   scrub?.style.setProperty('--p', '1.3');
-  pin?.style.setProperty('--p', '1');
+  pinParts.forEach((el) => el.style.setProperty('--q', '1'));
   rows.forEach((r) => r.classList.add('is-done'));
   sum?.classList.add('is-done');
 }
@@ -280,6 +299,21 @@ document.addEventListener('click', (e) => {
   if (!a) return;
   if (a.dataset.event) dl({ event: a.dataset.event, page_path: location.pathname });
   else if (a.href.startsWith('mailto:')) dl({ event: 'email_click', page_path: location.pathname });
+});
+
+/* ---------- Page transitions: the clicked service title flies into the next page's eyebrow ---------- */
+// The name is given at click time to that one title only (names must be unique on the page),
+// and taken off the current eyebrow so it does not compete with the clicked title.
+document.addEventListener('click', (e) => {
+  const a = (e.target as Element).closest?.('a[href^="/"]');
+  const title = a?.closest('li')?.querySelector<HTMLElement>('[data-vt-title]');
+  if (!title) return;
+  document.querySelectorAll<HTMLElement>('[data-vt-title], [data-vt-target]').forEach((el) => (el.style.viewTransitionName = 'none'));
+  title.style.viewTransitionName = 'svc-title';
+});
+// Coming back from the back/forward cache: clear names left over from the last click
+window.addEventListener('pageshow', (e) => {
+  if (e.persisted) document.querySelectorAll<HTMLElement>('[data-vt-title], [data-vt-target]').forEach((el) => (el.style.viewTransitionName = ''));
 });
 
 /* ---------- Contact form: POST to a form backend if configured, else open the mail app ---------- */

@@ -1,4 +1,44 @@
 /* Apple-inspired system: white / #f5f5f7 / black, #1d1d1f ink, blue actions, AI gradient. */
+/* Scroll-driven values used only on the element they are set on. Registered as
+   non-inherited so updating them every frame does not restyle the whole subtree. */
+@property --x { syntax: '<length>'; inherits: false; initial-value: 0px; }
+@property --hp { syntax: '<number>'; inherits: false; initial-value: 0.1; }
+@property --sp { syntax: '<number>'; inherits: false; initial-value: 0; }
+@property --q { syntax: '<number>'; inherits: false; initial-value: 1; }
+
+/* ---------- Page transitions (cross-document View Transitions) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+::view-transition-old(root) {
+  animation: vt-out 0.28s cubic-bezier(0.4, 0, 1, 1) both;
+}
+::view-transition-new(root) {
+  animation: vt-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
+}
+::view-transition-group(svc-title) {
+  animation-duration: 0.7s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* the old title (often two lines) fades out early so it does not ghost over the new one */
+::view-transition-old(svc-title) {
+  animation: vt-out 0.22s ease-out both;
+}
+::view-transition-new(svc-title) {
+  animation: vt-fade 0.45s ease-out 0.1s both;
+}
+@keyframes vt-fade {
+  from { opacity: 0; }
+}
+@keyframes vt-out {
+  to { opacity: 0; }
+}
+@keyframes vt-in {
+  from { opacity: 0; transform: translateY(16px); }
+}
+
 :root {
   --white: #ffffff;
   --gray: #f5f5f7;

@@ -56,9 +56,9 @@ const b = words(h.titleB);
       radial-gradient(35% 50% at 30% 50%, rgb(8 148 255 / 0.16), transparent 70%),
       radial-gradient(35% 50% at 55% 55%, rgb(201 89 221 / 0.14), transparent 70%),
       radial-gradient(30% 45% at 75% 45%, rgb(255 144 4 / 0.12), transparent 70%);
-    filter: blur(40px);
     opacity: calc(1 - var(--h) * 1.4);
     animation: breathe 9s ease-in-out infinite;
+    will-change: transform;
     pointer-events: none;
   }
   @keyframes breathe {
@@ -124,11 +124,11 @@ const b = words(h.titleB);
     align-items: baseline;
     gap: 6px 22px;
     margin-top: 18px;
-    color: #a1a1a6;
+    color: var(--muted);
     font-size: 0.8125rem;
   }
   .trust b {
-    color: #86868b;
+    color: #515154;
     font-size: 1.0625rem;
     font-weight: 650;
     letter-spacing: -0.02em;

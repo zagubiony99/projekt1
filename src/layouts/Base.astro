@@ -127,7 +127,7 @@ const jsonLd = {
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
-    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script is:inline>document.documentElement.classList.add('js');addEventListener('pagereveal',function(e){if(e.viewTransition){var h=document.documentElement;h.classList.add('vt');e.viewTransition.finished.finally(function(){h.classList.remove('vt')})}});</script>
     {site.gtmId && (
       <script is:inline define:vars={{ gtmId: site.gtmId }}>
         // Consent Mode v2: everything denied until the visitor decides.

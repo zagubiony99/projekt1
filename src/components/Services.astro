@@ -78,7 +78,7 @@ const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-
               )}
             </div>
             <div class="txt">
-              <h3 class:list={{ ai: i === 1 }}>{it.name}</h3>
+              <h3 class:list={{ ai: i === 1 }} data-vt-title>{it.name}</h3>
               <p>{it.desc}</p>
               <p class="tags">{it.tags.join(' · ')}</p>
               <a class="more go" href={`${ui[lang].base}${pages[i][lang].slug}/`}>{ui[lang].more}<span class="sr-only">: {it.name}</span></a>
@@ -168,6 +168,7 @@ const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-
     padding: 0 32px 32px;
   }
   h3 {
+    width: fit-content;
     font-size: clamp(1.625rem, 1.3rem + 1vw, 2.125rem);
     line-height: 1.08;
     letter-spacing: -0.035em;

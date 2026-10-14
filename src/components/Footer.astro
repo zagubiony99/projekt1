@@ -63,10 +63,10 @@ const year = new Date().getFullYear();
     font-weight: 600;
     margin-bottom: 8px;
   }
-  .cols li {
-    padding: 3px 0;
-  }
   .cols a {
+    display: inline-block;
+    padding-block: 3px;
+    min-height: 24px;
     color: var(--ink-2);
   }
   .cols a:hover {
@@ -88,6 +88,9 @@ const year = new Date().getFullYear();
     flex-wrap: wrap;
   }
   nav a {
+    display: inline-block;
+    min-height: 24px;
+    line-height: 24px;
     color: var(--ink-2);
     padding: 0 10px;
     border-left: 1px solid var(--line);

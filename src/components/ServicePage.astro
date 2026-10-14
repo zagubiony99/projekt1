@@ -71,7 +71,7 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
         <nav class="crumbs intro" aria-label="Breadcrumb">
           <a href={t.path}>{u.home}</a><span>›</span><a href={`${t.path}#${t.ids.services}`}>{u.services}</a><span>›</span><span aria-current="page">{s.name}</span>
         </nav>
-        <p class="eyebrow intro">{s.eyebrow}</p>
+        <p class="eyebrow intro vt-target" data-vt-target>{s.eyebrow}</p>
         <h1 class="intro">{s.title}</h1>
         <p class="lead intro">{s.lead}</p>
         <div class="ctas intro">
@@ -206,7 +206,7 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
           {rest.map((r, i) => (
             <li data-reveal style={`--d:${i % 3}`}>
               <a href={`${u.base}${r[lang].slug}/`}>
-                <b>{r[lang].name}</b>
+                <b data-vt-title>{r[lang].name}</b>
                 <span>{r[lang].title}</span>
                 <span class="more">{u.more}</span>
               </a>
@@ -242,7 +242,6 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
       radial-gradient(35% 50% at 30% 50%, rgb(8 148 255 / 0.14), transparent 70%),
       radial-gradient(35% 50% at 55% 55%, rgb(201 89 221 / 0.12), transparent 70%),
       radial-gradient(30% 45% at 75% 45%, rgb(255 144 4 / 0.1), transparent 70%);
-    filter: blur(40px);
     pointer-events: none;
   }
   .top {
@@ -289,7 +288,7 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
   }
   .trust {
     margin-top: 20px;
-    color: #a1a1a6;
+    color: var(--muted);
     font-size: 0.9375rem;
     font-weight: 600;
     letter-spacing: -0.01em;
@@ -302,6 +301,18 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
     animation: rise 1.2s var(--ease-out) forwards;
   }
   :global(.js) .intro:nth-child(2) { animation-delay: 0.08s; }
+  /* Page transition target: the clicked service title flies into this eyebrow,
+     so on arrival it is already in place instead of fading in. */
+  .vt-target {
+    width: fit-content;
+    view-transition-name: svc-title;
+  }
+  :global(.js.vt) .vt-target {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    animation: none;
+  }
   :global(.js) .intro:nth-child(3) { animation-delay: 0.16s; }
   :global(.js) .intro:nth-child(4) { animation-delay: 0.26s; }
   :global(.js) .intro:nth-child(5) { animation-delay: 0.36s; }
@@ -622,6 +633,7 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
     background: var(--gray-2);
   }
   .ocards b {
+    width: fit-content;
     font-size: 1.125rem;
     font-weight: 650;
     letter-spacing: -0.025em;

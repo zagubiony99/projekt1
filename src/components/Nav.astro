@@ -21,7 +21,7 @@ const links = [
     <div class="end">
       <nav class="links" aria-label="Main">
         {links.map(([href, label]) => <a href={href}>{label}</a>)}
-        <a href={altHref} hreflang={alt.lang} aria-label={t.nav.switchLabel}>{alt.lang.toUpperCase()}</a>
+        <a href={altHref} hreflang={alt.lang} aria-label={`${alt.lang.toUpperCase()}: ${t.nav.switchLabel}`}>{alt.lang.toUpperCase()}</a>
       </nav>
       <a class="cta" href={`#${t.ids.contact}`}>{t.nav.cta}</a>
       <button class="burger" type="button" aria-expanded="false" aria-controls="mobile-menu" data-burger>
@@ -44,6 +44,7 @@ const links = [
     position: fixed;
     inset: 0 0 auto;
     z-index: 50;
+    view-transition-name: site-nav;
     background: rgb(251 251 253 / 0.8);
     backdrop-filter: saturate(1.8) blur(20px);
     -webkit-backdrop-filter: saturate(1.8) blur(20px);
