@@ -1,0 +1,90 @@
+---
+import { getDict, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const t = getDict(Astro.props.lang);
+const m = t.manifesto;
+
+// Pre-split into words at build time; one CSS var (--p, set on scroll) lights them up in order.
+let i = 0;
+const parts = m.parts.map((p) => {
+  const words = p.t.split(/(\s+)/).filter((w) => w.length);
+  const out = words.map((w) => (/^\s+$/.test(w) ? { space: true, w } : { w, i: i++ }));
+  return { ...p, words: out, start: i - out.filter((w) => !('space' in w)).length, end: i - 1 };
+});
+const n = i;
+---
+
+<section class="section manifesto" aria-label={m.label} data-scrub style={`--n:${n}`}>
+  <div class="wrap grid">
+    <p class="label">(03) {m.label}</p>
+    <p class="txt">
+      {parts.map((p) => {
+        const words = p.words.map((w) =>
+          'space' in w ? w.w : <span class="w" style={`--i:${w.i}`}>{w.w}</span>
+        );
+        const span = `--s:${p.start};--e:${p.end}`;
+        if ('strike' in p && p.strike) return <s class="strike" style={span}>{words}</s>;
+        if ('mark' in p && p.mark) return <mark class="mark" style={span}>{words}</mark>;
+        return words;
+      })}
+    </p>
+  </div>
+</section>
+
+<style>
+  .manifesto {
+    border-top: 1px solid var(--ink);
+  }
+  .label {
+    grid-column: 1 / span 3;
+    align-self: start;
+    margin-top: 0.9em;
+  }
+  .txt {
+    grid-column: 4 / -1;
+    font-size: clamp(2rem, 0.9rem + 4.2vw, 5.75rem);
+    line-height: 1.02;
+    font-weight: 560;
+    font-stretch: 78%;
+    letter-spacing: -0.02em;
+  }
+  .w {
+    opacity: clamp(0.13, calc(var(--p) * var(--n) - var(--i)), 1);
+  }
+  /* Inline backgrounds (not pseudo-elements) so strike/highlight wrap correctly across lines. */
+  .strike,
+  .mark {
+    color: inherit;
+    background-color: transparent;
+    text-decoration: none;
+    background-repeat: no-repeat;
+    -webkit-box-decoration-break: slice;
+    box-decoration-break: slice;
+  }
+  .strike {
+    /* drawn once its words are lit */
+    --k: clamp(0, calc((var(--p) * var(--n) - var(--e) - 1) / 2), 1);
+    background-image: linear-gradient(var(--signal), var(--signal));
+    background-position: 0 56%;
+    background-size: calc(var(--k, 1) * 100%) 0.08em;
+  }
+  .mark {
+    /* grows while its own words light up */
+    --k: clamp(0, calc((var(--p) * var(--n) - var(--s)) / (var(--e) - var(--s) + 1)), 1);
+    background-image: linear-gradient(var(--signal), var(--signal));
+    background-position: 0 70%;
+    background-size: calc(var(--k, 1) * 100%) 0.78em;
+  }
+  .mark .w {
+    font-family: var(--f-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-stretch: 100%;
+    letter-spacing: -0.01em;
+  }
+
+  @media (max-width: 900px) {
+    .label, .txt { grid-column: 1 / -1; }
+    .label { margin: 0 0 32px; }
+  }
+</style>

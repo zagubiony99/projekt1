@@ -1,0 +1,109 @@
+---
+import { getDict, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const t = getDict(Astro.props.lang);
+const f = t.faq;
+---
+
+<section class="section faq" id="faq" aria-labelledby="faq-h">
+  <div class="wrap grid">
+    <header class="head">
+      <p class="label">(06) {f.label}</p>
+      <h2 class="display" id="faq-h">{f.title}</h2>
+    </header>
+    <div class="items">
+      {f.items.map((it, i) => (
+        <details class="q" data-reveal style={`--d:${i % 3}`}>
+          <summary>
+            <span class="mono">Q{i + 1}</span>
+            <span class="qt">{it.q}</span>
+            <span class="pm" aria-hidden="true"></span>
+          </summary>
+          <p class="a">{it.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq {
+    background: var(--paper-2);
+    border-top: 1px solid var(--ink);
+  }
+  .head {
+    grid-column: 1 / span 4;
+    align-self: start;
+    position: sticky;
+    top: 120px;
+    display: grid;
+    gap: 24px;
+  }
+  .head h2 {
+    font-size: clamp(2.75rem, 1.6rem + 3.6vw, 5.5rem);
+  }
+  .items {
+    grid-column: 6 / -1;
+    border-top: 1px solid var(--ink);
+  }
+  .q {
+    border-bottom: 1px solid var(--ink);
+  }
+  summary {
+    display: grid;
+    grid-template-columns: 48px 1fr 28px;
+    gap: 16px;
+    align-items: center;
+    padding-block: 26px;
+    cursor: pointer;
+    list-style: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary .mono { color: var(--ink-2); }
+  .qt {
+    font-size: clamp(1.25rem, 1rem + 1vw, 1.875rem);
+    font-weight: 600;
+    font-stretch: 86%;
+    line-height: 1.15;
+    transition: transform 0.4s var(--ease);
+  }
+  summary:hover .qt { transform: translateX(8px); }
+  .pm {
+    position: relative;
+    width: 28px;
+    height: 28px;
+  }
+  .pm::before,
+  .pm::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 18px;
+    height: 2px;
+    background: var(--ink);
+    translate: -50% -50%;
+    transition: rotate 0.4s var(--ease), background-color 0.3s;
+  }
+  .pm::after { rotate: 90deg; }
+  .q[open] .pm::after { rotate: 0deg; }
+  .q[open] .pm::before,
+  .q[open] .pm::after { background: var(--signal); }
+  .a {
+    padding: 0 44px 30px 64px;
+    max-width: 62ch;
+    color: var(--ink-2);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+  }
+  .q[open] .a { animation: open 0.5s var(--ease); }
+  @keyframes open {
+    from { opacity: 0; transform: translateY(-8px); }
+  }
+  @media (max-width: 960px) {
+    .head, .items { grid-column: 1 / -1; }
+    .head { position: static; margin-bottom: 48px; }
+    .a { padding-left: 0; padding-right: 0; }
+    summary { grid-template-columns: 36px 1fr 28px; }
+  }
+</style>

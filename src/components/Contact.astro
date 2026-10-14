@@ -1,0 +1,188 @@
+---
+import { site } from '../config';
+import { getDict, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const t = getDict(Astro.props.lang);
+const c = t.contact;
+---
+
+<section class="section contact" id="kontakt" aria-labelledby="kontakt-h">
+  <div class="wrap grid">
+    <div class="left">
+      <p class="label">(07) {c.label}</p>
+      <h2 class="display" id="kontakt-h">{c.title}</h2>
+      <p class="lead">{c.lead}</p>
+      <div class="direct">
+        <p class="mono">{c.orEmail}</p>
+        <a class="mail" href={`mailto:${site.email}`}>{site.email}</a>
+      </div>
+    </div>
+
+    <form
+      class="form"
+      action={`mailto:${site.email}`}
+      method="get"
+      data-form
+      data-email={site.email}
+      data-subject={c.subject}
+      data-l-topics={c.bodyTopics}
+      data-l-url={c.bodyUrl}
+    >
+      <input type="hidden" name="subject" value={c.subject} />
+      <fieldset>
+        <legend class="mono">{c.topicsLabel}</legend>
+        <div class="chips">
+          {c.topics.map((tp) => (
+            <label class="chip">
+              <input type="checkbox" name="topic" value={tp} />
+              <span>{tp}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+      <label class="field">
+        <span class="mono">{c.urlLabel}</span>
+        <input type="url" name="url" placeholder={c.urlPlaceholder} autocomplete="url" inputmode="url" />
+      </label>
+      <label class="field">
+        <span class="mono">{c.msgLabel}</span>
+        <textarea name="body" rows="4" placeholder={c.msgPlaceholder} required></textarea>
+      </label>
+      <button class="btn submit" type="submit">{c.submit}<span class="arrow" aria-hidden="true">→</span></button>
+    </form>
+  </div>
+</section>
+
+<style>
+  .contact {
+    background: var(--signal);
+    color: var(--ink);
+    border-top: 1px solid var(--ink);
+  }
+  .contact ::selection {
+    background: var(--ink);
+    color: var(--signal);
+  }
+  .contact .label::before {
+    background: var(--ink);
+  }
+  .grid {
+    row-gap: 64px;
+  }
+  .left {
+    grid-column: 1 / span 6;
+    display: grid;
+    gap: 28px;
+    align-content: start;
+  }
+  .left h2 {
+    font-size: clamp(3.25rem, 1.2rem + 7vw, 10rem);
+  }
+  .direct {
+    margin-top: 24px;
+    display: grid;
+    gap: 8px;
+  }
+  .mail {
+    justify-self: start;
+    font-size: clamp(1.375rem, 0.9rem + 1.8vw, 2.5rem);
+    font-weight: 650;
+    font-stretch: 80%;
+    letter-spacing: -0.01em;
+    border-bottom: 2px solid var(--ink);
+    word-break: break-all;
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .mail:hover {
+    color: var(--paper);
+    border-color: var(--paper);
+  }
+  .form {
+    grid-column: 8 / -1;
+    display: grid;
+    gap: 32px;
+    align-content: start;
+    padding: clamp(24px, 3vw, 40px);
+    background: var(--paper);
+    box-shadow: 10px 10px 0 var(--ink);
+    outline: 1px solid var(--ink);
+  }
+  fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+  legend,
+  .field > .mono {
+    display: block;
+    margin-bottom: 12px;
+    color: var(--ink-2);
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .chip input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .chip span {
+    display: inline-block;
+    padding: 9px 14px;
+    box-shadow: inset 0 0 0 1px var(--ink);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.25s, color 0.25s;
+  }
+  .chip:hover span {
+    background: var(--paper-2);
+  }
+  .chip input:checked + span {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .chip input:checked + span::before {
+    content: '✓ ';
+    color: var(--signal);
+  }
+  .chip input:focus-visible + span {
+    outline: 2px solid var(--signal);
+    outline-offset: 2px;
+  }
+  .field {
+    display: block;
+  }
+  .field input,
+  .field textarea {
+    width: 100%;
+    padding: 10px 0;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--ink);
+    border-radius: 0;
+    font-size: 1.125rem;
+    resize: vertical;
+    transition: border-color 0.3s;
+  }
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: rgb(14 14 12 / 0.38);
+  }
+  .field input:focus,
+  .field textarea:focus {
+    outline: none;
+    border-bottom-color: var(--signal);
+    box-shadow: 0 1px 0 var(--signal);
+  }
+  .submit {
+    justify-self: start;
+  }
+  @media (max-width: 1080px) {
+    .left, .form { grid-column: 1 / -1; }
+    .form { margin-right: 10px; }
+  }
+</style>

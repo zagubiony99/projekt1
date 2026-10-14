@@ -1,0 +1,80 @@
+---
+import { site } from '../config';
+import { getDict, otherLang, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getDict(lang);
+const alt = getDict(otherLang(lang));
+const year = new Date().getFullYear();
+---
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="row top">
+      <a href={`mailto:${site.email}`} class="link-u">{site.email}</a>
+      {site.linkedin && <a href={site.linkedin} class="link-u" rel="me noopener" target="_blank">LinkedIn ↗</a>}
+      <a href={alt.path} hreflang={alt.lang} class="link-u">{t.nav.switchLabel}</a>
+      <a href="#top" class="link-u">{t.footer.top} ↑</a>
+    </div>
+  </div>
+  <p class="word display" aria-hidden="true" data-word><span>Zięciak<i></i></span></p>
+  <div class="wrap">
+    <div class="row bottom mono">
+      <span>© {year} {site.name}. {t.footer.rights}</span>
+      <span>{t.footer.built}</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    background: var(--ink);
+    color: var(--paper);
+    padding-top: 56px;
+    overflow: hidden;
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 40px;
+  }
+  .top {
+    font-size: 1rem;
+  }
+  .top a:last-child {
+    margin-left: auto;
+  }
+  .word {
+    position: relative;
+    margin: clamp(32px, 5vw, 72px) var(--gutter) 0;
+    font-size: 26vw;
+    line-height: 0.74;
+    white-space: nowrap;
+    font-weight: var(--wg, 860);
+    letter-spacing: -0.02em;
+    color: var(--paper);
+    padding-bottom: 0.16em;
+  }
+  .word span {
+    display: inline-block;
+  }
+  .word i {
+    display: inline-block;
+    width: 0.11em;
+    height: 0.11em;
+    margin-left: 0.03em;
+    background: var(--signal);
+  }
+  .bottom {
+    justify-content: space-between;
+    padding-block: 22px 26px;
+    border-top: 1px solid var(--night-line);
+    color: rgb(236 235 228 / 0.6);
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.6875rem;
+  }
+  @media (max-width: 640px) {
+    .top a:last-child { margin-left: 0; }
+  }
+</style>

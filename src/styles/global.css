@@ -1,0 +1,295 @@
+:root {
+  --paper: #ecebe4;
+  --paper-2: #e2e0d6;
+  --ink: #0e0e0c;
+  --ink-2: #4a4a43;
+  --line: rgb(14 14 12 / 0.16);
+  --signal: #ff4f1a;
+  --signal-ink: #0e0e0c;
+  --night-line: rgb(236 235 228 / 0.16);
+
+  --f-sans: 'Archivo Variable', 'Archivo', system-ui, sans-serif;
+  --f-serif: 'Instrument Serif', 'Times New Roman', serif;
+  --f-mono: 'JetBrains Mono Variable', ui-monospace, 'SFMono-Regular', monospace;
+
+  --gutter: clamp(16px, 3vw, 40px);
+  --max: 1680px;
+  --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
+  --ease-io: cubic-bezier(0.7, 0, 0.2, 1);
+
+  --fs-mono: 0.75rem;
+  --fs-body: clamp(1rem, 0.94rem + 0.25vw, 1.1875rem);
+  --fs-lead: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
+  --fs-h2: clamp(3rem, 1.4rem + 7vw, 9.5rem);
+  --fs-h3: clamp(1.75rem, 1.2rem + 2.4vw, 3.75rem);
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--f-sans);
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  font-stretch: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+/* Paper grain — tactile, static, cheap. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+h1, h2, h3, h4, p, ul, ol, dl, dd, figure {
+  margin: 0;
+}
+ul, ol {
+  padding: 0;
+  list-style: none;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+button, input, textarea {
+  font: inherit;
+  color: inherit;
+}
+button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+::selection {
+  background: var(--signal);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 200;
+  padding: 10px 14px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--f-mono);
+  font-size: var(--fs-mono);
+  transform: translateY(-200%);
+}
+.skip:focus {
+  transform: none;
+}
+
+/* ---------- Layout ---------- */
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(12px, 1.6vw, 28px);
+}
+
+.section {
+  position: relative;
+  padding-block: clamp(88px, 11vw, 180px);
+}
+
+/* ---------- Type primitives ---------- */
+.mono {
+  font-family: var(--f-mono);
+  font-size: var(--fs-mono);
+  font-weight: 450;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75em;
+  font-family: var(--f-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.label::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--signal);
+}
+
+.display {
+  font-family: var(--f-sans);
+  font-stretch: 62%;
+  font-weight: 760;
+  line-height: 0.86;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+}
+
+.serif {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
+
+.h2 {
+  font-size: var(--fs-h2);
+}
+
+.lead {
+  font-size: var(--fs-lead);
+  line-height: 1.35;
+  font-stretch: 92%;
+  max-width: 34ch;
+}
+
+.muted {
+  color: var(--ink-2);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  --bg: var(--ink);
+  --fg: var(--paper);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 22px;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--f-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.4s var(--ease);
+}
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--signal);
+  transform: translateY(101%);
+  transition: transform 0.45s var(--ease);
+}
+.btn:hover::after,
+.btn:focus-visible::after {
+  transform: none;
+}
+.btn:hover,
+.btn:focus-visible {
+  color: var(--ink);
+}
+.btn .arrow {
+  display: inline-block;
+  transition: transform 0.45s var(--ease);
+}
+.btn:hover .arrow {
+  transform: translateX(4px);
+}
+
+.btn--ghost {
+  --bg: transparent;
+  --fg: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--ink);
+}
+
+.link-u {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat;
+  transition: background-size 0.4s var(--ease);
+}
+.link-u:hover {
+  background-size: 0 1px;
+  background-position: 100% 100%;
+}
+
+/* ---------- Reveal (progressive: only hidden when JS is on) ---------- */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s var(--ease),
+    transform 0.9s var(--ease);
+  transition-delay: calc(var(--d, 0) * 80ms);
+}
+.js [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}

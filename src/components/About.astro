@@ -1,0 +1,146 @@
+---
+import { site } from '../config';
+import { getDict, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const t = getDict(Astro.props.lang);
+const a = t.about;
+---
+
+<section class="section" id="o-mnie" aria-labelledby="o-mnie-h">
+  <div class="wrap grid">
+    <figure class="fig" data-reveal>
+      {site.photo ? (
+        <img src={site.photo} alt={site.name} width="800" height="1000" loading="lazy" decoding="async" />
+      ) : (
+        <div class="mono-portrait" aria-hidden="true">
+          <span class="display m">M</span>
+          <span class="display z">Z</span>
+          <i class="sq"></i>
+        </div>
+      )}
+      <figcaption class="mono">
+        <span>Fig. 05</span>
+        <span>{site.name}</span>
+      </figcaption>
+    </figure>
+
+    <div class="copy">
+      <p class="label" data-reveal>(05) {a.label}</p>
+      <h2 class="display h2 title" id="o-mnie-h" data-reveal>{a.title}</h2>
+      {a.paragraphs.map((p, i) => <p class="p" data-reveal style={`--d:${i + 1}`}>{p}</p>)}
+      <dl class="facts" data-reveal style="--d:2">
+        {a.facts.map((f) => (
+          <div>
+            <dt class="mono">{f.k}</dt>
+            <dd>{f.v}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    row-gap: 56px;
+  }
+  .fig {
+    grid-column: 1 / span 5;
+    align-self: start;
+    position: sticky;
+    top: 110px;
+  }
+  .fig img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.15);
+  }
+  .mono-portrait {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    background: var(--ink);
+    color: var(--paper);
+    overflow: hidden;
+    container-type: inline-size;
+  }
+  .mono-portrait .display {
+    position: absolute;
+    font-size: 92cqw;
+    line-height: 0.72;
+  }
+  .m {
+    left: 0.04em;
+    top: 0.06em;
+  }
+  .z {
+    right: 0.05em;
+    bottom: 0.03em;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--paper);
+  }
+  .sq {
+    position: absolute;
+    right: 9%;
+    top: 9%;
+    width: 13%;
+    aspect-ratio: 1;
+    background: var(--signal);
+  }
+  .fig figcaption {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid var(--ink);
+    margin-top: 12px;
+    color: var(--ink-2);
+  }
+  .copy {
+    grid-column: 7 / -1;
+    display: grid;
+    gap: 28px;
+    align-content: start;
+  }
+  .title {
+    font-size: clamp(3rem, 1.4rem + 5vw, 7.5rem);
+    margin-bottom: 12px;
+  }
+  .p {
+    font-size: var(--fs-lead);
+    line-height: 1.45;
+    font-stretch: 94%;
+    max-width: 38ch;
+  }
+  .p:first-of-type::first-letter {
+    float: left;
+    font-family: var(--f-serif);
+    font-style: italic;
+    font-size: 4.6em;
+    line-height: 0.78;
+    margin: 0.04em 0.08em 0 0;
+    color: var(--signal);
+  }
+  .facts {
+    margin-top: 24px;
+    border-top: 1px solid var(--ink);
+  }
+  .facts div {
+    display: grid;
+    grid-template-columns: minmax(130px, 1fr) 2fr;
+    gap: 16px;
+    padding-block: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .facts dt {
+    color: var(--ink-2);
+    padding-top: 0.3em;
+  }
+  .facts dd {
+    font-weight: 560;
+    font-stretch: 90%;
+  }
+  @media (max-width: 960px) {
+    .fig, .copy { grid-column: 1 / -1; }
+    .fig { position: static; max-width: 520px; }
+  }
+</style>

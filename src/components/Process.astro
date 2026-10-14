@@ -1,0 +1,131 @@
+---
+import { getDict, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const t = getDict(Astro.props.lang);
+const p = t.process;
+---
+
+<section class="section night" id="proces" aria-labelledby="proces-h">
+  <div class="wrap grid">
+    <header class="head">
+      <p class="label">(04) {p.label}</p>
+      <h2 class="display h2" id="proces-h">{p.title}</h2>
+      <p class="lead">{p.intro}</p>
+    </header>
+
+    <div class="steps" data-steps>
+      <span class="rail" aria-hidden="true"><i data-rail></i></span>
+      <ol>
+      {p.steps.map((s, i) => (
+        <li class="step" data-reveal>
+          <span class="num display" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <div class="step__body">
+            <p class="when mono">{s.when}</p>
+            <h3 class="display name">{s.name}</h3>
+            <p class="desc">{s.desc}</p>
+            <p class="out mono"><span>→</span> {s.out}</p>
+          </div>
+        </li>
+      ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .night {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .night ::selection {
+    color: var(--ink);
+  }
+  .head {
+    grid-column: 1 / span 5;
+    align-self: start;
+    position: sticky;
+    top: 120px;
+    display: grid;
+    gap: 28px;
+  }
+  .head .h2 {
+    font-size: clamp(3rem, 1.4rem + 5.6vw, 8rem);
+  }
+  .head .lead {
+    color: rgb(236 235 228 / 0.7);
+  }
+  .steps {
+    grid-column: 7 / -1;
+    position: relative;
+    padding-left: clamp(28px, 4vw, 64px);
+  }
+  .rail {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--night-line);
+  }
+  .rail i {
+    position: absolute;
+    inset: 0;
+    background: var(--signal);
+    transform-origin: 50% 0;
+    transform: scaleY(var(--r, 1));
+  }
+  .step {
+    position: relative;
+    display: grid;
+    grid-template-columns: clamp(4.2rem, 2.2rem + 6.4vw, 9.6rem) 1fr;
+    gap: clamp(12px, 2vw, 32px);
+    padding-block: clamp(32px, 4vw, 64px);
+    border-bottom: 1px solid var(--night-line);
+  }
+  .step:first-of-type {
+    padding-top: 0;
+  }
+  .num {
+    font-size: clamp(4rem, 2rem + 6vw, 9rem);
+    line-height: 0.8;
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(236 235 228 / 0.5);
+  }
+  .step:hover .num {
+    color: var(--signal);
+    -webkit-text-stroke-color: var(--signal);
+  }
+  .num { transition: color 0.4s var(--ease); }
+  .step__body {
+    display: grid;
+    gap: 14px;
+    align-content: start;
+  }
+  .when {
+    justify-self: start;
+    padding: 5px 9px;
+    box-shadow: inset 0 0 0 1px var(--night-line);
+    color: rgb(236 235 228 / 0.75);
+    font-size: 0.6875rem;
+  }
+  .name {
+    font-size: clamp(2.25rem, 1.4rem + 2.6vw, 4rem);
+  }
+  .desc {
+    max-width: 46ch;
+    color: rgb(236 235 228 / 0.78);
+  }
+  .out {
+    color: var(--paper);
+    text-transform: none;
+    font-size: 0.8125rem;
+  }
+  .out span {
+    color: var(--signal);
+  }
+
+  @media (max-width: 960px) {
+    .head, .steps { grid-column: 1 / -1; }
+    .head { position: static; margin-bottom: 64px; }
+  }
+</style>

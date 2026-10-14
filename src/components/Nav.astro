@@ -1,0 +1,241 @@
+---
+import { getDict, otherLang, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getDict(lang);
+const alt = getDict(otherLang(lang));
+const links = [
+  ['#uslugi', t.nav.services],
+  ['#proces', t.nav.process],
+  ['#o-mnie', t.nav.about],
+  ['#faq', t.nav.faq],
+] as const;
+---
+
+<header class="nav" data-nav>
+  <div class="progress" aria-hidden="true"><span data-progress></span></div>
+  <div class="wrap nav__in">
+    <a class="brand" href={t.path} aria-label="Maciej Zięciak — home">
+      <span class="brand__mark" aria-hidden="true">MZ<i></i></span>
+      <span class="brand__txt">
+        <b>Maciej Zięciak</b>
+        <span class="mono">SEO Consultant</span>
+      </span>
+    </a>
+
+    <nav class="nav__links" aria-label="Main">
+      {links.map(([href, label], i) => (
+        <a href={href}><span class="mono">0{i + 1}</span>{label}</a>
+      ))}
+    </nav>
+
+    <div class="nav__end">
+      <a class="lang mono" href={alt.path} hreflang={alt.lang} lang={alt.lang} aria-label={t.nav.switchLabel}>
+        <span class:list={{ on: lang === 'pl' }}>PL</span>
+        <span class="sep">/</span>
+        <span class:list={{ on: lang === 'en' }}>EN</span>
+      </a>
+      <a class="btn nav__cta" href="#kontakt">{t.nav.cta}<span class="arrow" aria-hidden="true">→</span></a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="mobile-menu" data-burger>
+        <span class="sr-only" data-burger-label data-open={t.nav.menu} data-close={t.nav.close}>{t.nav.menu}</span>
+        <i></i><i></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="sheet" id="mobile-menu" data-sheet hidden>
+    <nav class="wrap sheet__in" aria-label="Mobile">
+      {[...links, ['#kontakt', t.nav.contact]].map(([href, label], i) => (
+        <a href={href} class="display"><span class="mono">0{i + 1}</span>{label}</a>
+      ))}
+      <a class="lang mono" href={alt.path} hreflang={alt.lang}>{t.nav.switchLabel} →</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    transition: background-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  }
+  .nav.is-scrolled {
+    background: rgb(236 235 228 / 0.86);
+    backdrop-filter: blur(10px) saturate(1.2);
+    -webkit-backdrop-filter: blur(10px) saturate(1.2);
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .nav:has([aria-expanded='true']) {
+    background: var(--paper);
+  }
+  .progress {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 2px;
+  }
+  .progress span {
+    display: block;
+    height: 100%;
+    background: var(--signal);
+    transform-origin: 0 50%;
+    transform: scaleX(var(--p, 0));
+  }
+  .nav__in {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: 76px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .brand__mark {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    background: var(--ink);
+    color: var(--paper);
+    font-stretch: 62%;
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: 0.02em;
+  }
+  .brand__mark i {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width: 6px;
+    height: 6px;
+    background: var(--signal);
+  }
+  .brand__txt {
+    display: grid;
+    line-height: 1.1;
+  }
+  .brand__txt b {
+    font-weight: 650;
+    font-stretch: 88%;
+    font-size: 1rem;
+  }
+  .brand__txt .mono {
+    font-size: 0.6875rem;
+    color: var(--ink-2);
+  }
+  .nav__links {
+    display: flex;
+    gap: clamp(16px, 2.4vw, 40px);
+    font-size: 0.9375rem;
+    font-weight: 500;
+  }
+  .nav__links a {
+    display: inline-flex;
+    gap: 6px;
+    align-items: baseline;
+    position: relative;
+    padding-block: 6px;
+  }
+  .nav__links .mono {
+    font-size: 0.625rem;
+    color: var(--ink-2);
+  }
+  .nav__links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: 100% 50%;
+    transition: transform 0.45s var(--ease);
+  }
+  .nav__links a:hover::after {
+    transform: scaleX(1);
+    transform-origin: 0 50%;
+  }
+  .nav__end {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .lang {
+    display: inline-flex;
+    gap: 6px;
+    color: var(--ink-2);
+  }
+  .lang .on {
+    color: var(--ink);
+    box-shadow: 0 1px 0 var(--signal);
+  }
+  .lang:hover span:not(.on):not(.sep) {
+    color: var(--ink);
+  }
+  .nav__cta {
+    padding: 14px 18px;
+  }
+  .burger {
+    display: none;
+    width: 44px;
+    height: 44px;
+    position: relative;
+    background: var(--ink);
+  }
+  .burger i {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    height: 2px;
+    background: var(--paper);
+    transition: transform 0.4s var(--ease);
+  }
+  .burger i:first-of-type { top: 17px; }
+  .burger i:last-of-type { top: 25px; }
+  .burger[aria-expanded='true'] i:first-of-type { transform: translateY(4px) rotate(45deg); }
+  .burger[aria-expanded='true'] i:last-of-type { transform: translateY(-4px) rotate(-45deg); }
+
+  .sheet {
+    position: fixed;
+    inset: 76px 0 0;
+    background: var(--ink);
+    color: var(--paper);
+    overflow: auto;
+  }
+  .sheet__in {
+    display: grid;
+    gap: 6px;
+    padding-block: 32px 48px;
+  }
+  .sheet__in a.display {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    font-size: clamp(3rem, 15vw, 6rem);
+    padding-block: 6px;
+    border-bottom: 1px solid var(--night-line);
+  }
+  .sheet__in a.display .mono {
+    font-size: 0.75rem;
+    color: var(--signal);
+    letter-spacing: 0;
+  }
+  .sheet .lang {
+    margin-top: 28px;
+    color: var(--paper);
+  }
+
+  @media (max-width: 1080px) {
+    .nav__links { display: none; }
+  }
+  @media (max-width: 720px) {
+    .nav__cta, .nav__end > .lang { display: none; }
+    .burger { display: block; }
+    .brand__txt .mono { display: none; }
+  }
+</style>

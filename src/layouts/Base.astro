@@ -1,0 +1,125 @@
+---
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource/instrument-serif/latin-ext-italic.css';
+import '@fontsource/instrument-serif/latin-italic.css';
+import '@fontsource-variable/jetbrains-mono/index.css';
+import '../styles/global.css';
+import { site } from '../config';
+import { getDict, otherLang, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = getDict(lang);
+const alt = getDict(otherLang(lang));
+
+const canonical = new URL(t.path, site.url).href;
+const altUrl = new URL(alt.path, site.url).href;
+const plUrl = new URL(getDict('pl').path, site.url).href;
+const ogImage = new URL(`/og-${lang}.png`, site.url).href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${site.url}/#person`,
+      name: site.name,
+      jobTitle: lang === 'pl' ? 'Konsultant SEO' : 'SEO Consultant',
+      url: site.url,
+      email: `mailto:${site.email}`,
+      knowsLanguage: ['pl', 'en'],
+      ...(site.linkedin ? { sameAs: [site.linkedin] } : {}),
+    },
+    {
+      '@type': 'ProfessionalService',
+      '@id': `${site.url}/#business`,
+      name: `${site.name} — SEO`,
+      url: canonical,
+      email: site.email,
+      description: t.meta.description,
+      founder: { '@id': `${site.url}/#person` },
+      areaServed: [{ '@type': 'Country', name: 'Poland' }, 'Worldwide'],
+      availableLanguage: ['Polish', 'English'],
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: t.services.title,
+        itemListElement: t.services.items.map((s) => ({
+          '@type': 'Offer',
+          itemOffered: { '@type': 'Service', name: s.name, description: s.desc },
+        })),
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${site.url}/#website`,
+      url: site.url,
+      name: site.name,
+      inLanguage: ['pl-PL', 'en-US'],
+      publisher: { '@id': `${site.url}/#person` },
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${canonical}#webpage`,
+      url: canonical,
+      name: t.meta.title,
+      description: t.meta.description,
+      inLanguage: lang === 'pl' ? 'pl-PL' : 'en-US',
+      isPartOf: { '@id': `${site.url}/#website` },
+      about: { '@id': `${site.url}/#business` },
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${canonical}#faq`,
+      mainEntity: t.faq.items.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{t.meta.title}</title>
+    <meta name="description" content={t.meta.description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="pl" href={lang === 'pl' ? canonical : altUrl} />
+    <link rel="alternate" hreflang="en" href={lang === 'en' ? canonical : altUrl} />
+    <link rel="alternate" hreflang="x-default" href={plUrl} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#ecebe4" />
+    <meta name="author" content={site.name} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={t.meta.title} />
+    <meta property="og:description" content={t.meta.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={t.locale} />
+    <meta property="og:locale:alternate" content={alt.locale} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={t.meta.title} />
+    <meta name="twitter:description" content={t.meta.description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip" href="#main">{t.skip}</a>
+    <slot />
+  </body>
+</html>

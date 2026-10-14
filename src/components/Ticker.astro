@@ -1,0 +1,55 @@
+---
+import { getDict, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const t = getDict(Astro.props.lang);
+---
+
+<div class="ticker" role="presentation">
+  <p class="sr-only">{t.ticker.join(', ')}</p>
+  {[0, 1].map((k) => (
+    <ul class="track display" aria-hidden="true">
+      {t.ticker.map((item) => (
+        <li>{item}<span class="star">✳</span></li>
+      ))}
+    </ul>
+  ))}
+</div>
+
+<style>
+  .ticker {
+    display: flex;
+    overflow: hidden;
+    background: var(--signal);
+    color: var(--ink);
+    border-block: 1px solid var(--ink);
+    padding-block: clamp(14px, 1.6vw, 22px);
+  }
+  .track {
+    flex: none;
+    display: flex;
+    font-size: clamp(2.25rem, 1.2rem + 3.6vw, 4.75rem);
+    line-height: 1;
+    animation: marquee 48s linear infinite;
+  }
+  .ticker:hover .track {
+    animation-play-state: paused;
+  }
+  li {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+  .star {
+    display: inline-block;
+    margin-inline: 0.45em;
+    font-family: var(--f-mono);
+    font-size: 0.5em;
+    animation: spin 8s linear infinite;
+  }
+  @keyframes marquee {
+    to { transform: translateX(-100%); }
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+</style>

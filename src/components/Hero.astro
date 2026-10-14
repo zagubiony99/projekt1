@@ -1,0 +1,369 @@
+---
+import { site } from '../config';
+import { getDict, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getDict(lang);
+const h = t.hero;
+// Redacted competitor rows: [url, title, line1, line2] bar widths in %.
+const rivals = [
+  [34, 78, 96, 58],
+  [26, 64, 92, 71],
+  [40, 83, 88, 46],
+  [30, 70, 95, 63],
+  [22, 58, 90, 52],
+];
+---
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero__top">
+    <h1 class="hero__title">
+      <span class="kicker mono">{site.name} — {lang === 'pl' ? 'konsultant SEO' : 'SEO consultant'}</span>
+      <span class="display t">
+        <span class="line"><span>{h.titleA}</span></span>
+        <span class="line l2"><span>{h.titleB}</span></span>
+        <span class="line"><span>{h.titleC && `${h.titleC} `}<em class="serif">{h.titleAccent}</em></span></span>
+      </span>
+    </h1>
+      <div class="hero__copy">
+        <p class="label">{h.eyebrow}</p>
+        <p class="lead">{h.lead}</p>
+      </div>
+      <div class="ctas">
+        <a class="btn" href="#kontakt">{h.ctaPrimary}<span class="arrow" aria-hidden="true">→</span></a>
+        <a class="btn btn--ghost" href="#uslugi">{h.ctaSecondary}<span class="arrow" aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+
+    <div class="grid hero__grid">
+      <aside class="note">
+        <p class="mono note__k">Fig. 01 — {h.serp.label}</p>
+        <p class="note__t">{h.serp.caption}</p>
+        <button type="button" class="mono replay" data-replay>↻ {h.serp.replay}</button>
+      </aside>
+
+      <figure class="serp" data-serp aria-label={h.serp.label}>
+        <div class="serp__bar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="2" />
+            <path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="square" />
+          </svg>
+          <span class="serp__q"><span data-q data-text={h.serp.query}>{h.serp.query}</span><i class="caret" aria-hidden="true"></i></span>
+          <span class="mono serp__loc">{lang === 'pl' ? 'pl-PL' : 'en-US'}</span>
+        </div>
+
+        <div class="serp__body">
+          <ol class="serp__ranks mono" aria-hidden="true">
+            {[1, 2, 3, 4, 5, 6].map((n) => <li>{String(n).padStart(2, '0')}</li>)}
+          </ol>
+          <ol class="serp__list" data-list>
+            <li class="row me is-top" data-me>
+              <div class="me__head">
+                <span class="fav" aria-hidden="true">MZ</span>
+                <span class="mono me__url">{site.domain} › seo</span>
+                <span class="badge mono" data-badge>#1</span>
+              </div>
+              <p class="me__title">{h.serp.title}</p>
+              <p class="me__snip">{h.serp.snippet}</p>
+            </li>
+            {rivals.map((w) => (
+              <li class="row rival" aria-hidden="true">
+                {w.map((x, i) => <span class:list={['bar', { t: i === 1 }]} style={`--w:${x}%`} />)}
+              </li>
+            ))}
+          </ol>
+        </div>
+
+      </figure>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding-top: clamp(112px, 13vw, 168px);
+    padding-bottom: clamp(56px, 7vw, 104px);
+    /* Visible 12-col hairline grid — the page's "ruler". */
+    background-image: linear-gradient(to right, var(--line) 1px, transparent 1px);
+    background-size: calc((min(100vw, var(--max)) - 2 * var(--gutter)) / 12) 100%;
+    background-position: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter))) 0;
+  }
+  .hero > .wrap {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero__title {
+    font-weight: inherit;
+  }
+  .kicker {
+    display: block;
+    margin-bottom: clamp(18px, 2.4vw, 32px);
+    color: var(--ink-2);
+  }
+  .t {
+    display: block;
+    font-size: clamp(4.25rem, 1rem + 15.5vw, 16.5rem);
+    line-height: 0.82;
+  }
+  .line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.04em;
+  }
+  .line > span {
+    display: inline-block;
+  }
+  .l2 {
+    padding-left: calc(100% / 12 * 3);
+  }
+  .t em {
+    font-size: 1.04em;
+    line-height: 0;
+    color: var(--signal);
+    letter-spacing: -0.035em;
+  }
+
+  .js .line > span {
+    transform: translateY(105%);
+    animation: rise 1.1s var(--ease) forwards;
+  }
+  .js .line:nth-child(2) > span { animation-delay: 0.08s; }
+  .js .line:nth-child(3) > span { animation-delay: 0.16s; }
+  @keyframes rise {
+    to { transform: none; }
+  }
+
+  /* Title + copy share one grid cell: copy sits in the empty space beside lines 1 and 3. */
+  .hero__top {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(12px, 1.6vw, 28px);
+  }
+  .hero__title {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+  .hero__copy {
+    grid-column: 9 / -1;
+    grid-row: 1;
+    align-self: start;
+    display: grid;
+    gap: 20px;
+    margin-top: clamp(36px, 3.6vw, 60px);
+  }
+  .hero__copy .lead {
+    max-width: 30ch;
+  }
+  .ctas {
+    grid-column: 7 / -1;
+    grid-row: 1;
+    align-self: end;
+    justify-self: end;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 0.6vw;
+  }
+  .js .hero__copy,
+  .js .ctas {
+    opacity: 0;
+    animation: fade 1s var(--ease) 0.45s forwards;
+  }
+  .js .ctas { animation-delay: 0.6s; }
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .hero__grid {
+    margin-top: clamp(64px, 9vw, 150px);
+    row-gap: 32px;
+  }
+  .note {
+    grid-column: 1 / span 3;
+    align-self: end;
+    display: grid;
+    gap: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--ink);
+    margin-bottom: 10px;
+  }
+  .note__k {
+    color: var(--ink-2);
+  }
+  .note__t {
+    font-family: var(--f-serif);
+    font-style: italic;
+    font-size: 1.5rem;
+    line-height: 1.15;
+  }
+  .replay {
+    justify-self: start;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--ink);
+  }
+  .replay:hover {
+    color: var(--signal);
+    border-color: var(--signal);
+  }
+
+  /* ---------- SERP simulation ---------- */
+  .serp {
+    --rh: 92px;
+    grid-column: 5 / -1;
+    background: var(--paper-2);
+    border: 1px solid var(--ink);
+    box-shadow: 10px 10px 0 var(--ink);
+    margin-right: 10px;
+  }
+  .serp__bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--ink);
+    background: var(--paper);
+    font-size: 1.0625rem;
+    font-weight: 500;
+  }
+  .serp__q {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    min-height: 1.5em;
+  }
+  .caret {
+    width: 2px;
+    height: 1.15em;
+    margin-left: 2px;
+    background: var(--signal);
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+  .serp__loc {
+    color: var(--ink-2);
+    font-size: 0.6875rem;
+  }
+  .serp__body {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    padding: 10px 0;
+  }
+  .serp__ranks li {
+    height: var(--rh);
+    display: grid;
+    place-items: center;
+    font-size: 0.8125rem;
+    color: var(--ink-2);
+  }
+  .serp__ranks li:first-child {
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .serp__list {
+    padding-right: 20px;
+  }
+  .row {
+    height: var(--rh);
+    display: grid;
+    align-content: center;
+    gap: 7px;
+    border-left: 3px solid transparent;
+    padding-left: 14px;
+  }
+  .rival .bar {
+    display: block;
+    height: 7px;
+    width: var(--w);
+    background: rgb(14 14 12 / 0.12);
+  }
+  .rival .bar.t {
+    height: 11px;
+    background: rgb(14 14 12 / 0.22);
+    margin-bottom: 2px;
+  }
+  .me {
+    background: var(--paper);
+    gap: 3px;
+    transition: border-color 0.4s var(--ease), background-color 0.4s var(--ease);
+  }
+  .me.is-top {
+    border-left-color: var(--signal);
+  }
+  .me__head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .fav {
+    display: grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.5625rem;
+    font-weight: 800;
+    font-stretch: 62%;
+  }
+  .me__url {
+    font-size: 0.6875rem;
+    text-transform: none;
+    color: var(--ink-2);
+  }
+  .badge {
+    margin-left: auto;
+    padding: 3px 7px;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.6875rem;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  .me.is-top .badge {
+    background: var(--signal);
+    color: var(--ink);
+  }
+  .me__title {
+    font-size: 1.0625rem;
+    font-weight: 650;
+    font-stretch: 90%;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .me__snip {
+    font-size: 0.8125rem;
+    color: var(--ink-2);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  @media (max-width: 1080px) {
+    .hero__copy, .ctas {
+      grid-column: 1 / -1;
+      grid-row: auto;
+      justify-self: start;
+      margin: 0;
+    }
+    .hero__copy { margin-top: 40px; }
+    .ctas { margin-top: 28px; }
+    .note, .serp { grid-column: 1 / -1; }
+    .note { order: 2; }
+    .l2 { padding-left: calc(100% / 12 * 2); }
+  }
+  @media (max-width: 560px) {
+    .t { font-size: 22vw; }
+    .serp { --rh: 84px; }
+    .serp__body { grid-template-columns: 40px 1fr; }
+    .serp__list { padding-right: 12px; }
+    .l2 { padding-left: 0; }
+    .ctas .btn { flex: 1 1 100%; justify-content: space-between; }
+  }
+</style>
