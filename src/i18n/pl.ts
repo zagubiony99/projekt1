@@ -7,6 +7,7 @@ export const pl = {
     description:
       'Technical SEO i widoczność w AI search dla dużych serwisów, e-commerce i enterprise. 9 lat doświadczenia: audyty, rendering, indeksacja, migracje, hreflang i dostęp botów AI.',
   },
+  ids: { services: 'uslugi', experience: 'doswiadczenie', process: 'proces', faq: 'faq', contact: 'kontakt', gets: 'co-dostajesz' },
   skip: 'Przejdź do treści',
   nav: {
     services: 'Usługi',

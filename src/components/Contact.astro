@@ -7,7 +7,7 @@ const t = getDict(Astro.props.lang);
 const c = t.contact;
 ---
 
-<section class="section section--black contact" id="kontakt" data-dark aria-labelledby="kontakt-h">
+<section class="section section--black contact" id={t.ids.contact} data-dark aria-labelledby="kontakt-h">
   <div class="aura" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="wrap">
     <header class="head">

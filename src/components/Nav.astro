@@ -8,10 +8,10 @@ const altHref = Astro.props.altHref ?? alt.path;
 // anchors always point at the homepage sections, so they work from service pages too
 const h = (a: string) => `${t.path}${a}`;
 const links = [
-  [h('#uslugi'), t.nav.services],
-  [h('#doswiadczenie'), t.nav.experience],
-  [h('#proces'), t.nav.process],
-  [h('#faq'), t.nav.faq],
+  [h(`#${t.ids.services}`), t.nav.services],
+  [h(`#${t.ids.experience}`), t.nav.experience],
+  [h(`#${t.ids.process}`), t.nav.process],
+  [h(`#${t.ids.faq}`), t.nav.faq],
 ] as const;
 ---
 
@@ -23,7 +23,7 @@ const links = [
         {links.map(([href, label]) => <a href={href}>{label}</a>)}
         <a href={altHref} hreflang={alt.lang} aria-label={t.nav.switchLabel}>{alt.lang.toUpperCase()}</a>
       </nav>
-      <a class="cta" href="#kontakt">{t.nav.cta}</a>
+      <a class="cta" href={`#${t.ids.contact}`}>{t.nav.cta}</a>
       <button class="burger" type="button" aria-expanded="false" aria-controls="mobile-menu" data-burger>
         <span class="sr-only" data-burger-label data-open={t.nav.menu} data-close={t.nav.close}>{t.nav.menu}</span>
         <i></i><i></i>
@@ -33,7 +33,7 @@ const links = [
 
   <div class="sheet" id="mobile-menu" data-sheet hidden>
     <nav class="wrap sheet__in" aria-label="Mobile">
-      {[...links, ['#kontakt', t.nav.contact]].map(([href, label]) => <a href={href}>{label}</a>)}
+      {[...links, [`#${t.ids.contact}`, t.nav.contact]].map(([href, label]) => <a href={href}>{label}</a>)}
       <a class="sw" href={altHref} hreflang={alt.lang}>{t.nav.switchLabel}</a>
     </nav>
   </div>

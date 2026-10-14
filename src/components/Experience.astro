@@ -5,7 +5,7 @@ const t = getDict(Astro.props.lang);
 const e = t.experience;
 ---
 
-<section class="section" id="doswiadczenie" aria-labelledby="exp-h">
+<section class="section" id={t.ids.experience} aria-labelledby="exp-h">
   <div class="wrap">
     <header class="head">
       <p class="eyebrow" data-reveal>{e.label}</p>

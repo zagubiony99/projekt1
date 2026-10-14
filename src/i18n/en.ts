@@ -2,13 +2,14 @@ import type { Dict } from './pl';
 
 export const en: Dict = {
   lang: 'en',
-  locale: 'en_US',
+  locale: 'en_GB',
   path: '/en/',
   meta: {
     title: 'Maciej Zięciak — Technical SEO & AI Search Consultant',
     description:
       'Technical SEO and AI search visibility for large websites, e-commerce and enterprise. 9 years of experience: audits, rendering, indexation, migrations, hreflang and AI crawler access.',
   },
+  ids: { services: 'services', experience: 'experience', process: 'process', faq: 'faq', contact: 'contact', gets: 'what-you-get' },
   skip: 'Skip to content',
   nav: {
     services: 'Services',

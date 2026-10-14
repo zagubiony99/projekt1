@@ -20,10 +20,10 @@ const year = new Date().getFullYear();
       <div>
         <p class="ch">{site.name}</p>
         <ul>
-          <li><a href={`${t.path}#doswiadczenie`}>{t.nav.experience}</a></li>
-          <li><a href={`${t.path}#proces`}>{t.nav.process}</a></li>
-          <li><a href={`${t.path}#faq`}>{t.nav.faq}</a></li>
-          <li><a href="#kontakt">{t.nav.contact}</a></li>
+          <li><a href={`${t.path}#${t.ids.experience}`}>{t.nav.experience}</a></li>
+          <li><a href={`${t.path}#${t.ids.process}`}>{t.nav.process}</a></li>
+          <li><a href={`${t.path}#${t.ids.faq}`}>{t.nav.faq}</a></li>
+          <li><a href={`#${t.ids.contact}`}>{t.nav.contact}</a></li>
         </ul>
       </div>
     </div>

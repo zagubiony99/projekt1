@@ -37,7 +37,7 @@ const extraLd = [
     url,
     name: s.metaTitle,
     description: s.metaDescription,
-    inLanguage: lang === 'pl' ? 'pl-PL' : 'en-US',
+    inLanguage: lang === 'pl' ? 'pl-PL' : 'en-GB',
     isPartOf: { '@id': `${site.url}/#website` },
     about: { '@id': `${url}#service` },
     breadcrumb: { '@id': `${url}#breadcrumb` },
@@ -47,7 +47,7 @@ const extraLd = [
     '@id': `${url}#breadcrumb`,
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: u.home, item: home },
-      { '@type': 'ListItem', position: 2, name: u.services, item: `${home}#uslugi` },
+      { '@type': 'ListItem', position: 2, name: u.services, item: `${home}#${t.ids.services}` },
       { '@type': 'ListItem', position: 3, name: s.name, item: url },
     ],
   },
@@ -68,14 +68,14 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
       <div class="glow" aria-hidden="true"></div>
       <div class="wrap top">
         <nav class="crumbs intro" aria-label="Breadcrumb">
-          <a href={t.path}>{u.home}</a><span>›</span><a href={`${t.path}#uslugi`}>{u.services}</a><span>›</span><span aria-current="page">{s.name}</span>
+          <a href={t.path}>{u.home}</a><span>›</span><a href={`${t.path}#${t.ids.services}`}>{u.services}</a><span>›</span><span aria-current="page">{s.name}</span>
         </nav>
         <p class="eyebrow intro">{s.eyebrow}</p>
         <h1 class="intro">{s.title}</h1>
         <p class="lead intro">{s.lead}</p>
         <div class="ctas intro">
-          <a class="btn" href="#kontakt" data-magnet>{u.cta}</a>
-          <a class="more" href="#co-dostajesz">{u.seeWhat}</a>
+          <a class="btn" href={`#${t.ids.contact}`} data-magnet>{u.cta}</a>
+          <a class="more" href={`#${t.ids.gets}`}>{u.seeWhat}</a>
         </div>
         <p class="trust intro">{orgs.join('  ·  ')}</p>
       </div>
@@ -97,13 +97,13 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
         </ul>
         <p class="bridge" data-reveal>
           {lang === 'pl' ? 'Jeśli choć jedno się zgadza, warto porozmawiać.' : 'If even one of these rings true, let’s talk.'}
-          <a class="more" href="#kontakt">{u.cta}</a>
+          <a class="more" href={`#${t.ids.contact}`}>{u.cta}</a>
         </p>
       </div>
     </section>
 
     <!-- Deliverables -->
-    <section class="section section--gray" id="co-dostajesz" aria-labelledby="get-h">
+    <section class="section section--gray" id={t.ids.gets} aria-labelledby="get-h">
       <div class="wrap wrap--wide">
         <header class="head">
           <p class="eyebrow" data-reveal>{s.eyebrow}</p>

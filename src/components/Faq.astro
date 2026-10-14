@@ -5,7 +5,7 @@ const t = getDict(Astro.props.lang);
 const f = t.faq;
 ---
 
-<section class="section" id="faq" aria-labelledby="faq-h">
+<section class="section" id={t.ids.faq} aria-labelledby="faq-h">
   <div class="wrap">
     <header class="head">
       <p class="eyebrow" data-reveal>{f.label}</p>

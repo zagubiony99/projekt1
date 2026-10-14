@@ -66,7 +66,7 @@ const jsonLd = {
       '@id': `${site.url}/#website`,
       url: site.url,
       name: site.name,
-      inLanguage: ['pl-PL', 'en-US'],
+      inLanguage: ['pl-PL', 'en-GB'],
       publisher: { '@id': `${site.url}/#person` },
     },
     ...(isHome ? [] : extraLd),
@@ -76,7 +76,7 @@ const jsonLd = {
       url: canonical,
       name: t.meta.title,
       description: t.meta.description,
-      inLanguage: lang === 'pl' ? 'pl-PL' : 'en-US',
+      inLanguage: lang === 'pl' ? 'pl-PL' : 'en-GB',
       isPartOf: { '@id': `${site.url}/#website` },
       about: { '@id': `${site.url}/#business` },
     },
@@ -94,7 +94,7 @@ const jsonLd = {
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={lang === 'pl' ? 'pl' : 'en-GB'}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
