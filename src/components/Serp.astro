@@ -1,0 +1,211 @@
+---
+import { site } from '../config';
+import { getDict, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getDict(lang);
+const s = t.serp;
+const rivals = [
+  [38, 74, 92],
+  [30, 62, 86],
+  [44, 80, 70],
+  [26, 58, 88],
+  [34, 68, 76],
+];
+---
+
+<section class="section serp-sec" aria-labelledby="serp-h">
+  <div class="wrap grid">
+    <div class="copy">
+      <p class="pill" data-reveal>{s.pill}</p>
+      <h2 class="h2" id="serp-h" data-reveal>{s.title}</h2>
+      <p class="lead" data-reveal style="--d:1">{s.text}</p>
+      <button type="button" class="btn btn--forest replay" data-replay data-reveal style="--d:2">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v5h-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        {s.replay}
+      </button>
+    </div>
+
+    <div data-reveal style="--d:1">
+    <figure class="card" data-serp aria-label={s.label}>
+      <div class="search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="2.4" />
+          <path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" />
+        </svg>
+        <span class="q"><span data-q data-text={s.query}>{s.query}</span><i class="caret" aria-hidden="true"></i></span>
+      </div>
+      <ol class="list" data-list>
+        <li class="row me is-top" data-me>
+          <div class="me__head">
+            <span class="fav" aria-hidden="true">M</span>
+            <span class="url">{site.domain}</span>
+            <span class="badge" data-badge>#1</span>
+          </div>
+          <p class="me__title">{s.title2}</p>
+          <p class="me__snip">{s.snippet}</p>
+        </li>
+        {rivals.map((w) => (
+          <li class="row rival" aria-hidden="true">
+            {w.map((x, i) => <span class:list={['bar', { t: i === 1 }]} style={`--w:${x}%`} />)}
+          </li>
+        ))}
+      </ol>
+    </figure>
+    </div>
+  </div>
+</section>
+
+<style>
+  .serp-sec {
+    background: var(--coral);
+  }
+  .serp-sec .pill::before {
+    background: var(--forest);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: center;
+  }
+  .copy {
+    display: grid;
+    gap: 28px;
+    justify-items: start;
+  }
+  .copy .lead {
+    color: var(--forest);
+    opacity: 0.85;
+  }
+  .replay {
+    margin-top: 8px;
+  }
+  .card {
+    --rh: 96px;
+    padding: 20px;
+    border-radius: var(--r-lg);
+    background: var(--cream);
+    transform: rotate(1.2deg);
+    box-shadow: 0 30px 60px -30px rgb(10 31 25 / 0.55);
+  }
+  .search {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 22px;
+    border-radius: 999px;
+    background: var(--cream-2);
+    font-size: 1.125rem;
+    font-weight: 560;
+    box-shadow: 0 2px 0 rgb(15 43 35 / 0.08);
+  }
+  .q {
+    display: flex;
+    align-items: center;
+    min-height: 1.5em;
+  }
+  .caret {
+    width: 2.5px;
+    height: 1.15em;
+    margin-left: 2px;
+    border-radius: 2px;
+    background: var(--coral);
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+  .list {
+    margin-top: 12px;
+    display: grid;
+  }
+  .row {
+    position: relative;
+    height: var(--rh);
+    display: grid;
+    align-content: center;
+    gap: 8px;
+    padding-inline: 20px;
+    border-radius: var(--r);
+  }
+  .rival .bar {
+    display: block;
+    height: 9px;
+    width: var(--w);
+    border-radius: 9px;
+    background: rgb(15 43 35 / 0.1);
+  }
+  .rival .bar.t {
+    height: 13px;
+    background: rgb(15 43 35 / 0.18);
+  }
+  .me {
+    z-index: 1;
+    gap: 2px;
+    background: var(--cream-2);
+    transition: background-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  }
+  .me.is-top {
+    background: var(--lime);
+    box-shadow: 0 14px 30px -14px rgb(15 43 35 / 0.45);
+  }
+  .me__head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .fav {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 7px;
+    background: var(--forest);
+    color: var(--lime);
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+  .url {
+    font-size: 0.875rem;
+    opacity: 0.75;
+  }
+  .badge {
+    margin-left: auto;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--forest);
+    color: var(--cream);
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+  .me.is-top .badge {
+    background: var(--coral);
+    color: var(--forest);
+  }
+  .me__title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .me__snip {
+    font-size: 0.9375rem;
+    opacity: 0.75;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @media (max-width: 960px) {
+    .grid { grid-template-columns: 1fr; }
+    .card { transform: none; }
+  }
+  @media (max-width: 560px) {
+    .card { --rh: 88px; padding: 12px; }
+    .row { padding-inline: 14px; }
+  }
+</style>

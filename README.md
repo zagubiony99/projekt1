@@ -20,12 +20,12 @@ npm run preview   # podgląd wersji produkcyjnej
 | Imię, e-mail, LinkedIn, zdjęcie | `src/config.ts` |
 | Wszystkie teksty PL | `src/i18n/pl.ts` |
 | Wszystkie teksty EN | `src/i18n/en.ts` |
-| Kolory, fonty, siatka | `src/styles/global.css` (zmienne w `:root`) |
+| Kolory (zieleń, krem, limonka, koral), font, przyciski | `src/styles/global.css` (zmienne w `:root`) |
 | Sekcje strony | `src/components/*.astro` |
-| Interakcje (animacja SERP, scroll, formularz) | `src/scripts/main.ts` |
+| Interakcje (symulacja wyników, manifest przy scrollu, formularz) | `src/scripts/main.ts` |
 | Grafiki do udostępniania (OG) | `public/og-pl.png`, `public/og-en.png` |
 
-**Zdjęcie:** wrzuć plik do `public/` (np. `public/maciej.jpg`) i ustaw `photo: '/maciej.jpg'` w `src/config.ts`. Zastąpi typograficzny placeholder „MZ” w sekcji „O mnie”.
+**Zdjęcie:** wrzuć plik do `public/` (np. `public/maciej.jpg`) i ustaw `photo: '/maciej.jpg'` w `src/config.ts`. Zastąpi placeholder z inicjałami „MZ” w sekcji „O mnie”.
 
 ## Adresy URL
 

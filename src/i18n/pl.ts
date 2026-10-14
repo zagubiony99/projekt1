@@ -14,30 +14,29 @@ export const pl = {
     about: 'O mnie',
     faq: 'FAQ',
     contact: 'Kontakt',
-    cta: 'Umów rozmowę',
+    cta: 'Pogadajmy',
     switchLabel: 'English version',
     menu: 'Menu',
     close: 'Zamknij',
   },
   hero: {
-    eyebrow: 'Konsulting SEO — PL / EN',
-    titleA: 'Pierwsza',
-    titleB: 'strona to',
-    titleC: 'za',
-    titleAccent: 'mało.',
+    pill: 'Konsultant SEO · PL / EN',
+    title: [{ t: 'Twoja firma na ' }, { t: 'pierwszej', hl: true }, { t: ' stronie. I w kasie.' }],
+    sticker: ['SEO', '+ AI', 'search'],
     lead:
-      'Pozycja w Google to środek, nie cel. Buduję widoczność, która kończy się zapytaniem ofertowym i sprzedażą — a nie ładnym wykresem w raporcie.',
+      'Konsultant SEO, który mówi po ludzku. Audyty, strategia treści i widoczność w Google oraz ChatGPT — tak, żeby ruch kończył się zapytaniem, a nie tylko ładnym wykresem.',
     ctaPrimary: 'Umów bezpłatną rozmowę',
-    ctaSecondary: 'Zobacz, co robię',
-    serp: {
-      query: 'konsultant seo',
-      label: 'Wyniki wyszukiwania — symulacja',
-      position: 'pozycja',
-      title: 'Maciej Zięciak — konsultant SEO',
-      snippet: 'Audyty techniczne, strategia treści i widoczność w AI search. Ruch, który zarabia.',
-      replay: 'Odtwórz ponownie',
-      caption: 'Ilustracja. Nikt uczciwy nie gwarantuje pozycji — gwarantuję metodę.',
-    },
+    ctaSecondary: 'Co robię?',
+  },
+  serp: {
+    pill: 'Symulacja',
+    title: 'Z dalszych stron prosto na górę.',
+    text: 'Tak wygląda kierunek, w którym pracuję: Twoja strona tam, gdzie klienci naprawdę klikają. Nikt uczciwy nie gwarantuje pozycji — ja gwarantuję metodę i pełną przejrzystość.',
+    query: 'konsultant seo',
+    label: 'Wyniki wyszukiwania — symulacja',
+    title2: 'Maciej Zięciak — konsultant SEO',
+    snippet: 'Audyty techniczne, strategia treści i widoczność w AI search.',
+    replay: 'Odtwórz jeszcze raz',
   },
   ticker: [
     'Technical SEO',
@@ -53,8 +52,8 @@ export const pl = {
   ],
   services: {
     label: 'Usługi',
-    title: 'Co mogę dla Ciebie zrobić',
-    intro: 'Sześć obszarów, w których najczęściej przynoszę największą różnicę. Rozwiń, żeby zobaczyć szczegóły.',
+    title: 'W czym pomagam',
+    intro: 'Sześć obszarów, w których robię największą różnicę. Możesz wziąć jeden albo wszystkie.',
     deliverablesLabel: 'Dostajesz',
     timeLabel: 'Czas',
     items: [
@@ -120,7 +119,7 @@ export const pl = {
   },
   process: {
     label: 'Proces',
-    title: 'Od diagnozy do wyniku',
+    title: 'Jak pracuję',
     intro: 'Bez magii i bez czarnych skrzynek. Na każdym etapie wiesz, co robię, dlaczego i co z tego wynika.',
     steps: [
       {
@@ -191,7 +190,7 @@ export const pl = {
   },
   contact: {
     label: 'Kontakt',
-    title: 'Porozmawiajmy o Twoim ruchu.',
+    title: 'Pogadajmy.',
     lead: 'Napisz kilka zdań o firmie i o tym, co chcesz osiągnąć. Pierwsza rozmowa jest bezpłatna i do niczego nie zobowiązuje.',
     topicsLabel: 'Czego potrzebujesz?',
     topics: ['Audyt', 'Strategia treści', 'AI search', 'E-commerce', 'Migracja', 'Stała współpraca'],

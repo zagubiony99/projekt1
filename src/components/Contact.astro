@@ -9,12 +9,11 @@ const c = t.contact;
 <section class="section contact" id="kontakt" aria-labelledby="kontakt-h">
   <div class="wrap grid">
     <div class="left">
-      <p class="label">(07) {c.label}</p>
-      <h2 class="display" id="kontakt-h">{c.title}</h2>
+      <h2 id="kontakt-h">{c.title}</h2>
       <p class="lead">{c.lead}</p>
       <div class="direct">
-        <p class="mono">{c.orEmail}</p>
-        <a class="mail" href={`mailto:${site.email}`}>{site.email}</a>
+        <p>{c.orEmail}</p>
+        <a class="mail" href={`mailto:${site.email}`}>{site.email} <span aria-hidden="true">↗</span></a>
       </div>
     </div>
 
@@ -30,10 +29,10 @@ const c = t.contact;
     >
       <input type="hidden" name="subject" value={c.subject} />
       <fieldset>
-        <legend class="mono">{c.topicsLabel}</legend>
+        <legend>{c.topicsLabel}</legend>
         <div class="chips">
           {c.topics.map((tp) => (
-            <label class="chip">
+            <label class="tchip">
               <input type="checkbox" name="topic" value={tp} />
               <span>{tp}</span>
             </label>
@@ -41,71 +40,77 @@ const c = t.contact;
         </div>
       </fieldset>
       <label class="field">
-        <span class="mono">{c.urlLabel}</span>
+        <span>{c.urlLabel}</span>
         <input type="url" name="url" placeholder={c.urlPlaceholder} autocomplete="url" inputmode="url" />
       </label>
       <label class="field">
-        <span class="mono">{c.msgLabel}</span>
+        <span>{c.msgLabel}</span>
         <textarea name="body" rows="4" placeholder={c.msgPlaceholder} required></textarea>
       </label>
-      <button class="btn submit" type="submit">{c.submit}<span class="arrow" aria-hidden="true">→</span></button>
+      <button class="btn btn--lime submit" type="submit">{c.submit} <span class="arrow" aria-hidden="true">→</span></button>
     </form>
   </div>
 </section>
 
 <style>
   .contact {
-    background: var(--signal);
-    color: var(--ink);
-    border-top: 1px solid var(--ink);
+    background: var(--lime);
+    color: var(--forest);
   }
   .contact ::selection {
-    background: var(--ink);
-    color: var(--signal);
-  }
-  .contact .label::before {
-    background: var(--ink);
+    background: var(--forest);
+    color: var(--lime);
   }
   .grid {
-    row-gap: 64px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
   }
   .left {
-    grid-column: 1 / span 6;
     display: grid;
     gap: 28px;
-    align-content: start;
+    justify-items: start;
   }
-  .left h2 {
-    font-size: clamp(3.25rem, 1.2rem + 7vw, 10rem);
+  h2 {
+    font-size: clamp(4rem, 1.4rem + 10vw, 12rem);
+    line-height: 0.85;
+    letter-spacing: -0.06em;
+    font-weight: 800;
+  }
+  .lead {
+    max-width: 30ch;
   }
   .direct {
-    margin-top: 24px;
+    margin-top: 12px;
     display: grid;
-    gap: 8px;
+    gap: 6px;
+  }
+  .direct p {
+    font-weight: 550;
+    opacity: 0.7;
   }
   .mail {
-    justify-self: start;
-    font-size: clamp(1.375rem, 0.9rem + 1.8vw, 2.5rem);
-    font-weight: 650;
-    font-stretch: 80%;
-    letter-spacing: -0.01em;
-    border-bottom: 2px solid var(--ink);
-    word-break: break-all;
-    transition: color 0.3s, border-color 0.3s;
+    font-size: clamp(1.375rem, 1rem + 1.4vw, 2.25rem);
+    font-weight: 760;
+    letter-spacing: -0.035em;
+    word-break: break-word;
+    background: linear-gradient(var(--forest), var(--forest)) 0 100% / 100% 3px no-repeat;
+    transition: background-size 0.4s var(--ease);
   }
   .mail:hover {
-    color: var(--paper);
-    border-color: var(--paper);
+    background-size: 0 3px;
+    background-position: 100% 100%;
   }
   .form {
-    grid-column: 8 / -1;
     display: grid;
-    gap: 32px;
-    align-content: start;
-    padding: clamp(24px, 3vw, 40px);
-    background: var(--paper);
-    box-shadow: 10px 10px 0 var(--ink);
-    outline: 1px solid var(--ink);
+    gap: 28px;
+    padding: clamp(24px, 3vw, 44px);
+    border-radius: var(--r-lg);
+    background: var(--forest);
+    color: var(--cream);
+    transform: rotate(1deg);
+    box-shadow: 0 30px 60px -30px rgb(10 31 25 / 0.6);
   }
   fieldset {
     border: 0;
@@ -113,44 +118,45 @@ const c = t.contact;
     padding: 0;
   }
   legend,
-  .field > .mono {
+  .field > span {
     display: block;
     margin-bottom: 12px;
-    color: var(--ink-2);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--mist);
   }
   .chips {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
   }
-  .chip input {
+  .tchip input {
     position: absolute;
     opacity: 0;
     pointer-events: none;
   }
-  .chip span {
+  .tchip span {
     display: inline-block;
-    padding: 9px 14px;
-    box-shadow: inset 0 0 0 1px var(--ink);
-    font-size: 0.875rem;
-    font-weight: 500;
+    padding: 10px 16px;
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 1.5px rgb(244 239 227 / 0.35);
+    font-size: 0.9375rem;
+    font-weight: 560;
     cursor: pointer;
     user-select: none;
-    transition: background-color 0.25s, color 0.25s;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.3s var(--spring);
   }
-  .chip:hover span {
-    background: var(--paper-2);
+  .tchip:hover span {
+    box-shadow: inset 0 0 0 1.5px var(--cream);
   }
-  .chip input:checked + span {
-    background: var(--ink);
-    color: var(--paper);
+  .tchip input:checked + span {
+    background: var(--lime);
+    color: var(--forest);
+    box-shadow: none;
+    transform: rotate(-2deg);
   }
-  .chip input:checked + span::before {
-    content: '✓ ';
-    color: var(--signal);
-  }
-  .chip input:focus-visible + span {
-    outline: 2px solid var(--signal);
+  .tchip input:focus-visible + span {
+    outline: 3px solid var(--coral);
     outline-offset: 2px;
   }
   .field {
@@ -159,30 +165,30 @@ const c = t.contact;
   .field input,
   .field textarea {
     width: 100%;
-    padding: 10px 0;
-    background: transparent;
-    border: 0;
-    border-bottom: 1px solid var(--ink);
-    border-radius: 0;
-    font-size: 1.125rem;
+    padding: 16px 18px;
+    border: 1.5px solid transparent;
+    border-radius: var(--r-sm);
+    background: var(--forest-2);
+    color: var(--cream);
+    font-size: 1.0625rem;
     resize: vertical;
-    transition: border-color 0.3s;
+    transition: border-color 0.2s, background-color 0.2s;
   }
   .field input::placeholder,
   .field textarea::placeholder {
-    color: rgb(14 14 12 / 0.38);
+    color: rgb(244 239 227 / 0.45);
   }
   .field input:focus,
   .field textarea:focus {
     outline: none;
-    border-bottom-color: var(--signal);
-    box-shadow: 0 1px 0 var(--signal);
+    border-color: var(--lime);
+    background: #1b4337;
   }
   .submit {
     justify-self: start;
   }
-  @media (max-width: 1080px) {
-    .left, .form { grid-column: 1 / -1; }
-    .form { margin-right: 10px; }
+  @media (max-width: 960px) {
+    .grid { grid-template-columns: 1fr; }
+    .form { transform: none; }
   }
 </style>

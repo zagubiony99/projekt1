@@ -2,36 +2,32 @@
 import { site } from '../config';
 import { getDict, type Lang } from '../i18n';
 interface Props { lang: Lang }
-const t = getDict(Astro.props.lang);
+const { lang } = Astro.props;
+const t = getDict(lang);
 const a = t.about;
 ---
 
-<section class="section" id="o-mnie" aria-labelledby="o-mnie-h">
+<section class="section about" id="o-mnie" aria-labelledby="o-mnie-h">
   <div class="wrap grid">
-    <figure class="fig" data-reveal>
+    <figure class="pic" data-reveal>
       {site.photo ? (
         <img src={site.photo} alt={site.name} width="800" height="1000" loading="lazy" decoding="async" />
       ) : (
-        <div class="mono-portrait" aria-hidden="true">
-          <span class="display m">M</span>
-          <span class="display z">Z</span>
-          <i class="sq"></i>
+        <div class="initials" aria-hidden="true">
+          <span>MZ</span>
         </div>
       )}
-      <figcaption class="mono">
-        <span>Fig. 05</span>
-        <span>{site.name}</span>
-      </figcaption>
+      <span class="hi" aria-hidden="true">{lang === 'pl' ? 'Cześć!' : 'Hi!'}</span>
     </figure>
 
     <div class="copy">
-      <p class="label" data-reveal>(05) {a.label}</p>
-      <h2 class="display h2 title" id="o-mnie-h" data-reveal>{a.title}</h2>
+      <p class="pill" data-reveal>{a.label}</p>
+      <h2 class="h2" id="o-mnie-h" data-reveal>{a.title}</h2>
       {a.paragraphs.map((p, i) => <p class="p" data-reveal style={`--d:${i + 1}`}>{p}</p>)}
       <dl class="facts" data-reveal style="--d:2">
         {a.facts.map((f) => (
           <div>
-            <dt class="mono">{f.k}</dt>
+            <dt>{f.k}</dt>
             <dd>{f.v}</dd>
           </div>
         ))}
@@ -41,106 +37,101 @@ const a = t.about;
 </section>
 
 <style>
-  .grid {
-    row-gap: 56px;
+  .about {
+    background: var(--cream-2);
   }
-  .fig {
-    grid-column: 1 / span 5;
-    align-self: start;
+  .grid {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
+  }
+  .pic {
     position: sticky;
     top: 110px;
   }
-  .fig img {
+  .pic img,
+  .initials {
     width: 100%;
     aspect-ratio: 4 / 5;
+    border-radius: var(--r-lg);
     object-fit: cover;
-    filter: grayscale(1) contrast(1.15);
   }
-  .mono-portrait {
-    position: relative;
-    aspect-ratio: 4 / 5;
-    background: var(--ink);
-    color: var(--paper);
+  .initials {
+    display: grid;
+    place-items: center;
+    background: var(--forest);
+    color: var(--lime);
     overflow: hidden;
     container-type: inline-size;
   }
-  .mono-portrait .display {
+  .initials span {
+    font-size: 52cqw;
+    font-weight: 800;
+    letter-spacing: -0.07em;
+    line-height: 1;
+    transform: rotate(-6deg);
+  }
+  .hi {
     position: absolute;
-    font-size: 92cqw;
-    line-height: 0.72;
-  }
-  .m {
-    left: 0.04em;
-    top: 0.06em;
-  }
-  .z {
-    right: 0.05em;
-    bottom: 0.03em;
-    color: transparent;
-    -webkit-text-stroke: 1.5px var(--paper);
-  }
-  .sq {
-    position: absolute;
-    right: 9%;
-    top: 9%;
-    width: 13%;
-    aspect-ratio: 1;
-    background: var(--signal);
-  }
-  .fig figcaption {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 12px;
-    border-top: 1px solid var(--ink);
-    margin-top: 12px;
-    color: var(--ink-2);
+    right: -14px;
+    bottom: 36px;
+    padding: 14px 22px;
+    border-radius: 999px;
+    background: var(--coral);
+    font-size: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
+    font-weight: 780;
+    letter-spacing: -0.03em;
+    transform: rotate(-8deg);
+    box-shadow: 0 12px 30px -12px rgb(10 31 25 / 0.5);
   }
   .copy {
-    grid-column: 7 / -1;
     display: grid;
-    gap: 28px;
-    align-content: start;
+    gap: 24px;
+    justify-items: start;
   }
-  .title {
-    font-size: clamp(3rem, 1.4rem + 5vw, 7.5rem);
-    margin-bottom: 12px;
+  .copy .h2 {
+    margin-bottom: 8px;
   }
   .p {
     font-size: var(--fs-lead);
     line-height: 1.45;
-    font-stretch: 94%;
     max-width: 38ch;
+    color: var(--ink-soft);
   }
-  .p:first-of-type::first-letter {
-    float: left;
-    font-family: var(--f-serif);
-    font-style: italic;
-    font-size: 4.6em;
-    line-height: 0.78;
-    margin: 0.04em 0.08em 0 0;
-    color: var(--signal);
+  .p:first-of-type {
+    color: var(--forest);
   }
   .facts {
-    margin-top: 24px;
-    border-top: 1px solid var(--ink);
+    margin-top: 16px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
   }
   .facts div {
-    display: grid;
-    grid-template-columns: minmax(130px, 1fr) 2fr;
-    gap: 16px;
-    padding-block: 16px;
-    border-bottom: 1px solid var(--line);
+    padding: 20px 22px;
+    border-radius: var(--r);
+    background: var(--cream);
   }
   .facts dt {
-    color: var(--ink-2);
-    padding-top: 0.3em;
+    font-size: 0.875rem;
+    font-weight: 550;
+    opacity: 0.65;
   }
   .facts dd {
-    font-weight: 560;
-    font-stretch: 90%;
+    margin-top: 4px;
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
   }
-  @media (max-width: 960px) {
-    .fig, .copy { grid-column: 1 / -1; }
-    .fig { position: static; max-width: 520px; }
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; }
+    .pic { position: relative; top: 0; max-width: 420px; }
+    .hi { right: 12px; }
+  }
+  @media (max-width: 520px) {
+    .facts { grid-template-columns: 1fr; }
   }
 </style>

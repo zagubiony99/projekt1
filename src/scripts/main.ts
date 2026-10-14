@@ -35,23 +35,16 @@ document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
 
 /* ---------- Scroll-linked effects (single rAF loop) ---------- */
 const scrub = document.querySelector<HTMLElement>('[data-scrub]');
-const steps = document.querySelector<HTMLElement>('[data-steps]');
-const rail = document.querySelector<HTMLElement>('[data-rail]');
 const word = document.querySelector<HTMLElement>('[data-word]');
 
-// Size the wordmark once, at its final (heaviest) weight, so the scroll-driven weight change never alters page height.
+// Fit the footer wordmark to the container width.
 const wordSpan = word?.querySelector('span');
-const WG_MAX = 860;
 const fitWord = () => {
   if (!word || !wordSpan) return;
-  const prev = word.style.getPropertyValue('--wg');
   word.style.fontSize = '';
-  word.style.setProperty('--wg', String(WG_MAX));
   const size = parseFloat(getComputedStyle(word).fontSize);
   const w = wordSpan.getBoundingClientRect().width;
   if (w > 0) word.style.fontSize = `${(size * word.clientWidth) / w}px`;
-  if (prev) word.style.setProperty('--wg', prev);
-  else word.style.removeProperty('--wg');
 };
 fitWord();
 document.fonts?.ready.then(fitWord);
@@ -70,17 +63,6 @@ const onScroll = () => {
   if (scrub) {
     const r = scrub.getBoundingClientRect();
     scrub.style.setProperty('--p', (clamp((vh * 0.85 - r.top) / (r.height * 0.85)) * 1.08).toFixed(4));
-  }
-  if (steps && rail) {
-    const r = steps.getBoundingClientRect();
-    rail.style.setProperty('--r', clamp((vh * 0.6 - r.top) / r.height).toFixed(4));
-  }
-  if (word) {
-    const r = word.getBoundingClientRect();
-    if (r.top < vh && r.bottom > 0) {
-      const p = clamp((vh - r.top) / (vh * 0.7));
-      word.style.setProperty('--wg', String(Math.round(160 + (WG_MAX - 160) * p)));
-    }
   }
 };
 const requestTick = () => {
@@ -141,7 +123,7 @@ if (serp) {
     }
     if (id !== run) return;
     me.classList.add('is-top');
-    badge.textContent = `#1 ▲${n - 1}`;
+    badge.textContent = `#1 ↑${n - 1}`;
   };
 
   if (!reduce) {

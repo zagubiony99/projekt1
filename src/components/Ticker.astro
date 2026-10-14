@@ -4,12 +4,15 @@ interface Props { lang: Lang }
 const t = getDict(Astro.props.lang);
 ---
 
-<div class="ticker" role="presentation">
+<div class="ticker">
   <p class="sr-only">{t.ticker.join(', ')}</p>
-  {[0, 1].map((k) => (
-    <ul class="track display" aria-hidden="true">
+  {[0, 1].map(() => (
+    <ul class="track" aria-hidden="true">
       {t.ticker.map((item) => (
-        <li>{item}<span class="star">✳</span></li>
+        <li>
+          {item}
+          <svg viewBox="0 0 24 24" class="star"><path d="M12 0C13 8 16 11 24 12 16 13 13 16 12 24 11 16 8 13 0 12 8 11 11 8 12 0Z" /></svg>
+        </li>
       ))}
     </ul>
   ))}
@@ -19,17 +22,18 @@ const t = getDict(Astro.props.lang);
   .ticker {
     display: flex;
     overflow: hidden;
-    background: var(--signal);
-    color: var(--ink);
-    border-block: 1px solid var(--ink);
-    padding-block: clamp(14px, 1.6vw, 22px);
+    background: var(--lime);
+    color: var(--forest);
+    padding-block: clamp(10px, 1.2vw, 18px) clamp(22px, 2.4vw, 34px);
   }
   .track {
     flex: none;
     display: flex;
-    font-size: clamp(2.25rem, 1.2rem + 3.6vw, 4.75rem);
+    font-size: clamp(1.75rem, 1rem + 2.6vw, 3.5rem);
+    font-weight: 760;
+    letter-spacing: -0.04em;
     line-height: 1;
-    animation: marquee 48s linear infinite;
+    animation: marquee 44s linear infinite;
   }
   .ticker:hover .track {
     animation-play-state: paused;
@@ -40,11 +44,11 @@ const t = getDict(Astro.props.lang);
     white-space: nowrap;
   }
   .star {
-    display: inline-block;
-    margin-inline: 0.45em;
-    font-family: var(--f-mono);
-    font-size: 0.5em;
-    animation: spin 8s linear infinite;
+    width: 0.6em;
+    height: 0.6em;
+    margin-inline: 0.5em;
+    fill: var(--forest);
+    animation: spin 10s linear infinite;
   }
   @keyframes marquee {
     to { transform: translateX(-100%); }

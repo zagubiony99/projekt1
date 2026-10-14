@@ -3,187 +3,148 @@ import { getDict, type Lang } from '../i18n';
 interface Props { lang: Lang }
 const t = getDict(Astro.props.lang);
 const s = t.services;
+// Bento: each card gets its own colour + footprint.
+const looks = ['forest wide', 'lime', 'coral', 'sand', 'sand', 'forest2 full'];
 ---
 
 <section class="section" id="uslugi" aria-labelledby="uslugi-h">
   <div class="wrap">
-    <header class="grid head">
-      <p class="label" data-reveal>(02) {s.label}</p>
-      <h2 class="display h2" id="uslugi-h" data-reveal>{s.title}</h2>
-      <p class="lead muted" data-reveal style="--d:1">{s.intro}</p>
+    <header class="head">
+      <h2 class="h2" id="uslugi-h" data-reveal>{s.title}</h2>
+      <p class="lead" data-reveal style="--d:1">{s.intro}</p>
     </header>
 
-    <ol class="list">
+    <ul class="bento">
       {s.items.map((it, i) => (
-        <li data-reveal style={`--d:${i % 3}`}>
-          <details class="svc" name="svc" open={i === 0}>
-            <summary>
-              <span class="n mono">{String(i + 1).padStart(2, '0')}</span>
-              <span class="name display">{it.name}</span>
-              <span class="tag mono">{it.tag}</span>
-              <span class="plus" aria-hidden="true"></span>
-            </summary>
-            <div class="body grid">
-              <p class="desc">{it.desc}</p>
-              <div class="meta">
-                <p class="mono k">{s.deliverablesLabel}</p>
-                <ul>
-                  {it.deliverables.map((d) => <li>{d}</li>)}
-                </ul>
-              </div>
-              <div class="meta">
-                <p class="mono k">{s.timeLabel}</p>
-                <p class="time">{it.time}</p>
-              </div>
-            </div>
-          </details>
+        <li class:list={['card', looks[i]]} data-reveal style={`--d:${i % 3}`}>
+          <p class="tag">{it.tag}</p>
+          <h3>{it.name}</h3>
+          <p class="desc">{it.desc}</p>
+          <ul class="dl" aria-label={s.deliverablesLabel}>
+            {it.deliverables.map((d) => <li>{d}</li>)}
+          </ul>
+          <p class="time"><span>{s.timeLabel}:</span> {it.time}</p>
         </li>
       ))}
-    </ol>
+    </ul>
   </div>
 </section>
 
 <style>
   .head {
-    row-gap: 24px;
-    margin-bottom: clamp(48px, 7vw, 112px);
-    align-items: end;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-bottom: clamp(40px, 5vw, 72px);
   }
-  .head .label { grid-column: 1 / -1; }
-  .head h2 { grid-column: 1 / span 8; }
-  .head .lead { grid-column: 9 / -1; justify-self: end; }
-
-  .list {
-    border-top: 1px solid var(--ink);
+  .head .lead {
+    color: var(--ink-soft);
   }
-  .list > li {
-    border-bottom: 1px solid var(--ink);
-  }
-  summary {
-    position: relative;
+  .bento {
     display: grid;
-    grid-template-columns: 72px 1fr auto 56px;
-    align-items: center;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: clamp(12px, 1.4vw, 20px);
+  }
+  .card {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
     gap: 16px;
-    padding: clamp(18px, 2.4vw, 30px) 0;
-    cursor: pointer;
-    list-style: none;
-    isolation: isolate;
-    transition: color 0.4s var(--ease), padding 0.4s var(--ease);
+    padding: clamp(24px, 2.6vw, 40px);
+    border-radius: var(--r-lg);
+    background: var(--cream-2);
+    color: var(--forest);
+    transition:
+      transform 0.5s var(--spring),
+      box-shadow 0.5s var(--ease);
   }
-  summary::-webkit-details-marker { display: none; }
-  summary::before {
-    content: '';
-    position: absolute;
-    inset: 0 calc(-1 * var(--gutter));
-    z-index: -1;
-    background: var(--ink);
-    clip-path: inset(100% 0 0 0);
-    transition: clip-path 0.5s var(--ease);
+  .card:hover {
+    transform: translateY(-6px) rotate(-0.8deg);
+    box-shadow: 0 24px 50px -24px rgb(10 31 25 / 0.5);
   }
-  @media (hover: hover) {
-    summary:hover {
-      color: var(--paper);
-      padding-left: 12px;
-    }
-    summary:hover::before {
-      clip-path: inset(0 0 0 0);
-    }
-    summary:hover .plus { background: var(--signal); }
+  .card:nth-child(even):hover {
+    transform: translateY(-6px) rotate(0.8deg);
   }
-  .n { color: inherit; opacity: 0.6; }
-  .name {
-    font-size: clamp(2.25rem, 1rem + 4.6vw, 6rem);
-    line-height: 0.9;
+  .wide { grid-column: span 7; }
+  .lime { grid-column: span 5; background: var(--lime); }
+  .coral { background: var(--coral); }
+  .forest { background: var(--forest); color: var(--cream); }
+  .forest2 { background: var(--forest-2); color: var(--cream); }
+  .full {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 48px;
+    align-items: start;
   }
-  .tag {
-    padding: 6px 10px;
-    box-shadow: inset 0 0 0 1px currentColor;
-    font-size: 0.6875rem;
-    white-space: nowrap;
-  }
-  .plus {
-    position: relative;
-    justify-self: end;
-    width: 44px;
-    height: 44px;
-    background: var(--paper-2);
-    transition: background-color 0.3s, transform 0.5s var(--ease);
-  }
-  .plus::before,
-  .plus::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 16px;
-    height: 2px;
-    background: var(--ink);
-    translate: -50% -50%;
-  }
-  .plus::after { rotate: 90deg; }
-  details[open] .plus {
-    background: var(--signal);
-  }
-  .plus::before,
-  .plus::after {
-    transition: rotate 0.5s var(--ease);
-  }
-  details[open] .plus::before { rotate: 45deg; }
-  details[open] .plus::after { rotate: 135deg; }
+  .full .tag, .full h3 { grid-column: 1; justify-self: start; }
+  .full .desc, .full .dl, .full .time { grid-column: 2; }
+  .full h3 { grid-row: 2 / span 3; align-self: start; }
+  .full .tag { grid-row: 1; }
 
-  .body {
-    padding: 4px 0 clamp(28px, 3.4vw, 48px);
-    row-gap: 28px;
+  .tag {
+    align-self: flex-start;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgb(15 43 35 / 0.1);
+    font-size: 0.875rem;
+    font-weight: 600;
   }
-  details[open] .body {
-    animation: open 0.6s var(--ease);
+  .forest .tag, .forest2 .tag {
+    background: rgb(244 239 227 / 0.14);
   }
-  @keyframes open {
-    from { opacity: 0; transform: translateY(-10px); }
+  h3 {
+    font-size: clamp(2rem, 1.3rem + 2.2vw, 3.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+    font-weight: 780;
+    text-wrap: balance;
+  }
+  .wide h3, .full h3 {
+    font-size: clamp(2.5rem, 1.4rem + 3.4vw, 5rem);
   }
   .desc {
-    grid-column: 2 / span 5;
-    font-size: var(--fs-lead);
-    line-height: 1.4;
-    font-stretch: 92%;
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    opacity: 0.85;
+    max-width: 46ch;
   }
-  .meta:nth-of-type(1) { grid-column: 8 / span 3; }
-  .meta:nth-of-type(2) { grid-column: 11 / span 2; }
-  .k {
-    color: var(--ink-2);
-    margin-bottom: 12px;
+  .dl {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 8px;
   }
-  .meta ul li {
-    position: relative;
-    padding: 8px 0 8px 22px;
-    border-top: 1px solid var(--line);
-    font-size: 0.9375rem;
+  .dl li {
+    padding: 7px 13px;
+    border-radius: 999px;
+    border: 1.5px solid currentColor;
+    font-size: 0.875rem;
+    font-weight: 520;
+    line-height: 1.25;
   }
-  .meta ul li::before {
-    content: '→';
-    position: absolute;
-    left: 0;
-    color: var(--signal);
-    font-family: var(--f-mono);
+  .forest .dl li, .forest2 .dl li {
+    border-color: rgb(244 239 227 / 0.4);
   }
   .time {
-    font-size: clamp(1.5rem, 1rem + 1.4vw, 2.25rem);
-    font-stretch: 70%;
+    font-size: 1.125rem;
     font-weight: 700;
-    text-transform: uppercase;
-    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .time span {
+    font-weight: 450;
+    opacity: 0.7;
   }
 
-  @media (max-width: 1080px) {
-    .head h2, .head .lead { grid-column: 1 / -1; justify-self: start; }
-    .desc { grid-column: 1 / -1; }
-    .meta:nth-of-type(1) { grid-column: 1 / span 8; }
-    .meta:nth-of-type(2) { grid-column: 9 / -1; }
+  @media (max-width: 1060px) {
+    .card, .wide, .lime { grid-column: span 6; }
+    .full { grid-column: 1 / -1; }
   }
-  @media (max-width: 640px) {
-    summary { grid-template-columns: 36px 1fr 44px; }
-    .tag { display: none; }
-    .meta:nth-of-type(1), .meta:nth-of-type(2) { grid-column: 1 / -1; }
+  @media (max-width: 720px) {
+    .card, .wide, .lime, .full { grid-column: 1 / -1; }
+    .full { display: flex; }
   }
 </style>

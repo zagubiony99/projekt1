@@ -3,129 +3,142 @@ import { getDict, type Lang } from '../i18n';
 interface Props { lang: Lang }
 const t = getDict(Astro.props.lang);
 const p = t.process;
+// Simple line icons, one per step: magnifier, map, wrench, chart.
+const icons = [
+  '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/>',
+  '<path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20Z"/><path d="M9 4v13.5M15 6.5V20"/>',
+  '<path d="M14.5 6.5a4 4 0 0 0 5 5L12 19a2.1 2.1 0 0 1-3-3l7.5-7.5Z"/><path d="M14.5 6.5 17 4"/>',
+  '<path d="M4 20V4M4 20h16"/><path d="m7 15 4-4 3 3 5-6"/>',
+];
 ---
 
-<section class="section night" id="proces" aria-labelledby="proces-h">
-  <div class="wrap grid">
+<section class="section" id="proces" aria-labelledby="proces-h">
+  <div class="wrap">
     <header class="head">
-      <p class="label">(04) {p.label}</p>
-      <h2 class="display h2" id="proces-h">{p.title}</h2>
-      <p class="lead">{p.intro}</p>
+      <h2 class="h2" id="proces-h" data-reveal>{p.title}</h2>
+      <p class="lead" data-reveal style="--d:1">{p.intro}</p>
     </header>
 
-    <div class="steps" data-steps>
-      <span class="rail" aria-hidden="true"><i data-rail></i></span>
-      <ol>
+    <ol class="steps">
       {p.steps.map((s, i) => (
-        <li class="step" data-reveal>
-          <span class="num display" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-          <div class="step__body">
-            <p class="when mono">{s.when}</p>
-            <h3 class="display name">{s.name}</h3>
-            <p class="desc">{s.desc}</p>
-            <p class="out mono"><span>→</span> {s.out}</p>
+        <li class="step" data-reveal style={`--d:${i}`}>
+          <div class="top">
+            <span class="ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={icons[i]} />
+            </span>
+            <span class="when">{s.when}</span>
           </div>
+          <h3>{s.name}</h3>
+          <p class="desc">{s.desc}</p>
+          <p class="out"><span aria-hidden="true">→</span>{s.out}</p>
         </li>
       ))}
-      </ol>
-    </div>
+    </ol>
   </div>
 </section>
 
 <style>
-  .night {
-    background: var(--ink);
-    color: var(--paper);
-  }
-  .night ::selection {
-    color: var(--ink);
-  }
   .head {
-    grid-column: 1 / span 5;
-    align-self: start;
-    position: sticky;
-    top: 120px;
-    display: grid;
-    gap: 28px;
-  }
-  .head .h2 {
-    font-size: clamp(3rem, 1.4rem + 5.6vw, 8rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-bottom: clamp(40px, 5vw, 72px);
   }
   .head .lead {
-    color: rgb(236 235 228 / 0.7);
+    color: var(--ink-soft);
   }
   .steps {
-    grid-column: 7 / -1;
-    position: relative;
-    padding-left: clamp(28px, 4vw, 64px);
-  }
-  .rail {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: var(--night-line);
-  }
-  .rail i {
-    position: absolute;
-    inset: 0;
-    background: var(--signal);
-    transform-origin: 50% 0;
-    transform: scaleY(var(--r, 1));
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(12px, 1.4vw, 20px);
   }
   .step {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: clamp(24px, 2.2vw, 32px);
+    border-radius: var(--r-lg);
+    background: var(--cream-2);
+    transition: background-color 0.35s, transform 0.5s var(--spring);
+  }
+  .step:hover {
+    background: var(--lime);
+    transform: translateY(-6px) rotate(-1deg);
+  }
+  .step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 50px;
+    right: calc(-1 * clamp(12px, 1.4vw, 20px));
+    width: clamp(12px, 1.4vw, 20px);
+    height: 3px;
+    background: var(--forest);
+    z-index: 1;
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .ic {
     display: grid;
-    grid-template-columns: clamp(4.2rem, 2.2rem + 6.4vw, 9.6rem) 1fr;
-    gap: clamp(12px, 2vw, 32px);
-    padding-block: clamp(32px, 4vw, 64px);
-    border-bottom: 1px solid var(--night-line);
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    background: var(--forest);
+    color: var(--lime);
   }
-  .step:first-of-type {
-    padding-top: 0;
-  }
-  .num {
-    font-size: clamp(4rem, 2rem + 6vw, 9rem);
-    line-height: 0.8;
-    color: transparent;
-    -webkit-text-stroke: 1px rgb(236 235 228 / 0.5);
-  }
-  .step:hover .num {
-    color: var(--signal);
-    -webkit-text-stroke-color: var(--signal);
-  }
-  .num { transition: color 0.4s var(--ease); }
-  .step__body {
-    display: grid;
-    gap: 14px;
-    align-content: start;
+  .ic svg {
+    width: 26px;
+    height: 26px;
   }
   .when {
-    justify-self: start;
-    padding: 5px 9px;
-    box-shadow: inset 0 0 0 1px var(--night-line);
-    color: rgb(236 235 228 / 0.75);
-    font-size: 0.6875rem;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1.5px solid currentColor;
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
   }
-  .name {
-    font-size: clamp(2.25rem, 1.4rem + 2.6vw, 4rem);
+  h3 {
+    font-size: clamp(1.875rem, 1.3rem + 1.4vw, 2.75rem);
+    line-height: 1;
+    letter-spacing: -0.045em;
+    font-weight: 780;
   }
   .desc {
-    max-width: 46ch;
-    color: rgb(236 235 228 / 0.78);
+    font-size: 1rem;
+    line-height: 1.5;
+    opacity: 0.82;
   }
   .out {
-    color: var(--paper);
-    text-transform: none;
-    font-size: 0.8125rem;
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1.5px solid rgb(15 43 35 / 0.15);
+    display: flex;
+    gap: 10px;
+    font-weight: 650;
+    font-size: 1rem;
+    line-height: 1.35;
   }
   .out span {
-    color: var(--signal);
+    color: var(--coral);
+    font-weight: 800;
   }
-
-  @media (max-width: 960px) {
-    .head, .steps { grid-column: 1 / -1; }
-    .head { position: static; margin-bottom: 64px; }
+  .step:hover .out span {
+    color: var(--forest);
+  }
+  @media (max-width: 1060px) {
+    .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .step::after { display: none; }
+  }
+  @media (max-width: 620px) {
+    .steps { grid-template-columns: 1fr; }
   }
 </style>

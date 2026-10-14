@@ -5,17 +5,16 @@ const t = getDict(Astro.props.lang);
 const f = t.faq;
 ---
 
-<section class="section faq" id="faq" aria-labelledby="faq-h">
+<section class="section dark faq" id="faq" aria-labelledby="faq-h">
   <div class="wrap grid">
     <header class="head">
-      <p class="label">(06) {f.label}</p>
-      <h2 class="display" id="faq-h">{f.title}</h2>
+      <p class="pill">{f.label}</p>
+      <h2 class="h2" id="faq-h">{f.title}</h2>
     </header>
     <div class="items">
       {f.items.map((it, i) => (
-        <details class="q" data-reveal style={`--d:${i % 3}`}>
+        <details class="q" name="faq" open={i === 0} data-reveal style={`--d:${i % 3}`}>
           <summary>
-            <span class="mono">Q{i + 1}</span>
             <span class="qt">{it.q}</span>
             <span class="pm" aria-hidden="true"></span>
           </summary>
@@ -27,51 +26,58 @@ const f = t.faq;
 </section>
 
 <style>
-  .faq {
-    background: var(--paper-2);
-    border-top: 1px solid var(--ink);
+  .grid {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
   }
   .head {
-    grid-column: 1 / span 4;
-    align-self: start;
     position: sticky;
     top: 120px;
     display: grid;
     gap: 24px;
+    justify-items: start;
   }
-  .head h2 {
+  .head .h2 {
     font-size: clamp(2.75rem, 1.6rem + 3.6vw, 5.5rem);
   }
   .items {
-    grid-column: 6 / -1;
-    border-top: 1px solid var(--ink);
+    display: grid;
+    gap: 10px;
   }
   .q {
-    border-bottom: 1px solid var(--ink);
+    border-radius: var(--r);
+    background: var(--forest-2);
+    transition: background-color 0.3s;
+  }
+  .q:hover {
+    background: #1b4337;
   }
   summary {
-    display: grid;
-    grid-template-columns: 48px 1fr 28px;
-    gap: 16px;
+    display: flex;
     align-items: center;
-    padding-block: 26px;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 24px 24px 24px 28px;
     cursor: pointer;
     list-style: none;
   }
   summary::-webkit-details-marker { display: none; }
-  summary .mono { color: var(--ink-2); }
   .qt {
-    font-size: clamp(1.25rem, 1rem + 1vw, 1.875rem);
-    font-weight: 600;
-    font-stretch: 86%;
-    line-height: 1.15;
-    transition: transform 0.4s var(--ease);
+    font-size: clamp(1.25rem, 1rem + 0.9vw, 1.75rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
   }
-  summary:hover .qt { transform: translateX(8px); }
   .pm {
     position: relative;
-    width: 28px;
-    height: 28px;
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--lime);
+    transition: transform 0.45s var(--spring), background-color 0.3s;
   }
   .pm::before,
   .pm::after {
@@ -79,31 +85,30 @@ const f = t.faq;
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 18px;
-    height: 2px;
-    background: var(--ink);
+    width: 16px;
+    height: 2.5px;
+    border-radius: 2px;
+    background: var(--forest);
     translate: -50% -50%;
-    transition: rotate 0.4s var(--ease), background-color 0.3s;
   }
   .pm::after { rotate: 90deg; }
-  .q[open] .pm::after { rotate: 0deg; }
-  .q[open] .pm::before,
-  .q[open] .pm::after { background: var(--signal); }
+  .q[open] .pm {
+    transform: rotate(135deg);
+    background: var(--coral);
+  }
   .a {
-    padding: 0 44px 30px 64px;
-    max-width: 62ch;
-    color: var(--ink-2);
+    padding: 0 28px 28px;
+    max-width: 60ch;
+    color: var(--mist);
     font-size: 1.0625rem;
-    line-height: 1.55;
+    line-height: 1.6;
   }
   .q[open] .a { animation: open 0.5s var(--ease); }
   @keyframes open {
     from { opacity: 0; transform: translateY(-8px); }
   }
   @media (max-width: 960px) {
-    .head, .items { grid-column: 1 / -1; }
-    .head { position: static; margin-bottom: 48px; }
-    .a { padding-left: 0; padding-right: 0; }
-    summary { grid-template-columns: 36px 1fr 28px; }
+    .grid { grid-template-columns: 1fr; }
+    .head { position: static; }
   }
 </style>

@@ -16,30 +16,29 @@ export const en: Dict = {
     about: 'About',
     faq: 'FAQ',
     contact: 'Contact',
-    cta: 'Book a call',
+    cta: 'Let’s talk',
     switchLabel: 'Wersja polska',
     menu: 'Menu',
     close: 'Close',
   },
   hero: {
-    eyebrow: 'SEO consulting — EN / PL',
-    titleA: 'Page',
-    titleB: 'one isn’t',
-    titleC: '',
-    titleAccent: 'enough.',
+    pill: 'SEO consultant · EN / PL',
+    title: [{ t: 'Your business on ' }, { t: 'page one.', hl: true }, { t: ' And in the black.' }],
+    sticker: ['SEO', '+ AI', 'search'],
     lead:
-      'Rankings are a means, not the goal. I build search visibility that ends in a sales inquiry and revenue — not in a pretty chart in a monthly report.',
+      'An SEO consultant who speaks human. Audits, content strategy and visibility in Google and ChatGPT — so your traffic ends in an inquiry, not just a pretty chart.',
     ctaPrimary: 'Book a free call',
-    ctaSecondary: 'See what I do',
-    serp: {
-      query: 'seo consultant',
-      label: 'Search results — simulation',
-      position: 'position',
-      title: 'Maciej Zięciak — SEO Consultant',
-      snippet: 'Technical audits, content strategy and AI search visibility. Traffic that pays.',
-      replay: 'Replay',
-      caption: 'Illustration. No honest consultant guarantees rankings — I guarantee the method.',
-    },
+    ctaSecondary: 'What do I do?',
+  },
+  serp: {
+    pill: 'Simulation',
+    title: 'From the back pages straight to the top.',
+    text: 'This is the direction I work towards: your site where customers actually click. No honest consultant guarantees rankings — I guarantee the method and full transparency.',
+    query: 'seo consultant',
+    label: 'Search results — simulation',
+    title2: 'Maciej Zięciak — SEO Consultant',
+    snippet: 'Technical audits, content strategy and AI search visibility.',
+    replay: 'Play again',
   },
   ticker: [
     'Technical SEO',
@@ -55,8 +54,8 @@ export const en: Dict = {
   ],
   services: {
     label: 'Services',
-    title: 'What I can do for you',
-    intro: 'Six areas where I usually make the biggest difference. Expand any of them for details.',
+    title: 'How I can help',
+    intro: 'Six areas where I make the biggest difference. Take one, or take them all.',
     deliverablesLabel: 'You get',
     timeLabel: 'Timeline',
     items: [
@@ -122,7 +121,7 @@ export const en: Dict = {
   },
   process: {
     label: 'Process',
-    title: 'From diagnosis to results',
+    title: 'How I work',
     intro: 'No magic, no black boxes. At every stage you know what I’m doing, why, and what it leads to.',
     steps: [
       {
@@ -193,7 +192,7 @@ export const en: Dict = {
   },
   contact: {
     label: 'Contact',
-    title: 'Let’s talk about your traffic.',
+    title: 'Let’s talk.',
     lead: 'Write a few sentences about your company and what you want to achieve. The first call is free and comes with no strings attached.',
     topicsLabel: 'What do you need?',
     topics: ['Audit', 'Content strategy', 'AI search', 'E-commerce', 'Migration', 'Ongoing work'],
