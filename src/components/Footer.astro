@@ -9,37 +9,51 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="foot">
-  <div class="wrap row">
-    <span>Copyright © {year} {site.name}. {t.footer.rights}</span>
-    <nav aria-label="Footer">
-      <a href={`mailto:${site.email}`}>{site.email}</a>
-      {site.linkedin && <a href={site.linkedin} rel="me noopener" target="_blank">LinkedIn</a>}
-      <a href={alt.path} hreflang={alt.lang}>{t.nav.switchLabel}</a>
-      <a href="#top">{t.footer.top}</a>
-    </nav>
+  <div class="wrap wrap--wide">
+    <p class="note">{t.footer.built}</p>
+    <div class="row">
+      <span>Copyright © {year} {site.name}. {t.footer.rights}</span>
+      <nav aria-label="Footer">
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+        {site.linkedin && <a href={site.linkedin} rel="me noopener" target="_blank">LinkedIn</a>}
+        <a href={alt.path} hreflang={alt.lang}>{t.nav.switchLabel}</a>
+        <a href="#top">{t.footer.top}</a>
+      </nav>
+    </div>
   </div>
 </footer>
 
 <style>
   .foot {
     background: var(--gray);
-    padding-block: 22px;
-    color: var(--ink-3);
+    padding-block: 18px 22px;
+    color: var(--muted);
     font-size: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+  .note {
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
   }
   .row {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 10px 32px;
+    gap: 8px 32px;
+    padding-top: 14px;
   }
   nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px 20px;
   }
   nav a {
     color: var(--ink-2);
+    padding: 0 10px;
+    border-left: 1px solid var(--line);
+  }
+  nav a:first-child {
+    padding-left: 0;
+    border-left: 0;
   }
   nav a:hover {
     text-decoration: underline;

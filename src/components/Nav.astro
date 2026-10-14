@@ -13,16 +13,14 @@ const links = [
 ---
 
 <header class="nav" data-nav>
-  <div class="wrap bar">
+  <div class="wrap wrap--wide bar">
     <a class="logo" href={t.path} aria-label="Maciej Zięciak — home">Maciej Zięciak</a>
-
-    <nav class="links" aria-label="Main">
-      {links.map(([href, label]) => <a href={href}>{label}</a>)}
-    </nav>
-
     <div class="end">
-      <a class="lang" href={alt.path} hreflang={alt.lang} aria-label={t.nav.switchLabel}>{alt.lang.toUpperCase()}</a>
-      <a class="btn cta" href="#kontakt">{t.nav.cta}</a>
+      <nav class="links" aria-label="Main">
+        {links.map(([href, label]) => <a href={href}>{label}</a>)}
+        <a href={alt.path} hreflang={alt.lang} aria-label={t.nav.switchLabel}>{alt.lang.toUpperCase()}</a>
+      </nav>
+      <a class="cta" href="#kontakt">{t.nav.cta}</a>
       <button class="burger" type="button" aria-expanded="false" aria-controls="mobile-menu" data-burger>
         <span class="sr-only" data-burger-label data-open={t.nav.menu} data-close={t.nav.close}>{t.nav.menu}</span>
         <i></i><i></i>
@@ -43,107 +41,115 @@ const links = [
     position: fixed;
     inset: 0 0 auto;
     z-index: 50;
-    background: rgb(255 255 255 / 0.72);
+    background: rgb(251 251 253 / 0.8);
     backdrop-filter: saturate(1.8) blur(20px);
     -webkit-backdrop-filter: saturate(1.8) blur(20px);
-    transition: box-shadow 0.3s var(--ease);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s var(--ease), background-color 0.3s var(--ease);
   }
   .nav.is-scrolled {
-    box-shadow: 0 1px 0 var(--line);
+    border-bottom-color: rgb(0 0 0 / 0.08);
+  }
+  .nav.is-dark {
+    background: rgb(22 22 23 / 0.8);
+    border-bottom-color: rgb(255 255 255 / 0.08);
+    color: #f5f5f7;
   }
   .bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    height: 56px;
+    height: 52px;
   }
   .logo {
-    font-size: 1.0625rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
+    font-size: 1.3125rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
     white-space: nowrap;
-  }
-  .links {
-    display: flex;
-    gap: 32px;
-    font-size: 0.8125rem;
-    color: var(--ink-2);
-  }
-  .links a {
-    transition: color 0.2s;
-  }
-  .links a:hover {
-    color: var(--ink);
   }
   .end {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 24px;
   }
-  .lang {
-    font-size: 0.8125rem;
-    color: var(--ink-2);
+  .links {
+    display: flex;
+    gap: 24px;
+    font-size: 0.75rem;
+    letter-spacing: -0.01em;
   }
-  .lang:hover {
-    color: var(--ink);
+  .links a {
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+  .links a:hover {
+    opacity: 1;
   }
   .cta {
-    min-height: 34px;
-    padding: 0 16px;
-    font-size: 0.8125rem;
-    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 0 12px;
+    border-radius: 999px;
+    background: var(--blue);
+    color: #fff;
+    font-size: 0.75rem;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+  .cta:hover {
+    background: var(--blue-hover);
   }
   .burger {
     display: none;
     position: relative;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
   }
   .burger i {
     position: absolute;
-    left: 11px;
-    right: 11px;
+    left: 10px;
+    right: 10px;
     height: 1.5px;
-    background: var(--ink);
+    background: currentColor;
     transition: transform 0.3s var(--ease);
   }
-  .burger i:first-of-type { top: 16px; }
-  .burger i:last-of-type { top: 23px; }
+  .burger i:first-of-type { top: 14px; }
+  .burger i:last-of-type { top: 21px; }
   .burger[aria-expanded='true'] i:first-of-type { transform: translateY(3.5px) rotate(45deg); }
   .burger[aria-expanded='true'] i:last-of-type { transform: translateY(-3.5px) rotate(-45deg); }
 
   .nav:has([aria-expanded='true']) {
     background: var(--white);
+    color: var(--ink);
   }
   .sheet {
     position: fixed;
-    inset: 56px 0 0;
+    inset: 52px 0 0;
     background: var(--white);
+    color: var(--ink);
     overflow: auto;
   }
   .sheet__in {
     display: grid;
-    padding-block: 20px 40px;
+    padding-block: 16px 40px;
   }
   .sheet__in a {
-    padding: 10px 0;
+    padding: 8px 0;
     font-size: 1.75rem;
-    font-weight: 700;
-    letter-spacing: -0.04em;
+    font-weight: 600;
+    letter-spacing: -0.03em;
   }
   .sheet__in .sw {
-    margin-top: 20px;
+    margin-top: 16px;
     font-size: 1.0625rem;
-    font-weight: 500;
-    color: #0066cc;
+    font-weight: 400;
+    color: var(--link);
   }
-
-  @media (max-width: 900px) {
+  @media (max-width: 760px) {
     .links { display: none; }
-  }
-  @media (max-width: 600px) {
-    .cta, .lang { display: none; }
     .burger { display: block; }
+    .end { gap: 12px; }
   }
 </style>

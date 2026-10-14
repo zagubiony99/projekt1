@@ -44,6 +44,18 @@ export const en: Dict = {
       ],
     },
   },
+  statement: {
+    label: 'Why now',
+    parts: [
+      { t: 'Google is no longer the only place your customers search. They ask ChatGPT, Perplexity and AI Overviews. The question is: ' },
+      { t: 'is your website in the answer?', mark: true },
+    ],
+  },
+  stage: {
+    eyebrow: 'Bot access audit',
+    title: 'See your site through the eyes of bots.',
+    text: 'Googlebot renders JavaScript. Most AI crawlers don’t. I check what each of them actually sees, and what your WAF, CDN or robots.txt blocks along the way.',
+  },
   stats: {
     label: 'By the numbers',
     items: [

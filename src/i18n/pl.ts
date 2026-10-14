@@ -42,6 +42,18 @@ export const pl = {
       ],
     },
   },
+  statement: {
+    label: 'Dlaczego teraz',
+    parts: [
+      { t: 'Google to już nie jedyne miejsce, w którym szukają Twoi klienci. Pytają ChatGPT, Perplexity i AI Overviews. Pytanie brzmi: ' },
+      { t: 'czy Twoja strona jest w odpowiedzi?', mark: true },
+    ],
+  },
+  stage: {
+    eyebrow: 'Audyt dostępu botów',
+    title: 'Zobacz swoją stronę oczami botów.',
+    text: 'Googlebot renderuje JavaScript. Większość crawlerów AI tego nie robi. Sprawdzam, co naprawdę widzi każdy z nich i co po drodze blokuje WAF, CDN albo robots.txt.',
+  },
   stats: {
     label: 'W liczbach',
     items: [

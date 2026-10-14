@@ -6,23 +6,19 @@ const t = getDict(Astro.props.lang);
 const c = t.contact;
 ---
 
-<section class="section contact" id="kontakt" aria-labelledby="kontakt-h">
-  <div class="wrap grid">
-    <div class="left">
-      <h2 class="h2" id="kontakt-h">{c.title}</h2>
-      <p class="lead">{c.lead}</p>
-      <div class="direct">
-        <p>{c.orEmail}</p>
-        <a class="mail" href={`mailto:${site.email}`}>{site.email}</a>
-        {site.linkedin && <a class="mail" href={site.linkedin} rel="me noopener" target="_blank">LinkedIn ↗</a>}
-      </div>
-    </div>
+<section class="section section--black contact" id="kontakt" data-dark aria-labelledby="kontakt-h">
+  <div class="wrap">
+    <header class="head">
+      <h2 class="h2 ai" id="kontakt-h" data-reveal>{c.title}</h2>
+      <p class="lead" data-reveal style="--d:1">{c.lead}</p>
+    </header>
 
     <form
       class="form"
       action={`mailto:${site.email}`}
       method="get"
       data-form
+      data-reveal
       data-email={site.email}
       data-subject={c.subject}
       data-l-topics={c.bodyTopics}
@@ -48,64 +44,30 @@ const c = t.contact;
         <span>{c.msgLabel}</span>
         <textarea name="body" rows="4" placeholder={c.msgPlaceholder} required></textarea>
       </label>
-      <button class="btn submit" type="submit">{c.submit}</button>
+      <div class="actions">
+        <button class="btn" type="submit">{c.submit}</button>
+        <p class="direct">
+          {c.orEmail}: <a class="more" href={`mailto:${site.email}`}>{site.email}</a>
+        </p>
+      </div>
     </form>
   </div>
 </section>
 
 <style>
-  .contact {
-    background: var(--forest);
-    color: var(--white);
-  }
-  .contact ::selection {
-    background: var(--green);
-    color: var(--forest);
-  }
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px clamp(40px, 6vw, 96px);
-    align-items: center;
-  }
-  .left {
-    display: grid;
-    gap: 24px;
-  }
-  .left .h2 {
-    color: var(--green);
-  }
-  .left .lead {
-    color: rgb(255 255 255 / 0.8);
-    max-width: 30ch;
-  }
-  .direct {
-    display: grid;
-    gap: 4px;
-    margin-top: 8px;
-  }
-  .direct p {
-    color: rgb(255 255 255 / 0.6);
-    font-size: 0.9375rem;
-  }
-  .mail {
-    justify-self: start;
-    font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.75rem);
-    font-weight: 700;
-    letter-spacing: -0.035em;
-    color: var(--green);
-  }
-  .mail:hover {
-    text-decoration: underline;
-    text-underline-offset: 4px;
+  .contact .h2 {
+    font-size: clamp(2.75rem, 1.6rem + 4.6vw, 5.5rem);
+    padding-bottom: 0.06em;
   }
   .form {
+    max-width: 720px;
+    margin-inline: auto;
     display: grid;
-    gap: 22px;
-    padding: clamp(24px, 3vw, 40px);
+    gap: 24px;
+    padding: clamp(24px, 4vw, 48px);
     border-radius: var(--r-lg);
-    background: var(--white);
-    color: var(--ink);
+    background: var(--dark);
+    border: 1px solid rgb(255 255 255 / 0.06);
   }
   fieldset {
     border: 0;
@@ -118,6 +80,7 @@ const c = t.contact;
     margin-bottom: 10px;
     font-size: 0.9375rem;
     font-weight: 600;
+    color: #f5f5f7;
   }
   .chips {
     display: flex;
@@ -131,25 +94,25 @@ const c = t.contact;
   }
   .chip span {
     display: inline-block;
-    padding: 8px 14px;
+    padding: 8px 15px;
     border-radius: 999px;
-    background: var(--gray);
-    color: var(--ink-2);
+    box-shadow: inset 0 0 0 1px var(--dark-line);
+    color: #d2d2d7;
     font-size: 0.9375rem;
-    font-weight: 500;
     cursor: pointer;
     user-select: none;
-    transition: background-color 0.2s, color 0.2s;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
   }
   .chip:hover span {
-    background: var(--gray-2);
+    box-shadow: inset 0 0 0 1px var(--dark-muted);
   }
   .chip input:checked + span {
-    background: var(--forest);
-    color: var(--green);
+    background: #f5f5f7;
+    color: var(--ink);
+    box-shadow: none;
   }
   .chip input:focus-visible + span {
-    outline: 2px solid var(--forest);
+    outline: 2px solid var(--link-dark);
     outline-offset: 2px;
   }
   .field input,
@@ -157,26 +120,36 @@ const c = t.contact;
     width: 100%;
     padding: 14px 16px;
     border-radius: 12px;
-    border: 1.5px solid transparent;
-    background: var(--gray);
-    font-size: 1rem;
+    border: 1px solid var(--dark-line);
+    background: var(--black);
+    color: #f5f5f7;
+    font-size: 1.0625rem;
     resize: vertical;
-    transition: border-color 0.2s, background-color 0.2s;
+    transition: border-color 0.2s;
   }
   .field input::placeholder,
   .field textarea::placeholder {
-    color: var(--ink-3);
+    color: var(--dark-muted);
   }
   .field input:focus,
   .field textarea:focus {
     outline: none;
-    border-color: var(--forest);
-    background: var(--white);
+    border-color: var(--link-dark);
   }
-  .submit {
-    justify-self: start;
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 24px;
   }
-  @media (max-width: 900px) {
-    .grid { grid-template-columns: 1fr; }
+  .direct {
+    color: var(--dark-muted);
+    font-size: 0.9375rem;
+  }
+  .direct .more {
+    font-size: 0.9375rem;
+  }
+  .direct .more::after {
+    content: none;
   }
 </style>

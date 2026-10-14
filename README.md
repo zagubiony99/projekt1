@@ -20,9 +20,9 @@ npm run preview   # podgląd wersji produkcyjnej
 | Imię, e-mail, LinkedIn, zdjęcie | `src/config.ts` |
 | Wszystkie teksty PL | `src/i18n/pl.ts` |
 | Wszystkie teksty EN | `src/i18n/en.ts` |
-| Kolory (biel, szarość #f5f5f7, zieleń w stylu Wise), font (Inter Tight), przyciski | `src/styles/global.css` (zmienne w `:root`) |
+| Kolory (paleta Apple: biel, #f5f5f7, czerń, niebieski + gradient AI), font (SF Pro na Apple, Inter Tight gdzie indziej), przyciski | `src/styles/global.css` (zmienne w `:root`) |
 | Sekcje strony | `src/components/*.astro` |
-| Interakcje (karta dostępu botów w hero, powiększanie „sceny” przy scrollu, formularz) | `src/scripts/main.ts` |
+| Interakcje (tekst zapalający się przy scrollu, scena z kartą botów, liczby odliczające w górę, formularz) | `src/scripts/main.ts` |
 | Grafiki do udostępniania (OG) | `public/og-pl.png`, `public/og-en.png` |
 
 ## Adresy URL

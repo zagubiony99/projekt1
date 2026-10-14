@@ -2,6 +2,9 @@
 import Base from '../layouts/Base.astro';
 import Nav from './Nav.astro';
 import Hero from './Hero.astro';
+import Statement from './Statement.astro';
+import Stage from './Stage.astro';
+import Stats from './Stats.astro';
 import Services from './Services.astro';
 import Experience from './Experience.astro';
 import Process from './Process.astro';
@@ -17,6 +20,9 @@ const { lang } = Astro.props;
   <Nav lang={lang} />
   <main id="main">
     <Hero lang={lang} />
+    <Statement lang={lang} />
+    <Stage lang={lang} />
+    <Stats lang={lang} />
     <Services lang={lang} />
     <Experience lang={lang} />
     <Process lang={lang} />
