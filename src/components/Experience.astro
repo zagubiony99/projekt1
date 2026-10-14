@@ -13,7 +13,7 @@ const e = t.experience;
       <p class="lead" data-reveal style="--d:1">{e.intro}</p>
     </header>
 
-    <ol class="list">
+    <ol class="list" data-rail>
       {e.items.map((it) => (
         <li class:list={['job', { hl: 'highlight' in it && it.highlight }]} data-reveal>
           <p class="when">{it.when}</p>
@@ -30,12 +30,51 @@ const e = t.experience;
 
 <style>
   .list {
+    --r: 0;
+    position: relative;
     border-top: 1px solid var(--line);
+  }
+  /* vertical progress rail that fills as you scroll through the career */
+  .list::before,
+  .list::after {
+    content: '';
+    position: absolute;
+    left: calc(11rem + 18px);
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    border-radius: 2px;
+    background: var(--gray-2);
+  }
+  .list::after {
+    background: linear-gradient(180deg, #0894ff, #c959dd 45%, #ff2e54 75%, #ff9004);
+    transform-origin: 50% 0;
+    transform: scaleY(var(--r));
+  }
+  .job {
+    position: relative;
+  }
+  .job::before {
+    content: '';
+    position: absolute;
+    left: calc(11rem + 13px);
+    top: 39px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--white);
+    box-shadow: inset 0 0 0 2px var(--line);
+    z-index: 1;
+    transition: box-shadow 0.4s, background-color 0.4s;
+  }
+  .job.is-lit::before {
+    background: var(--ink);
+    box-shadow: 0 0 0 4px rgb(0 113 227 / 0.15);
   }
   .job {
     display: grid;
     grid-template-columns: 11rem minmax(0, 1fr);
-    gap: 8px 40px;
+    gap: 8px 72px;
     padding: 32px 0;
     border-bottom: 1px solid var(--line);
   }
@@ -72,6 +111,8 @@ const e = t.experience;
     color: var(--ink);
   }
   @media (max-width: 720px) {
-    .job { grid-template-columns: 1fr; gap: 4px; }
+    .job { grid-template-columns: 1fr; gap: 4px; padding-left: 32px; }
+    .list::before, .list::after { left: 6px; }
+    .job::before { left: 1px; top: 36px; }
   }
 </style>

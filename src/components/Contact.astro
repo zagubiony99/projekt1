@@ -58,6 +58,18 @@ const c = t.contact;
   .contact .h2 {
     font-size: clamp(2.75rem, 1.6rem + 4.6vw, 5.5rem);
     padding-bottom: 0.06em;
+    background-size: 250% 100%;
+    animation: flow 10s ease-in-out infinite;
+  }
+  @keyframes flow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  .form {
+    transition: box-shadow 0.6s var(--ease-out);
+  }
+  .form:focus-within {
+    box-shadow: 0 0 0 1px rgb(41 151 255 / 0.4), 0 30px 80px -30px rgb(41 151 255 / 0.35);
   }
   .form {
     max-width: 720px;

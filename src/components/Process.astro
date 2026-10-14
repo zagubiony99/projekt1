@@ -43,10 +43,28 @@ const icons = [
     background: var(--white);
   }
   .ic {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     color: var(--blue);
     margin-bottom: 28px;
+  }
+  :global(.js) .ic :global(path),
+  :global(.js) .ic :global(circle) {
+    stroke-dasharray: 120;
+    stroke-dashoffset: 120;
+    transition: stroke-dashoffset 1.6s var(--ease-out);
+    transition-delay: calc(0.3s + var(--d, 0) * 0.15s);
+  }
+  :global(.js) .step.is-in .ic :global(path),
+  :global(.js) .step.is-in .ic :global(circle) {
+    stroke-dashoffset: 0;
+  }
+  .step {
+    transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
+  }
+  .step:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 50px -28px rgb(0 0 0 / 0.25);
   }
   h3 {
     font-size: 1.5rem;

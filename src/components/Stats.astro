@@ -16,9 +16,13 @@ const t = getDict(Astro.props.lang);
     </dl>
     <div class="tools" data-reveal>
       <p>{t.tools.label}</p>
-      <ul>
-        {t.tools.items.map((n) => <li>{n}</li>)}
-      </ul>
+      <div class="marquee">
+        {[0, 1].map((k) => (
+          <ul aria-hidden={k === 1 ? 'true' : undefined}>
+            {[...t.tools.items, ...t.tools.items].map((n) => <li>{n}</li>)}
+          </ul>
+        ))}
+      </div>
     </div>
   </div>
 </section>
@@ -61,14 +65,28 @@ const t = getDict(Astro.props.lang);
     color: var(--muted);
     font-size: 1.0625rem;
   }
-  .tools ul {
+  .marquee {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 14px clamp(28px, 5vw, 64px);
-    margin-top: 22px;
+    overflow: hidden;
+    margin-top: 26px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+  .marquee ul {
+    flex: none;
+    display: flex;
+    gap: clamp(40px, 6vw, 88px);
+    padding-right: clamp(40px, 6vw, 88px);
+    animation: slide 30s linear infinite;
+  }
+  .marquee:hover ul {
+    animation-play-state: paused;
+  }
+  @keyframes slide {
+    to { transform: translateX(-100%); }
   }
   .tools li {
+    white-space: nowrap;
     font-size: clamp(1.375rem, 1.1rem + 1vw, 2rem);
     font-weight: 650;
     letter-spacing: -0.035em;

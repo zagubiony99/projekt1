@@ -16,7 +16,7 @@ const s = t.services;
   <div class="wrap wrap--wide">
     <ul class="tiles">
       {s.items.map((it, i) => (
-        <li class:list={['tile', { dark: i === 1 }]} data-reveal style={`--d:${i % 2}`}>
+        <li class:list={['tile', { dark: i === 1 }]} data-reveal data-tilt style={`--d:${i % 2}`}>
           <h3 class:list={{ ai: i === 1 }}>{it.name}</h3>
           <p>{it.desc}</p>
           <p class="tags">{it.tags.join(' · ')}</p>
@@ -33,6 +33,13 @@ const s = t.services;
     gap: 20px;
   }
   .tile {
+    --mx: 50%;
+    --my: 50%;
+    --rx: 0deg;
+    --ry: 0deg;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -40,11 +47,30 @@ const s = t.services;
     padding: clamp(32px, 4vw, 56px);
     border-radius: var(--r-lg);
     background: var(--white);
-    transition: transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-out);
+    transform: perspective(1200px) rotateX(var(--rx)) rotateY(var(--ry));
+    transition: transform 0.5s var(--ease-out), box-shadow 0.6s var(--ease-out);
+  }
+  /* spotlight that follows the cursor */
+  .tile::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(420px circle at var(--mx) var(--my), rgb(0 113 227 / 0.08), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .dark::before {
+    background: radial-gradient(460px circle at var(--mx) var(--my), rgb(201 89 221 / 0.28), rgb(8 148 255 / 0.1) 40%, transparent 65%);
+  }
+  .tile:hover::before {
+    opacity: 1;
   }
   .tile:hover {
-    transform: scale(1.015);
-    box-shadow: 0 20px 50px -20px rgb(0 0 0 / 0.15);
+    box-shadow: 0 30px 60px -28px rgb(0 0 0 / 0.25);
+  }
+  .tile.is-in:hover {
+    transition: transform 0.15s linear, box-shadow 0.6s var(--ease-out);
   }
   h3 {
     font-size: clamp(1.875rem, 1.4rem + 1.4vw, 2.75rem);

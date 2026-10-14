@@ -6,12 +6,13 @@ const s = t.stage;
 const c = t.hero.card;
 ---
 
-<section class="section section--black stage-sec" data-dark aria-labelledby="stage-h">
+<section class="section--black stage-sec" data-dark data-pin aria-labelledby="stage-h">
+  <div class="sticky">
   <div class="wrap">
     <header class="head">
-      <p class="eyebrow" data-reveal>{s.eyebrow}</p>
-      <h2 class="h2" id="stage-h" data-reveal>{s.title}</h2>
-      <p class="lead" data-reveal style="--d:1">{s.text}</p>
+      <p class="eyebrow">{s.eyebrow}</p>
+      <h2 class="h2" id="stage-h">{s.title}</h2>
+      <p class="lead">{s.text}</p>
     </header>
   </div>
 
@@ -49,12 +50,39 @@ const c = t.hero.card;
       </figure>
     </div>
   </div>
+  </div>
 </section>
 
 <style>
+  /* Pinned scene: the section is tall, its content sticks while --p runs 0 -> 1 */
   .stage-sec {
-    padding-top: clamp(40px, 6vw, 80px);
+    --p: 0;
+    position: relative;
+    height: 300vh;
+  }
+  .sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+    display: grid;
+    align-content: center;
+    gap: clamp(16px, 3vh, 40px);
     overflow: hidden;
+    padding-top: 64px;
+  }
+  .sticky .head {
+    margin-bottom: 0;
+    gap: 10px;
+    opacity: clamp(0, calc(var(--p) * 8), 1);
+    transform: translateY(calc((1 - clamp(0, var(--p) * 8, 1)) * 30px));
+  }
+  .sticky .h2 {
+    font-size: clamp(2rem, 1.3rem + 2.8vw, 3.75rem);
+  }
+  .sticky .lead {
+    font-size: clamp(1rem, 0.95rem + 0.4vw, 1.25rem);
+    max-width: 52ch;
   }
   .stage {
     --k: 0;
@@ -67,9 +95,11 @@ const c = t.hero.card;
       radial-gradient(60% 70% at 20% 0%, rgb(8 148 255 / 0.25), transparent 60%),
       radial-gradient(50% 60% at 85% 10%, rgb(255 144 4 / 0.18), transparent 60%),
       var(--dark);
-    transform: scale(calc(0.86 + var(--k) * 0.14));
-    opacity: calc(0.4 + var(--k) * 0.6);
-    transform-origin: 50% 20%;
+    --k: clamp(0, calc(var(--p) * 4), 1);
+    transform: scale(calc(0.8 + var(--k) * 0.2));
+    opacity: calc(0.25 + var(--k) * 0.75);
+    transform-origin: 50% 30%;
+    padding-block: clamp(20px, 4vh, 56px);
   }
   .card {
     width: min(100%, 660px);
@@ -168,30 +198,38 @@ const c = t.hero.card;
     content: '';
   }
 
-  .js .row .res {
+  :global(.js) .row .res {
     opacity: 0.2;
     transition: opacity 0.45s var(--ease);
   }
-  .js .row .ind {
+  :global(.js) .row .ind {
     background: #3a3a3c;
     color: transparent;
     transform: scale(0.7);
     transition: background-color 0.3s, color 0.3s, transform 0.5s var(--ease-out);
   }
-  .js .row.is-done .res { opacity: 1; }
-  .js .row.is-done .ind { transform: none; background: var(--ok); color: #000; }
-  .js .row.is-done[data-s='warn'] .ind { background: var(--warn); }
-  .js .row.is-done[data-s='err'] .ind { background: var(--err); color: #fff; }
-  .js .sum {
+  :global(.js) .row.is-done .res { opacity: 1; }
+  :global(.js) .row.is-done .ind { transform: none; background: var(--ok); color: #000; }
+  :global(.js) .row.is-done[data-s='warn'] .ind { background: var(--warn); }
+  :global(.js) .row.is-done[data-s='err'] .ind { background: var(--err); color: #fff; }
+  :global(.js) .sum {
     opacity: 0;
     transform: translateY(8px);
     transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
   }
-  .js .sum.is-done {
+  :global(.js) .sum.is-done {
     opacity: 1;
     transform: none;
   }
   @media (max-width: 520px) {
-    .row { grid-template-columns: 1fr; gap: 6px; }
+    .row { grid-template-columns: 7.2rem 1fr; gap: 8px; padding: 9px 0; font-size: 0.8125rem; }
+    .ind { width: 18px; height: 18px; }
+    .card { padding: 14px; }
+    .card__note { display: none; }
+    .sticky .lead { display: none; }
+  }
+  @media (max-height: 980px) and (min-width: 521px) {
+    .sticky .lead { display: none; }
+    .row { padding-block: 9px; }
   }
 </style>

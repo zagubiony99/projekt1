@@ -1,6 +1,6 @@
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 /* ---------- Nav: mobile sheet ---------- */
 const nav = document.querySelector<HTMLElement>('[data-nav]');
@@ -19,17 +19,27 @@ burger?.addEventListener('click', () => setSheet(burger.getAttribute('aria-expan
 sheet?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setSheet(false)));
 document.addEventListener('keydown', (e) => e.key === 'Escape' && setSheet(false));
 
-/* ---------- Scroll-linked effects (one rAF loop) ---------- */
+/* ---------- Scroll-linked scenes (one rAF loop) ---------- */
 const darks = [...document.querySelectorAll<HTMLElement>('[data-dark]')];
+const hero = document.querySelector<HTMLElement>('[data-hero]');
 const scrub = document.querySelector<HTMLElement>('[data-scrub]');
-const stage = document.querySelector<HTMLElement>('[data-stage]');
+const pin = document.querySelector<HTMLElement>('[data-pin]');
+const rows = pin ? [...pin.querySelectorAll<HTMLElement>('.row')] : [];
+const sum = pin?.querySelector<HTMLElement>('[data-sum]');
+const rail = document.querySelector<HTMLElement>('[data-rail]');
+const jobs = rail ? [...rail.querySelectorAll<HTMLElement>('.job')] : [];
+
+// progress of a tall pinned section: 0 when its top hits the viewport top, 1 when its bottom does
+const pinProgress = (el: HTMLElement, vh: number) => {
+  const r = el.getBoundingClientRect();
+  return clamp(-r.top / Math.max(1, r.height - vh));
+};
 
 let ticking = false;
 const onScroll = () => {
   ticking = false;
   const vh = window.innerHeight;
   nav?.classList.toggle('is-scrolled', window.scrollY > 8);
-  // Nav turns dark while it sits over a black section.
   const overDark = darks.some((el) => {
     const r = el.getBoundingClientRect();
     return r.top <= 26 && r.bottom >= 26;
@@ -37,14 +47,20 @@ const onScroll = () => {
   nav?.classList.toggle('is-dark', overDark);
 
   if (reduce) return;
-  if (scrub) {
-    const r = scrub.getBoundingClientRect();
-    const p = clamp(-r.top / (r.height - vh));
-    scrub.style.setProperty('--p', (p * 1.3).toFixed(4));
+  if (hero) hero.style.setProperty('--h', clamp(window.scrollY / (vh * 0.8)).toFixed(4));
+  if (scrub) scrub.style.setProperty('--p', (pinProgress(scrub, vh) * 1.3).toFixed(4));
+  if (pin) {
+    const p = pinProgress(pin, vh);
+    pin.style.setProperty('--p', p.toFixed(4));
+    // bots resolve one by one as the scene scrolls, then the verdict appears
+    rows.forEach((row, i) => row.classList.toggle('is-done', p > 0.28 + i * 0.08));
+    sum?.classList.toggle('is-done', p > 0.28 + rows.length * 0.08 + 0.04);
   }
-  if (stage) {
-    const r = stage.getBoundingClientRect();
-    stage.style.setProperty('--k', clamp((vh - r.top) / (vh * 0.75)).toFixed(3));
+  if (rail) {
+    const r = rail.getBoundingClientRect();
+    const fill = clamp((vh * 0.6 - r.top) / r.height);
+    rail.style.setProperty('--r', fill.toFixed(4));
+    jobs.forEach((j) => j.classList.toggle('is-lit', j.getBoundingClientRect().top + 40 < vh * 0.6));
   }
 };
 const requestTick = () => {
@@ -56,8 +72,12 @@ const requestTick = () => {
 window.addEventListener('scroll', requestTick, { passive: true });
 window.addEventListener('resize', requestTick);
 if (reduce) {
-  scrub?.style.setProperty('--p', '1.2');
-  stage?.style.setProperty('--k', '1');
+  scrub?.style.setProperty('--p', '1.3');
+  pin?.style.setProperty('--p', '1');
+  rows.forEach((r) => r.classList.add('is-done'));
+  sum?.classList.add('is-done');
+  rail?.style.setProperty('--r', '1');
+  jobs.forEach((j) => j.classList.add('is-lit'));
 }
 onScroll();
 
@@ -70,11 +90,10 @@ const io = new IntersectionObserver(
         io.unobserve(e.target);
       }
     }),
-  { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+  { rootMargin: '0px 0px -10% 0px', threshold: 0.1 },
 );
 document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
 
-/* ---------- Once-when-visible helper ---------- */
 const whenVisible = (el: Element, fn: () => void, threshold = 0.35) => {
   const o = new IntersectionObserver(
     (entries) => {
@@ -88,28 +107,6 @@ const whenVisible = (el: Element, fn: () => void, threshold = 0.35) => {
   o.observe(el);
 };
 
-/* ---------- Bot access card: rows resolve one by one ---------- */
-const card = document.querySelector<HTMLElement>('[data-bots]');
-if (card) {
-  const rows = [...card.querySelectorAll<HTMLElement>('.row')];
-  const sum = card.querySelector<HTMLElement>('[data-sum]');
-  const finish = () => {
-    rows.forEach((r) => r.classList.add('is-done'));
-    sum?.classList.add('is-done');
-  };
-  if (reduce) finish();
-  else
-    whenVisible(card, async () => {
-      await sleep(300);
-      for (const r of rows) {
-        r.classList.add('is-done');
-        await sleep(r.dataset.s === 'ok' ? 300 : 500);
-      }
-      await sleep(200);
-      sum?.classList.add('is-done');
-    });
-}
-
 /* ---------- Count-up numbers ("1,1 mln", "670 tys.", "9 years") ---------- */
 document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => {
   const m = (el.textContent ?? '').match(/^([\d.,]+)(.*)$/s);
@@ -121,17 +118,40 @@ document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => {
   const suffix = m[2];
   const fmt = (v: number) => v.toFixed(decimals).replace('.', sep) + suffix;
   el.textContent = fmt(0);
-  whenVisible(el, () => {
-    const t0 = performance.now();
-    const dur = 1400;
-    const step = (now: number) => {
-      const k = clamp((now - t0) / dur);
-      el.textContent = fmt(target * (1 - Math.pow(1 - k, 3)));
-      if (k < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, 0.6);
+  whenVisible(
+    el,
+    () => {
+      const t0 = performance.now();
+      const dur = 1600;
+      const step = (now: number) => {
+        const k = clamp((now - t0) / dur);
+        el.textContent = fmt(target * (1 - Math.pow(1 - k, 4)));
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    },
+    0.6,
+  );
 });
+
+/* ---------- Tiles: cursor spotlight + gentle 3D tilt ---------- */
+if (finePointer && !reduce) {
+  document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((el) => {
+    el.addEventListener('pointermove', (e) => {
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width;
+      const y = (e.clientY - r.top) / r.height;
+      el.style.setProperty('--mx', `${(x * 100).toFixed(1)}%`);
+      el.style.setProperty('--my', `${(y * 100).toFixed(1)}%`);
+      el.style.setProperty('--ry', `${((x - 0.5) * 6).toFixed(2)}deg`);
+      el.style.setProperty('--rx', `${((0.5 - y) * 6).toFixed(2)}deg`);
+    });
+    el.addEventListener('pointerleave', () => {
+      el.style.setProperty('--rx', '0deg');
+      el.style.setProperty('--ry', '0deg');
+    });
+  });
+}
 
 /* ---------- Contact form → prefilled email ---------- */
 const form = document.querySelector<HTMLFormElement>('[data-form]');
