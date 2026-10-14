@@ -23,7 +23,7 @@ export const en: Dict = {
   },
   hero: {
     pill: 'SEO consultant · EN / PL',
-    title: [{ t: 'Your business on ' }, { t: 'page one.', hl: true }, { t: ' And in the black.' }],
+    title: [{ t: 'Your business on ' }, { t: 'page one', hl: true }, { t: ' of Google.' }],
     sticker: ['SEO', '+ AI', 'search'],
     lead:
       'An SEO consultant who speaks human. Audits, content strategy and visibility in Google and ChatGPT — so your traffic ends in an inquiry, not just a pretty chart.',

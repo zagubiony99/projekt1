@@ -21,7 +21,7 @@ export const pl = {
   },
   hero: {
     pill: 'Konsultant SEO · PL / EN',
-    title: [{ t: 'Twoja firma na ' }, { t: 'pierwszej', hl: true }, { t: ' stronie. I w kasie.' }],
+    title: [{ t: 'Twoja firma na ' }, { t: 'pierwszej', hl: true }, { t: ' stronie Google.' }],
     sticker: ['SEO', '+ AI', 'search'],
     lead:
       'Konsultant SEO, który mówi po ludzku. Audyty, strategia treści i widoczność w Google oraz ChatGPT — tak, żeby ruch kończył się zapytaniem, a nie tylko ładnym wykresem.',
