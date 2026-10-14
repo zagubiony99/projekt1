@@ -3,27 +3,24 @@ import { getDict, type Lang } from '../i18n';
 interface Props { lang: Lang }
 const t = getDict(Astro.props.lang);
 const s = t.services;
-// Bento: each card gets its own colour + footprint.
-const looks = ['forest wide', 'lime', 'coral', 'sand', 'sand', 'forest2 full'];
 ---
 
 <section class="section" id="uslugi" aria-labelledby="uslugi-h">
   <div class="wrap">
     <header class="head">
+      <p class="eyebrow">{s.label}</p>
       <h2 class="h2" id="uslugi-h" data-reveal>{s.title}</h2>
       <p class="lead" data-reveal style="--d:1">{s.intro}</p>
     </header>
 
-    <ul class="bento">
+    <ul class="list">
       {s.items.map((it, i) => (
-        <li class:list={['card', looks[i]]} data-reveal style={`--d:${i % 3}`}>
-          <p class="tag">{it.tag}</p>
+        <li class="item" data-reveal style={`--d:${i % 2}`}>
           <h3>{it.name}</h3>
           <p class="desc">{it.desc}</p>
-          <ul class="dl" aria-label={s.deliverablesLabel}>
-            {it.deliverables.map((d) => <li>{d}</li>)}
+          <ul class="tags">
+            {it.tags.map((tg) => <li class="tag">{tg}</li>)}
           </ul>
-          <p class="time"><span>{s.timeLabel}:</span> {it.time}</p>
         </li>
       ))}
     </ul>
@@ -31,120 +28,44 @@ const looks = ['forest wide', 'lime', 'coral', 'sand', 'sand', 'forest2 full'];
 </section>
 
 <style>
-  .head {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 32px;
-    flex-wrap: wrap;
-    margin-bottom: clamp(40px, 5vw, 72px);
-  }
-  .head .lead {
-    color: var(--ink-soft);
-  }
-  .bento {
+  .list {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: clamp(12px, 1.4vw, 20px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    border-radius: var(--r-lg);
+    border: 1px solid var(--line);
+    background: var(--line);
+    overflow: hidden;
   }
-  .card {
-    grid-column: span 4;
+  .item {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    padding: clamp(24px, 2.6vw, 40px);
-    border-radius: var(--r-lg);
-    background: var(--cream-2);
-    color: var(--forest);
-    transition:
-      transform 0.5s var(--spring),
-      box-shadow 0.5s var(--ease);
+    gap: 14px;
+    padding: clamp(24px, 3vw, 40px);
+    background: var(--bg);
+    transition: background-color 0.3s;
   }
-  .card:hover {
-    transform: translateY(-6px) rotate(-0.8deg);
-    box-shadow: 0 24px 50px -24px rgb(10 31 25 / 0.5);
-  }
-  .card:nth-child(even):hover {
-    transform: translateY(-6px) rotate(0.8deg);
-  }
-  .wide { grid-column: span 7; }
-  .lime { grid-column: span 5; background: var(--lime); }
-  .coral { background: var(--coral); }
-  .forest { background: var(--forest); color: var(--cream); }
-  .forest2 { background: var(--forest-2); color: var(--cream); }
-  .full {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 48px;
-    align-items: start;
-  }
-  .full .tag, .full h3 { grid-column: 1; justify-self: start; }
-  .full .desc, .full .dl, .full .time { grid-column: 2; }
-  .full h3 { grid-row: 2 / span 3; align-self: start; }
-  .full .tag { grid-row: 1; }
-
-  .tag {
-    align-self: flex-start;
-    padding: 6px 12px;
-    border-radius: 999px;
-    background: rgb(15 43 35 / 0.1);
-    font-size: 0.875rem;
-    font-weight: 600;
-  }
-  .forest .tag, .forest2 .tag {
-    background: rgb(244 239 227 / 0.14);
+  .item:hover {
+    background: var(--bg-2);
   }
   h3 {
-    font-size: clamp(2rem, 1.3rem + 2.2vw, 3.5rem);
-    line-height: 0.95;
-    letter-spacing: -0.045em;
-    font-weight: 780;
-    text-wrap: balance;
-  }
-  .wide h3, .full h3 {
-    font-size: clamp(2.5rem, 1.4rem + 3.4vw, 5rem);
+    font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+    font-weight: 560;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
   }
   .desc {
-    font-size: 1.0625rem;
-    line-height: 1.5;
-    opacity: 0.85;
-    max-width: 46ch;
+    color: var(--muted);
+    max-width: 52ch;
   }
-  .dl {
+  .tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
     margin-top: auto;
-    padding-top: 8px;
+    padding-top: 10px;
   }
-  .dl li {
-    padding: 7px 13px;
-    border-radius: 999px;
-    border: 1.5px solid currentColor;
-    font-size: 0.875rem;
-    font-weight: 520;
-    line-height: 1.25;
-  }
-  .forest .dl li, .forest2 .dl li {
-    border-color: rgb(244 239 227 / 0.4);
-  }
-  .time {
-    font-size: 1.125rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-  .time span {
-    font-weight: 450;
-    opacity: 0.7;
-  }
-
-  @media (max-width: 1060px) {
-    .card, .wide, .lime { grid-column: span 6; }
-    .full { grid-column: 1 / -1; }
-  }
-  @media (max-width: 720px) {
-    .card, .wide, .lime, .full { grid-column: 1 / -1; }
-    .full { display: flex; }
+  @media (max-width: 760px) {
+    .list { grid-template-columns: 1fr; }
   }
 </style>

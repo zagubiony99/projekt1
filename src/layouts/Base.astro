@@ -1,5 +1,5 @@
 ---
-import '@fontsource-variable/bricolage-grotesque/opsz.css';
+import '@fontsource-variable/geist/index.css';
 import '../styles/global.css';
 import { site } from '../config';
 import { getDict, otherLang, type Lang } from '../i18n';
@@ -23,16 +23,17 @@ const jsonLd = {
       '@type': 'Person',
       '@id': `${site.url}/#person`,
       name: site.name,
-      jobTitle: lang === 'pl' ? 'Konsultant SEO' : 'SEO Consultant',
+      jobTitle: 'Technical SEO & AI Search Consultant',
       url: site.url,
       email: `mailto:${site.email}`,
       knowsLanguage: ['pl', 'en'],
+      knowsAbout: ['Technical SEO', 'AI search', 'Generative Engine Optimization', 'Adobe Experience Manager', 'International SEO', 'E-commerce SEO', 'Site migrations'],
       ...(site.linkedin ? { sameAs: [site.linkedin] } : {}),
     },
     {
       '@type': 'ProfessionalService',
       '@id': `${site.url}/#business`,
-      name: `${site.name} — SEO`,
+      name: `${site.name} — Technical SEO & AI Search`,
       url: canonical,
       email: site.email,
       description: t.meta.description,
@@ -91,7 +92,7 @@ const jsonLd = {
     <link rel="alternate" hreflang="en" href={lang === 'en' ? canonical : altUrl} />
     <link rel="alternate" hreflang="x-default" href={plUrl} />
     <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta name="theme-color" content="#0f2b23" />
+    <meta name="theme-color" content="#0a0b0a" />
     <meta name="author" content={site.name} />
 
     <meta property="og:type" content="website" />

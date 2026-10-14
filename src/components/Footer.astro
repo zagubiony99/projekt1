@@ -9,75 +9,39 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="foot">
-  <div class="wrap">
-    <div class="top">
+  <div class="wrap row">
+    <span>© {year} {site.name}</span>
+    <nav aria-label="Footer">
       <a href={`mailto:${site.email}`}>{site.email}</a>
-      {site.linkedin && <a href={site.linkedin} rel="me noopener" target="_blank">LinkedIn ↗</a>}
+      {site.linkedin && <a href={site.linkedin} rel="me noopener" target="_blank">LinkedIn</a>}
       <a href={alt.path} hreflang={alt.lang}>{t.nav.switchLabel}</a>
-      <a href="#top" class="up">{t.footer.top} ↑</a>
-    </div>
-    <p class="word" aria-hidden="true" data-word><span>zięciak<i>.</i></span></p>
-    <div class="bottom">
-      <span>© {year} {site.name}. {t.footer.rights}</span>
-      <span>{t.footer.built}</span>
-    </div>
+      <a href="#top">{t.footer.top} ↑</a>
+    </nav>
   </div>
 </footer>
 
 <style>
   .foot {
-    background: var(--forest-3);
-    color: var(--cream);
-    padding-top: 56px;
-    overflow: hidden;
+    border-top: 1px solid var(--line);
+    padding-block: 28px;
+    color: var(--dim);
+    font-size: 0.875rem;
   }
-  .top {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  .top a {
-    padding: 10px 18px;
-    border-radius: 999px;
-    box-shadow: inset 0 0 0 1.5px rgb(244 239 227 / 0.25);
-    font-weight: 550;
-    transition: background-color 0.2s, color 0.2s;
-  }
-  .top a:hover {
-    background: var(--lime);
-    color: var(--forest);
-    box-shadow: none;
-  }
-  .top .up {
-    margin-left: auto;
-  }
-  .word {
-    margin-top: clamp(24px, 4vw, 56px);
-    font-size: 24vw;
-    line-height: 0.8;
-    font-weight: 800;
-    letter-spacing: -0.045em;
-    white-space: nowrap;
-    padding-bottom: 0.16em;
-  }
-  .word span {
-    display: inline-block;
-  }
-  .word i {
-    font-style: normal;
-    color: var(--lime);
-  }
-  .bottom {
+  .row {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 12px 32px;
-    padding-block: 24px 28px;
-    border-top: 1.5px solid rgb(244 239 227 / 0.12);
-    font-size: 0.875rem;
-    color: rgb(244 239 227 / 0.6);
   }
-  @media (max-width: 640px) {
-    .top .up { margin-left: 0; }
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+  }
+  a {
+    transition: color 0.2s;
+  }
+  a:hover {
+    color: var(--text);
   }
 </style>

@@ -2,12 +2,9 @@
 import Base from '../layouts/Base.astro';
 import Nav from './Nav.astro';
 import Hero from './Hero.astro';
-import Ticker from './Ticker.astro';
-import Serp from './Serp.astro';
 import Services from './Services.astro';
-import Manifesto from './Manifesto.astro';
+import Experience from './Experience.astro';
 import Process from './Process.astro';
-import About from './About.astro';
 import Faq from './Faq.astro';
 import Contact from './Contact.astro';
 import Footer from './Footer.astro';
@@ -20,12 +17,9 @@ const { lang } = Astro.props;
   <Nav lang={lang} />
   <main id="main">
     <Hero lang={lang} />
-    <Ticker lang={lang} />
     <Services lang={lang} />
-    <Manifesto lang={lang} />
+    <Experience lang={lang} />
     <Process lang={lang} />
-    <Serp lang={lang} />
-    <About lang={lang} />
     <Faq lang={lang} />
     <Contact lang={lang} />
   </main>

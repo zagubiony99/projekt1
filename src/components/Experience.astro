@@ -1,0 +1,83 @@
+---
+import { getDict, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const t = getDict(Astro.props.lang);
+const e = t.experience;
+---
+
+<section class="section" id="doswiadczenie" aria-labelledby="exp-h">
+  <div class="wrap">
+    <header class="head">
+      <p class="eyebrow">{e.label}</p>
+      <h2 class="h2" id="exp-h" data-reveal>{e.title}</h2>
+      <p class="lead" data-reveal style="--d:1">{e.intro}</p>
+    </header>
+
+    <ol class="timeline">
+      {e.items.map((it) => (
+        <li class:list={['job', { hl: 'highlight' in it && it.highlight }]} data-reveal>
+          <p class="when">{it.when}</p>
+          <div class="who">
+            <p class="org">{it.org}</p>
+            <h3 class="role">{it.role}</h3>
+          </div>
+          <p class="desc">{it.desc}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .timeline {
+    border-top: 1px solid var(--line);
+  }
+  .job {
+    display: grid;
+    grid-template-columns: 9rem minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: 12px 40px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .when {
+    color: var(--dim);
+    font-size: 0.875rem;
+    padding-top: 3px;
+    font-variant-numeric: tabular-nums;
+  }
+  .org {
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .role {
+    margin-top: 2px;
+    color: var(--muted);
+    font-size: 0.9375rem;
+    font-weight: 450;
+  }
+  .desc {
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+  .hl {
+    position: relative;
+  }
+  .hl .org::after {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-left: 10px;
+    vertical-align: middle;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .hl .desc {
+    color: var(--text);
+  }
+  @media (max-width: 860px) {
+    .job { grid-template-columns: 1fr; gap: 6px; }
+    .desc { margin-top: 6px; }
+  }
+</style>

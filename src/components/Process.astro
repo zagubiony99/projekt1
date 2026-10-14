@@ -3,34 +3,20 @@ import { getDict, type Lang } from '../i18n';
 interface Props { lang: Lang }
 const t = getDict(Astro.props.lang);
 const p = t.process;
-// Simple line icons, one per step: magnifier, map, wrench, chart.
-const icons = [
-  '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/>',
-  '<path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20Z"/><path d="M9 4v13.5M15 6.5V20"/>',
-  '<path d="M14.5 6.5a4 4 0 0 0 5 5L12 19a2.1 2.1 0 0 1-3-3l7.5-7.5Z"/><path d="M14.5 6.5 17 4"/>',
-  '<path d="M4 20V4M4 20h16"/><path d="m7 15 4-4 3 3 5-6"/>',
-];
 ---
 
 <section class="section" id="proces" aria-labelledby="proces-h">
   <div class="wrap">
     <header class="head">
+      <p class="eyebrow">{p.label}</p>
       <h2 class="h2" id="proces-h" data-reveal>{p.title}</h2>
-      <p class="lead" data-reveal style="--d:1">{p.intro}</p>
     </header>
-
     <ol class="steps">
       {p.steps.map((s, i) => (
         <li class="step" data-reveal style={`--d:${i}`}>
-          <div class="top">
-            <span class="ic" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={icons[i]} />
-            </span>
-            <span class="when">{s.when}</span>
-          </div>
+          <span class="bar" aria-hidden="true"><i style={`--w:${(i + 1) * 25}%`}></i></span>
           <h3>{s.name}</h3>
-          <p class="desc">{s.desc}</p>
-          <p class="out"><span aria-hidden="true">→</span>{s.out}</p>
+          <p>{s.desc}</p>
         </li>
       ))}
     </ol>
@@ -38,107 +24,39 @@ const icons = [
 </section>
 
 <style>
-  .head {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 32px;
-    flex-wrap: wrap;
-    margin-bottom: clamp(40px, 5vw, 72px);
-  }
-  .head .lead {
-    color: var(--ink-soft);
-  }
   .steps {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: clamp(12px, 1.4vw, 20px);
+    gap: clamp(20px, 2.4vw, 36px);
   }
-  .step {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: clamp(24px, 2.2vw, 32px);
-    border-radius: var(--r-lg);
-    background: var(--cream-2);
-    transition: background-color 0.35s, transform 0.5s var(--spring);
+  .bar {
+    display: block;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--line-2);
+    margin-bottom: 22px;
+    overflow: hidden;
   }
-  .step:hover {
-    background: var(--lime);
-    transform: translateY(-6px) rotate(-1deg);
-  }
-  .step:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    top: 50px;
-    right: calc(-1 * clamp(12px, 1.4vw, 20px));
-    width: clamp(12px, 1.4vw, 20px);
-    height: 3px;
-    background: var(--forest);
-    z-index: 1;
-  }
-  .top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-  }
-  .ic {
-    display: grid;
-    place-items: center;
-    width: 56px;
-    height: 56px;
-    border-radius: 18px;
-    background: var(--forest);
-    color: var(--lime);
-  }
-  .ic svg {
-    width: 26px;
-    height: 26px;
-  }
-  .when {
-    padding: 6px 12px;
-    border-radius: 999px;
-    border: 1.5px solid currentColor;
-    font-size: 0.875rem;
-    font-weight: 600;
-    white-space: nowrap;
+  .bar i {
+    display: block;
+    width: var(--w);
+    height: 100%;
+    background: var(--accent);
   }
   h3 {
-    font-size: clamp(1.875rem, 1.3rem + 1.4vw, 2.75rem);
-    line-height: 1;
-    letter-spacing: -0.045em;
-    font-weight: 780;
+    font-size: 1.25rem;
+    font-weight: 560;
+    letter-spacing: -0.03em;
   }
-  .desc {
-    font-size: 1rem;
-    line-height: 1.5;
-    opacity: 0.82;
+  p {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 0.9375rem;
   }
-  .out {
-    margin-top: auto;
-    padding-top: 16px;
-    border-top: 1.5px solid rgb(15 43 35 / 0.15);
-    display: flex;
-    gap: 10px;
-    font-weight: 650;
-    font-size: 1rem;
-    line-height: 1.35;
+  @media (max-width: 900px) {
+    .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 40px; }
   }
-  .out span {
-    color: var(--coral);
-    font-weight: 800;
-  }
-  .step:hover .out span {
-    color: var(--forest);
-  }
-  @media (max-width: 1060px) {
-    .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .step::after { display: none; }
-  }
-  @media (max-width: 620px) {
+  @media (max-width: 520px) {
     .steps { grid-template-columns: 1fr; }
   }
 </style>

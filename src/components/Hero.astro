@@ -3,156 +3,312 @@ import { getDict, type Lang } from '../i18n';
 interface Props { lang: Lang }
 const t = getDict(Astro.props.lang);
 const h = t.hero;
+const c = h.card;
 ---
 
-<section class="hero dark" id="top">
+<section class="hero" id="top">
+  <div class="glow" aria-hidden="true"></div>
   <div class="wrap">
-    <p class="pill top-pill">{h.pill}</p>
-
-    <h1 class="title">
-      {h.title.map((p) => ('hl' in p && p.hl ? <span class="hl">{p.t}</span> : p.t))}
-    </h1>
-
-    <div class="sticker" aria-hidden="true">
-      <span>{h.sticker.map((l) => <b>{l}</b>)}</span>
-    </div>
-
-    <div class="row">
-      <div class="left">
-        <div class="ctas">
-          <a class="btn" href="#kontakt">{h.ctaPrimary} <span class="arrow" aria-hidden="true">→</span></a>
-          <a class="btn btn--ghost" href="#uslugi">{h.ctaSecondary}</a>
-        </div>
+    <div class="grid">
+      <div class="copy">
+        <p class="pill"><span class="dot" aria-hidden="true"></span>{h.pill}</p>
+        <h1>
+          <span>{h.titleA}</span>
+          <span class="b">{h.titleB}</span>
+        </h1>
         <p class="lead">{h.lead}</p>
+        <div class="ctas">
+          <a class="btn btn--accent" href="#kontakt">{h.ctaPrimary} <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--ghost" href="#doswiadczenie">{h.ctaSecondary}</a>
+        </div>
       </div>
-      <ul class="chips" aria-label={t.services.title}>
-        {t.services.items.map((s) => <li class="chip">{s.name}</li>)}
-      </ul>
+
+      <figure class="card" data-bots aria-label={c.title}>
+        <figcaption class="card__head">
+          <span class="card__title">{c.title}</span>
+          <span class="card__note">{c.note}</span>
+        </figcaption>
+        <div class="url">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v10H5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" /></svg>
+          {c.url}
+        </div>
+        <ul class="rows">
+          {c.rows.map((r) => (
+            <li class="row" data-s={r.s}>
+              <span class="bot">{r.bot}</span>
+              <span class="res">
+                <i class="ind" aria-hidden="true"></i>
+                <span>{r.t}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+        <p class="sum" data-sum>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 8v5m0 3.5v.5M10.3 3.9 2.6 17.5A2 2 0 0 0 4.3 20.5h15.4a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          {c.summary}
+        </p>
+      </figure>
     </div>
+
+    <dl class="stats" aria-label={t.stats.label}>
+      {t.stats.items.map((s) => (
+        <div>
+          <dt>{s.k}</dt>
+          <dd>{s.v}</dd>
+        </div>
+      ))}
+    </dl>
   </div>
-  <svg class="squiggle" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0 60 C 120 10, 240 110, 360 60 S 600 10, 720 60 S 960 110, 1080 60 S 1320 10, 1440 60 V120 H0 Z" />
-  </svg>
 </section>
 
 <style>
   .hero {
     position: relative;
-    padding-top: clamp(120px, 12vw, 168px);
-    padding-bottom: clamp(96px, 9vw, 150px);
+    padding-top: clamp(128px, 14vw, 184px);
+    padding-bottom: clamp(56px, 6vw, 88px);
     overflow: hidden;
+  }
+  .glow {
+    position: absolute;
+    inset: -30% -10% auto;
+    height: 900px;
+    background:
+      radial-gradient(520px 320px at 72% 30%, rgb(212 255 79 / 0.07), transparent 70%),
+      radial-gradient(700px 400px at 20% 0%, rgb(237 237 234 / 0.04), transparent 70%);
+    pointer-events: none;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(900px 560px at 70% 20%, #000 10%, transparent 75%);
+    -webkit-mask-image: radial-gradient(900px 560px at 70% 20%, #000 10%, transparent 75%);
+    opacity: 0.55;
+    pointer-events: none;
   }
   .hero .wrap {
     position: relative;
   }
-  .top-pill {
-    color: var(--cream);
+  .grid {
+    display: grid;
+    grid-template-columns: 1.08fr 0.92fr;
+    gap: clamp(40px, 5vw, 80px);
+    align-items: center;
   }
-  .title {
-    margin-top: clamp(20px, 2.4vw, 32px);
-    max-width: 11.5em;
-    font-size: clamp(3.4rem, 1rem + 8.6vw, 10rem);
-    line-height: 0.9;
-    letter-spacing: -0.055em;
-    font-weight: 790;
-    text-wrap: balance;
+  .copy {
+    display: grid;
+    gap: 28px;
+    justify-items: start;
   }
-  .title .hl {
-    margin-block: 0.04em;
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 14px 6px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line-2);
+    background: rgb(16 18 16 / 0.6);
+    color: var(--muted);
+    font-size: 0.8125rem;
+    font-weight: 500;
   }
-  .sticker {
-    position: absolute;
-    right: var(--gutter);
-    top: clamp(-10px, 1vw, 20px);
-    width: clamp(120px, 13vw, 196px);
-    aspect-ratio: 1;
+  .dot {
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
-    background: var(--coral);
-    color: var(--forest);
-    display: grid;
-    place-items: center;
-    animation: wobble 6s ease-in-out infinite;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgb(212 255 79 / 0.14);
   }
-  .sticker span {
+  h1 {
     display: grid;
-    text-align: center;
-    font-size: clamp(1.05rem, 0.6rem + 1vw, 1.5rem);
+    font-size: clamp(2.75rem, 1.4rem + 4.6vw, 5.25rem);
     line-height: 1;
-    font-weight: 780;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.05em;
+    font-weight: 560;
   }
-  @keyframes wobble {
-    0%, 100% { transform: rotate(12deg); }
-    50% { transform: rotate(-6deg) scale(1.04); }
-  }
-  .row {
-    margin-top: clamp(48px, 6vw, 96px);
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 48px;
-  }
-  .left {
-    display: grid;
-    gap: 36px;
+  h1 .b {
+    color: var(--dim);
   }
   .ctas {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
-  }
-  .lead {
-    color: var(--mist);
-    max-width: 34ch;
-  }
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
     gap: 10px;
-    max-width: 520px;
-    color: rgb(244 239 227 / 0.88);
-  }
-  .chips .chip {
-    border-color: rgb(244 239 227 / 0.3);
-  }
-  .squiggle {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -1px;
-    width: 100%;
-    height: clamp(36px, 5vw, 72px);
-    fill: var(--lime);
+    margin-top: 4px;
   }
 
-  .js .title,
-  .js .row,
-  .js .top-pill {
-    animation: up 1s var(--ease) both;
+  /* ---------- Bot access card ---------- */
+  .card {
+    border-radius: var(--r-lg);
+    border: 1px solid var(--line-2);
+    background: linear-gradient(180deg, var(--bg-2), #0c0d0c);
+    box-shadow: 0 40px 80px -40px rgb(0 0 0 / 0.8), inset 0 1px 0 rgb(255 255 255 / 0.04);
+    padding: 22px;
   }
-  .js .title { animation-delay: 0.08s; }
-  .js .row { animation-delay: 0.22s; }
-  .js .sticker {
-    animation: pop 0.9s var(--spring) 0.4s both, wobble 6s ease-in-out 1.3s infinite;
+  .card__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
   }
+  .card__title {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .card__note {
+    font-size: 0.75rem;
+    color: var(--dim);
+  }
+  .url {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.8125rem;
+  }
+  .rows {
+    margin-top: 10px;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 9.5rem 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 4px;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.875rem;
+  }
+  .bot {
+    font-weight: 560;
+    letter-spacing: -0.01em;
+  }
+  .res {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--muted);
+    min-width: 0;
+  }
+  .res span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .ind {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  [data-s='warn'] .ind { background: var(--amber); }
+  [data-s='err'] .ind { background: var(--red); }
+  [data-s='warn'] .res { color: #e9d7b0; }
+  [data-s='err'] .res { color: #f2b8b0; }
+  .sum {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: rgb(255 122 107 / 0.08);
+    border: 1px solid rgb(255 122 107 / 0.2);
+    color: #f6c4bd;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  /* Scan animation: rows resolve one by one (only with JS). */
+  .js .card .row .res {
+    opacity: 0.25;
+    transition: opacity 0.4s var(--ease);
+  }
+  .js .card .row .ind {
+    background: var(--dim);
+    animation: pulse 1s ease-in-out infinite;
+  }
+  .js .card .row.is-done .res { opacity: 1; }
+  .js .card .row.is-done .ind { animation: none; background: var(--accent); }
+  .js .card .row.is-done[data-s='warn'] .ind { background: var(--amber); }
+  .js .card .row.is-done[data-s='err'] .ind { background: var(--red); }
+  .js .card .sum {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+  }
+  .js .card .sum.is-done {
+    opacity: 1;
+    transform: none;
+  }
+  @keyframes pulse {
+    50% { opacity: 0.35; }
+  }
+
+  /* ---------- Stats ---------- */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-top: clamp(64px, 8vw, 112px);
+    border-top: 1px solid var(--line);
+  }
+  .stats div {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 28px 24px 0;
+    border-left: 1px solid var(--line);
+  }
+  .stats div:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .stats dd {
+    font-size: clamp(2rem, 1.4rem + 1.8vw, 3rem);
+    font-weight: 560;
+    letter-spacing: -0.045em;
+    line-height: 1;
+  }
+  .stats dt {
+    color: var(--muted);
+    font-size: 0.9375rem;
+    line-height: 1.45;
+    max-width: 24ch;
+  }
+
+  .js .copy > *,
+  .js .card {
+    animation: up 0.9s var(--ease) both;
+  }
+  .js .copy > :nth-child(2) { animation-delay: 0.06s; }
+  .js .copy > :nth-child(3) { animation-delay: 0.12s; }
+  .js .copy > :nth-child(4) { animation-delay: 0.18s; }
+  .js .card { animation-delay: 0.25s; }
   @keyframes up {
-    from { opacity: 0; transform: translateY(36px); }
-  }
-  @keyframes pop {
-    from { opacity: 0; transform: scale(0.3) rotate(-40deg); }
-    to { transform: rotate(12deg); }
+    from { opacity: 0; transform: translateY(18px); }
   }
 
-  @media (max-width: 1060px) {
-    .row { flex-direction: column; align-items: flex-start; }
-    .chips { justify-content: flex-start; }
+  @media (max-width: 1020px) {
+    .grid { grid-template-columns: 1fr; }
+    .card { max-width: 620px; }
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stats div:nth-child(odd) { padding-left: 0; border-left: 0; }
+    .stats div:nth-child(n + 3) { border-top: 1px solid var(--line); margin-top: 28px; }
   }
-  @media (max-width: 720px) {
-    .title { font-size: 15vw; }
-    .chips { display: none; }
-    .sticker { top: auto; bottom: -84px; right: var(--gutter); width: 104px; }
-    .row { margin-top: 40px; }
-    .ctas .btn { flex: 1 1 auto; justify-content: center; }
+  @media (max-width: 520px) {
+    .row { grid-template-columns: 1fr; gap: 4px; }
+    .stats dt { font-size: 0.875rem; }
+    .ctas .btn { flex: 1 1 100%; }
   }
 </style>
