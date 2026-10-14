@@ -1,0 +1,46 @@
+---
+import { getDict, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const t = getDict(Astro.props.lang);
+---
+
+<div class="sticky-cta" data-sticky aria-hidden="true">
+  <span>{t.sticky.text}</span>
+  <a class="btn" href={`#${t.ids.contact}`} tabindex="-1">{t.sticky.btn}</a>
+</div>
+
+<style>
+  .sticky-cta {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    z-index: 60;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 10px 10px 18px;
+    border-radius: 999px;
+    background: rgb(29 29 31 / 0.82);
+    backdrop-filter: blur(20px) saturate(1.6);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
+    color: #f5f5f7;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    box-shadow: 0 16px 40px -12px rgb(0 0 0 / 0.5);
+    transform: translateY(140%);
+    transition: transform 0.5s var(--ease-out);
+  }
+  .sticky-cta .btn {
+    min-height: 40px;
+    padding: 0 20px;
+    font-size: 0.9375rem;
+  }
+  .sticky-cta.on {
+    transform: none;
+  }
+  @media (max-width: 760px) {
+    .sticky-cta { display: flex; }
+  }
+</style>

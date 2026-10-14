@@ -253,16 +253,54 @@ if (finePointer && !reduce) {
   });
 }
 
-/* ---------- Contact form → prefilled email ---------- */
+/* ---------- Sticky mobile CTA: visible after the hero, hidden over the contact form ---------- */
+const sticky = document.querySelector<HTMLElement>('[data-sticky]');
+if (sticky) {
+  const contactEl = document.querySelector('.contact');
+  let pastHero = false;
+  let atContact = false;
+  const sync = () => sticky.classList.toggle('on', pastHero && !atContact);
+  const heroEl = document.querySelector('[data-hero], .sv-hero');
+  if (heroEl) new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting; sync(); }).observe(heroEl);
+  if (contactEl) new IntersectionObserver(([e]) => { atContact = e.isIntersecting; sync(); }, { threshold: 0.05 }).observe(contactEl);
+}
+
+/* ---------- Contact form: POST to a form backend if configured, else open the mail app ---------- */
 const form = document.querySelector<HTMLFormElement>('[data-form]');
-form?.addEventListener('submit', (e) => {
+form?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const fd = new FormData(form);
   const d = form.dataset;
+  if (fd.get('botcheck')) return; // honeypot
   const topics = fd.getAll('topic').join(', ');
   const url = String(fd.get('url') ?? '').trim();
   const msg = String(fd.get('body') ?? '').trim();
   const head = [topics && `${d.lTopics}: ${topics}`, url && `${d.lUrl}: ${url}`].filter(Boolean).join('\n');
   const body = head ? `${head}\n\n${msg}` : msg;
-  window.location.href = `mailto:${d.email}?subject=${encodeURIComponent(d.subject ?? '')}&body=${encodeURIComponent(body)}`;
+
+  if (!d.endpoint) {
+    window.location.href = `mailto:${d.email}?subject=${encodeURIComponent(d.subject ?? '')}&body=${encodeURIComponent(body)}`;
+    return;
+  }
+  const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+  const ok = form.querySelector<HTMLElement>('[data-ok]');
+  const err = form.querySelector<HTMLElement>('[data-err]');
+  const label = btn?.textContent ?? '';
+  if (btn) { btn.disabled = true; btn.textContent = d.sending ?? '…'; }
+  ok && (ok.hidden = true); err && (err.hidden = true);
+  try {
+    const payload = new FormData();
+    fd.forEach((v, k) => k !== 'botcheck' && payload.append(k, v));
+    payload.set('topic', topics);
+    payload.set('message', body);
+    const res = await fetch(d.endpoint, { method: 'POST', body: payload, headers: { Accept: 'application/json' } });
+    if (!res.ok) throw new Error(String(res.status));
+    form.reset();
+    ok && (ok.hidden = false);
+    (window as any).dataLayer?.push({ event: 'generate_lead', form: 'contact' });
+  } catch {
+    err && (err.hidden = false);
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = label; }
+  }
 });

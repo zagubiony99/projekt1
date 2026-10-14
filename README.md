@@ -27,6 +27,13 @@ npm run preview   # podgląd wersji produkcyjnej
 | Interakcje (tekst zapalający się przy scrollu, scena z kartą botów, liczby odliczające w górę, formularz) | `src/scripts/main.ts` |
 | Grafiki do udostępniania (OG) | `public/og-pl.png`, `public/og-en.png` |
 
+## Formularz kontaktowy i kalendarz (ważne dla sprzedaży)
+
+W `src/config.ts`:
+- `formEndpoint` (+ opcjonalnie `formAccessKey`): adres darmowego backendu formularzy, np. Formspree (`https://formspree.io/f/xxxx`) albo Web3Forms (`https://api.web3forms.com/submit` + klucz). Wtedy formularz wysyła się bez opuszczania strony i pokazuje potwierdzenie. Bez tego otwiera program pocztowy, co gubi część zapytań.
+- `bookingUrl`: link do Cal.com lub Calendly. Pod formularzem pojawi się „Wolisz od razu wybrać termin?”.
+- Po udanej wysyłce strona wysyła zdarzenie `generate_lead` do `dataLayer`, jeśli podłączysz Google Tag Managera.
+
 ## Adresy URL
 
 - `/` to wersja polska (domyślna)

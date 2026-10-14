@@ -5,7 +5,7 @@ export const en: Dict = {
   locale: 'en_GB',
   path: '/en/',
   meta: {
-    title: 'Maciej Zięciak — Technical SEO & AI Search Consultant',
+    title: 'Technical SEO & AI Search Consultant | Maciej Zięciak, 9 years of experience',
     description:
       'Technical SEO and AI search visibility for large websites, e-commerce and enterprise. 9 years of experience: audits, rendering, indexation, migrations, hreflang and AI crawler access.',
   },
@@ -27,9 +27,11 @@ export const en: Dict = {
     titleA: 'Visible in Google.',
     titleB: 'Cited by AI.',
     lead:
-      'I help large websites, online stores and enterprise brands show up where people look for answers today: Google, AI Overviews, ChatGPT and Perplexity. I start with the technical layer: crawling, rendering, indexation and architecture.',
+      'Technical SEO and AI search for large websites, online stores and enterprise brands. I find and fix what blocks your traffic from Google and AI answers, with clear priorities and tickets your team can ship.',
     ctaPrimary: 'Book a free consultation',
     ctaSecondary: 'See my experience',
+    ctaNote: '30 minutes · online · no strings attached',
+    trustLabel: 'Experience includes',
     card: {
       title: 'Who can see your page?',
       url: 'example.com/category/product',
@@ -70,6 +72,33 @@ export const en: Dict = {
     label: 'Tools I work with',
     items: ['Botify', 'Lumar', 'OnCrawl', 'Screaming Frog', 'GetBeast'],
   },
+  bands: {
+    afterServices: {
+      title: 'Not sure where to start?',
+      text: 'On a free consultation I’ll review your site and point out the 3 things worth fixing first.',
+      btn: 'Book a free consultation',
+    },
+    afterProcess: {
+      title: 'The first step takes 30 minutes.',
+      text: 'A short call, concrete takeaways, no commitment.',
+      btn: 'Pick a time for a call',
+    },
+  },
+  compare: {
+    label: 'Why a consultant, not an agency',
+    title: 'A senior on your project. From day one.',
+    me: 'With me',
+    them: 'Typical agency',
+    rows: [
+      { k: 'Who does the work', me: 'Me, personally: from audit to release review', them: 'Often a junior; the senior shows up in meetings' },
+      { k: 'Specialism', me: 'Technical SEO and AI search', them: 'A bit of everything: SEO, Ads, social' },
+      { k: 'Experience', me: '9 years, incl. enterprise at PMI and Accenture Song', them: 'Depends on who gets assigned' },
+      { k: 'What you get', me: 'Developer tickets ranked by impact', them: 'A PDF report and a rankings summary' },
+      { k: 'Contact', me: 'Directly with me', them: 'Through an account manager' },
+      { k: 'Engagement', me: 'One-off audit or ongoing support, your call', them: 'Often packages with minimum terms' },
+    ],
+  },
+  sticky: { text: 'Free consultation · 30 min', btn: 'Book' },
   services: {
     label: 'Services',
     title: 'How I can help',
@@ -168,6 +197,10 @@ export const en: Dict = {
     title: 'Common questions',
     items: [
       {
+        q: 'What happens on the free consultation?',
+        a: '30 minutes online. You tell me about the site and your goals; I review it live and point out the 3 things worth fixing first. No commitment: after the call you decide whether we go further.',
+      },
+      {
         q: 'How is technical SEO different from “regular” SEO?',
         a: 'Technical SEO decides whether search engines and AI crawlers can find, fetch, render and understand your site. If something is broken here, content and links can’t perform fully, no matter how good they are.',
       },
@@ -184,6 +217,14 @@ export const en: Dict = {
         a: 'Both. Most often I write developer tickets and review changes, but I can implement parts of the work myself.',
       },
       {
+        q: 'Can you work with our agency or dev partner?',
+        a: 'Yes. I usually work alongside the client’s dev teams and agencies: writing tickets, reviewing changes and answering technical questions.',
+      },
+      {
+        q: 'Will you sign an NDA?',
+        a: 'Yes. For projects that need access to data, logs and code, signing an NDA before we start is standard.',
+      },
+      {
         q: 'How much does it cost?',
         a: 'Audits are a one-off fee, ongoing work is billed monthly. The price depends on the size of the site and the scope. After a short call you get a concrete quote.',
       },
@@ -192,14 +233,20 @@ export const en: Dict = {
   contact: {
     label: 'Contact',
     title: 'Let’s talk about your website.',
-    lead: 'Write a few sentences about the project and what you want to achieve. The first consultation is free.',
+    lead: 'On a free 30-minute call I’ll review your site and point out the 3 things worth fixing first. No strings attached.',
     topicsLabel: 'What is it about?',
     topics: ['Technical audit', 'AI search', 'Large website', 'Enterprise / AEM', 'Migration', 'Ongoing work'],
     urlLabel: 'Website',
     urlPlaceholder: 'https://yourcompany.com',
     msgLabel: 'Message',
     msgPlaceholder: 'What do you do and what do you want to achieve?',
-    submit: 'Send message',
+    submit: 'Book a free consultation',
+    note: 'I reply personally. Your details are used only to answer your enquiry.',
+    booking: 'Prefer to pick a time right away?',
+    bookingBtn: 'Open calendar',
+    sending: 'Sending…',
+    success: 'Thanks! Your message is in. I’ll get back to you with a time for the call.',
+    error: 'Something went wrong. Please email me directly at',
     subject: 'SEO inquiry — maciejzieciak.com',
     bodyTopics: 'Topic',
     bodyUrl: 'Website',

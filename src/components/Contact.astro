@@ -34,11 +34,15 @@ const c = t.contact;
       data-form
       data-reveal
       data-email={site.email}
+      data-endpoint={site.formEndpoint || undefined}
+      data-sending={c.sending}
       data-subject={c.subject}
       data-l-topics={c.bodyTopics}
       data-l-url={c.bodyUrl}
     >
       <input type="hidden" name="subject" value={c.subject} />
+      {site.formAccessKey && <input type="hidden" name="access_key" value={site.formAccessKey} />}
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
       <fieldset>
         <legend>{c.topicsLabel}</legend>
         <div class="chips">
@@ -64,6 +68,12 @@ const c = t.contact;
           {c.orEmail}: <a class="more" href={`mailto:${site.email}`}>{site.email}</a>
         </p>
       </div>
+      <p class="fnote">{c.note}</p>
+      <p class="status ok" data-ok hidden role="status">{c.success}</p>
+      <p class="status err" data-err hidden role="alert">{c.error} <a href={`mailto:${site.email}`}>{site.email}</a></p>
+      {site.bookingUrl && (
+        <p class="book">{c.booking} <a class="more" href={site.bookingUrl} target="_blank" rel="noopener">{c.bookingBtn}</a></p>
+      )}
     </form>
   </div>
 </section>
@@ -237,6 +247,38 @@ const c = t.contact;
     flex-wrap: wrap;
     align-items: center;
     gap: 16px 24px;
+  }
+  .hp {
+    position: absolute;
+    left: -9999px;
+  }
+  .fnote {
+    margin-top: -8px;
+    color: var(--dark-muted);
+    font-size: 0.8125rem;
+  }
+  .status {
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+  }
+  .status.ok {
+    background: rgb(48 209 88 / 0.14);
+    color: #7ee29a;
+  }
+  .status.err {
+    background: rgb(255 69 58 / 0.14);
+    color: #ff9b94;
+  }
+  .status a {
+    color: inherit;
+    text-decoration: underline;
+  }
+  .book {
+    padding-top: 18px;
+    border-top: 1px solid var(--dark-line);
+    color: #d2d2d7;
   }
   .direct {
     color: var(--dark-muted);

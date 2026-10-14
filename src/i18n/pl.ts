@@ -3,7 +3,7 @@ export const pl = {
   locale: 'pl_PL',
   path: '/',
   meta: {
-    title: 'Maciej Zięciak — konsultant Technical SEO i AI Search',
+    title: 'Konsultant Technical SEO i AI Search | Maciej Zięciak, 9 lat doświadczenia',
     description:
       'Technical SEO i widoczność w AI search dla dużych serwisów, e-commerce i enterprise. 9 lat doświadczenia: audyty, rendering, indeksacja, migracje, hreflang i dostęp botów AI.',
   },
@@ -25,9 +25,11 @@ export const pl = {
     titleA: 'Widoczność w\u00a0Google.',
     titleB: 'Cytowania w\u00a0AI.',
     lead:
-      'Pomagam dużym serwisom, sklepom i firmom enterprise być widocznymi tam, gdzie dziś szuka się odpowiedzi: w Google, AI Overviews, ChatGPT i Perplexity. Zaczynam od techniki, czyli crawlu, renderowania, indeksacji i architektury.',
+      'Technical SEO i AI search dla dużych serwisów, sklepów i marek enterprise. Znajduję i usuwam to, co blokuje ruch z Google i odpowiedzi AI, z jasnymi priorytetami i zadaniami dla Twojego zespołu.',
     ctaPrimary: 'Umów bezpłatną konsultację',
     ctaSecondary: 'Zobacz doświadczenie',
+    ctaNote: '30 minut · online · bez zobowiązań',
+    trustLabel: 'Doświadczenie m.in. z',
     card: {
       title: 'Kto widzi Twoją stronę?',
       url: 'example.com/kategoria/produkt',
@@ -68,6 +70,33 @@ export const pl = {
     label: 'Narzędzia, na których pracuję',
     items: ['Botify', 'Lumar', 'OnCrawl', 'Screaming Frog', 'GetBeast'],
   },
+  bands: {
+    afterServices: {
+      title: 'Nie wiesz, od czego zacząć?',
+      text: 'Na bezpłatnej konsultacji przejrzę Twoją stronę i wskażę 3 rzeczy, które warto poprawić w pierwszej kolejności.',
+      btn: 'Umów bezpłatną konsultację',
+    },
+    afterProcess: {
+      title: 'Pierwszy krok zajmuje 30 minut.',
+      text: 'Krótka rozmowa, konkretne wnioski, zero zobowiązań.',
+      btn: 'Wybierz termin rozmowy',
+    },
+  },
+  compare: {
+    label: 'Dlaczego konsultant, a nie agencja',
+    title: 'Senior przy Twoim projekcie. Od pierwszego dnia.',
+    me: 'Ze mną',
+    them: 'Typowa agencja',
+    rows: [
+      { k: 'Kto wykonuje pracę', me: 'Ja, osobiście: od audytu po review wdrożeń', them: 'Często junior, senior pojawia się na spotkaniach' },
+      { k: 'Specjalizacja', me: 'Technical SEO i AI search', them: 'Wszystko po trochu: SEO, Ads, social' },
+      { k: 'Doświadczenie', me: '9 lat, w tym enterprise w PMI i Accenture Song', them: 'Zależy od osoby, która dostanie projekt' },
+      { k: 'Co dostajesz', me: 'Zadania dla developerów ułożone według wpływu', them: 'Raport PDF i zestawienie pozycji' },
+      { k: 'Kontakt', me: 'Bezpośrednio ze mną', them: 'Przez account managera' },
+      { k: 'Forma współpracy', me: 'Jednorazowy audyt albo stała opieka, decydujesz Ty', them: 'Często pakiety z minimalnym okresem umowy' },
+    ],
+  },
+  sticky: { text: 'Bezpłatna konsultacja · 30 min', btn: 'Umów' },
   services: {
     label: 'Usługi',
     title: 'W czym pomagam',
@@ -166,6 +195,10 @@ export const pl = {
     title: 'Częste pytania',
     items: [
       {
+        q: 'Jak wygląda bezpłatna konsultacja?',
+        a: '30 minut online. Opowiadasz o serwisie i celach, a ja przeglądam stronę na żywo i wskazuję 3 rzeczy, które warto poprawić w pierwszej kolejności. Bez zobowiązań: po rozmowie sam decydujesz, czy idziemy dalej.',
+      },
+      {
         q: 'Czym Technical SEO różni się od „zwykłego” SEO?',
         a: 'Technical SEO odpowiada za to, czy wyszukiwarki i boty AI mogą znaleźć, pobrać, wyrenderować i zrozumieć Twoją stronę. Jeśli tu jest problem, treści i linki nie zadziałają w pełni, niezależnie od ich jakości.',
       },
@@ -182,6 +215,14 @@ export const pl = {
         a: 'Jedno i drugie. Najczęściej piszę zadania dla developerów i robię review zmian, ale część rzeczy mogę wdrożyć samodzielnie.',
       },
       {
+        q: 'Czy pracujesz z naszą agencją lub software housem?',
+        a: 'Tak. Najczęściej współpracuję z zespołami dev i agencjami po stronie klienta: przygotowuję zadania, robię review zmian i odpowiadam na pytania techniczne.',
+      },
+      {
+        q: 'Czy podpisujesz NDA?',
+        a: 'Tak. Przy projektach wymagających dostępu do danych, logów i kodu podpisanie NDA przed startem to standard.',
+      },
+      {
         q: 'Ile to kosztuje?',
         a: 'Audyt wyceniam jednorazowo, stałą współpracę miesięcznie. Kwota zależy od skali serwisu i zakresu. Po krótkiej rozmowie dostajesz konkretną wycenę.',
       },
@@ -190,14 +231,20 @@ export const pl = {
   contact: {
     label: 'Kontakt',
     title: 'Porozmawiajmy o Twoim serwisie.',
-    lead: 'Napisz kilka zdań o projekcie i o tym, co chcesz osiągnąć. Pierwsza konsultacja jest bezpłatna.',
+    lead: 'Na bezpłatnej, 30-minutowej rozmowie przejrzę Twoją stronę i wskażę 3 rzeczy, które warto poprawić w pierwszej kolejności. Bez zobowiązań.',
     topicsLabel: 'Czego dotyczy projekt?',
     topics: ['Audyt techniczny', 'AI search', 'Duży serwis', 'Enterprise / AEM', 'Migracja', 'Stała współpraca'],
     urlLabel: 'Adres strony',
     urlPlaceholder: 'https://twojafirma.pl',
     msgLabel: 'Wiadomość',
     msgPlaceholder: 'Czym się zajmujecie i co chcecie osiągnąć?',
-    submit: 'Wyślij wiadomość',
+    submit: 'Umów bezpłatną konsultację',
+    note: 'Odpowiadam osobiście. Dane z formularza wykorzystam wyłącznie do odpowiedzi na Twoje zapytanie.',
+    booking: 'Wolisz od razu wybrać termin?',
+    bookingBtn: 'Otwórz kalendarz',
+    sending: 'Wysyłam…',
+    success: 'Dzięki! Wiadomość dotarła. Odezwę się z propozycją terminu rozmowy.',
+    error: 'Nie udało się wysłać. Napisz proszę bezpośrednio na',
     subject: 'Zapytanie SEO — maciejzieciak.com',
     bodyTopics: 'Temat',
     bodyUrl: 'Strona',

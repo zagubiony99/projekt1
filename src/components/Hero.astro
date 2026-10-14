@@ -24,6 +24,11 @@ const b = words(h.titleB);
       <a class="btn" href={`#${t.ids.contact}`} data-magnet>{h.ctaPrimary}</a>
       <a class="more" href={`#${t.ids.experience}`}>{h.ctaSecondary}</a>
     </div>
+    <p class="note intro" style={`--i:${n + 4}`}>{h.ctaNote}</p>
+    <div class="trust intro" style={`--i:${n + 5}`}>
+      <span>{h.trustLabel}</span>
+      <b>Philip Morris International</b><b>Accenture Song</b><b>IG</b>
+    </div>
   </div>
   <a class="scroll-hint" href="#why" aria-hidden="true" tabindex="-1"><span></span></a>
 </section>
@@ -106,6 +111,27 @@ const b = words(h.titleB);
     align-items: center;
     gap: 16px 32px;
     margin-top: 14px;
+  }
+  .note {
+    margin-top: -6px;
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+  .trust {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    gap: 6px 22px;
+    margin-top: 18px;
+    color: #a1a1a6;
+    font-size: 0.8125rem;
+  }
+  .trust b {
+    color: #86868b;
+    font-size: 1.0625rem;
+    font-weight: 650;
+    letter-spacing: -0.02em;
   }
   .scroll-hint {
     position: absolute;

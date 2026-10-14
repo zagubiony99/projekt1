@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Nav from './Nav.astro';
 import Contact from './Contact.astro';
 import Footer from './Footer.astro';
+import StickyCta from './StickyCta.astro';
 import { site } from '../config';
 import { getDict, otherLang, type Lang } from '../i18n';
 import { services, ui } from '../data/services';
@@ -77,6 +78,7 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
           <a class="btn" href={`#${t.ids.contact}`} data-magnet>{u.cta}</a>
           <a class="more" href={`#${t.ids.gets}`}>{u.seeWhat}</a>
         </div>
+        <p class="cnote intro">{t.hero.ctaNote}</p>
         <p class="trust intro">{orgs.join('  ·  ')}</p>
       </div>
     </section>
@@ -215,6 +217,7 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
     </section>
   </main>
   <Footer lang={lang} altHref={altPath} />
+  <StickyCta lang={lang} />
 </Base>
 
 <script>
@@ -279,8 +282,13 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
     gap: 16px 32px;
     margin-top: 10px;
   }
+  .cnote {
+    margin-top: -6px;
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
   .trust {
-    margin-top: 28px;
+    margin-top: 20px;
     color: #a1a1a6;
     font-size: 0.9375rem;
     font-weight: 600;
@@ -297,7 +305,8 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
   :global(.js) .intro:nth-child(3) { animation-delay: 0.16s; }
   :global(.js) .intro:nth-child(4) { animation-delay: 0.26s; }
   :global(.js) .intro:nth-child(5) { animation-delay: 0.36s; }
-  :global(.js) .intro:nth-child(6) { animation-delay: 0.5s; }
+  :global(.js) .intro:nth-child(6) { animation-delay: 0.44s; }
+  :global(.js) .intro:nth-child(7) { animation-delay: 0.52s; }
   @keyframes rise {
     to { opacity: 1; filter: none; transform: none; }
   }

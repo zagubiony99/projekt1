@@ -1,0 +1,94 @@
+---
+import { getDict, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const t = getDict(Astro.props.lang);
+const c = t.compare;
+---
+
+<section class="section section--gray" aria-labelledby="cmp-h">
+  <div class="wrap">
+    <header class="head">
+      <p class="eyebrow" data-reveal>{c.label}</p>
+      <h2 class="h2" id="cmp-h" data-reveal>{c.title}</h2>
+    </header>
+    <div class="table" role="table" data-reveal>
+      <div class="row hd" role="row">
+        <span role="columnheader"></span>
+        <span role="columnheader" class="me">{c.me}</span>
+        <span role="columnheader" class="them">{c.them}</span>
+      </div>
+      {c.rows.map((r) => (
+        <div class="row" role="row">
+          <span role="rowheader" class="k">{r.k}</span>
+          <span role="cell" class="me"><i class="y" aria-hidden="true">✓</i>{r.me}</span>
+          <span role="cell" class="them"><i class="n" aria-hidden="true">–</i>{r.them}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .table {
+    max-width: 1040px;
+    margin-inline: auto;
+    border-radius: var(--r-lg);
+    background: var(--white);
+    padding: 8px clamp(16px, 3vw, 36px);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr 1.4fr;
+    gap: 16px 28px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--gray-2);
+    align-items: start;
+  }
+  .row:last-child {
+    border-bottom: 0;
+  }
+  .hd {
+    padding-block: 22px 14px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+  .hd .me {
+    background: var(--ai);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hd .them {
+    color: var(--muted);
+  }
+  .k {
+    font-weight: 600;
+  }
+  .row:not(.hd) .me,
+  .row:not(.hd) .them {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 10px;
+  }
+  .row:not(.hd) .them {
+    color: var(--muted);
+  }
+  i {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    font-style: normal;
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+  .y { background: #30d158; color: #fff; }
+  .n { background: var(--gray-2); color: var(--ink-2); }
+  @media (max-width: 760px) {
+    .row { grid-template-columns: 1fr 1fr; }
+    .k { grid-column: 1 / -1; }
+    .hd span:first-child { display: none; }
+  }
+</style>
