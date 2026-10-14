@@ -2,9 +2,11 @@
 
 Strona **maciejzieciak.com**: konsulting Technical SEO & AI Search po polsku i po angielsku.
 
-Zbudowana w [Astro](https://astro.build). Wynikiem jest statyczny HTML z ok. 4 KB JavaScriptu, a fonty są hostowane lokalnie, bez Google Fonts (to ważne pod RODO).
+Zbudowana w [Astro](https://astro.build). Wynikiem jest statyczny HTML z ok. 9 KB JavaScriptu, a fonty są hostowane lokalnie, bez Google Fonts (to ważne pod RODO).
 
 ## Uruchomienie
+
+Wymaga Node.js 22.12 lub nowszego.
 
 ```bash
 npm install
