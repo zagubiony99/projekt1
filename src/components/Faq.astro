@@ -13,7 +13,7 @@ const f = t.faq;
     </header>
     <div class="items">
       {f.items.map((it, i) => (
-        <details class="q" name="faq" open={i === 0}>
+        <details class="q" name="faq" open={i === 0} data-acc data-reveal style={`--d:${i}`}>
           <summary>
             <span>{it.q}</span>
             <span class="pm" aria-hidden="true"></span>
@@ -74,8 +74,18 @@ const f = t.faq;
     color: var(--muted);
     font-size: 1.0625rem;
   }
-  .q[open] .a { animation: open 0.5s var(--ease-out); }
-  @keyframes open {
-    from { opacity: 0; transform: translateY(-6px); }
+  .a {
+    transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+  }
+  .q:not([open]) .a,
+  .q.is-closing .a {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  summary {
+    transition: color 0.2s;
+  }
+  summary:hover {
+    color: var(--blue);
   }
 </style>

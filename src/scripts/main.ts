@@ -26,8 +26,40 @@ const scrub = document.querySelector<HTMLElement>('[data-scrub]');
 const pin = document.querySelector<HTMLElement>('[data-pin]');
 const rows = pin ? [...pin.querySelectorAll<HTMLElement>('.row')] : [];
 const sum = pin?.querySelector<HTMLElement>('[data-sum]');
-const rail = document.querySelector<HTMLElement>('[data-rail]');
-const jobs = rail ? [...rail.querySelectorAll<HTMLElement>('.job')] : [];
+const hs = document.querySelector<HTMLElement>('[data-hscroll]');
+const track = hs?.querySelector<HTMLElement>('[data-track]');
+const hbar = hs?.querySelector<HTMLElement>('[data-hbar]');
+const exp = document.querySelector<HTMLElement>('[data-exp]');
+const jobs = exp ? [...exp.querySelectorAll<HTMLElement>('[data-job]')] : [];
+const slides = exp ? [...exp.querySelectorAll<HTMLElement>('[data-slide]')] : [];
+const dots = exp ? [...exp.querySelectorAll<HTMLElement>('[data-dot]')] : [];
+const steps = document.querySelector<HTMLElement>('[data-steps]');
+const stepPanels = steps ? [...steps.querySelectorAll<HTMLElement>('[data-step]')] : [];
+const stepNums = steps ? [...steps.querySelectorAll<HTMLElement>('[data-snum]')] : [];
+const sbar = steps?.querySelector<HTMLElement>('[data-sbar]');
+const wide = window.matchMedia('(min-width: 900px)');
+
+// Horizontal gallery: the section is as tall as the sideways distance the track must travel
+let hsTravel = 0;
+const sizeGallery = () => {
+  if (!hs || !track) return;
+  if (!wide.matches || reduce) {
+    hs.style.height = '';
+    track.style.removeProperty('--x');
+    hsTravel = 0;
+    return;
+  }
+  hsTravel = Math.max(0, track.scrollWidth - window.innerWidth);
+  hs.style.height = `${window.innerHeight + hsTravel}px`;
+};
+sizeGallery();
+
+// Switch the active item in a "one at a time" scene
+const setActive = (items: HTMLElement[], idx: number) =>
+  items.forEach((el, i) => {
+    el.classList.toggle('on', i === idx);
+    el.classList.toggle('out', i < idx);
+  });
 
 // progress of a tall pinned section: 0 when its top hits the viewport top, 1 when its bottom does
 const pinProgress = (el: HTMLElement, vh: number) => {
@@ -56,11 +88,25 @@ const onScroll = () => {
     rows.forEach((row, i) => row.classList.toggle('is-done', p > 0.28 + i * 0.08));
     sum?.classList.toggle('is-done', p > 0.28 + rows.length * 0.08 + 0.04);
   }
-  if (rail) {
-    const r = rail.getBoundingClientRect();
-    const fill = clamp((vh * 0.6 - r.top) / r.height);
-    rail.style.setProperty('--r', fill.toFixed(4));
-    jobs.forEach((j) => j.classList.toggle('is-lit', j.getBoundingClientRect().top + 40 < vh * 0.6));
+  if (hs && track && hsTravel > 0) {
+    const p = pinProgress(hs, vh);
+    track.style.setProperty('--x', `${(-p * hsTravel).toFixed(1)}px`);
+    hbar?.style.setProperty('--hp', (0.15 + p * 0.85).toFixed(4));
+  }
+  if (exp && jobs.length) {
+    // the job crossing the middle of the screen drives the big sticky years
+    let idx = 0;
+    jobs.forEach((j, i) => { if (j.getBoundingClientRect().top < vh * 0.5) idx = i; });
+    jobs.forEach((j, i) => j.classList.toggle('is-active', i === idx));
+    setActive(slides, idx);
+    dots.forEach((d, i) => d.classList.toggle('on', i === idx));
+  }
+  if (steps && stepPanels.length) {
+    const p = pinProgress(steps, vh);
+    const idx = Math.min(stepPanels.length - 1, Math.floor(p * stepPanels.length * 0.999));
+    setActive(stepPanels, idx);
+    setActive(stepNums, idx);
+    sbar?.style.setProperty('--sp', (0.08 + p * 0.92).toFixed(4));
   }
 };
 const requestTick = () => {
@@ -70,14 +116,15 @@ const requestTick = () => {
   }
 };
 window.addEventListener('scroll', requestTick, { passive: true });
-window.addEventListener('resize', requestTick);
+window.addEventListener('resize', () => {
+  sizeGallery();
+  requestTick();
+});
 if (reduce) {
   scrub?.style.setProperty('--p', '1.3');
   pin?.style.setProperty('--p', '1');
   rows.forEach((r) => r.classList.add('is-done'));
   sum?.classList.add('is-done');
-  rail?.style.setProperty('--r', '1');
-  jobs.forEach((j) => j.classList.add('is-lit'));
 }
 onScroll();
 
@@ -106,6 +153,19 @@ const whenVisible = (el: Element, fn: () => void, threshold = 0.35) => {
   );
   o.observe(el);
 };
+
+/* ---------- Service cards: play their illustration once visible ---------- */
+const cardIO = new IntersectionObserver(
+  (entries) =>
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-on');
+        cardIO.unobserve(e.target);
+      }
+    }),
+  { threshold: 0.55 },
+);
+document.querySelectorAll('[data-card]').forEach((el) => (reduce ? el.classList.add('is-on') : cardIO.observe(el)));
 
 /* ---------- Count-up numbers ("1,1 mln", "670 tys.", "9 years") ---------- */
 document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => {
@@ -150,6 +210,46 @@ if (finePointer && !reduce) {
       el.style.setProperty('--rx', '0deg');
       el.style.setProperty('--ry', '0deg');
     });
+  });
+}
+
+/* ---------- FAQ: smooth open/close (one open at a time) ---------- */
+const accs = [...document.querySelectorAll<HTMLDetailsElement>('[data-acc]')];
+const animateAcc = (d: HTMLDetailsElement, open: boolean) => {
+  const summary = d.querySelector('summary')!;
+  const from = d.offsetHeight;
+  if (open) d.open = true;
+  const to = open ? d.scrollHeight : summary.offsetHeight;
+  if (!open) d.classList.add('is-closing');
+  const anim = d.animate({ height: [`${from}px`, `${to}px`] }, { duration: reduce ? 0 : 420, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
+  d.style.overflow = 'hidden';
+  anim.onfinish = () => {
+    if (!open) d.open = false;
+    d.classList.remove('is-closing');
+    d.style.overflow = '';
+  };
+};
+accs.forEach((d) => {
+  d.removeAttribute('name'); // we handle exclusivity ourselves, with animation
+  d.querySelector('summary')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    const opening = !d.open;
+    if (opening) accs.filter((o) => o !== d && o.open).forEach((o) => animateAcc(o, false));
+    animateAcc(d, opening);
+  });
+});
+
+/* ---------- Magnetic primary buttons ---------- */
+if (finePointer && !reduce) {
+  document.querySelectorAll<HTMLElement>('[data-magnet]').forEach((el) => {
+    el.style.transition = 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s';
+    el.addEventListener('pointermove', (e) => {
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - (r.left + r.width / 2)) * 0.25;
+      const y = (e.clientY - (r.top + r.height / 2)) * 0.35;
+      el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+    });
+    el.addEventListener('pointerleave', () => (el.style.transform = ''));
   });
 }
 

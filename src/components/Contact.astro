@@ -7,6 +7,7 @@ const c = t.contact;
 ---
 
 <section class="section section--black contact" id="kontakt" data-dark aria-labelledby="kontakt-h">
+  <div class="aura" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="wrap">
     <header class="head">
       <h2 class="h2 ai" id="kontakt-h" data-reveal>{c.title}</h2>
@@ -45,7 +46,7 @@ const c = t.contact;
         <textarea name="body" rows="4" placeholder={c.msgPlaceholder} required></textarea>
       </label>
       <div class="actions">
-        <button class="btn" type="submit">{c.submit}</button>
+        <button class="btn" type="submit" data-magnet>{c.submit}</button>
         <p class="direct">
           {c.orEmail}: <a class="more" href={`mailto:${site.email}`}>{site.email}</a>
         </p>
@@ -55,6 +56,36 @@ const c = t.contact;
 </section>
 
 <style>
+  .contact {
+    position: relative;
+    overflow: hidden;
+  }
+  .contact > .wrap {
+    position: relative;
+  }
+  .aura {
+    position: absolute;
+    inset: 0;
+    filter: blur(80px);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  .aura i {
+    position: absolute;
+    width: 46vw;
+    max-width: 640px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+  .aura i:nth-child(1) { left: 5%; top: 40%; background: rgb(8 148 255 / 0.45); }
+  .aura i:nth-child(2) { right: 8%; top: 25%; background: rgb(201 89 221 / 0.4); animation-duration: 22s; animation-delay: -6s; }
+  .aura i:nth-child(3) { left: 35%; bottom: -20%; background: rgb(255 46 84 / 0.3); animation-duration: 26s; animation-delay: -12s; }
+  @keyframes drift {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(8vw, -6vh) scale(1.15); }
+    100% { transform: translate(-6vw, 4vh) scale(0.9); }
+  }
   .contact .h2 {
     font-size: clamp(2.75rem, 1.6rem + 4.6vw, 5.5rem);
     padding-bottom: 0.06em;
@@ -78,8 +109,10 @@ const c = t.contact;
     gap: 24px;
     padding: clamp(24px, 4vw, 48px);
     border-radius: var(--r-lg);
-    background: var(--dark);
-    border: 1px solid rgb(255 255 255 / 0.06);
+    background: rgb(22 22 23 / 0.7);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border: 1px solid rgb(255 255 255 / 0.08);
   }
   fieldset {
     border: 0;

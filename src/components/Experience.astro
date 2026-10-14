@@ -13,78 +13,122 @@ const e = t.experience;
       <p class="lead" data-reveal style="--d:1">{e.intro}</p>
     </header>
 
-    <ol class="list" data-rail>
-      {e.items.map((it) => (
-        <li class:list={['job', { hl: 'highlight' in it && it.highlight }]} data-reveal>
-          <p class="when">{it.when}</p>
-          <div>
-            <h3 class="org">{it.org}</h3>
+    <div class="layout" data-exp>
+      <!-- Sticky "now showing" panel: big years that change as you scroll the list -->
+      <div class="aside" aria-hidden="true">
+        <div class="now">
+          {e.items.map((it, i) => (
+            <div class:list={['slide', { on: i === 0 }]} data-slide>
+              <p class="yr">{it.when}</p>
+              <p class="org">{it.org}</p>
+            </div>
+          ))}
+        </div>
+        <div class="dots">{e.items.map((_, i) => <i class:list={{ on: i === 0 }} data-dot />)}</div>
+      </div>
+
+      <ol class="list">
+        {e.items.map((it) => (
+          <li class:list={['job', { hl: 'highlight' in it && it.highlight }]} data-job data-reveal>
+            <p class="when">{it.when}</p>
+            <h3 class="jorg">{it.org}</h3>
             <p class="role">{it.role}</p>
             <p class="desc">{it.desc}</p>
-          </div>
-        </li>
-      ))}
-    </ol>
+          </li>
+        ))}
+      </ol>
+    </div>
   </div>
 </section>
 
 <style>
-  .list {
-    --r: 0;
-    position: relative;
-    border-top: 1px solid var(--line);
-  }
-  /* vertical progress rail that fills as you scroll through the career */
-  .list::before,
-  .list::after {
-    content: '';
-    position: absolute;
-    left: calc(11rem + 18px);
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    border-radius: 2px;
-    background: var(--gray-2);
-  }
-  .list::after {
-    background: linear-gradient(180deg, #0894ff, #c959dd 45%, #ff2e54 75%, #ff9004);
-    transform-origin: 50% 0;
-    transform: scaleY(var(--r));
-  }
-  .job {
-    position: relative;
-  }
-  .job::before {
-    content: '';
-    position: absolute;
-    left: calc(11rem + 13px);
-    top: 39px;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--white);
-    box-shadow: inset 0 0 0 2px var(--line);
-    z-index: 1;
-    transition: box-shadow 0.4s, background-color 0.4s;
-  }
-  .job.is-lit::before {
-    background: var(--ink);
-    box-shadow: 0 0 0 4px rgb(0 113 227 / 0.15);
-  }
-  .job {
+  .layout {
     display: grid;
-    grid-template-columns: 11rem minmax(0, 1fr);
-    gap: 8px 72px;
-    padding: 32px 0;
-    border-bottom: 1px solid var(--line);
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
   }
-  .when {
-    color: var(--muted);
-    font-size: 1.0625rem;
-    padding-top: 4px;
+  .aside {
+    position: sticky;
+    top: 30vh;
+    display: grid;
+    gap: 28px;
+  }
+  .now {
+    position: relative;
+    height: clamp(150px, 16vw, 210px);
+  }
+  .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(24px);
+    transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out), filter 0.6s var(--ease-out);
+  }
+  .slide.on {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+  .slide.out {
+    transform: translateY(-24px);
+  }
+  .yr {
+    font-size: clamp(2.5rem, 1.2rem + 3.6vw, 4.5rem);
+    white-space: nowrap;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    background: var(--ai);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding-bottom: 0.08em;
     font-variant-numeric: tabular-nums;
   }
   .org {
+    margin-top: 10px;
+    font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.75rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+  .dots {
+    display: flex;
+    gap: 8px;
+  }
+  .dots i {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--gray-2);
+    transition: width 0.4s var(--ease-out), background-color 0.4s;
+  }
+  .dots i.on {
+    width: 28px;
+    background: var(--ink);
+  }
+  .list {
+    display: grid;
+    gap: 16px;
+  }
+  .job {
+    padding: 28px 30px;
+    border-radius: var(--r-lg);
+    background: var(--gray);
+    transition: background-color 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out), opacity 0.5s;
+  }
+  .job.is-active {
+    background: var(--white);
+    box-shadow: 0 20px 50px -24px rgb(0 0 0 / 0.22), inset 0 0 0 1px var(--gray-2);
+  }
+  .when {
+    color: var(--muted);
+    font-size: 0.9375rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .jorg {
+    margin-top: 6px;
     font-size: clamp(1.375rem, 1.2rem + 0.6vw, 1.75rem);
     font-weight: 650;
     letter-spacing: -0.03em;
@@ -92,15 +136,13 @@ const e = t.experience;
   }
   .role {
     margin-top: 4px;
-    font-size: 1.0625rem;
     font-weight: 500;
   }
   .desc {
     margin-top: 10px;
     color: var(--muted);
-    max-width: 62ch;
   }
-  .hl .org {
+  .hl .jorg {
     background: var(--ai);
     -webkit-background-clip: text;
     background-clip: text;
@@ -110,9 +152,8 @@ const e = t.experience;
   .hl .desc {
     color: var(--ink);
   }
-  @media (max-width: 720px) {
-    .job { grid-template-columns: 1fr; gap: 4px; padding-left: 32px; }
-    .list::before, .list::after { left: 6px; }
-    .job::before { left: 1px; top: 36px; }
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; }
+    .aside { display: none; }
   }
 </style>
