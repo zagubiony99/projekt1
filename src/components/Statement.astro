@@ -7,8 +7,9 @@ const s = t.statement;
 // Split into words at build time; one CSS var (--p, set on scroll) lights them up in order.
 let i = 0;
 const parts = s.parts.map((p) => {
-  const words = p.t.split(/(\s+)/).filter((w) => w.length);
-  const out = words.map((w) => (/^\s+$/.test(w) ? { space: true, w } : { w, i: i++ }));
+  // split on ordinary spaces only, so glued pairs like "w\u00a0odpowiedzi" stay together
+  const words = p.t.split(/([ \t\n]+)/).filter((w) => w.length);
+  const out = words.map((w) => (/^[ \t\n]+$/.test(w) ? { space: true, w } : { w, i: i++ }));
   const count = out.filter((w) => !('space' in w)).length;
   return { ...p, words: out, start: i - count, count };
 });

@@ -1,3 +1,5 @@
+import { polishTypo } from '../i18n/typo';
+
 // Service landing pages (PL + EN). Each entry is one sales page per language.
 // Copy is built only on facts from the profile; no invented client results or prices.
 
@@ -24,7 +26,7 @@ export type ServiceCopy = {
 
 type Pair = { key: string; topic: { pl: string; en: string }; pl: ServiceCopy; en: ServiceCopy };
 
-export const services: Pair[] = [
+const raw: Pair[] = [
   {
     key: 'audit',
     topic: { pl: 'Audyt techniczny', en: 'Technical audit' },
@@ -33,42 +35,42 @@ export const services: Pair[] = [
       name: 'Audyt Technical SEO',
       metaTitle: 'Audyt Technical SEO — crawl, rendering, indeksacja | Maciej Zięciak',
       metaDescription:
-        'Audyt Technical SEO dla dużych serwisów i e-commerce: crawl, renderowanie JavaScriptu, indeksacja, logi serwera, Core Web Vitals. Lista problemów według wpływu na ruch i gotowe zadania dla developerów.',
+        'Audyt Technical SEO dla dużych serwisów i e-commerce: crawl, renderowanie JavaScriptu, indeksacja, logi serwera, Core Web Vitals. Lista problemów według wpływu na ruch i gotowe zadania dla programistów.',
       eyebrow: 'Audyt Technical SEO',
       title: 'Dowiedz się, co naprawdę blokuje Twój ruch.',
       lead:
-        'Nie dostaniesz 80-stronicowego PDF-a, który nikt nie przeczyta. Dostaniesz listę problemów ułożoną według wpływu na ruch i przychód, z gotowymi zadaniami dla developerów.',
+        'Nie dostaniesz 80-stronicowego PDF-a, którego nikt nie przeczyta. Dostaniesz listę problemów ułożoną według wpływu na ruch i przychód, z gotowymi zadaniami dla programistów.',
       painTitle: 'Brzmi znajomo?',
       pains: [
         'Ruch organiczny spada, a nikt nie potrafi wskazać dlaczego.',
         'Google indeksuje tysiące stron, których nie chcesz w wynikach, a pomija te, które sprzedają.',
-        'W Search Console rośnie „Strona zeskanowana, ale nie zindeksowana”.',
+        'W Search Console przybywa stron ze statusem „Strona zeskanowana, ale nie zindeksowana”.',
         'Strona stoi na JavaScripcie i nie wiesz, co Googlebot faktycznie widzi.',
         'Poprzedni audyt skończył się listą 300 punktów bez priorytetów.',
-        'Zespół dev pyta „co właściwie mamy zrobić?” i nie dostaje jasnej odpowiedzi.',
+        'Programiści pytają „co właściwie mamy zrobić?” i nie dostają jasnej odpowiedzi.',
       ],
       getTitle: 'Co dostajesz',
       gets: [
-        { t: 'Mapę problemów według wpływu', d: 'Każdy problem z oceną wpływu na ruch, kosztu wdrożenia i priorytetem. Najpierw to, co przyniesie najwięcej.' },
-        { t: 'Gotowe zadania dla developerów', d: 'Tickety z opisem problemu, przykładowymi URL-ami, oczekiwanym zachowaniem i kryteriami akceptacji. Do wklejenia w Jirę.' },
+        { t: 'Listę problemów od najważniejszych', d: 'Każdy problem z oceną wpływu na ruch, kosztem wdrożenia i priorytetem. Najpierw to, co przyniesie najwięcej.' },
+        { t: 'Gotowe zadania dla programistów', d: 'Opis problemu, przykładowe adresy, oczekiwany efekt i warunki odbioru. Do wklejenia prosto do Jiry.' },
         { t: 'Analizę renderowania i indeksacji', d: 'Co widzi Googlebot, a co boty AI. Gdzie JavaScript, canonicale, przekierowania albo robots.txt odcinają treść.' },
-        { t: 'Analizę logów serwera', d: 'Na co Googlebot faktycznie wydaje crawl budget, a które sekcje serwisu omija.' },
-        { t: 'Omówienie na callu', d: 'Przechodzimy przez wyniki z Tobą i zespołem dev, żeby wszyscy wiedzieli, co i dlaczego.' },
-        { t: 'Weryfikację po wdrożeniu', d: 'Sprawdzam, czy poprawki działają tak, jak powinny, zanim uznamy temat za zamknięty.' },
+        { t: 'Analizę logów serwera', d: 'Gdzie Googlebot naprawdę spędza czas, a które sekcje serwisu omija.' },
+        { t: 'Omówienie wyników', d: 'Przechodzimy przez wyniki z Tobą i programistami, żeby wszyscy wiedzieli, co robimy i dlaczego.' },
+        { t: 'Sprawdzenie po wdrożeniu', d: 'Upewniam się, że poprawki działają tak, jak powinny, zanim uznamy temat za zamknięty.' },
       ],
       stepsTitle: 'Jak to przebiega',
       steps: [
-        { t: 'Konsultacja i dostępy', when: 'Dzień 1–3', d: 'Krótka rozmowa o celach, dostęp do Search Console, analityki i, jeśli to możliwe, logów serwera.' },
-        { t: 'Crawl i analiza', when: 'Tydzień 1–2', d: 'Pełny crawl (Screaming Frog, Botify, Lumar lub OnCrawl), analiza renderowania, indeksacji i logów.' },
-        { t: 'Priorytety i zadania', when: 'Tydzień 2–3', d: 'Spisuję problemy według wpływu i przygotowuję gotowe zadania dla zespołu.' },
-        { t: 'Omówienie i wsparcie', when: 'Tydzień 3', d: 'Call z zespołem, odpowiedzi na pytania developerów, weryfikacja pierwszych wdrożeń.' },
+        { t: 'Rozmowa i dostępy', when: 'Dzień 1–3', d: 'Krótka rozmowa o celach i dostęp do Search Console, analityki oraz, jeśli to możliwe, logów serwera.' },
+        { t: 'Crawl i analiza', when: 'Tydzień 1–2', d: 'Pełny crawl w Screaming Frogu, Botify, Lumarze albo OnCrawlu oraz analiza renderowania, indeksacji i logów.' },
+        { t: 'Priorytety i zadania', when: 'Tydzień 2–3', d: 'Układam problemy od najważniejszych i przygotowuję gotowe zadania dla zespołu.' },
+        { t: 'Omówienie i wsparcie', when: 'Tydzień 3', d: 'Spotkanie z zespołem, odpowiedzi na pytania programistów i sprawdzenie pierwszych wdrożeń.' },
       ],
       forTitle: 'Dla kogo to jest',
       forYes: [
-        'Serwisy od kilku tysięcy do milionów URL-i',
+        'Serwisy od kilku tysięcy do milionów adresów',
         'Sklepy internetowe i serwisy z nawigacją fasetową',
         'Strony na JavaScripcie (React, Next.js, Angular) i na AEM',
-        'Firmy z własnym zespołem dev albo software housem',
+        'Firmy z własnymi programistami albo software housem',
       ],
       forNo: [
         'Wizytówki z kilkoma podstronami',
@@ -79,7 +81,7 @@ export const services: Pair[] = [
       faq: [
         { q: 'Ile trwa audyt?', a: 'Zwykle 2–3 tygodnie od otrzymania dostępów. Przy bardzo dużych serwisach albo analizie logów z dłuższego okresu może to potrwać dłużej. Termin ustalamy przed startem.' },
         { q: 'Jakich dostępów potrzebujesz?', a: 'Minimum to Google Search Console i analityka. Bardzo pomagają logi serwera i dostęp do środowiska testowego. Wszystko ustalamy na pierwszej rozmowie.' },
-        { q: 'Czy wdrażasz poprawki?', a: 'Zwykle przygotowuję zadania dla Twojego zespołu dev i weryfikuję wdrożenia. Część rzeczy mogę wdrożyć samodzielnie, jeśli to ma sens.' },
+        { q: 'Czy wdrażasz poprawki?', a: 'Zwykle przygotowuję zadania dla Twoich programistów i sprawdzam wdrożenia. Część rzeczy mogę zrobić sam, jeśli to ma sens.' },
         { q: 'Ile kosztuje audyt?', a: 'Audyt wyceniam jednorazowo, w zależności od wielkości serwisu i zakresu (np. czy analizujemy logi). Konkretną kwotę dostajesz po bezpłatnej konsultacji.' },
       ],
     },
@@ -144,44 +146,44 @@ export const services: Pair[] = [
     topic: { pl: 'AI search', en: 'AI search' },
     pl: {
       slug: 'widocznosc-w-ai-search',
-      name: 'AI Search i widoczność w LLM',
+      name: 'Widoczność w odpowiedziach AI',
       metaTitle: 'Widoczność w AI search: ChatGPT, Perplexity, AI Overviews | Maciej Zięciak',
       metaDescription:
-        'Widoczność marki w ChatGPT, Perplexity, Gemini i Google AI Overviews. Audyt dostępu botów AI, renderowania bez JavaScriptu, encji i danych strukturalnych oraz monitoring cytowań.',
-      eyebrow: 'AI Search i widoczność w LLM',
-      title: 'Bądź w odpowiedzi, a nie tylko pod nią.',
+        'Widoczność marki w ChatGPT, Perplexity, Gemini i Google AI Overviews. Audyt dostępu botów AI, test strony bez JavaScriptu, dane strukturalne i pomiar obecności marki w odpowiedziach AI.',
+      eyebrow: 'Widoczność w odpowiedziach AI',
+      title: 'Niech AI poleca Ciebie, a nie konkurencję.',
       lead:
-        'Coraz więcej klientów zadaje pytanie ChatGPT, Perplexity albo AI Overviews, zanim w ogóle kliknie link. Sprawdzam, czy modele w ogóle mają dostęp do Twojej strony, czy ją rozumieją i czy ją cytują, a potem to poprawiam.',
+        'Coraz więcej klientów pyta ChatGPT, Perplexity albo AI Overviews, zanim kliknie jakikolwiek link. Sprawdzam, czy modele mają dostęp do Twojej strony, czy ją rozumieją i czy ją cytują. Potem usuwam to, co stoi na przeszkodzie.',
       painTitle: 'Brzmi znajomo?',
       pains: [
         'Pytasz ChatGPT o swoją branżę i w odpowiedzi jest konkurencja, a Ciebie nie ma.',
         'Nie wiesz, czy boty OpenAI, Perplexity i Anthropic w ogóle mają dostęp do Twojej strony.',
-        'WAF albo CDN blokuje nieznane boty i nikt tego nie sprawdzał.',
+        'Firewall albo CDN blokuje nieznane boty i nikt tego nie sprawdzał.',
         'Treść ładuje się JavaScriptem, którego większość crawlerów AI nie wykonuje.',
         'AI Overviews odpowiadają na pytania, na które kiedyś klikano w Twoją stronę.',
         'Zarząd pyta o „strategię na AI”, a w SEO nikt nie ma na to planu.',
       ],
       getTitle: 'Co dostajesz',
       gets: [
-        { t: 'Audyt dostępu botów AI', d: 'Robots.txt, WAF, CDN i kody odpowiedzi dla OAI-SearchBot, GPTBot, PerplexityBot, ClaudeBot, Google-Extended i innych.' },
-        { t: 'Test renderowania bez JavaScriptu', d: 'Ile treści widzi crawler, który nie wykonuje JS, i co trzeba przenieść do HTML-a.' },
-        { t: 'Encje i dane strukturalne', d: 'Schema.org i spójne informacje o marce, żeby modele rozumiały, kim jesteś i czym się zajmujesz.' },
-        { t: 'Monitoring cytowań', d: 'Zestaw promptów dla Twojej branży i regularny pomiar, jak marka pojawia się w odpowiedziach AI.' },
-        { t: 'Strategię treści pod odpowiedzi', d: 'Które treści mają szansę być cytowane i jak je przygotować, żeby model chciał z nich korzystać.' },
-        { t: 'Plan i decyzję o dostępie', d: 'Świadoma decyzja, którym botom dać dostęp do treści, a którym nie, z uwzględnieniem prawa i biznesu.' },
+        { t: 'Audyt dostępu botów AI', d: 'Robots.txt, firewall, CDN i odpowiedzi serwera dla OAI-SearchBot, GPTBot, PerplexityBot, ClaudeBot, Google-Extended i innych.' },
+        { t: 'Test strony bez JavaScriptu', d: 'Ile treści widzi bot, który nie uruchamia JavaScriptu, i co trzeba przenieść do HTML-a.' },
+        { t: 'Dane strukturalne i informacje o marce', d: 'Schema.org i spójny opis marki w sieci, żeby modele rozumiały, kim jesteś i czym się zajmujesz.' },
+        { t: 'Pomiar obecności w AI', d: 'Zestaw pytań typowych dla Twojej branży i regularny pomiar, jak często i w jakim kontekście pojawia się Twoja marka.' },
+        { t: 'Plan treści, które AI cytuje', d: 'Które treści mają szansę trafić do odpowiedzi i jak je przygotować, żeby modele chciały z nich korzystać.' },
+        { t: 'Decyzję, którym botom dać dostęp', d: 'Które boty wpuścić, a które zablokować, z uwzględnieniem kwestii prawnych i biznesowych.' },
       ],
       stepsTitle: 'Jak to przebiega',
       steps: [
         { t: 'Punkt wyjścia', when: 'Tydzień 1', d: 'Sprawdzam, jak marka wypada dziś w ChatGPT, Perplexity, Gemini i AI Overviews na kluczowe pytania.' },
-        { t: 'Dostęp i rendering', when: 'Tydzień 1–2', d: 'Audyt dostępu botów, odpowiedzi serwera, WAF/CDN i treści widocznej bez JavaScriptu.' },
-        { t: 'Encje i treści', when: 'Tydzień 2–4', d: 'Dane strukturalne, informacje o marce i plan treści, które mają szansę być cytowane.' },
-        { t: 'Pomiar', when: 'Co miesiąc', d: 'Powtarzalny pomiar obecności w odpowiedziach AI i korekta działań.' },
+        { t: 'Dostęp i JavaScript', when: 'Tydzień 1–2', d: 'Audyt dostępu botów, odpowiedzi serwera, firewalla i CDN oraz treści widocznej bez JavaScriptu.' },
+        { t: 'Marka i treści', when: 'Tydzień 2–4', d: 'Dane strukturalne, informacje o marce i plan treści, które mają szansę trafić do odpowiedzi.' },
+        { t: 'Pomiar', when: 'Co miesiąc', d: 'Regularny pomiar obecności w odpowiedziach AI i korekta działań.' },
       ],
       forTitle: 'Dla kogo to jest',
       forYes: [
         'Marki, których klienci pytają AI o rekomendacje',
         'SaaS, B2B i usługi z długim procesem decyzyjnym',
-        'Serwisy z dużą ilością treści eksperckich',
+        'Serwisy z dużą liczbą treści eksperckich',
         'Firmy, które chcą świadomie zdecydować o dostępie botów AI',
       ],
       forNo: [
@@ -190,9 +192,9 @@ export const services: Pair[] = [
       ],
       proof: 'Obecnie pracuję jako Manager SEO & AI Search Operations w Philip Morris International. Wcześniej przez prawie 5 lat zajmowałem się Technical SEO w Accenture Song.',
       faq: [
-        { q: 'Czy da się zagwarantować obecność w ChatGPT?', a: 'Nie. Modele działają inaczej niż ranking Google i nikt uczciwy tego nie gwarantuje. Da się natomiast usunąć bariery techniczne, wzmocnić markę jako encję i mierzyć postępy.' },
-        { q: 'Czy blokować boty AI?', a: 'To decyzja biznesowa. Część botów służy do trenowania modeli, część do wyszukiwania w czasie rzeczywistym. Pomagam rozróżnić, które przynoszą widoczność, a które nie.' },
-        { q: 'Jak mierzysz widoczność w AI?', a: 'Zestawem stałych promptów dla Twojej branży, sprawdzanych regularnie w kilku modelach, plus danymi o ruchu z narzędzi AI w analityce.' },
+        { q: 'Czy da się zagwarantować obecność w ChatGPT?', a: 'Nie. Modele działają inaczej niż wyniki Google i nikt uczciwy tego nie obiecuje. Da się za to usunąć bariery techniczne, wzmocnić markę i mierzyć postępy.' },
+        { q: 'Czy blokować boty AI?', a: 'To decyzja biznesowa. Część botów zbiera dane do trenowania modeli, a część wyszukuje informacje na bieżąco. Pomagam rozróżnić, które dają widoczność, a które nie.' },
+        { q: 'Jak mierzysz widoczność w AI?', a: 'Stałym zestawem pytań dla Twojej branży, sprawdzanym regularnie w kilku modelach, oraz danymi o ruchu z narzędzi AI w analityce.' },
         { q: 'Czy to zastępuje klasyczne SEO?', a: 'Nie, to jego rozszerzenie. Te same fundamenty techniczne decydują o widoczności w Google i w odpowiedziach AI.' },
       ],
     },
@@ -261,33 +263,33 @@ export const services: Pair[] = [
       metaDescription:
         'SEO dla serwisów z setkami tysięcy URL-i: crawl budget, nawigacja fasetowa, szablony stron i programmatic SEO. Doświadczenie z serwisem, który urósł do ponad 1,1 mln podstron.',
       eyebrow: 'Duże serwisy i programmatic SEO',
-      title: 'Skala, która pracuje na ruch, a nie przeciwko niemu.',
+      title: 'Milion podstron może pracować na Ciebie. Albo przeciwko Tobie.',
       lead:
-        'Przy setkach tysięcy URL-i każdy błąd w szablonie mnoży się przez skalę. Sam rozwijałem serwis do ponad 1,1 mln podstron i 115 tys. wizyt organicznych miesięcznie, więc wiem, gdzie takie projekty się sypią.',
+        'Przy setkach tysięcy adresów każdy błąd w szablonie powtarza się tysiące razy. Sam rozwijałem serwis do ponad 1,1 mln podstron i 115 tys. wizyt organicznych miesięcznie, więc wiem, gdzie takie projekty się sypią.',
       painTitle: 'Brzmi znajomo?',
       pains: [
         'Googlebot krąży po filtrach i parametrach zamiast po stronach, które mają znaczenie.',
-        'W indeksie jest kilka razy więcej stron niż w sitemapie albo odwrotnie.',
+        'W indeksie jest kilka razy więcej stron niż w mapie witryny albo odwrotnie.',
         'Nowe strony czekają tygodniami na zaindeksowanie.',
-        'Tysiące podobnych stron konkuruje ze sobą o te same frazy.',
-        'Wdrożenie nowego szablonu zrobiło coś z ruchem i nikt nie wie co.',
+        'Tysiące podobnych stron konkurują ze sobą o te same frazy.',
+        'Po wdrożeniu nowego szablonu ruch się zmienił i nikt nie wie dlaczego.',
         'Programmatic SEO wygenerowało dużo stron i mało ruchu.',
       ],
       getTitle: 'Co dostajesz',
       gets: [
-        { t: 'Analizę crawl budgetu', d: 'Na podstawie logów i crawlu: gdzie bot marnuje zasoby i jak przekierować go na wartościowe sekcje.' },
+        { t: 'Analizę crawl budgetu', d: 'Na podstawie logów i crawla: gdzie bot marnuje czas i jak skierować go do wartościowych sekcji.' },
         { t: 'Kontrolę indeksacji', d: 'Zasady dla filtrów, parametrów, paginacji i duplikatów: co indeksować, co kanonizować, czego nie crawlować.' },
-        { t: 'Audyt szablonów', d: 'SEO liczone per szablon, a nie per URL. Jedna poprawka naprawia tysiące stron.' },
+        { t: 'Audyt szablonów', d: 'Patrzę na szablony, a nie pojedyncze adresy. Jedna poprawka naprawia tysiące stron.' },
         { t: 'Architekturę i linkowanie wewnętrzne', d: 'Struktura, która prowadzi bota i użytkownika do stron z największym potencjałem.' },
         { t: 'Strategię programmatic SEO', d: 'Które strony generować, z jakich danych i jak zapewnić im unikalną wartość.' },
-        { t: 'Monitoring po zmianach', d: 'Pomiar indeksacji i ruchu per sekcja, żeby od razu widzieć efekt wdrożeń.' },
+        { t: 'Pomiar po zmianach', d: 'Indeksacja i ruch w każdej sekcji osobno, żeby od razu widzieć efekt wdrożeń.' },
       ],
       stepsTitle: 'Jak to przebiega',
       steps: [
-        { t: 'Dane', when: 'Tydzień 1', d: 'Logi serwera, Search Console, sitemapy i crawl reprezentatywnej części serwisu.' },
-        { t: 'Diagnoza per sekcja', when: 'Tydzień 1–3', d: 'Analiza szablonów, indeksacji i crawl budgetu dla każdej sekcji serwisu.' },
+        { t: 'Dane', when: 'Tydzień 1', d: 'Logi serwera, Search Console, mapy witryny i crawl reprezentatywnej części serwisu.' },
+        { t: 'Diagnoza sekcji', when: 'Tydzień 1–3', d: 'Analiza szablonów, indeksacji i crawl budgetu w każdej sekcji serwisu.' },
         { t: 'Zasady i architektura', when: 'Tydzień 3–4', d: 'Reguły indeksacji, linkowania i generowania stron spisane jako zadania dla zespołu.' },
-        { t: 'Wdrożenie i pomiar', when: 'Kolejne miesiące', d: 'Wsparcie wdrożeń i monitoring zmian w indeksacji i ruchu.' },
+        { t: 'Wdrożenie i pomiar', when: 'Kolejne miesiące', d: 'Wsparcie wdrożeń i śledzenie zmian w indeksacji i ruchu.' },
       ],
       forTitle: 'Dla kogo to jest',
       forYes: [
@@ -297,9 +299,9 @@ export const services: Pair[] = [
         'Wydawcy i serwisy z dużym archiwum treści',
       ],
       forNo: ['Serwisy poniżej kilku tysięcy stron, gdzie wystarczy standardowy audyt'],
-      proof: 'Przez lata byłem jedynym specjalistą SEO polskiego katalogu firm: ponad 1,1 mln podstron, 670 tys. URL-i w indeksie Google i 115 tys. wizyt organicznych miesięcznie w szczycie.',
+      proof: 'Przez lata byłem jedynym specjalistą SEO polskiego katalogu firm: ponad 1,1 mln podstron, 670 tys. adresów w indeksie Google i 115 tys. wizyt z wyszukiwarki miesięcznie w szczytowym momencie.',
       faq: [
-        { q: 'Od ilu stron serwis jest „duży”?', a: 'Problemy typowe dla dużych serwisów zaczynają się zwykle od kilkudziesięciu tysięcy URL-i albo wcześniej, jeśli serwis ma rozbudowane filtry i parametry.' },
+        { q: 'Od ilu stron serwis jest „duży”?', a: 'Problemy typowe dla dużych serwisów zaczynają się zwykle od kilkudziesięciu tysięcy adresów albo wcześniej, jeśli serwis ma rozbudowane filtry i parametry.' },
         { q: 'Czy potrzebne są logi serwera?', a: 'Bardzo pomagają, bo pokazują, co bot faktycznie robi. Bez nich też da się pracować, ale diagnoza jest mniej precyzyjna.' },
         { q: 'Czy programmatic SEO jeszcze działa?', a: 'Tak, jeśli strony mają realną wartość i unikalne dane. Masowe generowanie podobnych stron dziś raczej szkodzi niż pomaga.' },
       ],
@@ -363,7 +365,7 @@ export const services: Pair[] = [
       name: 'Enterprise i SEO międzynarodowe',
       metaTitle: 'SEO enterprise i międzynarodowe, hreflang, Adobe Experience Manager | Maciej Zięciak',
       metaDescription:
-        'SEO dla marek enterprise i serwisów wielojęzycznych: hreflang, struktura wersji językowych, Adobe Experience Manager, praca z zespołami dev i w procesach korporacyjnych.',
+        'SEO dla marek enterprise i serwisów wielojęzycznych: hreflang, struktura wersji językowych, Adobe Experience Manager, praca z zespołami IT i w procesach korporacyjnych.',
       eyebrow: 'Enterprise i SEO międzynarodowe',
       title: 'Jedna marka, wiele rynków. Zero chaosu w wynikach.',
       lead:
@@ -371,10 +373,10 @@ export const services: Pair[] = [
       painTitle: 'Brzmi znajomo?',
       pains: [
         'Google pokazuje użytkownikom w Niemczech wersję brytyjską albo odwrotnie.',
-        'Hreflang jest wdrożony, ale Search Console pokazuje błędy, a nikt nie wie, które są ważne.',
+        'Hreflang niby jest wdrożony, ale crawl pokazuje setki błędów i nikt nie wie, które są ważne.',
         'Każdy rynek robi SEO po swojemu i wyniki są nie do porównania.',
         'Zmiany SEO czekają miesiącami w kolejce wydań.',
-        'Globalny szablon psuje lokalne strony, które dobrze rankowały.',
+        'Globalny szablon psuje lokalne strony, które dobrze radziły sobie w Google.',
         'Agencje na różnych rynkach dostają sprzeczne wytyczne.',
       ],
       getTitle: 'Co dostajesz',
@@ -382,28 +384,28 @@ export const services: Pair[] = [
         { t: 'Audyt hreflang i wersji językowych', d: 'Pełna mapa wersji rynkowych, błędy w powiązaniach, x-default i spójność z canonicalami.' },
         { t: 'Strategię struktury rynków', d: 'Domeny, subdomeny czy katalogi, oraz jak to wpływa na SEO, utrzymanie i koszty.' },
         { t: 'Wytyczne SEO dla AEM', d: 'Ustawienia komponentów, szablonów i dyspozytora, które decydują o SEO w Adobe Experience Manager.' },
-        { t: 'Standardy dla rynków i agencji', d: 'Jedne zasady SEO dla wszystkich rynków, żeby wyniki były porównywalne i skalowalne.' },
-        { t: 'SEO w procesie wydań', d: 'Kryteria akceptacji SEO w ticketach i review przed wydaniem, żeby błędy nie trafiały na produkcję.' },
-        { t: 'Raportowanie per rynek', d: 'Widoczność i ruch w podziale na rynki i wersje językowe.' },
+        { t: 'Standardy dla rynków i agencji', d: 'Jedne zasady SEO dla wszystkich rynków, żeby wyniki dało się porównać, a dobre rozwiązania przenieść dalej.' },
+        { t: 'SEO w procesie wydań', d: 'Wymagania SEO w zadaniach i kontrola przed każdym wydaniem, żeby błędy nie trafiały na produkcję.' },
+        { t: 'Raporty dla każdego rynku', d: 'Widoczność i ruch w podziale na rynki i wersje językowe.' },
       ],
       stepsTitle: 'Jak to przebiega',
       steps: [
         { t: 'Mapa rynków', when: 'Tydzień 1', d: 'Inwentaryzacja domen, wersji językowych i zespołów odpowiedzialnych za każdy rynek.' },
         { t: 'Audyt', when: 'Tydzień 1–3', d: 'Hreflang, canonicale, szablony i konfiguracja CMS na reprezentatywnych rynkach.' },
-        { t: 'Standardy', when: 'Tydzień 3–4', d: 'Wytyczne i kryteria akceptacji SEO dla zespołów i agencji.' },
-        { t: 'Stała opieka', when: 'Kolejne miesiące', d: 'Review wydań, wsparcie rynków i raportowanie.' },
+        { t: 'Standardy', when: 'Tydzień 3–4', d: 'Wytyczne i wymagania SEO dla zespołów i agencji.' },
+        { t: 'Stała opieka', when: 'Kolejne miesiące', d: 'Kontrola wydań, wsparcie rynków i raporty.' },
       ],
       forTitle: 'Dla kogo to jest',
       forYes: [
         'Marki działające na wielu rynkach i w wielu językach',
         'Serwisy na Adobe Experience Manager i innych CMS-ach enterprise',
-        'Organizacje z kilkoma zespołami dev i agencjami',
+        'Organizacje z kilkoma zespołami IT i agencjami',
         'Firmy wchodzące na nowe rynki',
       ],
       forNo: ['Firmy działające na jednym rynku, w jednym języku'],
       proof: 'Od 2019 roku pracuję przy serwisach na Adobe Experience Manager: w IG, potem w Accenture Song (strategie Technical SEO dla odbiorców międzynarodowych), dziś w Philip Morris International.',
       faq: [
-        { q: 'Czy pracujesz z naszą agencją i zespołem dev?', a: 'Tak, to standard w projektach enterprise. Przygotowuję wytyczne i zadania, robię review i wspieram zespoły w różnych krajach.' },
+        { q: 'Czy pracujesz z naszą agencją i programistami?', a: 'Tak, w dużych firmach to standard. Przygotowuję wytyczne i zadania, sprawdzam wdrożenia i wspieram zespoły w różnych krajach.' },
         { q: 'Czy znasz tylko AEM?', a: 'AEM znam najlepiej, ale zasady SEO międzynarodowego są uniwersalne. Pracowałem też z WordPressem, platformami e-commerce i systemami autorskimi.' },
         { q: 'W jakich językach pracujesz?', a: 'Komunikacja i dokumentacja po polsku albo po angielsku.' },
       ],
@@ -464,51 +466,51 @@ export const services: Pair[] = [
     topic: { pl: 'Migracja', en: 'Migration' },
     pl: {
       slug: 'migracja-strony-seo',
-      name: 'Migracje i relaunche',
+      name: 'Migracje i przebudowy stron',
       metaTitle: 'Migracja strony bez utraty ruchu SEO | Maciej Zięciak',
       metaDescription:
         'Bezpieczna migracja strony: zmiana CMS, domeny lub struktury URL bez utraty ruchu organicznego. Mapa przekierowań, testy przed startem i monitoring po wdrożeniu.',
-      eyebrow: 'Migracje i relaunche',
+      eyebrow: 'Migracje i przebudowy stron',
       title: 'Nowa strona. Ten sam ruch. Albo większy.',
       lead:
-        'Migracja to najszybszy sposób, żeby stracić połowę ruchu w tydzień. Pilnuję, żeby tak się nie stało: od mapy przekierowań, przez testy na środowisku testowym, po monitoring tygodniami po starcie.',
+        'Migracja to najszybszy sposób, żeby w tydzień stracić połowę ruchu. Pilnuję, żeby tak się nie stało: przygotowuję mapę przekierowań, testuję nową wersję przed startem i obserwuję ruch przez kilka tygodni po nim.',
       painTitle: 'Brzmi znajomo?',
       pains: [
         'Zmieniacie CMS, domenę albo strukturę URL i nikt nie odpowiada za SEO.',
         'Agencja robiąca nową stronę mówi, że „przekierowania się dorobi”.',
-        'Po poprzednim relaunchu ruch spadł i nigdy w pełni nie wrócił.',
+        'Po poprzedniej przebudowie strony ruch spadł i nigdy w pełni nie wrócił.',
         'Nie wiesz, które stare adresy mają linki i ruch, a które można spokojnie pominąć.',
         'Termin startu jest ustalony, a SEO jest na końcu listy.',
       ],
       getTitle: 'Co dostajesz',
       gets: [
-        { t: 'Inwentaryzację starych URL-i', d: 'Wszystkie adresy z ruchem, linkami i w indeksie. Nic wartościowego nie zginie po drodze.' },
+        { t: 'Spis starych adresów', d: 'Wszystkie adresy, które mają ruch, linki albo są w indeksie. Nic wartościowego nie zginie po drodze.' },
         { t: 'Mapę przekierowań 301', d: 'Stary adres → nowy adres, bez łańcuchów i przekierowań na stronę główną.' },
-        { t: 'Testy przed startem', d: 'Crawl środowiska testowego: przekierowania, canonicale, meta robots, hreflang, sitemapy, renderowanie.' },
-        { t: 'Checklistę dnia startu', d: 'Co sprawdzić w pierwszej godzinie, pierwszym dniu i pierwszym tygodniu po starcie.' },
-        { t: 'Monitoring po wdrożeniu', d: 'Indeksacja, błędy 404, ruch i pozycje przez kilka tygodni po starcie, z szybką reakcją na problemy.' },
+        { t: 'Testy przed startem', d: 'Crawl wersji testowej: przekierowania, canonicale, meta robots, hreflang, mapy witryny i renderowanie.' },
+        { t: 'Listę kontrolną na dzień startu', d: 'Co sprawdzić w pierwszej godzinie, pierwszym dniu i pierwszym tygodniu po starcie.' },
+        { t: 'Opiekę po wdrożeniu', d: 'Przez kilka tygodni po starcie pilnuję indeksacji, błędów 404, ruchu i pozycji i szybko reaguję na problemy.' },
         { t: 'Raport porównawczy', d: 'Ruch i widoczność przed migracją i po niej, w czytelnej formie dla zarządu.' },
       ],
       stepsTitle: 'Jak to przebiega',
       steps: [
-        { t: 'Planowanie', when: 'Jak najwcześniej', d: 'Włączam się na etapie projektu, żeby SEO było w wymaganiach, a nie poprawkach.' },
-        { t: 'Mapa i wymagania', when: 'Przed developmentem', d: 'Inwentaryzacja URL-i, mapa przekierowań i wymagania SEO dla nowej strony.' },
-        { t: 'Testy', when: 'Przed startem', d: 'Crawl i testy środowiska testowego, lista poprawek przed publikacją.' },
-        { t: 'Start i monitoring', when: 'Start + kilka tygodni', d: 'Kontrola w dniu startu i monitoring, aż ruch się ustabilizuje.' },
+        { t: 'Planowanie', when: 'Jak najwcześniej', d: 'Dołączam na etapie projektu, żeby SEO trafiło do wymagań, a nie do poprawek.' },
+        { t: 'Mapa i wymagania', when: 'Przed pracami programistycznymi', d: 'Spis adresów, mapa przekierowań i wymagania SEO dla nowej strony.' },
+        { t: 'Testy', when: 'Przed startem', d: 'Crawl i testy wersji testowej oraz lista poprawek przed publikacją.' },
+        { t: 'Start i obserwacja', when: 'Start + kilka tygodni', d: 'Kontrola w dniu startu i obserwacja, aż ruch się ustabilizuje.' },
       ],
       forTitle: 'Dla kogo to jest',
       forYes: [
         'Zmiana CMS albo platformy sklepu',
         'Zmiana domeny lub połączenie kilku domen',
-        'Nowa struktura URL lub nowa architektura informacji',
+        'Nowa struktura adresów albo nowy układ serwisu',
         'Redesign z przebudową szablonów',
       ],
       forNo: ['Zmiana samej grafiki bez zmian w adresach i szablonach'],
       proof: 'Pracowałem z e-commerce na wielu platformach sklepowych i z serwisami enterprise na Adobe Experience Manager, czyli w środowiskach, gdzie zmiany szablonów, struktur i platform to codzienność.',
       faq: [
-        { q: 'Kiedy powinienem się do Ciebie zgłosić?', a: 'Najlepiej zanim ruszy development nowej strony. Im później, tym więcej rzeczy trzeba poprawiać, zamiast od razu zaprojektować je dobrze.' },
+        { q: 'Kiedy najlepiej się zgłosić?', a: 'Zanim programiści zaczną budować nową stronę. Im później, tym więcej trzeba poprawiać, zamiast od razu zrobić dobrze.' },
         { q: 'Czy da się przeprowadzić migrację bez żadnego spadku?', a: 'Krótkie wahania są normalne, bo Google musi przetworzyć zmiany. Celem jest uniknięcie trwałego spadku i jak najszybszy powrót ruchu.' },
-        { q: 'Co, jeśli migracja już się odbyła i ruch spadł?', a: 'Też pomagam. Odtwarzam stare adresy, znajduję brakujące przekierowania i inne błędy, które zabrały ruch.' },
+        { q: 'A jeśli migracja już była i ruch spadł?', a: 'Też pomogę. Odtwarzam stare adresy, znajduję brakujące przekierowania i inne błędy, które zabrały ruch.' },
       ],
     },
     en: {
@@ -566,21 +568,21 @@ export const services: Pair[] = [
     topic: { pl: 'E-commerce', en: 'E-commerce' },
     pl: {
       slug: 'seo-ecommerce',
-      name: 'E-commerce SEO',
+      name: 'SEO dla e-commerce',
       metaTitle: 'SEO dla e-commerce: kategorie, filtry, karty produktów | Maciej Zięciak',
       metaDescription:
         'SEO dla sklepów internetowych: architektura kategorii, nawigacja fasetowa, karty produktów i kontrola indeksacji. PrestaShop, Magento, WordPress, Shoper, RedCart i systemy autorskie.',
-      eyebrow: 'E-commerce SEO',
+      eyebrow: 'SEO dla e-commerce',
       title: 'Więcej sprzedaży z wyszukiwarki, nie tylko więcej wejść.',
       lead:
         'W sklepie liczy się ruch na kategoriach i produktach, które sprzedają. Porządkuję strukturę, filtry i indeksację tak, żeby Google trafiał tam, gdzie są pieniądze.',
       painTitle: 'Brzmi znajomo?',
       pains: [
-        'Filtry generują tysiące adresów, które zjadają crawl budget.',
-        'Kategorie nie rankują na frazy, na które sprzedajesz.',
-        'Karty produktów mają opisy producenta, takie same jak u konkurencji.',
+        'Filtry tworzą tysiące adresów, które zjadają crawl budget.',
+        'Kategorie nie pojawiają się w Google na frazy, na których zarabiasz.',
+        'Karty produktów mają opisy od producenta, takie same jak u konkurencji.',
         'Produkty niedostępne zostawiają po sobie 404 albo puste strony.',
-        'Platforma sklepu robi z SEO rzeczy, nad którymi nie masz kontroli.',
+        'Platforma sklepu robi z SEO rzeczy, nad którymi nie panujesz.',
       ],
       getTitle: 'Co dostajesz',
       gets: [
@@ -596,7 +598,7 @@ export const services: Pair[] = [
         { t: 'Dane sprzedażowe', when: 'Tydzień 1', d: 'Które kategorie i produkty zarabiają, a które mają potencjał.' },
         { t: 'Audyt sklepu', when: 'Tydzień 1–3', d: 'Struktura, filtry, indeksacja, szablony i konfiguracja platformy.' },
         { t: 'Plan', when: 'Tydzień 3–4', d: 'Zadania dla zespołu i treści priorytetowe, ułożone według przychodu.' },
-        { t: 'Wdrożenie i pomiar', when: 'Kolejne miesiące', d: 'Wsparcie wdrożeń i pomiar ruchu oraz sprzedaży z organic.' },
+        { t: 'Wdrożenie i pomiar', when: 'Kolejne miesiące', d: 'Wsparcie wdrożeń i pomiar ruchu oraz sprzedaży z wyszukiwarki.' },
       ],
       forTitle: 'Dla kogo to jest',
       forYes: [
@@ -610,7 +612,7 @@ export const services: Pair[] = [
       faq: [
         { q: 'Z jakimi platformami pracujesz?', a: 'PrestaShop, Magento, WordPress, Shoper, RedCart i systemy autorskie.' },
         { q: 'Czy piszesz opisy produktów?', a: 'Przygotowuję szablony, wytyczne i priorytety. Same treści mogą pisać Twoi copywriterzy albo wspólnie dobierzemy wykonawcę.' },
-        { q: 'Kiedy zobaczę efekty w sprzedaży?', a: 'Poprawki techniczne mogą zadziałać w ciągu kilku tygodni. Stabilny wzrost ruchu i sprzedaży z organic to zwykle kilka miesięcy.' },
+        { q: 'Kiedy zobaczę efekty w sprzedaży?', a: 'Poprawki techniczne potrafią zadziałać w kilka tygodni. Na stabilny wzrost ruchu i sprzedaży z wyszukiwarki zwykle czeka się kilka miesięcy.' },
       ],
     },
     en: {
@@ -664,6 +666,9 @@ export const services: Pair[] = [
     },
   },
 ];
+
+// Polish copy gets Polish typography (no one-letter words at line ends)
+export const services: Pair[] = raw.map((p) => ({ ...p, pl: polishTypo(p.pl) }));
 
 export const ui = {
   pl: {

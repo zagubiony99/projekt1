@@ -250,7 +250,7 @@ export const en: Dict = {
     title: 'Let’s talk about your website.',
     lead: 'On a free 30-minute call I’ll review your site and point out the 3 things worth fixing first. No strings attached.',
     topicsLabel: 'What is it about?',
-    topics: ['Technical audit', 'AI search', 'Large website', 'Enterprise / AEM', 'Migration', 'Ongoing work'],
+    topics: ['Technical audit', 'AI search', 'Large website', 'E-commerce', 'Enterprise / AEM', 'Migration', 'Ongoing work'],
     urlLabel: 'Website',
     urlPlaceholder: 'https://yourcompany.com',
     msgLabel: 'Message',

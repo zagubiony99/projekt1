@@ -18,7 +18,7 @@ const A_WORD = 42;
 type Tok = { kind: 'w' | 'p' | 'c'; v: string; t: number; you?: boolean };
 const toks: Tok[] = [];
 let k = 0;
-for (const m of d.answer.matchAll(/\[(\d+)\]|[^\s[]+/g)) {
+for (const m of d.answer.matchAll(/\[(\d+)\]|[^ \t\n[]+/g)) {
   if (m[1]) {
     const n = Number(m[1]);
     toks.push({ kind: 'c', v: m[1], t: A_START + k * A_WORD, you: !!d.sources[n - 1]?.you });
