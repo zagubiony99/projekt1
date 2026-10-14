@@ -1,5 +1,6 @@
 ---
 import { getDict, type Lang } from '../i18n';
+import AiDemo from './AiDemo.astro';
 interface Props { lang: Lang }
 const t = getDict(Astro.props.lang);
 const h = t.hero;
@@ -30,18 +31,17 @@ const b = words(h.titleB);
       <b>Philip Morris International</b><b>Accenture Song</b><b>IG</b>
     </div>
   </div>
-  <a class="scroll-hint" href="#why" aria-hidden="true" tabindex="-1"><span></span></a>
+  <div class="wrap">
+    <AiDemo lang={Astro.props.lang} />
+  </div>
 </section>
 
 <style>
   .hero {
     --h: 0;
     position: relative;
-    min-height: 100svh;
-    display: grid;
-    align-items: center;
-    padding-top: 96px;
-    padding-bottom: 96px;
+    padding-top: clamp(104px, 13vh, 150px);
+    padding-bottom: clamp(56px, 9vh, 112px);
     overflow: hidden;
   }
   /* Soft Apple-Intelligence aura behind the headline, breathing slowly */
@@ -133,33 +133,6 @@ const b = words(h.titleB);
     font-weight: 650;
     letter-spacing: -0.02em;
   }
-  .scroll-hint {
-    position: absolute;
-    left: 50%;
-    bottom: 32px;
-    translate: -50% 0;
-    width: 26px;
-    height: 42px;
-    border-radius: 14px;
-    box-shadow: inset 0 0 0 1.5px var(--line);
-    opacity: calc(1 - var(--h) * 4);
-  }
-  .scroll-hint span {
-    position: absolute;
-    left: 50%;
-    top: 8px;
-    width: 4px;
-    height: 8px;
-    margin-left: -2px;
-    border-radius: 2px;
-    background: var(--muted);
-    animation: wheel 1.8s var(--ease-out) infinite;
-  }
-  @keyframes wheel {
-    0% { transform: translateY(0); opacity: 1; }
-    70% { transform: translateY(12px); opacity: 0; }
-    100% { opacity: 0; }
-  }
 
   /* Entrance: each word rises out of a blur, staggered */
   :global(.js) .w,
@@ -178,6 +151,5 @@ const b = words(h.titleB);
   }
   @media (max-width: 520px) {
     .ctas .btn { width: 100%; }
-    .scroll-hint { display: none; }
   }
 </style>

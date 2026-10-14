@@ -31,6 +31,21 @@ export const en: Dict = {
     ctaPrimary: 'Book a free consultation',
     ctaSecondary: 'See my experience',
     ctaNote: '30 minutes · online · no strings attached',
+    demo: {
+      app: 'AI answer',
+      note: 'Illustrative example',
+      q: 'Which running shoes should I choose for my first marathon?',
+      think: 'Searching 14 pages',
+      answer:
+        'For a first marathon, choose well-cushioned shoes with a stable ride [1][3]. Match them to your foot type and run at least 50 km in them before race day [2]. The store’s guide has a model comparison and a size chart [2].',
+      sourcesLabel: 'Sources',
+      sources: [
+        { d: 'running-blog.com', t: 'How to choose marathon shoes' },
+        { d: 'yourstore.com', t: 'Marathon running shoes: a buying guide', you: true },
+        { d: 'runners-forum.com', t: 'First marathon: which shoes?' },
+      ],
+      you: 'Your website',
+    },
     trustLabel: 'Experience includes',
     card: {
       title: 'Who can see your page?',

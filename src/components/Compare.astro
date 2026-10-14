@@ -14,8 +14,8 @@ const c = t.compare;
     <div class="table" role="table" data-reveal>
       <div class="row hd" role="row">
         <span role="columnheader"></span>
-        <span role="columnheader" class="me">{c.me}</span>
-        <span role="columnheader" class="them">{c.them}</span>
+        <span role="columnheader" class="me"><i class="y lg" aria-hidden="true">✓</i><span>{c.me}</span></span>
+        <span role="columnheader" class="them"><i class="n lg" aria-hidden="true">–</i><span>{c.them}</span></span>
       </div>
       {c.rows.map((r) => (
         <div class="row" role="row">
@@ -53,7 +53,10 @@ const c = t.compare;
     font-weight: 700;
     letter-spacing: -0.03em;
   }
-  .hd .me {
+  .lg {
+    display: none;
+  }
+  .hd .me > span {
     background: var(--ai);
     -webkit-background-clip: text;
     background-clip: text;
@@ -86,9 +89,20 @@ const c = t.compare;
   }
   .y { background: #30d158; color: #fff; }
   .n { background: var(--gray-2); color: var(--ink-2); }
+  /* Phone: one column per row (topic, then "me", then "agency"); the header becomes a legend */
   @media (max-width: 760px) {
-    .row { grid-template-columns: 1fr 1fr; }
-    .k { grid-column: 1 / -1; }
-    .hd span:first-child { display: none; }
+    .row { grid-template-columns: 1fr; gap: 10px; padding: 16px 0; }
+    .hd {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 20px;
+      font-size: 1rem;
+      padding-block: 16px 12px;
+    }
+    .hd > span:first-child { display: none; }
+    .hd .me, .hd .them { display: inline-flex; align-items: center; gap: 8px; }
+    .lg { display: grid; }
+    .k { font-size: 0.9375rem; }
+    .row:not(.hd) .them { font-size: 0.9375rem; }
   }
 </style>

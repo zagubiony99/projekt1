@@ -4,6 +4,7 @@ import Nav from './Nav.astro';
 import Contact from './Contact.astro';
 import Footer from './Footer.astro';
 import StickyCta from './StickyCta.astro';
+import AiDemo from './AiDemo.astro';
 import { site } from '../config';
 import { getDict, otherLang, type Lang } from '../i18n';
 import { services, ui } from '../data/services';
@@ -81,6 +82,7 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
         <p class="cnote intro">{t.hero.ctaNote}</p>
         <p class="trust intro">{orgs.join('  ·  ')}</p>
       </div>
+      {pair.key === 'ai' && <div class="wrap"><AiDemo lang={lang} /></div>}
     </section>
 
     <!-- Pain points -->

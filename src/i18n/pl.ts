@@ -30,6 +30,23 @@ export const pl = {
     ctaSecondary: 'Zobacz doświadczenie',
     ctaNote: '30 minut · online · bez zobowiązań',
     trustLabel: 'Doświadczenie m.in. z',
+    // Hero demo: an AI answer that cites "your" site. Illustrative, fictional domains.
+    // Citations in the answer are written as [n] and refer to sources[n - 1].
+    demo: {
+      app: 'Odpowiedź AI',
+      note: 'Przykład poglądowy',
+      q: 'Jakie buty do biegania wybrać na pierwszy maraton?',
+      think: 'Przeszukuję 14 stron',
+      answer:
+        'Na pierwszy maraton wybierz buty z dobrą amortyzacją i stabilnym prowadzeniem stopy [1][3]. Dobierz je do typu stopy i przebiegnij w nich co najmniej 50 km przed startem [2]. Porównanie modeli i tabelę rozmiarów znajdziesz w poradniku sklepu [2].',
+      sourcesLabel: 'Źródła',
+      sources: [
+        { d: 'biegowy-blog.pl', t: 'Jak wybrać buty na maraton' },
+        { d: 'twojsklep.pl', t: 'Buty do biegania na maraton: poradnik', you: true },
+        { d: 'forum-biegaczy.pl', t: 'Pierwszy maraton: jakie buty?' },
+      ],
+      you: 'Twoja strona',
+    },
     card: {
       title: 'Kto widzi Twoją stronę?',
       url: 'example.com/kategoria/produkt',

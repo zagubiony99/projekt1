@@ -22,6 +22,8 @@ document.addEventListener('keydown', (e) => e.key === 'Escape' && setSheet(false
 /* ---------- Scroll-linked scenes (one rAF loop) ---------- */
 const darks = [...document.querySelectorAll<HTMLElement>('[data-dark]')];
 const hero = document.querySelector<HTMLElement>('[data-hero]');
+// the hero's scroll value is set only on the parts that use it (--h is non-inherited)
+const heroParts = hero ? [...hero.querySelectorAll<HTMLElement>('.glow, [data-hero-inner], [data-demo]')] : [];
 const scrub = document.querySelector<HTMLElement>('[data-scrub]');
 const pin = document.querySelector<HTMLElement>('[data-pin]');
 const rows = pin ? [...pin.querySelectorAll<HTMLElement>('.row')] : [];
@@ -98,7 +100,8 @@ const onScroll = () => {
   nav?.classList.toggle('is-scrolled', y > 8);
   nav?.classList.toggle('is-dark', overDark);
   if (!motion) return;
-  setVar(hero, '--h', clamp(y / (vh * 0.8)).toFixed(3));
+  const hv = clamp(y / (vh * 0.8)).toFixed(3);
+  heroParts.forEach((el) => setVar(el, '--h', hv));
   if (scrub) setVar(scrub, '--p', (progress(scrubR, vh) * 1.3).toFixed(3));
   if (pin) {
     const p = progress(pinR, vh);
@@ -146,6 +149,15 @@ if (reduce) {
   sum?.classList.add('is-done');
 }
 onScroll();
+
+/* ---------- Hero AI-answer demo: plays once when the window is well in view ---------- */
+const demo = document.querySelector<HTMLElement>('[data-demo]');
+if (demo && !reduce) {
+  const dio = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) { demo.classList.add('play'); dio.disconnect(); }
+  }, { threshold: 0.45 });
+  dio.observe(demo);
+}
 
 /* ---------- Reveal on scroll ---------- */
 const io = new IntersectionObserver(

@@ -3,6 +3,8 @@ import { getDict, type Lang } from '../i18n';
 interface Props { lang: Lang }
 const t = getDict(Astro.props.lang);
 const e = t.experience;
+// Big sticky years: an open-ended range reads better (and fits) as "Since 2026"
+const big = (when: string) => when.replace(/^(\d{4})\s*—\s*(obecnie|present)$/i, Astro.props.lang === 'pl' ? 'Od $1' : 'Since $1');
 ---
 
 <section class="section" id={t.ids.experience} aria-labelledby="exp-h">
@@ -19,7 +21,7 @@ const e = t.experience;
         <div class="now">
           {e.items.map((it, i) => (
             <div class:list={['slide', { on: i === 0 }]} data-slide>
-              <p class="yr">{it.when}</p>
+              <p class="yr">{big(it.when)}</p>
               <p class="org">{it.org}</p>
             </div>
           ))}
