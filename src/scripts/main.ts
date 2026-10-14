@@ -159,6 +159,15 @@ if (demo && !reduce) {
   dio.observe(demo);
 }
 
+/* ---------- Compare: each row resolves (me lights up, agency is struck) as it passes 60% of the screen ---------- */
+const vsRows = document.querySelectorAll<HTMLElement>('[data-vs]');
+if (vsRows.length && !reduce) {
+  const vio = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add('hit'); vio.unobserve(e.target); }
+  }), { rootMargin: '0px 0px -40% 0px', threshold: 0 });
+  vsRows.forEach((r) => vio.observe(r));
+}
+
 /* ---------- Reveal on scroll ---------- */
 const io = new IntersectionObserver(
   (entries) =>
