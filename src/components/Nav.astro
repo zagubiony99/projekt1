@@ -1,14 +1,17 @@
 ---
 import { getDict, otherLang, type Lang } from '../i18n';
-interface Props { lang: Lang }
+interface Props { lang: Lang; altHref?: string }
 const { lang } = Astro.props;
 const t = getDict(lang);
 const alt = getDict(otherLang(lang));
+const altHref = Astro.props.altHref ?? alt.path;
+// anchors always point at the homepage sections, so they work from service pages too
+const h = (a: string) => `${t.path}${a}`;
 const links = [
-  ['#uslugi', t.nav.services],
-  ['#doswiadczenie', t.nav.experience],
-  ['#proces', t.nav.process],
-  ['#faq', t.nav.faq],
+  [h('#uslugi'), t.nav.services],
+  [h('#doswiadczenie'), t.nav.experience],
+  [h('#proces'), t.nav.process],
+  [h('#faq'), t.nav.faq],
 ] as const;
 ---
 
@@ -18,7 +21,7 @@ const links = [
     <div class="end">
       <nav class="links" aria-label="Main">
         {links.map(([href, label]) => <a href={href}>{label}</a>)}
-        <a href={alt.path} hreflang={alt.lang} aria-label={t.nav.switchLabel}>{alt.lang.toUpperCase()}</a>
+        <a href={altHref} hreflang={alt.lang} aria-label={t.nav.switchLabel}>{alt.lang.toUpperCase()}</a>
       </nav>
       <a class="cta" href="#kontakt">{t.nav.cta}</a>
       <button class="burger" type="button" aria-expanded="false" aria-controls="mobile-menu" data-burger>
@@ -31,7 +34,7 @@ const links = [
   <div class="sheet" id="mobile-menu" data-sheet hidden>
     <nav class="wrap sheet__in" aria-label="Mobile">
       {[...links, ['#kontakt', t.nav.contact]].map(([href, label]) => <a href={href}>{label}</a>)}
-      <a class="sw" href={alt.path} hreflang={alt.lang}>{t.nav.switchLabel}</a>
+      <a class="sw" href={altHref} hreflang={alt.lang}>{t.nav.switchLabel}</a>
     </nav>
   </div>
 </header>

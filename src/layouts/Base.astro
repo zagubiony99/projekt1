@@ -6,14 +6,26 @@ import { getDict, otherLang, type Lang } from '../i18n';
 
 interface Props {
   lang: Lang;
+  // Optional per-page overrides (service pages). Defaults = homepage.
+  title?: string;
+  description?: string;
+  path?: string;
+  altPath?: string;
+  extraLd?: Record<string, unknown>[];
 }
-const { lang } = Astro.props;
+const { lang, extraLd = [] } = Astro.props;
 const t = getDict(lang);
 const alt = getDict(otherLang(lang));
+const isHome = !Astro.props.path;
+const title = Astro.props.title ?? t.meta.title;
+const description = Astro.props.description ?? t.meta.description;
+const path = Astro.props.path ?? t.path;
+const altPath = Astro.props.altPath ?? alt.path;
+const plPath = lang === 'pl' ? path : altPath;
 
-const canonical = new URL(t.path, site.url).href;
-const altUrl = new URL(alt.path, site.url).href;
-const plUrl = new URL(getDict('pl').path, site.url).href;
+const canonical = new URL(path, site.url).href;
+const altUrl = new URL(altPath, site.url).href;
+const plUrl = new URL(plPath, site.url).href;
 const ogImage = new URL(`/og-${lang}.png`, site.url).href;
 
 const jsonLd = {
@@ -34,7 +46,7 @@ const jsonLd = {
       '@type': 'ProfessionalService',
       '@id': `${site.url}/#business`,
       name: `${site.name} — Technical SEO & AI Search`,
-      url: canonical,
+      url: new URL(t.path, site.url).href,
       email: site.email,
       description: t.meta.description,
       founder: { '@id': `${site.url}/#person` },
@@ -57,7 +69,8 @@ const jsonLd = {
       inLanguage: ['pl-PL', 'en-US'],
       publisher: { '@id': `${site.url}/#person` },
     },
-    {
+    ...(isHome ? [] : extraLd),
+    ...(!isHome ? [] : [{
       '@type': 'WebPage',
       '@id': `${canonical}#webpage`,
       url: canonical,
@@ -75,7 +88,7 @@ const jsonLd = {
         name: f.q,
         acceptedAnswer: { '@type': 'Answer', text: f.a },
       })),
-    },
+    }]),
   ],
 };
 ---
@@ -85,8 +98,8 @@ const jsonLd = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{t.meta.title}</title>
-    <meta name="description" content={t.meta.description} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang="pl" href={lang === 'pl' ? canonical : altUrl} />
     <link rel="alternate" hreflang="en" href={lang === 'en' ? canonical : altUrl} />
@@ -97,8 +110,8 @@ const jsonLd = {
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
-    <meta property="og:title" content={t.meta.title} />
-    <meta property="og:description" content={t.meta.description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={t.locale} />
     <meta property="og:locale:alternate" content={alt.locale} />
@@ -106,8 +119,8 @@ const jsonLd = {
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={t.meta.title} />
-    <meta name="twitter:description" content={t.meta.description} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

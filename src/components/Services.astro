@@ -1,5 +1,6 @@
 ---
 import { getDict, type Lang } from '../i18n';
+import { services as pages, ui } from '../data/services';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = getDict(lang);
@@ -80,6 +81,7 @@ const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-
               <h3 class:list={{ ai: i === 1 }}>{it.name}</h3>
               <p>{it.desc}</p>
               <p class="tags">{it.tags.join(' · ')}</p>
+              <a class="more go" href={`${ui[lang].base}${pages[i][lang].slug}/`}>{ui[lang].more}<span class="sr-only">: {it.name}</span></a>
             </div>
           </li>
         ))}
@@ -178,6 +180,11 @@ const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-
   }
   .dark .txt > p:not(.tags) { color: #a1a1a6; }
   .tags { font-size: 0.8125rem; color: var(--muted); }
+  .go { margin-top: 4px; font-size: 1rem; }
+  .dark .go { color: var(--link-dark); }
+  /* whole card is clickable via the link's stretched hit area */
+  .go::before { content: ''; position: absolute; inset: 0; z-index: 1; }
+  .card { cursor: pointer; }
   .bar {
     width: min(220px, 40vw);
     height: 4px;

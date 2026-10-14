@@ -1,0 +1,640 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from './Nav.astro';
+import Contact from './Contact.astro';
+import Footer from './Footer.astro';
+import { site } from '../config';
+import { getDict, otherLang, type Lang } from '../i18n';
+import { services, ui } from '../data/services';
+interface Props { lang: Lang; key: string }
+const { lang, key } = Astro.props;
+const other = otherLang(lang);
+const t = getDict(lang);
+const u = ui[lang];
+const pair = services.find((p) => p.key === key)!;
+const s = pair[lang];
+const path = `${u.base}${s.slug}/`;
+const altPath = `${ui[other].base}${pair[other].slug}/`;
+const url = new URL(path, site.url).href;
+const home = new URL(t.path, site.url).href;
+const rest = services.filter((p) => p.key !== key);
+
+const extraLd = [
+  {
+    '@type': 'Service',
+    '@id': `${url}#service`,
+    name: s.name,
+    serviceType: s.name,
+    description: s.metaDescription,
+    url,
+    provider: { '@id': `${site.url}/#person` },
+    areaServed: [{ '@type': 'Country', name: 'Poland' }, 'Worldwide'],
+    availableLanguage: ['Polish', 'English'],
+  },
+  {
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: s.metaTitle,
+    description: s.metaDescription,
+    inLanguage: lang === 'pl' ? 'pl-PL' : 'en-US',
+    isPartOf: { '@id': `${site.url}/#website` },
+    about: { '@id': `${url}#service` },
+    breadcrumb: { '@id': `${url}#breadcrumb` },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: u.home, item: home },
+      { '@type': 'ListItem', position: 2, name: u.services, item: `${home}#uslugi` },
+      { '@type': 'ListItem', position: 3, name: s.name, item: url },
+    ],
+  },
+  {
+    '@type': 'FAQPage',
+    '@id': `${url}#faq`,
+    mainEntity: s.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
+---
+
+<Base lang={lang} title={s.metaTitle} description={s.metaDescription} path={path} altPath={altPath} extraLd={extraLd}>
+  <Nav lang={lang} altHref={altPath} />
+  <main id="main">
+    <!-- Hero -->
+    <section class="sv-hero" id="top">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="wrap top">
+        <nav class="crumbs intro" aria-label="Breadcrumb">
+          <a href={t.path}>{u.home}</a><span>›</span><a href={`${t.path}#uslugi`}>{u.services}</a><span>›</span><span aria-current="page">{s.name}</span>
+        </nav>
+        <p class="eyebrow intro">{s.eyebrow}</p>
+        <h1 class="intro">{s.title}</h1>
+        <p class="lead intro">{s.lead}</p>
+        <div class="ctas intro">
+          <a class="btn" href="#kontakt" data-magnet>{u.cta}</a>
+          <a class="more" href="#co-dostajesz">{u.seeWhat}</a>
+        </div>
+        <p class="trust intro">{orgs.join('  ·  ')}</p>
+      </div>
+    </section>
+
+    <!-- Pain points -->
+    <section class="section section--black" data-dark aria-labelledby="pain-h">
+      <div class="wrap">
+        <header class="head">
+          <h2 class="h2" id="pain-h" data-reveal>{s.painTitle}</h2>
+        </header>
+        <ul class="pains">
+          {s.pains.map((p, i) => (
+            <li data-reveal style={`--d:${i % 3}`}>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M12 7v6m0 3.5v.5" /></svg>
+              <span>{p}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="bridge" data-reveal>
+          {lang === 'pl' ? 'Jeśli choć jedno się zgadza, warto porozmawiać.' : 'If even one of these rings true, let’s talk.'}
+          <a class="more" href="#kontakt">{u.cta}</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- Deliverables -->
+    <section class="section section--gray" id="co-dostajesz" aria-labelledby="get-h">
+      <div class="wrap wrap--wide">
+        <header class="head">
+          <p class="eyebrow" data-reveal>{s.eyebrow}</p>
+          <h2 class="h2" id="get-h" data-reveal>{s.getTitle}</h2>
+        </header>
+        <ul class="gets">
+          {s.gets.map((g, i) => (
+            <li data-reveal data-tilt style={`--d:${i % 3}`}>
+              <span class="tick" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="m4 8.4 2.6 2.6L12 5.4" /></svg></span>
+              <h3>{g.t}</h3>
+              <p>{g.d}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- Steps -->
+    <section class="section" aria-labelledby="steps-h">
+      <div class="wrap wrap--wide">
+        <header class="head">
+          <h2 class="h2" id="steps-h" data-reveal>{s.stepsTitle}</h2>
+        </header>
+        <ol class="steps">
+          {s.steps.map((st, i) => (
+            <li data-reveal style={`--d:${i}`}>
+              <span class="num">{String(i + 1).padStart(2, '0')}</span>
+              <span class="when">{st.when}</span>
+              <h3>{st.t}</h3>
+              <p>{st.d}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- Fit -->
+    <section class="section section--gray" aria-labelledby="fit-h">
+      <div class="wrap">
+        <header class="head">
+          <h2 class="h2" id="fit-h" data-reveal>{s.forTitle}</h2>
+        </header>
+        <div class="fit">
+          <div class="yes" data-reveal>
+            <p class="fit-h">{u.yes}</p>
+            <ul>{s.forYes.map((x) => <li>{x}</li>)}</ul>
+          </div>
+          <div class="no" data-reveal style="--d:1">
+            <p class="fit-h">{u.no}</p>
+            <ul>{s.forNo.map((x) => <li>{x}</li>)}</ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Proof -->
+    <section class="section proof" aria-labelledby="proof-h">
+      <div class="wrap">
+        <p class="eyebrow" data-reveal>{u.proofTitle}</p>
+        <p class="quote" id="proof-h" data-reveal>{s.proof}</p>
+        <dl class="mini">
+          {t.stats.items.map((st, i) => (
+            <div data-reveal style={`--d:${i}`}>
+              <dt>{st.k}</dt>
+              <dd data-count>{st.v}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section section--gray" aria-labelledby="sfaq-h">
+      <div class="wrap">
+        <header class="head">
+          <h2 class="h2" id="sfaq-h" data-reveal>{u.faqTitle}</h2>
+        </header>
+        <div class="faq">
+          {s.faq.map((f, i) => (
+            <details class="q" open={i === 0} data-acc>
+              <summary><span>{f.q}</span><span class="pm" aria-hidden="true"></span></summary>
+              <p class="a">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <Contact lang={lang} topic={pair.topic[lang]} next={{ title: u.nextTitle, items: u.next }} />
+
+    <!-- Other services -->
+    <section class="section others" aria-labelledby="oth-h">
+      <div class="wrap wrap--wide">
+        <header class="head">
+          <h2 class="h2" id="oth-h" data-reveal>{u.other}</h2>
+        </header>
+        <ul class="ocards">
+          {rest.map((r, i) => (
+            <li data-reveal style={`--d:${i % 3}`}>
+              <a href={`${u.base}${r[lang].slug}/`}>
+                <b>{r[lang].name}</b>
+                <span>{r[lang].title}</span>
+                <span class="more">{u.more}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  </main>
+  <Footer lang={lang} altHref={altPath} />
+</Base>
+
+<script>
+  import '../scripts/main.ts';
+</script>
+
+<style>
+  /* ---------- Hero ---------- */
+  .sv-hero {
+    position: relative;
+    padding: clamp(120px, 14vw, 180px) 0 clamp(80px, 10vw, 140px);
+    overflow: hidden;
+  }
+  .glow {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    width: min(1100px, 120vw);
+    aspect-ratio: 2 / 1;
+    translate: -50% -50%;
+    background:
+      radial-gradient(35% 50% at 30% 50%, rgb(8 148 255 / 0.14), transparent 70%),
+      radial-gradient(35% 50% at 55% 55%, rgb(201 89 221 / 0.12), transparent 70%),
+      radial-gradient(30% 45% at 75% 45%, rgb(255 144 4 / 0.1), transparent 70%);
+    filter: blur(40px);
+    pointer-events: none;
+  }
+  .top {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+  .crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+  .crumbs a:hover {
+    color: var(--ink);
+  }
+  h1 {
+    max-width: 16ch;
+    font-size: clamp(2.75rem, 1.4rem + 5vw, 5.75rem);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+    font-weight: 700;
+    text-wrap: balance;
+  }
+  .top .lead {
+    max-width: 44ch;
+  }
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 16px 32px;
+    margin-top: 10px;
+  }
+  .trust {
+    margin-top: 28px;
+    color: #a1a1a6;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    white-space: pre-wrap;
+  }
+  :global(.js) .intro {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(20px);
+    animation: rise 1.2s var(--ease-out) forwards;
+  }
+  :global(.js) .intro:nth-child(2) { animation-delay: 0.08s; }
+  :global(.js) .intro:nth-child(3) { animation-delay: 0.16s; }
+  :global(.js) .intro:nth-child(4) { animation-delay: 0.26s; }
+  :global(.js) .intro:nth-child(5) { animation-delay: 0.36s; }
+  :global(.js) .intro:nth-child(6) { animation-delay: 0.5s; }
+  @keyframes rise {
+    to { opacity: 1; filter: none; transform: none; }
+  }
+
+  /* ---------- Pains ---------- */
+  .pains {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    max-width: 1100px;
+    margin-inline: auto;
+  }
+  .pains li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 24px;
+    border-radius: var(--r);
+    background: var(--dark);
+    border: 1px solid rgb(255 255 255 / 0.07);
+    font-size: 1.0625rem;
+    line-height: 1.45;
+  }
+  .pains svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: #ff9f0a;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+  .bridge {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 20px;
+    margin-top: clamp(40px, 6vw, 64px);
+    font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.75rem);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    text-align: center;
+  }
+  .bridge .more {
+    font-size: inherit;
+  }
+
+  /* ---------- Gets ---------- */
+  .gets {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .gets li {
+    --mx: 50%;
+    --my: 50%;
+    --rx: 0deg;
+    --ry: 0deg;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    display: grid;
+    align-content: start;
+    gap: 12px;
+    padding: clamp(28px, 3vw, 40px);
+    border-radius: var(--r-lg);
+    background: var(--white);
+    transform: perspective(1200px) rotateX(var(--rx)) rotateY(var(--ry));
+    transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
+  }
+  .gets li::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(380px circle at var(--mx) var(--my), rgb(0 113 227 / 0.08), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .gets li:hover::before { opacity: 1; }
+  .gets li:hover { box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.25); }
+  .tick {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    margin-bottom: 8px;
+    border-radius: 50%;
+    background: var(--ai);
+  }
+  .tick svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .gets h3 {
+    font-size: 1.375rem;
+    font-weight: 650;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+  .gets p {
+    color: var(--muted);
+  }
+
+  /* ---------- Steps ---------- */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+    counter-reset: s;
+  }
+  .steps li {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    padding-top: 28px;
+    border-top: 2px solid var(--gray-2);
+  }
+  .steps li::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 0;
+    width: 40%;
+    height: 2px;
+    background: var(--ai);
+  }
+  .num {
+    font-size: 3.25rem;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    background: var(--ai);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .when {
+    justify-self: start;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--gray);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--ink-2);
+  }
+  .steps h3 {
+    font-size: 1.375rem;
+    font-weight: 650;
+    letter-spacing: -0.03em;
+  }
+  .steps p {
+    color: var(--muted);
+  }
+
+  /* ---------- Fit ---------- */
+  .fit {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .fit > div {
+    padding: clamp(28px, 3.4vw, 48px);
+    border-radius: var(--r-lg);
+    background: var(--white);
+  }
+  .fit-h {
+    font-size: 1.5rem;
+    font-weight: 650;
+    letter-spacing: -0.03em;
+    margin-bottom: 18px;
+  }
+  .fit li {
+    position: relative;
+    padding: 12px 0 12px 36px;
+    border-top: 1px solid var(--gray-2);
+    font-size: 1.0625rem;
+  }
+  .fit li::before {
+    position: absolute;
+    left: 0;
+    top: 12px;
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .yes li::before { content: '✓'; background: #30d158; color: #fff; }
+  .no li::before { content: '–'; background: var(--gray-2); color: var(--ink-2); }
+  .no { color: var(--ink-2); }
+
+  /* ---------- Proof ---------- */
+  .proof .wrap {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: 22px;
+  }
+  .quote {
+    max-width: 30ch;
+    font-size: clamp(1.75rem, 1.2rem + 2.2vw, 3rem);
+    font-weight: 650;
+    letter-spacing: -0.035em;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+  .mini {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    width: 100%;
+    margin-top: clamp(32px, 5vw, 56px);
+  }
+  .mini div {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 6px;
+  }
+  .mini dd {
+    font-size: clamp(2.25rem, 1.6rem + 2vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .mini dt {
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq {
+    max-width: 860px;
+    margin-inline: auto;
+    display: grid;
+    gap: 12px;
+  }
+  .q {
+    border-radius: var(--r);
+    background: var(--white);
+  }
+  summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    padding: 24px 28px;
+    cursor: pointer;
+    list-style: none;
+    font-size: 1.1875rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary:hover { color: var(--blue); }
+  .pm {
+    position: relative;
+    flex: none;
+    width: 22px;
+    height: 22px;
+    transition: transform 0.4s var(--ease-out);
+  }
+  .pm::before,
+  .pm::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 16px;
+    height: 1.75px;
+    border-radius: 2px;
+    background: currentColor;
+    translate: -50% -50%;
+  }
+  .pm::after { rotate: 90deg; }
+  .q[open] .pm { transform: rotate(45deg); }
+  .a {
+    padding: 0 28px 26px;
+    color: var(--muted);
+    font-size: 1.0625rem;
+    transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+  }
+  .q.is-closing .a { opacity: 0; transform: translateY(-8px); }
+
+  /* ---------- Other services ---------- */
+  .ocards {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .ocards a {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    height: 100%;
+    padding: 24px;
+    border-radius: var(--r-lg);
+    background: var(--gray);
+    transition: transform 0.5s var(--ease-out), background-color 0.3s;
+  }
+  .ocards a:hover {
+    transform: translateY(-4px);
+    background: var(--gray-2);
+  }
+  .ocards b {
+    font-size: 1.125rem;
+    font-weight: 650;
+    letter-spacing: -0.025em;
+  }
+  .ocards span:not(.more) {
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+  .ocards .more {
+    margin-top: 6px;
+    font-size: 0.9375rem;
+  }
+
+  @media (max-width: 1080px) {
+    .ocards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 40px; }
+    .pains, .gets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .mini { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 680px) {
+    .pains, .gets, .fit, .steps, .ocards { grid-template-columns: 1fr; }
+    .ctas .btn { width: 100%; }
+    .trust { white-space: normal; }
+  }
+</style>

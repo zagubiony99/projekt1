@@ -1,22 +1,39 @@
 ---
 import { site } from '../config';
 import { getDict, otherLang, type Lang } from '../i18n';
-interface Props { lang: Lang }
+import { services, ui } from '../data/services';
+interface Props { lang: Lang; altHref?: string }
 const { lang } = Astro.props;
 const t = getDict(lang);
 const alt = getDict(otherLang(lang));
+const altHref = Astro.props.altHref ?? alt.path;
 const year = new Date().getFullYear();
 ---
 
 <footer class="foot">
   <div class="wrap wrap--wide">
+    <div class="cols">
+      <div>
+        <p class="ch">{ui[lang].services}</p>
+        <ul>{services.map((p) => <li><a href={`${ui[lang].base}${p[lang].slug}/`}>{p[lang].name}</a></li>)}</ul>
+      </div>
+      <div>
+        <p class="ch">{site.name}</p>
+        <ul>
+          <li><a href={`${t.path}#doswiadczenie`}>{t.nav.experience}</a></li>
+          <li><a href={`${t.path}#proces`}>{t.nav.process}</a></li>
+          <li><a href={`${t.path}#faq`}>{t.nav.faq}</a></li>
+          <li><a href="#kontakt">{t.nav.contact}</a></li>
+        </ul>
+      </div>
+    </div>
     <p class="note">{t.footer.built}</p>
     <div class="row">
       <span>Copyright © {year} {site.name}. {t.footer.rights}</span>
       <nav aria-label="Footer">
         <a href={`mailto:${site.email}`}>{site.email}</a>
         {site.linkedin && <a href={site.linkedin} rel="me noopener" target="_blank">LinkedIn</a>}
-        <a href={alt.path} hreflang={alt.lang}>{t.nav.switchLabel}</a>
+        <a href={altHref} hreflang={alt.lang}>{t.nav.switchLabel}</a>
         <a href="#top">{t.footer.top}</a>
       </nav>
     </div>
@@ -30,6 +47,28 @@ const year = new Date().getFullYear();
     color: var(--muted);
     font-size: 0.75rem;
     letter-spacing: -0.01em;
+  }
+  .cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 280px));
+    gap: 24px 48px;
+    padding: 14px 0 22px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 14px;
+  }
+  .ch {
+    color: var(--ink);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .cols li {
+    padding: 3px 0;
+  }
+  .cols a {
+    color: var(--ink-2);
+  }
+  .cols a:hover {
+    text-decoration: underline;
   }
   .note {
     padding-bottom: 12px;

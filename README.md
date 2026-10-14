@@ -20,6 +20,8 @@ npm run preview   # podgląd wersji produkcyjnej
 | Imię, e-mail, LinkedIn, zdjęcie | `src/config.ts` |
 | Wszystkie teksty PL | `src/i18n/pl.ts` |
 | Wszystkie teksty EN | `src/i18n/en.ts` |
+| Podstrony usług (PL + EN): treści, FAQ, slugi | `src/data/services.ts` |
+| Szablon podstrony usługi | `src/components/ServicePage.astro` |
 | Kolory (paleta Apple: biel, #f5f5f7, czerń, niebieski + gradient AI), font (SF Pro na Apple, Inter Tight gdzie indziej), przyciski | `src/styles/global.css` (zmienne w `:root`) |
 | Sekcje strony | `src/components/*.astro` |
 | Interakcje (tekst zapalający się przy scrollu, scena z kartą botów, liczby odliczające w górę, formularz) | `src/scripts/main.ts` |
@@ -29,6 +31,7 @@ npm run preview   # podgląd wersji produkcyjnej
 
 - `/` to wersja polska (domyślna)
 - `/en/` to wersja angielska
+- `/uslugi/<slug>/` i `/en/services/<slug>/` to podstrony usług (6 × 2 języki), każda z danymi Service, BreadcrumbList i FAQPage
 
 Strona ma `hreflang` (pl, en, x-default), canonical, sitemapę z alternatywnymi wersjami językowymi, `robots.txt` i dane strukturalne JSON-LD (Person, ProfessionalService, WebSite, WebPage, FAQPage).
 

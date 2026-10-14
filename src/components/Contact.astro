@@ -1,7 +1,8 @@
 ---
 import { site } from '../config';
 import { getDict, type Lang } from '../i18n';
-interface Props { lang: Lang }
+interface Props { lang: Lang; topic?: string; next?: { title: string; items: readonly { t: string; d: string }[] } }
+const { topic, next } = Astro.props;
 const t = getDict(Astro.props.lang);
 const c = t.contact;
 ---
@@ -13,6 +14,18 @@ const c = t.contact;
       <h2 class="h2 ai" id="kontakt-h" data-reveal>{c.title}</h2>
       <p class="lead" data-reveal style="--d:1">{c.lead}</p>
     </header>
+
+    {next && (
+      <ol class="next" aria-label={next.title}>
+        {next.items.map((n, i) => (
+          <li data-reveal style={`--d:${i}`}>
+            <span class="n">{i + 1}</span>
+            <b>{n.t}</b>
+            <span>{n.d}</span>
+          </li>
+        ))}
+      </ol>
+    )}
 
     <form
       class="form"
@@ -31,7 +44,7 @@ const c = t.contact;
         <div class="chips">
           {c.topics.map((tp) => (
             <label class="chip">
-              <input type="checkbox" name="topic" value={tp} />
+              <input type="checkbox" name="topic" value={tp} checked={tp === topic} />
               <span>{tp}</span>
             </label>
           ))}
@@ -101,6 +114,44 @@ const c = t.contact;
   }
   .form:focus-within {
     box-shadow: 0 0 0 1px rgb(41 151 255 / 0.4), 0 30px 80px -30px rgb(41 151 255 / 0.35);
+  }
+  .next {
+    max-width: 920px;
+    margin: 0 auto clamp(40px, 6vw, 64px);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .next li {
+    display: grid;
+    gap: 6px;
+    padding: 22px;
+    border-radius: var(--r);
+    background: rgb(255 255 255 / 0.05);
+    border: 1px solid rgb(255 255 255 / 0.08);
+  }
+  .next .n {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    margin-bottom: 6px;
+    border-radius: 50%;
+    background: #f5f5f7;
+    color: #000;
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+  .next b {
+    font-size: 1.0625rem;
+    font-weight: 600;
+  }
+  .next span:last-child {
+    color: var(--dark-muted);
+    font-size: 0.9375rem;
+  }
+  @media (max-width: 760px) {
+    .next { grid-template-columns: 1fr; }
   }
   .form {
     max-width: 720px;
