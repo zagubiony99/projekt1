@@ -65,6 +65,10 @@ export const en: Dict = {
       { v: '115k', k: 'monthly organic visits at peak' },
     ],
   },
+  tools: {
+    label: 'Tools I work with',
+    items: ['Botify', 'Lumar', 'OnCrawl', 'Screaming Frog', 'GetBeast'],
+  },
   services: {
     label: 'Services',
     title: 'How I can help',

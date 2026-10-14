@@ -14,6 +14,12 @@ const t = getDict(Astro.props.lang);
         </div>
       ))}
     </dl>
+    <div class="tools" data-reveal>
+      <p>{t.tools.label}</p>
+      <ul>
+        {t.tools.items.map((n) => <li>{n}</li>)}
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -45,6 +51,33 @@ const t = getDict(Astro.props.lang);
     margin-inline: auto;
   }
   dd { white-space: nowrap; }
+  .tools {
+    margin-top: clamp(72px, 9vw, 120px);
+    padding-top: 40px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+  }
+  .tools p {
+    color: var(--muted);
+    font-size: 1.0625rem;
+  }
+  .tools ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px clamp(28px, 5vw, 64px);
+    margin-top: 22px;
+  }
+  .tools li {
+    font-size: clamp(1.375rem, 1.1rem + 1vw, 2rem);
+    font-weight: 650;
+    letter-spacing: -0.035em;
+    color: #86868b;
+    transition: color 0.3s;
+  }
+  .tools li:hover {
+    color: var(--ink);
+  }
   @media (max-width: 860px) {
     .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }

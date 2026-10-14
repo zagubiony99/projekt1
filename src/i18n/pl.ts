@@ -63,6 +63,10 @@ export const pl = {
       { v: '115 tys.', k: 'wizyt organicznych miesięcznie w szczycie' },
     ],
   },
+  tools: {
+    label: 'Narzędzia, na których pracuję',
+    items: ['Botify', 'Lumar', 'OnCrawl', 'Screaming Frog', 'GetBeast'],
+  },
   services: {
     label: 'Usługi',
     title: 'W czym pomagam',

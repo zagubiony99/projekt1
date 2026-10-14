@@ -27,7 +27,7 @@ const jsonLd = {
       url: site.url,
       email: `mailto:${site.email}`,
       knowsLanguage: ['pl', 'en'],
-      knowsAbout: ['Technical SEO', 'AI search', 'Generative Engine Optimization', 'Adobe Experience Manager', 'International SEO', 'E-commerce SEO', 'Site migrations'],
+      knowsAbout: ['Technical SEO', 'AI search', 'Generative Engine Optimization', 'Adobe Experience Manager', 'International SEO', 'E-commerce SEO', 'Site migrations', ...t.tools.items],
       ...(site.linkedin ? { sameAs: [site.linkedin] } : {}),
     },
     {
