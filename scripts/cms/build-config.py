@@ -143,6 +143,8 @@ COPY = [
         s('label', 'Nadtytuł'),
         s('title', 'Nagłówek'),
         t('intro', 'Wstęp'),
+        s('industriesLabel', 'Nagłówek listy branż'),
+        strings('industries', 'Branże'),
         items('items', 'Etapy kariery', [
             s('when', 'Lata', 'Np. 2021 — 2026 albo 2026 — obecnie.'),
             s('org', 'Firma'),

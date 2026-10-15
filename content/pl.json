@@ -185,6 +185,17 @@
     "label": "Doświadczenie",
     "title": "9 lat w SEO",
     "intro": "Od agencji i własnego serwisu, przez własną działalność, po zespoły w Accenture Song i Philip Morris International.",
+    "industriesLabel": "Branże, z którymi pracowałem",
+    "industries": [
+      "Hospitality",
+      "Ochrona zdrowia",
+      "Beauty",
+      "Motoryzacja",
+      "Branża tytoniowa",
+      "Trading",
+      "E-commerce",
+      "Adult"
+    ],
     "items": [
       {
         "when": "2026 — obecnie",
@@ -271,6 +282,10 @@
       {
         "q": "Pracujesz z dużymi serwisami i korporacjami?",
         "a": "Tak, to moja specjalność: serwisy z setkami tysięcy adresów, CMS-y enterprise jak Sitecore i Adobe Experience Manager, wiele rynków i języków oraz praca w procesach z zespołami IT."
+      },
+      {
+        "q": "Z jakimi branżami pracowałeś?",
+        "a": "Między innymi z hospitality, ochroną zdrowia, beauty, motoryzacją, branżą tytoniową, tradingiem, e-commerce i branżą adult. Technical SEO działa podobnie wszędzie, a różnice, takie jak regulacje, sezonowość czy ograniczenia reklamowe, uwzględniam w planie."
       },
       {
         "q": "Tylko doradzasz, czy też wdrażasz?",

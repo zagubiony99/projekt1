@@ -326,6 +326,13 @@ content:
       - name: intro
         label: Wstęp
         type: text
+      - name: industriesLabel
+        label: Nagłówek listy branż
+        type: string
+      - name: industries
+        label: Branże
+        type: string
+        list: true
       - name: items
         label: Etapy kariery
         type: object
@@ -866,6 +873,13 @@ content:
       - name: intro
         label: Wstęp
         type: text
+      - name: industriesLabel
+        label: Nagłówek listy branż
+        type: string
+      - name: industries
+        label: Branże
+        type: string
+        list: true
       - name: items
         label: Etapy kariery
         type: object

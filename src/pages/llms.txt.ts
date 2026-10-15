@@ -18,7 +18,7 @@ export const GET: APIRoute = () => {
     '',
     `${site.name} is an independent Technical SEO and AI search consultant with 9 years of experience, working in Polish and English. ` +
       `Experience includes Philip Morris International (Manager SEO & AI Search Operations), Accenture Song and IG. ` +
-      `Tools: ${en.tools.items.join(', ')}. Contact: ${site.email}.`,
+      `Industries: ${en.experience.industries.join(', ')}. Tools: ${en.tools.items.join(', ')}. Contact: ${site.email}.`,
     '',
     '## Services (English)',
     ...services.map((s) => `- [${s.en.name}](${url(`/en/services/${s.en.slug}/`)}): ${s.en.metaDescription}`),
