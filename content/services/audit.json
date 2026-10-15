@@ -78,7 +78,7 @@
     "forYes": [
       "Serwisy od kilku tysięcy do milionów adresów",
       "Sklepy internetowe i serwisy z nawigacją fasetową",
-      "Strony na JavaScripcie (React, Next.js, Angular) i na AEM",
+      "Strony na JavaScripcie (React, Next.js, Angular) i na CMS-ach enterprise (Sitecore, AEM)",
       "Firmy z własnymi programistami albo software housem"
     ],
     "forNo": [
@@ -86,7 +86,7 @@
       "Firmy szukające „pozycjonowania” w pakiecie z linkami",
       "Projekty bez możliwości wdrażania zmian w kodzie"
     ],
-    "proof": "Audyty techniczne robię od 2018 roku: dla e-commerce w agencji, dla serwisów na Adobe Experience Manager i dla międzynarodowych marek w Accenture Song i Philip Morris International.",
+    "proof": "Audyty techniczne robię od 2018 roku: dla sklepów w agencji, dla serwisów na WordPressie, Sitecore, Adobe Experience Manager i systemach autorskich oraz dla międzynarodowych marek w Accenture Song i Philip Morris International.",
     "faq": [
       {
         "q": "Ile trwa audyt?",
@@ -185,7 +185,7 @@
     "forYes": [
       "Websites from thousands to millions of URLs",
       "Online stores and sites with faceted navigation",
-      "JavaScript sites (React, Next.js, Angular) and AEM",
+      "JavaScript sites (React, Next.js, Angular) and enterprise CMSs (Sitecore, AEM)",
       "Companies with an in-house dev team or agency"
     ],
     "forNo": [
@@ -193,7 +193,7 @@
       "Anyone looking for “SEO packages” with links",
       "Projects where code changes can’t be shipped"
     ],
-    "proof": "I’ve been running technical audits since 2018: for e-commerce at an agency, for Adobe Experience Manager sites, and for international brands at Accenture Song and Philip Morris International.",
+    "proof": "I have been running technical audits since 2018: for online stores at an agency, for sites on WordPress, Sitecore, Adobe Experience Manager and custom builds, and for international brands at Accenture Song and Philip Morris International.",
     "faq": [
       {
         "q": "How long does an audit take?",

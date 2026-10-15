@@ -270,7 +270,7 @@
       },
       {
         "q": "Do you work with large and enterprise websites?",
-        "a": "Yes, that’s my specialty: sites with hundreds of thousands of URLs, platforms such as Adobe Experience Manager, multiple markets and languages, and working within development processes."
+        "a": "Yes, that’s my specialty: sites with hundreds of thousands of URLs, enterprise CMSs such as Sitecore and Adobe Experience Manager, multiple markets and languages, and working within development processes."
       },
       {
         "q": "Do you advise or also implement?",
@@ -300,7 +300,7 @@
       "AI search",
       "Large website",
       "E-commerce",
-      "Enterprise / AEM",
+      "Enterprise / CMS",
       "Migration",
       "Structured data",
       "WebOps",

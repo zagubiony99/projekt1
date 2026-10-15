@@ -8,7 +8,7 @@ export const serviceRoutes = [
   { key: 'webops', slug: { pl: 'webops-seo-operations', en: 'webops-seo-operations' }, topic: { pl: 'WebOps', en: 'WebOps' } },
   { key: 'content', slug: { pl: 'planowanie-tresci-seo', en: 'seo-content-planning' }, topic: { pl: 'Planowanie treści', en: 'Content planning' } },
   { key: 'large', slug: { pl: 'seo-duzych-serwisow', en: 'large-website-seo' }, topic: { pl: 'Duży serwis', en: 'Large website' } },
-  { key: 'intl', slug: { pl: 'seo-enterprise-miedzynarodowe', en: 'enterprise-international-seo' }, topic: { pl: 'Enterprise / AEM', en: 'Enterprise / AEM' } },
+  { key: 'intl', slug: { pl: 'seo-enterprise-miedzynarodowe', en: 'enterprise-international-seo' }, topic: { pl: 'Enterprise / CMS', en: 'Enterprise / CMS' } },
   { key: 'migration', slug: { pl: 'migracja-strony-seo', en: 'website-migration-seo' }, topic: { pl: 'Migracja', en: 'Migration' } },
   { key: 'ecom', slug: { pl: 'seo-ecommerce', en: 'ecommerce-seo' }, topic: { pl: 'E-commerce', en: 'E-commerce' } },
 ] as const;
