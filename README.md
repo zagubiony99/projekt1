@@ -15,14 +15,45 @@ npm run build     # wynik w dist/
 npm run preview   # podgląd wersji produkcyjnej
 ```
 
-## Gdzie co edytować
+## Edycja treści: CMS
+
+Wszystkie teksty (PL i EN), usługi i ustawienia kontaktowe edytujesz w przeglądarce, w **Pages CMS**: bez serwera, bez bazy danych, za darmo.
+
+1. Wejdź na **https://app.pagescms.org** i zaloguj się kontem GitHub.
+2. Zainstaluj aplikację Pages CMS dla repozytorium `zagubiony99/projekt1` (CMS poprowadzi Cię za rękę).
+3. Wybierz repozytorium i gałąź, z której publikuje się strona (np. `main`).
+4. Po lewej masz menu:
+   - **Ustawienia i kontakt**: e-mail, LinkedIn, zdjęcie, formularz, kalendarz, Google Tag Manager,
+   - **Strona główna**: wszystkie teksty po polsku i po angielsku,
+   - **Usługi**: 6 podstron usług, każda z wersją polską i angielską.
+5. Zmieniasz tekst i klikasz **Save**. CMS zapisuje zmianę w repozytorium, a hosting (Cloudflare Pages / Netlify / Vercel) w ok. minutę publikuje nową wersję strony.
+
+Polskich „sierotek” (w, i, z, o, a na końcu linii) nie musisz pilnować: strona poprawia je sama.
+
+**Czego nie ma w CMS (celowo):** adresy URL podstron (`src/data/routes.ts`: zmiana adresu wymaga przekierowania), treść polityki prywatności (`src/components/Privacy.astro`), wygląd i animacje.
+
+### Pliki z treścią
 
 | Co | Plik |
 | --- | --- |
-| Imię, e-mail, LinkedIn, zdjęcie | `src/config.ts` |
-| Wszystkie teksty PL | `src/i18n/pl.ts` |
-| Wszystkie teksty EN | `src/i18n/en.ts` |
-| Podstrony usług (PL + EN): treści, FAQ, slugi | `src/data/services.ts` |
+| Ustawienia, kontakt | `content/site.json` |
+| Teksty PL / EN | `content/pl.json`, `content/en.json` |
+| Usługi (PL + EN w jednym pliku) | `content/services/<klucz>.json` |
+| Zdjęcia wgrane w CMS | `public/media/` |
+| Konfiguracja CMS (generowana) | `.pages.yml` ← `scripts/cms/build-config.py` |
+
+Pages CMS zapisuje tylko pola opisane w konfiguracji. Jeśli dodasz w kodzie nowe pole tekstowe, dopisz je w `scripts/cms/build-config.py`, a potem uruchom:
+
+```bash
+python3 scripts/cms/build-config.py   # generuje .pages.yml
+python3 scripts/cms/check.py          # sprawdza, że zapis w CMS niczego nie skasuje
+```
+
+## Gdzie co edytować w kodzie
+
+| Co | Plik |
+| --- | --- |
+| Adresy podstron usług i tematy formularza | `src/data/routes.ts` |
 | Szablon podstrony usługi | `src/components/ServicePage.astro` |
 | Kolory (paleta Apple: biel, #f5f5f7, czerń, niebieski + gradient AI), font (SF Pro na Apple, Inter Tight gdzie indziej), przyciski | `src/styles/global.css` (zmienne w `:root`) |
 | Sekcje strony | `src/components/*.astro` |
@@ -31,14 +62,14 @@ npm run preview   # podgląd wersji produkcyjnej
 
 ## Formularz kontaktowy i kalendarz (ważne dla sprzedaży)
 
-W `src/config.ts`:
+W CMS (**Ustawienia i kontakt**) albo w `content/site.json`:
 - `formEndpoint` (+ opcjonalnie `formAccessKey`): adres darmowego backendu formularzy, np. Formspree (`https://formspree.io/f/xxxx`) albo Web3Forms (`https://api.web3forms.com/submit` + klucz). Wtedy formularz wysyła się bez opuszczania strony i pokazuje potwierdzenie. Bez tego otwiera program pocztowy, co gubi część zapytań.
 - `bookingUrl`: link do Cal.com lub Calendly. Pod formularzem pojawi się „Wolisz od razu wybrać termin?”.
 - Po udanej wysyłce strona wysyła zdarzenie `generate_lead` do `dataLayer`, jeśli podłączysz Google Tag Managera.
 
 ## Pomiar i reklamy
 
-- `gtmId` w `src/config.ts` włącza Google Tag Managera z Consent Mode v2, baner zgody (PL/EN) i link „Ustawienia cookies” w stopce. Puste = brak GTM, brak banera, brak cookies.
+- `gtmId` (CMS: Ustawienia i kontakt → Google Tag Manager ID) włącza Google Tag Managera z Consent Mode v2, baner zgody (PL/EN) i link „Ustawienia cookies” w stopce. Puste = brak GTM, brak banera, brak cookies.
 - Polityka prywatności: `/polityka-prywatnosci/` i `/en/privacy-policy/` (`src/components/Privacy.astro`). Przed startem reklam warto ją uzupełnić o dane firmy i dać do przejrzenia prawnikowi.
 - Kampanie Google Ads i LinkedIn Ads, konfiguracja GTM krok po kroku i plan optymalizacji: [`marketing/README.md`](marketing/README.md).
 

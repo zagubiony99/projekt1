@@ -19,7 +19,7 @@ Wszystko, co potrzebne do płatnej promocji maciejzieciak.com: reklamy, słowa k
 
 Bez tych punktów kampania będzie wydawać pieniądze bez pomiaru albo bez możliwości odpowiedzi na leady.
 
-### Uzupełnij `src/config.ts`
+### Uzupełnij ustawienia (CMS: „Ustawienia i kontakt” albo `content/site.json`)
 
 - **`formEndpoint`:**
   - formularz musi wysyłać się bez programu pocztowego (Formspree albo Web3Forms, instrukcja w głównym README);

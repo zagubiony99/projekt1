@@ -1,0 +1,200 @@
+{
+  "pl": {
+    "name": "Migracje i przebudowy stron",
+    "card": {
+      "desc": "Zmieniasz CMS, domenę albo adresy stron? Przygotuję przekierowania, przetestuję nową wersję przed startem i będę pilnował ruchu po wdrożeniu.",
+      "tags": [
+        "Mapa przekierowań",
+        "Testy przed startem",
+        "Opieka po starcie"
+      ]
+    },
+    "metaTitle": "Migracja strony bez utraty ruchu SEO | Maciej Zięciak",
+    "metaDescription": "Migracja strony bez utraty ruchu: zmiana CMS, domeny albo adresów URL. Mapa przekierowań, testy przed startem i opieka po wdrożeniu.",
+    "eyebrow": "Migracje i przebudowy stron",
+    "title": "Nowa strona. Ten sam ruch. Albo większy.",
+    "lead": "Migracja to najszybszy sposób, żeby w tydzień stracić połowę ruchu. Pilnuję, żeby tak się nie stało: przygotowuję mapę przekierowań, testuję nową wersję przed startem i obserwuję ruch przez kilka tygodni po nim.",
+    "painTitle": "Brzmi znajomo?",
+    "pains": [
+      "Zmieniacie CMS, domenę albo strukturę URL i nikt nie odpowiada za SEO.",
+      "Agencja robiąca nową stronę mówi, że „przekierowania się dorobi”.",
+      "Po poprzedniej przebudowie strony ruch spadł i nigdy w pełni nie wrócił.",
+      "Nie wiesz, które stare adresy mają linki i ruch, a które można spokojnie pominąć.",
+      "Termin startu jest ustalony, a SEO jest na końcu listy."
+    ],
+    "getTitle": "Co dostajesz",
+    "gets": [
+      {
+        "t": "Spis starych adresów",
+        "d": "Wszystkie adresy, które mają ruch, linki albo są w indeksie. Nic wartościowego nie zginie po drodze."
+      },
+      {
+        "t": "Mapę przekierowań 301",
+        "d": "Stary adres → nowy adres, bez łańcuchów i przekierowań na stronę główną."
+      },
+      {
+        "t": "Testy przed startem",
+        "d": "Crawl wersji testowej: przekierowania, canonicale, meta robots, hreflang, mapy witryny i renderowanie."
+      },
+      {
+        "t": "Listę kontrolną na dzień startu",
+        "d": "Co sprawdzić w pierwszej godzinie, pierwszym dniu i pierwszym tygodniu po starcie."
+      },
+      {
+        "t": "Opiekę po wdrożeniu",
+        "d": "Przez kilka tygodni po starcie pilnuję indeksacji, błędów 404, ruchu i pozycji i szybko reaguję na problemy."
+      },
+      {
+        "t": "Raport porównawczy",
+        "d": "Ruch i widoczność przed migracją i po niej, w czytelnej formie dla zarządu."
+      }
+    ],
+    "stepsTitle": "Jak to przebiega",
+    "steps": [
+      {
+        "t": "Planowanie",
+        "when": "Jak najwcześniej",
+        "d": "Dołączam na etapie projektu, żeby SEO trafiło do wymagań, a nie do poprawek."
+      },
+      {
+        "t": "Mapa i wymagania",
+        "when": "Przed pracami programistycznymi",
+        "d": "Spis adresów, mapa przekierowań i wymagania SEO dla nowej strony."
+      },
+      {
+        "t": "Testy",
+        "when": "Przed startem",
+        "d": "Crawl i testy wersji testowej oraz lista poprawek przed publikacją."
+      },
+      {
+        "t": "Start i obserwacja",
+        "when": "Start + kilka tygodni",
+        "d": "Kontrola w dniu startu i obserwacja, aż ruch się ustabilizuje."
+      }
+    ],
+    "forTitle": "Dla kogo to jest",
+    "forYes": [
+      "Zmiana CMS albo platformy sklepu",
+      "Zmiana domeny lub połączenie kilku domen",
+      "Nowa struktura adresów albo nowy układ serwisu",
+      "Redesign z przebudową szablonów"
+    ],
+    "forNo": [
+      "Zmiana samej grafiki bez zmian w adresach i szablonach"
+    ],
+    "proof": "Pracowałem z e-commerce na wielu platformach sklepowych i z serwisami enterprise na Adobe Experience Manager, czyli w środowiskach, gdzie zmiany szablonów, struktur i platform to codzienność.",
+    "faq": [
+      {
+        "q": "Kiedy najlepiej się zgłosić?",
+        "a": "Zanim programiści zaczną budować nową stronę. Im później, tym więcej trzeba poprawiać, zamiast od razu zrobić dobrze."
+      },
+      {
+        "q": "Czy da się przeprowadzić migrację bez żadnego spadku?",
+        "a": "Krótkie wahania są normalne, bo Google musi przetworzyć zmiany. Celem jest uniknięcie trwałego spadku i jak najszybszy powrót ruchu."
+      },
+      {
+        "q": "A jeśli migracja już była i ruch spadł?",
+        "a": "Też pomogę. Odtwarzam stare adresy, znajduję brakujące przekierowania i inne błędy, które zabrały ruch."
+      }
+    ]
+  },
+  "en": {
+    "name": "Migrations & relaunches",
+    "card": {
+      "desc": "Changing CMS, domain or URL structure without losing traffic: redirect mapping, pre-launch testing and post-launch monitoring.",
+      "tags": [
+        "Redirect mapping",
+        "Pre-launch QA",
+        "Monitoring"
+      ]
+    },
+    "metaTitle": "Website Migration Without Losing Traffic | Maciej Zięciak",
+    "metaDescription": "Website migration without losing organic traffic: a new CMS, domain or URL structure. Redirect mapping, pre-launch testing and post-launch monitoring.",
+    "eyebrow": "Migrations & relaunches",
+    "title": "New website. Same traffic. Or more.",
+    "lead": "A migration is the fastest way to lose half your traffic in a week. I make sure that doesn’t happen: from the redirect map, through staging tests, to weeks of monitoring after launch.",
+    "painTitle": "Sound familiar?",
+    "pains": [
+      "You’re changing CMS, domain or URL structure and nobody owns SEO.",
+      "The agency building the new site says “we’ll add redirects later”.",
+      "After the last relaunch traffic dropped and never fully came back.",
+      "You don’t know which old URLs have links and traffic and which can go.",
+      "The launch date is fixed and SEO is at the bottom of the list."
+    ],
+    "getTitle": "What you get",
+    "gets": [
+      {
+        "t": "Old URL inventory",
+        "d": "Every URL with traffic, links or index presence. Nothing valuable gets lost."
+      },
+      {
+        "t": "301 redirect map",
+        "d": "Old URL → new URL, with no chains and no redirects to the homepage."
+      },
+      {
+        "t": "Pre-launch testing",
+        "d": "A staging crawl: redirects, canonicals, meta robots, hreflang, sitemaps, rendering."
+      },
+      {
+        "t": "Launch-day checklist",
+        "d": "What to check in the first hour, first day and first week after launch."
+      },
+      {
+        "t": "Post-launch monitoring",
+        "d": "Indexation, 404s, traffic and rankings for several weeks, with fast reaction to problems."
+      },
+      {
+        "t": "Before/after report",
+        "d": "Traffic and visibility before and after the migration, in a format the board can read."
+      }
+    ],
+    "stepsTitle": "How it works",
+    "steps": [
+      {
+        "t": "Planning",
+        "when": "As early as possible",
+        "d": "I join at the design stage so SEO is in the requirements, not the bug list."
+      },
+      {
+        "t": "Map and requirements",
+        "when": "Before development",
+        "d": "URL inventory, redirect map and SEO requirements for the new site."
+      },
+      {
+        "t": "Testing",
+        "when": "Before launch",
+        "d": "Staging crawl and tests, a fix list before going live."
+      },
+      {
+        "t": "Launch and monitoring",
+        "when": "Launch + several weeks",
+        "d": "Launch-day checks and monitoring until traffic settles."
+      }
+    ],
+    "forTitle": "Who it’s for",
+    "forYes": [
+      "Changing CMS or e-commerce platform",
+      "Changing domain or merging several domains",
+      "New URL structure or information architecture",
+      "Redesigns that rebuild templates"
+    ],
+    "forNo": [
+      "Purely visual changes with no URL or template changes"
+    ],
+    "proof": "I’ve worked with e-commerce on many store platforms and with enterprise sites on Adobe Experience Manager, environments where template, structure and platform changes are part of everyday life.",
+    "faq": [
+      {
+        "q": "When should I get in touch?",
+        "a": "Ideally before development of the new site starts. The later it is, the more has to be fixed instead of designed right from the start."
+      },
+      {
+        "q": "Can a migration happen with no dip at all?",
+        "a": "Short fluctuations are normal while Google processes the changes. The goal is to avoid a lasting drop and recover traffic as fast as possible."
+      },
+      {
+        "q": "What if the migration already happened and traffic dropped?",
+        "a": "I help with that too: recovering old URLs, finding missing redirects and the other errors that took the traffic."
+      }
+    ]
+  }
+}

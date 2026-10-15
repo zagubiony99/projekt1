@@ -1,0 +1,214 @@
+{
+  "pl": {
+    "name": "Widoczność w odpowiedziach AI",
+    "card": {
+      "desc": "Sprawdzam, czy ChatGPT, Perplexity i Google AI mają dostęp do Twojej strony i czy ją rozumieją. Porządkuję dane strukturalne i informacje o marce, a potem mierzę, jak często pojawiasz się w odpowiedziach.",
+      "tags": [
+        "Dostęp botów AI",
+        "Dane strukturalne",
+        "Informacje o marce",
+        "Pomiar obecności w AI"
+      ]
+    },
+    "metaTitle": "Widoczność w ChatGPT i AI Overviews | Maciej Zięciak",
+    "metaDescription": "Sprawdzam, czy ChatGPT, Perplexity i Google AI widzą i cytują Twoją stronę. Dostęp botów AI, dane strukturalne i pomiar obecności marki w AI.",
+    "eyebrow": "Widoczność w odpowiedziach AI",
+    "title": "Niech AI poleca Ciebie, a nie konkurencję.",
+    "lead": "Coraz więcej klientów pyta ChatGPT, Perplexity albo AI Overviews, zanim kliknie jakikolwiek link. Sprawdzam, czy modele mają dostęp do Twojej strony, czy ją rozumieją i czy ją cytują. Potem usuwam to, co stoi na przeszkodzie.",
+    "painTitle": "Brzmi znajomo?",
+    "pains": [
+      "Pytasz ChatGPT o swoją branżę i w odpowiedzi jest konkurencja, a Ciebie nie ma.",
+      "Nie wiesz, czy boty OpenAI, Perplexity i Anthropic w ogóle mają dostęp do Twojej strony.",
+      "Firewall albo CDN blokuje nieznane boty i nikt tego nie sprawdzał.",
+      "Treść ładuje się JavaScriptem, którego większość crawlerów AI nie wykonuje.",
+      "AI Overviews odpowiadają na pytania, na które kiedyś klikano w Twoją stronę.",
+      "Zarząd pyta o „strategię na AI”, a w SEO nikt nie ma na to planu."
+    ],
+    "getTitle": "Co dostajesz",
+    "gets": [
+      {
+        "t": "Audyt dostępu botów AI",
+        "d": "Robots.txt, firewall, CDN i odpowiedzi serwera dla OAI-SearchBot, GPTBot, PerplexityBot, ClaudeBot, Google-Extended i innych."
+      },
+      {
+        "t": "Test strony bez JavaScriptu",
+        "d": "Ile treści widzi bot, który nie uruchamia JavaScriptu, i co trzeba przenieść do HTML-a."
+      },
+      {
+        "t": "Dane strukturalne i informacje o marce",
+        "d": "Schema.org i spójny opis marki w sieci, żeby modele rozumiały, kim jesteś i czym się zajmujesz."
+      },
+      {
+        "t": "Pomiar obecności w AI",
+        "d": "Zestaw pytań typowych dla Twojej branży i regularny pomiar, jak często i w jakim kontekście pojawia się Twoja marka."
+      },
+      {
+        "t": "Plan treści, które AI cytuje",
+        "d": "Które treści mają szansę trafić do odpowiedzi i jak je przygotować, żeby modele chciały z nich korzystać."
+      },
+      {
+        "t": "Decyzję, którym botom dać dostęp",
+        "d": "Które boty wpuścić, a które zablokować, z uwzględnieniem kwestii prawnych i biznesowych."
+      }
+    ],
+    "stepsTitle": "Jak to przebiega",
+    "steps": [
+      {
+        "t": "Punkt wyjścia",
+        "when": "Tydzień 1",
+        "d": "Sprawdzam, jak marka wypada dziś w ChatGPT, Perplexity, Gemini i AI Overviews na kluczowe pytania."
+      },
+      {
+        "t": "Dostęp i JavaScript",
+        "when": "Tydzień 1–2",
+        "d": "Audyt dostępu botów, odpowiedzi serwera, firewalla i CDN oraz treści widocznej bez JavaScriptu."
+      },
+      {
+        "t": "Marka i treści",
+        "when": "Tydzień 2–4",
+        "d": "Dane strukturalne, informacje o marce i plan treści, które mają szansę trafić do odpowiedzi."
+      },
+      {
+        "t": "Pomiar",
+        "when": "Co miesiąc",
+        "d": "Regularny pomiar obecności w odpowiedziach AI i korekta działań."
+      }
+    ],
+    "forTitle": "Dla kogo to jest",
+    "forYes": [
+      "Marki, których klienci pytają AI o rekomendacje",
+      "SaaS, B2B i usługi z długim procesem decyzyjnym",
+      "Serwisy z dużą liczbą treści eksperckich",
+      "Firmy, które chcą świadomie zdecydować o dostępie botów AI"
+    ],
+    "forNo": [
+      "Firmy oczekujące gwarancji „pierwszego miejsca w ChatGPT”",
+      "Strony bez treści, które dałoby się zacytować"
+    ],
+    "proof": "Obecnie pracuję jako Manager SEO & AI Search Operations w Philip Morris International. Wcześniej przez prawie 5 lat zajmowałem się Technical SEO w Accenture Song.",
+    "faq": [
+      {
+        "q": "Czy da się zagwarantować obecność w ChatGPT?",
+        "a": "Nie. Modele działają inaczej niż wyniki Google i nikt uczciwy tego nie obiecuje. Da się za to usunąć bariery techniczne, wzmocnić markę i mierzyć postępy."
+      },
+      {
+        "q": "Czy blokować boty AI?",
+        "a": "To decyzja biznesowa. Część botów zbiera dane do trenowania modeli, a część wyszukuje informacje na bieżąco. Pomagam rozróżnić, które dają widoczność, a które nie."
+      },
+      {
+        "q": "Jak mierzysz widoczność w AI?",
+        "a": "Stałym zestawem pytań dla Twojej branży, sprawdzanym regularnie w kilku modelach, oraz danymi o ruchu z narzędzi AI w analityce."
+      },
+      {
+        "q": "Czy to zastępuje klasyczne SEO?",
+        "a": "Nie, to jego rozszerzenie. Te same fundamenty techniczne decydują o widoczności w Google i w odpowiedziach AI."
+      }
+    ]
+  },
+  "en": {
+    "name": "AI search & LLM visibility",
+    "card": {
+      "desc": "I check whether AI crawlers can access your content and see it without JavaScript, fix structured data and entities, then measure how your brand shows up in ChatGPT, Perplexity and AI Overviews.",
+      "tags": [
+        "AI crawler access",
+        "Schema.org",
+        "Entities",
+        "Citation tracking"
+      ]
+    },
+    "metaTitle": "AI Search Visibility for ChatGPT | Maciej Zięciak",
+    "metaDescription": "Find out whether ChatGPT, Perplexity and Google AI can see and cite your site. AI crawler access, structured data and brand visibility tracking.",
+    "eyebrow": "AI search & LLM visibility",
+    "title": "Be in the answer, not just below it.",
+    "lead": "More and more buyers ask ChatGPT, Perplexity or AI Overviews before they ever click a link. I check whether models can access your site at all, whether they understand it and whether they cite it, and then I fix what’s missing.",
+    "painTitle": "Sound familiar?",
+    "pains": [
+      "You ask ChatGPT about your industry and it recommends competitors, not you.",
+      "You don’t know whether OpenAI, Perplexity and Anthropic crawlers can reach your site.",
+      "Your WAF or CDN blocks unknown bots and nobody has checked.",
+      "Content loads via JavaScript that most AI crawlers don’t execute.",
+      "AI Overviews now answer questions that used to send clicks to you.",
+      "The board asks for an “AI strategy” and SEO has no plan for it."
+    ],
+    "getTitle": "What you get",
+    "gets": [
+      {
+        "t": "AI crawler access audit",
+        "d": "Robots.txt, WAF, CDN and response codes for OAI-SearchBot, GPTBot, PerplexityBot, ClaudeBot, Google-Extended and more."
+      },
+      {
+        "t": "No-JavaScript rendering test",
+        "d": "How much content a non-JS crawler sees, and what needs to move into the HTML."
+      },
+      {
+        "t": "Entities and structured data",
+        "d": "Schema.org and consistent brand information so models understand who you are and what you do."
+      },
+      {
+        "t": "Citation tracking",
+        "d": "A prompt set for your industry and regular measurement of how your brand shows up in AI answers."
+      },
+      {
+        "t": "Answer-ready content strategy",
+        "d": "Which content is likely to be cited and how to shape it so models want to use it."
+      },
+      {
+        "t": "An access decision",
+        "d": "A conscious choice about which bots get your content, balancing legal and business needs."
+      }
+    ],
+    "stepsTitle": "How it works",
+    "steps": [
+      {
+        "t": "Baseline",
+        "when": "Week 1",
+        "d": "How your brand shows up today in ChatGPT, Perplexity, Gemini and AI Overviews for key questions."
+      },
+      {
+        "t": "Access and rendering",
+        "when": "Week 1–2",
+        "d": "Bot access, server responses, WAF/CDN and content visible without JavaScript."
+      },
+      {
+        "t": "Entities and content",
+        "when": "Week 2–4",
+        "d": "Structured data, brand information and a plan for citable content."
+      },
+      {
+        "t": "Measurement",
+        "when": "Monthly",
+        "d": "Repeatable measurement of AI answer presence and course correction."
+      }
+    ],
+    "forTitle": "Who it’s for",
+    "forYes": [
+      "Brands whose buyers ask AI for recommendations",
+      "SaaS, B2B and services with long buying cycles",
+      "Sites with a lot of expert content",
+      "Companies that want to decide on AI bot access deliberately"
+    ],
+    "forNo": [
+      "Anyone expecting a guaranteed “#1 in ChatGPT”",
+      "Sites with no content worth citing"
+    ],
+    "proof": "I currently work as Manager SEO & AI Search Operations at Philip Morris International. Before that I spent almost five years on technical SEO at Accenture Song.",
+    "faq": [
+      {
+        "q": "Can you guarantee a spot in ChatGPT?",
+        "a": "No. Models don’t work like Google rankings and nobody honest guarantees this. What I can do is remove technical barriers, strengthen your brand as an entity and measure progress."
+      },
+      {
+        "q": "Should we block AI bots?",
+        "a": "It’s a business decision. Some bots train models, others fetch pages for live answers. I help you tell apart the ones that bring visibility from the ones that don’t."
+      },
+      {
+        "q": "How do you measure AI visibility?",
+        "a": "With a fixed prompt set for your industry checked regularly across several models, plus AI referral traffic in your analytics."
+      },
+      {
+        "q": "Does this replace classic SEO?",
+        "a": "No, it extends it. The same technical foundations decide visibility in Google and in AI answers."
+      }
+    ]
+  }
+}

@@ -1,21 +1,27 @@
-// Single source of truth for personal/contact data — edit here, it propagates everywhere.
+// Personal and contact settings live in content/site.json and are edited in the CMS.
+// The CMS drops empty fields on save, so every optional setting has a default here.
+// The domain stays in code: it is used for canonicals, hreflang and the sitemap.
+import settings from '../content/site.json';
+
+type Settings = {
+  name: string;
+  email: string;
+  linkedin?: string;
+  photo?: string;
+  formEndpoint?: string;
+  formAccessKey?: string;
+  bookingUrl?: string;
+  gtmId?: string;
+};
+
 export const site = {
-  name: 'Maciej Zięciak',
-  domain: 'maciejzieciak.com',
-  url: 'https://maciejzieciak.com',
-  email: 'kontakt@maciejzieciak.com',
-  // Leave empty to hide. Used in footer + JSON-LD sameAs.
   linkedin: '',
-  // Path in /public, e.g. '/maciej.jpg'. Empty = typographic placeholder.
   photo: '',
-  city: 'Polska',
-  // Form backend (recommended): e.g. Formspree 'https://formspree.io/f/xxxx' or Web3Forms
-  // 'https://api.web3forms.com/submit' (+ formAccessKey). Empty = fallback to opening the mail app.
   formEndpoint: '',
   formAccessKey: '',
-  // Booking calendar (Cal.com / Calendly). When set, a "pick a time" link appears next to the form.
   bookingUrl: '',
-  // Google Tag Manager container (e.g. 'GTM-XXXXXXX'). Empty = no tracking at all.
-  // When set, Consent Mode v2 starts with everything denied and a consent banner appears.
   gtmId: '',
+  ...(settings as Settings),
+  domain: 'maciejzieciak.com',
+  url: 'https://maciejzieciak.com',
 };

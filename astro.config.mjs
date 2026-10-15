@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import { services } from './src/data/services.ts';
+import { serviceRoutes, serviceBase } from './src/data/routes.ts';
 
 const SITE = 'https://maciejzieciak.com';
 
@@ -9,7 +9,7 @@ const SITE = 'https://maciejzieciak.com';
 const pairs = [
   ['/', '/en/'],
   ['/polityka-prywatnosci/', '/en/privacy-policy/'],
-  ...services.map((s) => [`/uslugi/${s.pl.slug}/`, `/en/services/${s.en.slug}/`]),
+  ...serviceRoutes.map((s) => [`${serviceBase.pl}${s.slug.pl}/`, `${serviceBase.en}${s.slug.en}/`]),
 ];
 const alternates = new Map();
 for (const [pl, en] of pairs) {

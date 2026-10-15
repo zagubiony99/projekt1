@@ -4,6 +4,7 @@ import '../styles/global.css';
 import { site } from '../config';
 import { getDict, otherLang, type Lang } from '../i18n';
 import Consent from '../components/Consent.astro';
+import { services, ui } from '../data/services';
 
 interface Props {
   lang: Lang;
@@ -62,9 +63,14 @@ const jsonLd = {
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
         name: t.services.title,
-        itemListElement: t.services.items.map((s) => ({
+        itemListElement: services.map((s) => ({
           '@type': 'Offer',
-          itemOffered: { '@type': 'Service', name: s.name, description: s.desc },
+          itemOffered: {
+            '@type': 'Service',
+            name: s[lang].name,
+            description: s[lang].card.desc,
+            url: new URL(`${ui[lang].base}${s[lang].slug}/`, site.url).href,
+          },
         })),
       },
     },

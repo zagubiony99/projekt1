@@ -35,7 +35,7 @@ const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-
       </header>
     </div>
       <ul class="track" data-track>
-        {s.items.map((it, i) => (
+        {pages.map((p) => ({ name: p[lang].name, ...p[lang].card })).map((it, i) => (
           <li class:list={['card', `v${i}`, { dark: i === 1 }]} data-card data-tilt>
             <div class="vis" aria-hidden="true">
               {i === 0 && (
