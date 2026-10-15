@@ -1,0 +1,200 @@
+{
+  "pl": {
+    "name": "SEO dla e-commerce",
+    "card": {
+      "desc": "Kategorie, filtry i karty produktów ułożone tak, żeby Google trafiał tam, gdzie sprzedajesz. Znam PrestaShop, Magento, WordPressa, Shopera, RedCart i systemy autorskie.",
+      "tags": [
+        "Kategorie i filtry",
+        "Karty produktów",
+        "Rynki PL i CZ"
+      ]
+    },
+    "metaTitle": "SEO dla e-commerce: kategorie i filtry | Maciej Zięciak",
+    "metaDescription": "SEO dla sklepów internetowych: kategorie, filtry, karty produktów i indeksacja. PrestaShop, Magento, WordPress, Shoper, RedCart i systemy autorskie.",
+    "eyebrow": "SEO dla e-commerce",
+    "title": "Więcej sprzedaży z wyszukiwarki, nie tylko więcej wejść.",
+    "lead": "W sklepie liczy się ruch na kategoriach i produktach, które sprzedają. Porządkuję strukturę, filtry i indeksację tak, żeby Google trafiał tam, gdzie są pieniądze.",
+    "painTitle": "Brzmi znajomo?",
+    "pains": [
+      "Filtry tworzą tysiące adresów, które zjadają crawl budget.",
+      "Kategorie nie pojawiają się w Google na frazy, na których zarabiasz.",
+      "Karty produktów mają opisy od producenta, takie same jak u konkurencji.",
+      "Produkty niedostępne zostawiają po sobie 404 albo puste strony.",
+      "Platforma sklepu robi z SEO rzeczy, nad którymi nie panujesz."
+    ],
+    "getTitle": "Co dostajesz",
+    "gets": [
+      {
+        "t": "Architekturę kategorii",
+        "d": "Struktura kategorii i podkategorii oparta na tym, czego klienci faktycznie szukają."
+      },
+      {
+        "t": "Zasady dla filtrów",
+        "d": "Które kombinacje filtrów indeksować jako strony docelowe, a które ukryć przed botem."
+      },
+      {
+        "t": "Szablony kart produktów",
+        "d": "Tytuły, opisy, dane strukturalne Product i elementy, które pomagają w wynikach."
+      },
+      {
+        "t": "Obsługę niedostępnych produktów",
+        "d": "Zasady dla produktów wycofanych, sezonowych i chwilowo niedostępnych."
+      },
+      {
+        "t": "Wytyczne dla Twojej platformy",
+        "d": "Konkretne ustawienia dla PrestaShop, Magento, WordPressa, Shopera, RedCart albo systemu autorskiego."
+      },
+      {
+        "t": "Priorytety według przychodu",
+        "d": "Najpierw kategorie i produkty z największym potencjałem sprzedaży."
+      }
+    ],
+    "stepsTitle": "Jak to przebiega",
+    "steps": [
+      {
+        "t": "Dane sprzedażowe",
+        "when": "Tydzień 1",
+        "d": "Które kategorie i produkty zarabiają, a które mają potencjał."
+      },
+      {
+        "t": "Audyt sklepu",
+        "when": "Tydzień 1–3",
+        "d": "Struktura, filtry, indeksacja, szablony i konfiguracja platformy."
+      },
+      {
+        "t": "Plan",
+        "when": "Tydzień 3–4",
+        "d": "Zadania dla zespołu i treści priorytetowe, ułożone według przychodu."
+      },
+      {
+        "t": "Wdrożenie i pomiar",
+        "when": "Kolejne miesiące",
+        "d": "Wsparcie wdrożeń i pomiar ruchu oraz sprzedaży z wyszukiwarki."
+      }
+    ],
+    "forTitle": "Dla kogo to jest",
+    "forYes": [
+      "Sklepy od kilkuset do dziesiątek tysięcy produktów",
+      "Sklepy na rynku polskim i zagranicznym",
+      "Sklepy z rozbudowanymi filtrami",
+      "Marki planujące zmianę platformy"
+    ],
+    "forNo": [
+      "Sklepy z kilkunastoma produktami, gdzie lepiej sprawdzi się kampania płatna"
+    ],
+    "proof": "W agencji SEO w Krakowie odpowiadałem za SEO sklepów na rynkach polskim i czeskim: audyty, strategie i wdrożenia na PrestaShop, Magento, WordPress, Shoper, RedCart i systemach autorskich.",
+    "faq": [
+      {
+        "q": "Z jakimi platformami pracujesz?",
+        "a": "PrestaShop, Magento, WordPress, Shoper, RedCart i systemy autorskie."
+      },
+      {
+        "q": "Czy piszesz opisy produktów?",
+        "a": "Przygotowuję szablony, wytyczne i priorytety. Same treści mogą pisać Twoi copywriterzy albo wspólnie dobierzemy wykonawcę."
+      },
+      {
+        "q": "Kiedy zobaczę efekty w sprzedaży?",
+        "a": "Poprawki techniczne potrafią zadziałać w kilka tygodni. Na stabilny wzrost ruchu i sprzedaży z wyszukiwarki zwykle czeka się kilka miesięcy."
+      }
+    ]
+  },
+  "en": {
+    "name": "E-commerce SEO",
+    "card": {
+      "desc": "Categories, filters, product pages and indexation control. Hands-on with PrestaShop, Magento, WordPress, Shoper, RedCart and custom platforms.",
+      "tags": [
+        "Categories & filters",
+        "Product pages",
+        "PL & CZ markets"
+      ]
+    },
+    "metaTitle": "E-commerce SEO: Categories & Filters | Maciej Zięciak",
+    "metaDescription": "SEO for online stores: categories, faceted navigation, product pages and indexation. PrestaShop, Magento, WordPress, Shoper, RedCart and custom builds.",
+    "eyebrow": "E-commerce SEO",
+    "title": "More sales from search, not just more visits.",
+    "lead": "In a store what counts is traffic to the categories and products that sell. I fix structure, filters and indexation so Google goes where the money is.",
+    "painTitle": "Sound familiar?",
+    "pains": [
+      "Filters generate thousands of URLs that eat your crawl budget.",
+      "Categories don’t rank for the queries you sell on.",
+      "Product pages use manufacturer copy, identical to your competitors’.",
+      "Out-of-stock products leave behind 404s or empty pages.",
+      "Your store platform does things to SEO you can’t control."
+    ],
+    "getTitle": "What you get",
+    "gets": [
+      {
+        "t": "Category architecture",
+        "d": "A category and subcategory structure based on what customers actually search for."
+      },
+      {
+        "t": "Filter rules",
+        "d": "Which filter combinations become indexable landing pages and which stay hidden from bots."
+      },
+      {
+        "t": "Product page templates",
+        "d": "Titles, descriptions, Product structured data and elements that help in search."
+      },
+      {
+        "t": "Out-of-stock handling",
+        "d": "Rules for discontinued, seasonal and temporarily unavailable products."
+      },
+      {
+        "t": "Guidelines for your platform",
+        "d": "Concrete settings for PrestaShop, Magento, WordPress, Shoper, RedCart or a custom system."
+      },
+      {
+        "t": "Priorities by revenue",
+        "d": "Categories and products with the most sales potential come first."
+      }
+    ],
+    "stepsTitle": "How it works",
+    "steps": [
+      {
+        "t": "Sales data",
+        "when": "Week 1",
+        "d": "Which categories and products make money and which have potential."
+      },
+      {
+        "t": "Store audit",
+        "when": "Week 1–3",
+        "d": "Structure, filters, indexation, templates and platform configuration."
+      },
+      {
+        "t": "Plan",
+        "when": "Week 3–4",
+        "d": "Tickets for the team and priority content, ordered by revenue."
+      },
+      {
+        "t": "Rollout and measurement",
+        "when": "Following months",
+        "d": "Release support and measurement of organic traffic and sales."
+      }
+    ],
+    "forTitle": "Who it’s for",
+    "forYes": [
+      "Stores with hundreds to tens of thousands of products",
+      "Stores selling domestically and abroad",
+      "Stores with complex filtering",
+      "Brands planning a platform change"
+    ],
+    "forNo": [
+      "Stores with a dozen products, where paid campaigns will do better"
+    ],
+    "proof": "At an SEO agency in Kraków I ran SEO for online stores in the Polish and Czech markets: audits, strategy and implementation on PrestaShop, Magento, WordPress, Shoper, RedCart and custom platforms.",
+    "faq": [
+      {
+        "q": "Which platforms do you work with?",
+        "a": "PrestaShop, Magento, WordPress, Shoper, RedCart and custom systems."
+      },
+      {
+        "q": "Do you write product descriptions?",
+        "a": "I prepare templates, guidelines and priorities. Your copywriters can write the content, or we can pick someone together."
+      },
+      {
+        "q": "When will I see an effect on sales?",
+        "a": "Technical fixes can show impact within weeks. Sustained growth in organic traffic and sales usually takes a few months."
+      }
+    ]
+  }
+}

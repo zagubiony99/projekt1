@@ -1,0 +1,239 @@
+---
+import { getDict, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const t = getDict(Astro.props.lang);
+const s = t.stage;
+const c = t.hero.card;
+---
+
+<section class="section--black stage-sec" data-dark data-pin aria-labelledby="stage-h">
+  <div class="sticky">
+  <div class="wrap">
+    <header class="head">
+      <p class="eyebrow">{s.eyebrow}</p>
+      <h2 class="h2" id="stage-h">{s.title}</h2>
+      <p class="lead">{s.text}</p>
+    </header>
+  </div>
+
+  <div class="wrap wrap--wide">
+    <div class="stage" data-stage>
+      <figure class="card" data-bots aria-label={c.title}>
+        <figcaption class="card__head">
+          <span class="card__title">{c.title}</span>
+          <span class="card__note">{c.note}</span>
+        </figcaption>
+        <div class="url">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v10H5z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" /></svg>
+          {c.url}
+        </div>
+        <ul class="rows">
+          {c.rows.map((r, n) => (
+            <li class="row" data-s={r.s} style={`--n:${n}`}>
+              <span class="bot">{r.bot}</span>
+              <span class="res">
+                <i class="ind" aria-hidden="true">
+                  {r.s === 'ok' ? (
+                    <svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                  ) : r.s === 'warn' ? (
+                    <svg viewBox="0 0 16 16"><path d="M8 4.5v4.2M8 11.2v.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+                  ) : (
+                    <svg viewBox="0 0 16 16"><path d="m5.2 5.2 5.6 5.6m0-5.6-5.6 5.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+                  )}
+                </i>
+                <span>{r.t}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+        <p class="sum" data-sum>{c.summary}</p>
+      </figure>
+    </div>
+  </div>
+  </div>
+</section>
+
+<style>
+  /* Pinned scene: the section is tall, its content sticks while --q runs 0 -> 1.
+     --q is set by JS on the head and the stage only (non-inherited, see global.css);
+     without JS it stays 1, so everything is visible. */
+  .stage-sec {
+    position: relative;
+    height: 300vh;
+  }
+  .sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+    display: grid;
+    align-content: center;
+    gap: clamp(16px, 3vh, 40px);
+    overflow: hidden;
+    padding-top: 64px;
+  }
+  .sticky .head {
+    margin-bottom: 0;
+    gap: 10px;
+    opacity: clamp(0, calc(var(--q) * 8), 1);
+    transform: translateY(calc((1 - clamp(0, var(--q) * 8, 1)) * 30px));
+  }
+  .sticky .h2 {
+    font-size: clamp(2rem, 1.3rem + 2.8vw, 3.75rem);
+  }
+  .sticky .lead {
+    font-size: clamp(1rem, 0.95rem + 0.4vw, 1.25rem);
+    max-width: 52ch;
+  }
+  :global(.js) .sticky .head,
+  :global(.js) .stage {
+    --q: 0;
+  }
+  .stage {
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: clamp(28px, 6vw, 96px) clamp(12px, 5vw, 80px);
+    border-radius: var(--r-lg);
+    background: radial-gradient(70% 80% at 50% 110%, rgb(201 89 221 / 0.35), transparent 60%),
+      radial-gradient(60% 70% at 20% 0%, rgb(8 148 255 / 0.25), transparent 60%),
+      radial-gradient(50% 60% at 85% 10%, rgb(255 144 4 / 0.18), transparent 60%),
+      var(--dark);
+    transform: scale(calc(0.88 + clamp(0, calc(var(--q) * 4), 1) * 0.12));
+    opacity: calc(0.6 + clamp(0, calc(var(--q) * 4), 1) * 0.4);
+    transform-origin: 50% 30%;
+    padding-block: clamp(20px, 4vh, 56px);
+  }
+  .card {
+    width: min(100%, 660px);
+    padding: clamp(18px, 2.4vw, 28px);
+    border-radius: 22px;
+    background: rgb(29 29 31 / 0.8);
+    border: 1px solid rgb(255 255 255 / 0.1);
+    box-shadow: 0 40px 100px -30px rgb(0 0 0 / 0.8);
+    color: #f5f5f7;
+  }
+  .card__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .card__title {
+    font-size: 1.3125rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+  .card__note {
+    font-size: 0.8125rem;
+    color: var(--dark-muted);
+  }
+  .url {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: rgb(255 255 255 / 0.06);
+    color: var(--dark-muted);
+    font-size: 0.875rem;
+  }
+  .rows {
+    margin-top: 6px;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 9.5rem 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 13px 2px;
+    border-bottom: 1px solid rgb(255 255 255 / 0.08);
+    font-size: 0.9375rem;
+  }
+  .row:last-child {
+    border-bottom: 0;
+  }
+  .bot {
+    font-weight: 600;
+  }
+  .res {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #d2d2d7;
+    min-width: 0;
+  }
+  .res > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .ind {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--ok);
+    color: #000;
+  }
+  .ind svg {
+    width: 14px;
+    height: 14px;
+  }
+  [data-s='warn'] .ind { background: var(--warn); }
+  [data-s='err'] .ind { background: var(--err); color: #fff; }
+  .sum {
+    margin-top: 14px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: rgb(255 255 255 / 0.06);
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9375rem;
+  }
+  .sum::before {
+    content: '';
+  }
+
+  :global(.js) .row .res {
+    opacity: 0.35;
+    transition: opacity 0.45s var(--ease);
+  }
+  :global(.js) .row .ind {
+    background: #3a3a3c;
+    color: transparent;
+    transform: scale(0.7);
+    transition: background-color 0.3s, color 0.3s, transform 0.5s var(--ease-out);
+  }
+  /* rows still being "checked" pulse gently, so the card looks alive before it resolves */
+  :global(.js) .row:not(.is-done) .ind { animation: scan 1.4s ease-in-out infinite; animation-delay: calc(var(--n, 0) * 0.15s); }
+  @keyframes scan { 50% { opacity: 0.35; } }
+  :global(.js) .row.is-done .res { opacity: 1; }
+  :global(.js) .row.is-done .ind { transform: none; background: var(--ok); color: #000; }
+  :global(.js) .row.is-done[data-s='warn'] .ind { background: var(--warn); }
+  :global(.js) .row.is-done[data-s='err'] .ind { background: var(--err); color: #fff; }
+  :global(.js) .sum {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+  }
+  :global(.js) .sum.is-done {
+    opacity: 1;
+    transform: none;
+  }
+  @media (max-width: 520px) {
+    .row { grid-template-columns: 7.2rem 1fr; gap: 8px; padding: 9px 0; font-size: 0.8125rem; }
+    .ind { width: 18px; height: 18px; }
+    .card { padding: 14px; }
+    .card__note { display: none; }
+    .sticky .lead { display: none; }
+  }
+  @media (max-height: 980px) and (min-width: 521px) {
+    .sticky .lead { display: none; }
+    .row { padding-block: 9px; }
+  }
+</style>

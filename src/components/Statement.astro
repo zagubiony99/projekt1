@@ -1,0 +1,62 @@
+---
+import { getDict, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const t = getDict(Astro.props.lang);
+const s = t.statement;
+
+// Split into words at build time; one CSS var (--p, set on scroll) lights them up in order.
+let i = 0;
+const parts = s.parts.map((p) => {
+  // split on ordinary spaces only, so glued pairs like "w\u00a0odpowiedzi" stay together
+  const words = p.t.split(/([ \t\n]+)/).filter((w) => w.length);
+  const out = words.map((w) => (/^[ \t\n]+$/.test(w) ? { space: true, w } : { w, i: i++ }));
+  const count = out.filter((w) => !('space' in w)).length;
+  return { ...p, words: out, start: i - count, count };
+});
+const n = i;
+---
+
+<section class="statement section--black" id="why" aria-label={s.label} data-scrub data-dark style={`--n:${n}`}>
+  <div class="pin">
+    <p class="wrap txt">
+      {parts.map((p) =>
+        'mark' in p && p.mark ? (
+          <span class="ai mark" style={`--s:${p.start};--c:${p.count}`}>{p.t}</span>
+        ) : (
+          p.words.map((w) => ('space' in w ? w.w : <span class="w" style={`--i:${w.i}`}>{w.w}</span>))
+        )
+      )}
+    </p>
+  </div>
+</section>
+
+<style>
+  .statement {
+    position: relative;
+    height: 240vh;
+  }
+  .pin {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+  }
+  .txt {
+    max-width: calc(940px + 2 * var(--gutter));
+    font-size: clamp(2rem, 1.1rem + 3.4vw, 4rem);
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+    font-weight: 650;
+    text-wrap: balance;
+  }
+  .w {
+    opacity: clamp(0.16, calc(var(--p) * var(--n) - var(--i)), 1);
+  }
+  .mark {
+    opacity: clamp(0.16, calc((var(--p) * var(--n) - var(--s)) / var(--c)), 1);
+  }
+  @media (max-width: 640px) {
+    .statement { height: 200vh; }
+  }
+</style>

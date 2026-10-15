@@ -1,0 +1,204 @@
+{
+  "pl": {
+    "name": "Duże serwisy i programmatic SEO",
+    "card": {
+      "desc": "Setki tysięcy adresów, filtry, crawl budget i szablony stron. Sam rozwijałem serwis z ponad milionem podstron, więc wiem, gdzie takie projekty się sypią.",
+      "tags": [
+        "Crawl budget",
+        "Filtry i parametry",
+        "Szablony",
+        "Skala"
+      ]
+    },
+    "metaTitle": "SEO dużych serwisów i programmatic SEO | Maciej Zięciak",
+    "metaDescription": "SEO dla serwisów z setkami tysięcy adresów: crawl budget, filtry, szablony i programmatic SEO. Doświadczenie z serwisem, który urósł do 1,1 mln podstron.",
+    "eyebrow": "Duże serwisy i programmatic SEO",
+    "title": "Milion podstron może pracować na Ciebie. Albo przeciwko Tobie.",
+    "lead": "Przy setkach tysięcy adresów każdy błąd w szablonie powtarza się tysiące razy. Sam rozwijałem serwis do ponad 1,1 mln podstron i 115 tys. wizyt organicznych miesięcznie, więc wiem, gdzie takie projekty się sypią.",
+    "painTitle": "Brzmi znajomo?",
+    "pains": [
+      "Googlebot krąży po filtrach i parametrach zamiast po stronach, które mają znaczenie.",
+      "W indeksie jest kilka razy więcej stron niż w mapie witryny albo odwrotnie.",
+      "Nowe strony czekają tygodniami na zaindeksowanie.",
+      "Tysiące podobnych stron konkurują ze sobą o te same frazy.",
+      "Po wdrożeniu nowego szablonu ruch się zmienił i nikt nie wie dlaczego.",
+      "Programmatic SEO wygenerowało dużo stron i mało ruchu."
+    ],
+    "getTitle": "Co dostajesz",
+    "gets": [
+      {
+        "t": "Analizę crawl budgetu",
+        "d": "Na podstawie logów i crawla: gdzie bot marnuje czas i jak skierować go do wartościowych sekcji."
+      },
+      {
+        "t": "Kontrolę indeksacji",
+        "d": "Zasady dla filtrów, parametrów, paginacji i duplikatów: co indeksować, co kanonizować, czego nie crawlować."
+      },
+      {
+        "t": "Audyt szablonów",
+        "d": "Patrzę na szablony, a nie pojedyncze adresy. Jedna poprawka naprawia tysiące stron."
+      },
+      {
+        "t": "Architekturę i linkowanie wewnętrzne",
+        "d": "Struktura, która prowadzi bota i użytkownika do stron z największym potencjałem."
+      },
+      {
+        "t": "Strategię programmatic SEO",
+        "d": "Które strony generować, z jakich danych i jak zapewnić im unikalną wartość."
+      },
+      {
+        "t": "Pomiar po zmianach",
+        "d": "Indeksacja i ruch w każdej sekcji osobno, żeby od razu widzieć efekt wdrożeń."
+      }
+    ],
+    "stepsTitle": "Jak to przebiega",
+    "steps": [
+      {
+        "t": "Dane",
+        "when": "Tydzień 1",
+        "d": "Logi serwera, Search Console, mapy witryny i crawl reprezentatywnej części serwisu."
+      },
+      {
+        "t": "Diagnoza sekcji",
+        "when": "Tydzień 1–3",
+        "d": "Analiza szablonów, indeksacji i crawl budgetu w każdej sekcji serwisu."
+      },
+      {
+        "t": "Zasady i architektura",
+        "when": "Tydzień 3–4",
+        "d": "Reguły indeksacji, linkowania i generowania stron spisane jako zadania dla zespołu."
+      },
+      {
+        "t": "Wdrożenie i pomiar",
+        "when": "Kolejne miesiące",
+        "d": "Wsparcie wdrożeń i śledzenie zmian w indeksacji i ruchu."
+      }
+    ],
+    "forTitle": "Dla kogo to jest",
+    "forYes": [
+      "Katalogi, portale ogłoszeniowe, marketplace’y",
+      "Sklepy z dziesiątkami tysięcy produktów",
+      "Serwisy budujące strony z danych (programmatic SEO)",
+      "Wydawcy i serwisy z dużym archiwum treści"
+    ],
+    "forNo": [
+      "Serwisy poniżej kilku tysięcy stron, gdzie wystarczy standardowy audyt"
+    ],
+    "proof": "Przez lata byłem jedynym specjalistą SEO polskiego katalogu firm: ponad 1,1 mln podstron, 670 tys. adresów w indeksie Google i 115 tys. wizyt z wyszukiwarki miesięcznie w szczytowym momencie.",
+    "faq": [
+      {
+        "q": "Od ilu stron serwis jest „duży”?",
+        "a": "Problemy typowe dla dużych serwisów zaczynają się zwykle od kilkudziesięciu tysięcy adresów albo wcześniej, jeśli serwis ma rozbudowane filtry i parametry."
+      },
+      {
+        "q": "Czy potrzebne są logi serwera?",
+        "a": "Bardzo pomagają, bo pokazują, co bot faktycznie robi. Bez nich też da się pracować, ale diagnoza jest mniej precyzyjna."
+      },
+      {
+        "q": "Czy programmatic SEO jeszcze działa?",
+        "a": "Tak, jeśli strony mają realną wartość i unikalne dane. Masowe generowanie podobnych stron dziś raczej szkodzi niż pomaga."
+      }
+    ]
+  },
+  "en": {
+    "name": "Large sites & programmatic SEO",
+    "card": {
+      "desc": "Hundreds of thousands of URLs, faceted navigation, crawl budget, page templates. I grew a website past one million pages myself, so I know where these projects break.",
+      "tags": [
+        "Crawl budget",
+        "Faceted navigation",
+        "Templates",
+        "Scale"
+      ]
+    },
+    "metaTitle": "SEO for Large Websites & Programmatic SEO | Maciej Zięciak",
+    "metaDescription": "SEO for sites with hundreds of thousands of URLs: crawl budget, faceted navigation, templates and programmatic SEO, from someone who grew a 1.1M-page site.",
+    "eyebrow": "Large sites & programmatic SEO",
+    "title": "Scale that works for your traffic, not against it.",
+    "lead": "With hundreds of thousands of URLs, every template mistake multiplies at scale. I grew a site to over 1.1M pages and 115k monthly organic visits myself, so I know where these projects break.",
+    "painTitle": "Sound familiar?",
+    "pains": [
+      "Googlebot wanders through filters and parameters instead of the pages that matter.",
+      "Your index is several times larger than your sitemap, or the other way round.",
+      "New pages wait weeks to get indexed.",
+      "Thousands of near-identical pages compete for the same queries.",
+      "A new template went live, traffic changed, and nobody knows why.",
+      "Programmatic SEO produced lots of pages and little traffic."
+    ],
+    "getTitle": "What you get",
+    "gets": [
+      {
+        "t": "Crawl budget analysis",
+        "d": "From logs and crawls: where the bot wastes resources and how to point it at valuable sections."
+      },
+      {
+        "t": "Indexation control",
+        "d": "Rules for filters, parameters, pagination and duplicates: what to index, canonicalise or keep out of the crawl."
+      },
+      {
+        "t": "Template audit",
+        "d": "SEO measured per template, not per URL. One fix repairs thousands of pages."
+      },
+      {
+        "t": "Architecture and internal linking",
+        "d": "A structure that leads bots and users to the pages with the most potential."
+      },
+      {
+        "t": "Programmatic SEO strategy",
+        "d": "Which pages to generate, from which data, and how to give them unique value."
+      },
+      {
+        "t": "Post-change monitoring",
+        "d": "Indexation and traffic tracked per section, so you see the effect of every release."
+      }
+    ],
+    "stepsTitle": "How it works",
+    "steps": [
+      {
+        "t": "Data",
+        "when": "Week 1",
+        "d": "Server logs, Search Console, sitemaps and a crawl of a representative part of the site."
+      },
+      {
+        "t": "Diagnosis per section",
+        "when": "Week 1–3",
+        "d": "Templates, indexation and crawl budget analysed section by section."
+      },
+      {
+        "t": "Rules and architecture",
+        "when": "Week 3–4",
+        "d": "Indexation, linking and page-generation rules written up as tickets."
+      },
+      {
+        "t": "Rollout and measurement",
+        "when": "Following months",
+        "d": "Release support and monitoring of indexation and traffic."
+      }
+    ],
+    "forTitle": "Who it’s for",
+    "forYes": [
+      "Directories, classifieds and marketplaces",
+      "Stores with tens of thousands of products",
+      "Sites generating pages from data (programmatic SEO)",
+      "Publishers with large content archives"
+    ],
+    "forNo": [
+      "Sites under a few thousand pages, where a standard audit is enough"
+    ],
+    "proof": "For years I was the only SEO behind a Polish business directory: over 1.1M pages, 670k URLs indexed by Google and 115k monthly organic visits at peak.",
+    "faq": [
+      {
+        "q": "When is a site “large”?",
+        "a": "Large-site problems usually start at tens of thousands of URLs, or earlier if the site has heavy filtering and parameters."
+      },
+      {
+        "q": "Do you need server logs?",
+        "a": "They help a lot, because they show what the bot actually does. It’s possible without them, but the diagnosis is less precise."
+      },
+      {
+        "q": "Does programmatic SEO still work?",
+        "a": "Yes, if pages carry real value and unique data. Mass-producing near-identical pages tends to hurt rather than help today."
+      }
+    ]
+  }
+}

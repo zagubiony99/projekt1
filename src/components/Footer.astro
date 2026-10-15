@@ -1,0 +1,107 @@
+---
+import { site } from '../config';
+import { getDict, otherLang, type Lang } from '../i18n';
+import { services, ui } from '../data/services';
+interface Props { lang: Lang; altHref?: string; contactHref?: string }
+const { lang } = Astro.props;
+const t = getDict(lang);
+const alt = getDict(otherLang(lang));
+const altHref = Astro.props.altHref ?? alt.path;
+// pages without their own contact form pass the homepage form here
+const contactHref = Astro.props.contactHref ?? `#${t.ids.contact}`;
+const year = new Date().getFullYear();
+---
+
+<footer class="foot">
+  <div class="wrap wrap--wide">
+    <div class="cols">
+      <div>
+        <p class="ch">{ui[lang].services}</p>
+        <ul>{services.map((p) => <li><a href={`${ui[lang].base}${p[lang].slug}/`}>{p[lang].name}</a></li>)}</ul>
+      </div>
+      <div>
+        <p class="ch">{site.name}</p>
+        <ul>
+          <li><a href={`${t.path}#${t.ids.experience}`}>{t.nav.experience}</a></li>
+          <li><a href={`${t.path}#${t.ids.process}`}>{t.nav.process}</a></li>
+          <li><a href={`${t.path}#${t.ids.faq}`}>{t.nav.faq}</a></li>
+          <li><a href={contactHref}>{t.nav.contact}</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">{t.footer.built}</p>
+    <div class="row">
+      <span>Copyright © {year} {site.name}. {t.footer.rights}</span>
+      <nav aria-label="Footer">
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+        {site.linkedin && <a href={site.linkedin} rel="me noopener" target="_blank">LinkedIn</a>}
+        <a href={t.privacy.path}>{t.privacy.label}</a>
+        {site.gtmId && <a href="#" data-consent-open>{t.consent.settings}</a>}
+        <a href={altHref} hreflang={alt.lang}>{t.nav.switchLabel}</a>
+        <a href="#top">{t.footer.top}</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    background: var(--gray);
+    padding-block: 18px 22px;
+    color: var(--muted);
+    font-size: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+  .cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 280px));
+    gap: 24px 48px;
+    padding: 14px 0 22px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 14px;
+  }
+  .ch {
+    color: var(--ink);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .cols a {
+    display: inline-block;
+    padding-block: 3px;
+    min-height: 24px;
+    color: var(--ink-2);
+  }
+  .cols a:hover {
+    text-decoration: underline;
+  }
+  .note {
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 32px;
+    padding-top: 14px;
+  }
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  nav a {
+    display: inline-block;
+    min-height: 24px;
+    line-height: 24px;
+    color: var(--ink-2);
+    padding: 0 10px;
+    border-left: 1px solid var(--line);
+  }
+  nav a:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+  nav a:hover {
+    text-decoration: underline;
+  }
+</style>

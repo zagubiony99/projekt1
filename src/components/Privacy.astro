@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import { site } from '../config';
+import { getDict, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getDict(lang);
+const pl = lang === 'pl';
+const other = getDict(lang === 'pl' ? 'en' : 'pl');
+const tracking = Boolean(site.gtmId);
+---
+
+<Base lang={lang} title={`${t.privacy.label} | ${site.name}`} description={t.privacy.description} path={t.privacy.path} altPath={other.privacy.path}>
+  <Nav lang={lang} altHref={other.privacy.path} contactHref={`${t.path}#${t.ids.contact}`} />
+  <main id="main" class="wrap doc">
+    <h1 id="top">{t.privacy.label}</h1>
+    {pl ? (
+      <>
+        <h2>Administrator danych</h2>
+        <p>Administratorem danych osobowych przekazanych przez tę stronę jest {site.name}. Kontakt: <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+        <h2>Jakie dane i po co</h2>
+        <p>Jeśli wyślesz formularz albo e-mail, przetwarzam podane dane (np. adres e-mail, adres strony, treść wiadomości), a także informację, z jakiej kampanii lub strony trafiłeś na witrynę (parametry UTM), wyłącznie po to, żeby odpowiedzieć na zapytanie i ewentualnie przygotować ofertę (art. 6 ust. 1 lit. b i f RODO). Dane przechowuję tak długo, jak to potrzebne do prowadzenia korespondencji i ewentualnej współpracy.</p>
+        <h2>Cookies i analityka</h2>
+        <p>{tracking ? 'Strona korzysta z Google Tag Manager. Pliki cookies analityczne i reklamowe (np. Google Analytics, Google Ads, LinkedIn) są włączane wyłącznie po Twojej zgodzie wyrażonej w banerze. Zgodę możesz w każdej chwili zmienić w „Ustawieniach cookies” w stopce.' : 'Strona nie używa analityki ani plików cookies śledzących.'}</p>
+        <h2>Odbiorcy danych</h2>
+        <p>Dane mogą być przetwarzane przez dostawców usług technicznych (hosting, obsługa formularza, poczta e-mail{tracking ? ', narzędzia analityczne i reklamowe' : ''}) wyłącznie w zakresie niezbędnym do działania strony.</p>
+        <h2>Twoje prawa</h2>
+        <p>Masz prawo dostępu do danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia oraz sprzeciwu, a także prawo skargi do Prezesa UODO. W sprawach danych napisz na <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+      </>
+    ) : (
+      <>
+        <h2>Data controller</h2>
+        <p>The controller of personal data submitted through this website is {site.name}. Contact: <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+        <h2>What data and why</h2>
+        <p>If you send the form or an email, I process the details you provide (e.g. email address, website, message), plus which campaign or page brought you to the site (UTM parameters), only to answer your enquiry and, where relevant, prepare a proposal (Art. 6(1)(b) and (f) GDPR). I keep them for as long as needed for our correspondence and any collaboration.</p>
+        <h2>Cookies and analytics</h2>
+        <p>{tracking ? 'This website uses Google Tag Manager. Analytics and advertising cookies (e.g. Google Analytics, Google Ads, LinkedIn) are only switched on after you consent in the banner. You can change your choice at any time via “Cookie settings” in the footer.' : 'This website uses no analytics and no tracking cookies.'}</p>
+        <h2>Recipients</h2>
+        <p>Data may be processed by technical service providers (hosting, form handling, email{tracking ? ', analytics and advertising tools' : ''}) only as far as needed to run the website.</p>
+        <h2>Your rights</h2>
+        <p>You have the right to access, rectify, erase, restrict and port your data, to object, and to lodge a complaint with a supervisory authority. For anything data-related, email <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+      </>
+    )}
+  </main>
+  <Footer lang={lang} altHref={other.privacy.path} contactHref={`${t.path}#${t.ids.contact}`} />
+</Base>
+
+<style>
+  .doc {
+    max-width: calc(760px + 2 * var(--gutter));
+    padding-top: clamp(120px, 14vw, 170px);
+    padding-bottom: 120px;
+  }
+  h1 {
+    font-size: clamp(2.5rem, 1.6rem + 3vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    margin-bottom: 32px;
+  }
+  h2 {
+    margin-top: 36px;
+    margin-bottom: 10px;
+    font-size: 1.375rem;
+    font-weight: 650;
+    letter-spacing: -0.025em;
+  }
+  p { color: var(--ink-2); }
+  a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
+</style>

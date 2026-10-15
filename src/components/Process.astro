@@ -1,0 +1,182 @@
+---
+import { getDict, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const t = getDict(Astro.props.lang);
+const p = t.process;
+const icons = [
+  '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/>',
+  '<path d="M4 6h16M4 12h10M4 18h6"/>',
+  '<path d="m8 9-4 3 4 3M16 9l4 3-4 3M13.5 6l-3 12"/>',
+  '<path d="M4 20V4M4 20h16"/><path d="m7 15 4-4 3 3 5-6"/>',
+];
+---
+
+<!-- Pinned scene: the four steps hand over to each other as you scroll -->
+<section class="proc section--gray" id={t.ids.process} aria-labelledby="proces-h" data-steps>
+  <div class="sticky">
+    <div class="wrap inner">
+      <header class="head">
+        <p class="eyebrow">{p.label}</p>
+        <h2 class="h2" id="proces-h">{p.title}</h2>
+      </header>
+
+      <div class="stage">
+        <ol class="nums" aria-hidden="true">
+          {p.steps.map((_, i) => <li class:list={{ on: i === 0 }} data-snum>{String(i + 1).padStart(2, '0')}</li>)}
+        </ol>
+        <ol class="panels">
+          {p.steps.map((s, i) => (
+            <li class:list={['panel', { on: i === 0 }]} data-step>
+              <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[i]} />
+              <h3>{s.name}</h3>
+              <p>{s.desc}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div class="track" aria-hidden="true"><i data-sbar></i></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .proc {
+    position: relative;
+    height: 340vh;
+  }
+  .sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+    display: grid;
+    align-items: center;
+    overflow: hidden;
+  }
+  .inner {
+    display: grid;
+    gap: clamp(24px, 5vh, 56px);
+  }
+  .head {
+    margin-bottom: 0;
+  }
+  .stage {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: clamp(32px, 6vw, 96px);
+    align-items: center;
+    min-height: 300px;
+  }
+  .nums {
+    position: relative;
+    height: clamp(160px, 20vw, 280px);
+  }
+  .nums li {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center end;
+    font-size: clamp(9rem, 4rem + 14vw, 17rem);
+    font-weight: 700;
+    letter-spacing: -0.07em;
+    line-height: 0.8;
+    color: transparent;
+    -webkit-text-stroke: 2px #d2d2d7;
+    opacity: 0;
+    transform: translateY(40px) scale(0.92);
+    transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+  }
+  .nums li.on {
+    opacity: 1;
+    transform: none;
+    background: var(--ai);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-stroke: 0;
+  }
+  .panels {
+    position: relative;
+    min-height: 260px;
+  }
+  .panel {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    align-content: center;
+    gap: 14px;
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(30px);
+    transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out), filter 0.7s var(--ease-out);
+  }
+  .panel.on {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+  .panel.out {
+    transform: translateY(-30px);
+  }
+  .ic {
+    width: 48px;
+    height: 48px;
+    color: var(--blue);
+  }
+  .ic :global(path),
+  .ic :global(circle) {
+    stroke-dasharray: 120;
+    stroke-dashoffset: 120;
+  }
+  .panel.on .ic :global(path),
+  .panel.on .ic :global(circle) {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1.4s var(--ease-out) 0.2s;
+  }
+  h3 {
+    font-size: clamp(2.25rem, 1.6rem + 2.6vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: 1;
+  }
+  .panel p {
+    max-width: 40ch;
+    color: var(--muted);
+    font-size: clamp(1.125rem, 1rem + 0.4vw, 1.375rem);
+    line-height: 1.4;
+  }
+  .track {
+    width: min(320px, 60vw);
+    height: 4px;
+    margin-inline: auto;
+    border-radius: 4px;
+    background: var(--gray-2);
+    overflow: hidden;
+  }
+  .track i {
+    display: block;
+    height: 100%;
+    border-radius: 4px;
+    background: var(--ink);
+    transform-origin: 0 50%;
+    transform: scaleX(var(--sp, 0));
+  }
+  @media (max-width: 760px) {
+    .stage { grid-template-columns: 1fr; gap: 8px; }
+    .nums { height: 130px; }
+    .nums li { place-items: center start; font-size: 8rem; }
+  }
+  /* No-JS / reduced motion: show the steps as a plain list */
+  :global(html:not(.js)) .proc { height: auto; }
+  :global(html:not(.js)) .sticky { position: static; height: auto; padding-block: 96px; }
+  :global(html:not(.js)) .panels { display: grid; gap: 32px; min-height: 0; }
+  :global(html:not(.js)) .panel { position: static; opacity: 1; filter: none; transform: none; }
+  :global(html:not(.js)) .nums, :global(html:not(.js)) .track { display: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .proc { height: auto; }
+    .sticky { position: static; height: auto; padding-block: 96px; }
+    .panels { display: grid; gap: 32px; min-height: 0; }
+    .panel { position: static; opacity: 1; filter: none; transform: none; }
+    .nums, .track { display: none; }
+  }
+</style>

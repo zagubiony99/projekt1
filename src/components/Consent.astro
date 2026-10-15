@@ -1,0 +1,67 @@
+---
+import { getDict, type Lang } from '../i18n';
+interface Props { lang: Lang }
+const t = getDict(Astro.props.lang);
+const c = t.consent;
+---
+
+<div class="consent" data-consent hidden role="dialog" aria-live="polite" aria-label={c.settings}>
+  <p>{c.text} <a href={t.privacy.path}>{c.more}</a></p>
+  <div class="btns">
+    <button type="button" class="ghost" data-consent-reject>{c.reject}</button>
+    <button type="button" class="btn" data-consent-accept>{c.accept}</button>
+  </div>
+</div>
+
+<script>
+  const box = document.querySelector<HTMLElement>('[data-consent]');
+  const KEY = 'mz-consent';
+  const read = () => { try { return localStorage.getItem(KEY); } catch { return null; } };
+  const save = (v: string) => { try { localStorage.setItem(KEY, v); } catch {} };
+  const apply = (granted: boolean) => {
+    const v = granted ? 'granted' : 'denied';
+    (window as any).gtag?.('consent', 'update', { ad_storage: v, ad_user_data: v, ad_personalization: v, analytics_storage: v });
+    (window as any).dataLayer?.push({ event: 'consent_update', consent: v });
+  };
+  const show = (on: boolean) => { if (!box) return; box.hidden = !on; document.documentElement.classList.toggle('consent-open', on); };
+  const close = (granted: boolean) => { save(granted ? 'granted' : 'denied'); apply(granted); show(false); };
+  if (box) {
+    if (!read()) show(true);
+    box.querySelector('[data-consent-accept]')?.addEventListener('click', () => close(true));
+    box.querySelector('[data-consent-reject]')?.addEventListener('click', () => close(false));
+    document.querySelectorAll('[data-consent-open]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); show(true); }));
+  }
+</script>
+
+<style>
+  .consent {
+    position: fixed;
+    left: 16px;
+    bottom: 16px;
+    z-index: 70;
+    width: min(420px, calc(100vw - 32px));
+    display: grid;
+    gap: 14px;
+    padding: 20px;
+    border-radius: 20px;
+    background: rgb(255 255 255 / 0.94);
+    backdrop-filter: blur(20px) saturate(1.6);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
+    box-shadow: 0 20px 50px -20px rgb(0 0 0 / 0.35), inset 0 0 0 1px rgb(0 0 0 / 0.06);
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+  .consent[hidden] { display: none; }
+  .consent a { color: var(--link); }
+  .btns { display: flex; gap: 8px; justify-content: flex-end; }
+  .btns .btn { min-height: 38px; padding: 0 18px; font-size: 0.875rem; }
+  .ghost {
+    min-height: 38px;
+    padding: 0 16px;
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 1px var(--line);
+    font-size: 0.875rem;
+  }
+  .ghost:hover { background: var(--gray); }
+</style>

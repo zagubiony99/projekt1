@@ -1,0 +1,204 @@
+{
+  "pl": {
+    "name": "Enterprise i SEO międzynarodowe",
+    "card": {
+      "desc": "Wiele rynków, języków i zespołów, często na Adobe Experience Manager. Pilnuję hreflangów i wpisuję SEO w procesy firmy tak, żeby poprawki naprawdę trafiały na produkcję.",
+      "tags": [
+        "AEM",
+        "Hreflang",
+        "Wiele rynków",
+        "Procesy wdrożeń"
+      ]
+    },
+    "metaTitle": "SEO międzynarodowe i enterprise (AEM) | Maciej Zięciak",
+    "metaDescription": "SEO dla marek enterprise i serwisów wielojęzycznych: hreflang, struktura rynków, Adobe Experience Manager i praca z zespołami IT w dużych firmach.",
+    "eyebrow": "Enterprise i SEO międzynarodowe",
+    "title": "Jedna marka, wiele rynków. Zero chaosu w wynikach.",
+    "lead": "Przy wielu rynkach i językach SEO to przede wszystkim proces: hreflang, szablony, wydania i ludzie w różnych zespołach. Pracuję w takim środowisku na co dzień, od lat na Adobe Experience Manager.",
+    "painTitle": "Brzmi znajomo?",
+    "pains": [
+      "Google pokazuje użytkownikom w Niemczech wersję brytyjską albo odwrotnie.",
+      "Hreflang niby jest wdrożony, ale crawl pokazuje setki błędów i nikt nie wie, które są ważne.",
+      "Każdy rynek robi SEO po swojemu i wyniki są nie do porównania.",
+      "Zmiany SEO czekają miesiącami w kolejce wydań.",
+      "Globalny szablon psuje lokalne strony, które dobrze radziły sobie w Google.",
+      "Agencje na różnych rynkach dostają sprzeczne wytyczne."
+    ],
+    "getTitle": "Co dostajesz",
+    "gets": [
+      {
+        "t": "Audyt hreflang i wersji językowych",
+        "d": "Pełna mapa wersji rynkowych, błędy w powiązaniach, x-default i spójność z canonicalami."
+      },
+      {
+        "t": "Strategię struktury rynków",
+        "d": "Domeny, subdomeny czy katalogi, oraz jak to wpływa na SEO, utrzymanie i koszty."
+      },
+      {
+        "t": "Wytyczne SEO dla AEM",
+        "d": "Ustawienia komponentów, szablonów i dyspozytora, które decydują o SEO w Adobe Experience Manager."
+      },
+      {
+        "t": "Standardy dla rynków i agencji",
+        "d": "Jedne zasady SEO dla wszystkich rynków, żeby wyniki dało się porównać, a dobre rozwiązania przenieść dalej."
+      },
+      {
+        "t": "SEO w procesie wydań",
+        "d": "Wymagania SEO w zadaniach i kontrola przed każdym wydaniem, żeby błędy nie trafiały na produkcję."
+      },
+      {
+        "t": "Raporty dla każdego rynku",
+        "d": "Widoczność i ruch w podziale na rynki i wersje językowe."
+      }
+    ],
+    "stepsTitle": "Jak to przebiega",
+    "steps": [
+      {
+        "t": "Mapa rynków",
+        "when": "Tydzień 1",
+        "d": "Inwentaryzacja domen, wersji językowych i zespołów odpowiedzialnych za każdy rynek."
+      },
+      {
+        "t": "Audyt",
+        "when": "Tydzień 1–3",
+        "d": "Hreflang, canonicale, szablony i konfiguracja CMS na reprezentatywnych rynkach."
+      },
+      {
+        "t": "Standardy",
+        "when": "Tydzień 3–4",
+        "d": "Wytyczne i wymagania SEO dla zespołów i agencji."
+      },
+      {
+        "t": "Stała opieka",
+        "when": "Kolejne miesiące",
+        "d": "Kontrola wydań, wsparcie rynków i raporty."
+      }
+    ],
+    "forTitle": "Dla kogo to jest",
+    "forYes": [
+      "Marki działające na wielu rynkach i w wielu językach",
+      "Serwisy na Adobe Experience Manager i innych CMS-ach enterprise",
+      "Organizacje z kilkoma zespołami IT i agencjami",
+      "Firmy wchodzące na nowe rynki"
+    ],
+    "forNo": [
+      "Firmy działające na jednym rynku, w jednym języku"
+    ],
+    "proof": "Od 2019 roku pracuję przy serwisach na Adobe Experience Manager: w IG, potem w Accenture Song (strategie Technical SEO dla odbiorców międzynarodowych), dziś w Philip Morris International.",
+    "faq": [
+      {
+        "q": "Czy pracujesz z naszą agencją i programistami?",
+        "a": "Tak, w dużych firmach to standard. Przygotowuję wytyczne i zadania, sprawdzam wdrożenia i wspieram zespoły w różnych krajach."
+      },
+      {
+        "q": "Czy znasz tylko AEM?",
+        "a": "AEM znam najlepiej, ale zasady SEO międzynarodowego są uniwersalne. Pracowałem też z WordPressem, platformami e-commerce i systemami autorskimi."
+      },
+      {
+        "q": "W jakich językach pracujesz?",
+        "a": "Komunikacja i dokumentacja po polsku albo po angielsku."
+      }
+    ]
+  },
+  "en": {
+    "name": "Enterprise & international SEO",
+    "card": {
+      "desc": "Adobe Experience Manager, multiple markets and language versions, hreflang. Working with development teams and within corporate processes.",
+      "tags": [
+        "AEM",
+        "Hreflang",
+        "Multi-market",
+        "Dev processes"
+      ]
+    },
+    "metaTitle": "Enterprise & International SEO (AEM) | Maciej Zięciak",
+    "metaDescription": "SEO for enterprise brands and multilingual sites: hreflang, market structure, Adobe Experience Manager and work with dev teams in large organisations.",
+    "eyebrow": "Enterprise & international SEO",
+    "title": "One brand, many markets. No chaos in search.",
+    "lead": "With many markets and languages, SEO is mostly process: hreflang, templates, releases and people across teams. That’s my daily environment, on Adobe Experience Manager for years.",
+    "painTitle": "Sound familiar?",
+    "pains": [
+      "Google shows German users the UK version, or the other way round.",
+      "Hreflang is in place, but Search Console shows errors and nobody knows which matter.",
+      "Every market does SEO its own way and results can’t be compared.",
+      "SEO fixes wait months in the release queue.",
+      "A global template breaks local pages that used to rank well.",
+      "Agencies in different markets get conflicting guidelines."
+    ],
+    "getTitle": "What you get",
+    "gets": [
+      {
+        "t": "Hreflang and language version audit",
+        "d": "A full map of market versions, broken links between them, x-default and consistency with canonicals."
+      },
+      {
+        "t": "Market structure strategy",
+        "d": "Domains, subdomains or folders, and what that means for SEO, maintenance and cost."
+      },
+      {
+        "t": "SEO guidelines for AEM",
+        "d": "Component, template and dispatcher settings that decide SEO in Adobe Experience Manager."
+      },
+      {
+        "t": "Standards for markets and agencies",
+        "d": "One set of SEO rules across markets, so results are comparable and scalable."
+      },
+      {
+        "t": "SEO in the release process",
+        "d": "SEO acceptance criteria in tickets and pre-release review, so errors never reach production."
+      },
+      {
+        "t": "Reporting per market",
+        "d": "Visibility and traffic split by market and language version."
+      }
+    ],
+    "stepsTitle": "How it works",
+    "steps": [
+      {
+        "t": "Market map",
+        "when": "Week 1",
+        "d": "An inventory of domains, language versions and the teams behind each market."
+      },
+      {
+        "t": "Audit",
+        "when": "Week 1–3",
+        "d": "Hreflang, canonicals, templates and CMS configuration on representative markets."
+      },
+      {
+        "t": "Standards",
+        "when": "Week 3–4",
+        "d": "Guidelines and SEO acceptance criteria for teams and agencies."
+      },
+      {
+        "t": "Ongoing support",
+        "when": "Following months",
+        "d": "Release reviews, market support and reporting."
+      }
+    ],
+    "forTitle": "Who it’s for",
+    "forYes": [
+      "Brands operating in many markets and languages",
+      "Sites on Adobe Experience Manager and other enterprise CMSs",
+      "Organisations with several dev teams and agencies",
+      "Companies entering new markets"
+    ],
+    "forNo": [
+      "Single-market, single-language businesses"
+    ],
+    "proof": "Since 2019 I’ve worked on Adobe Experience Manager sites: at IG, then at Accenture Song (technical SEO strategy for international audiences), and today at Philip Morris International.",
+    "faq": [
+      {
+        "q": "Will you work with our agency and dev team?",
+        "a": "Yes, that’s standard on enterprise projects. I write guidelines and tickets, review releases and support teams across countries."
+      },
+      {
+        "q": "Do you only know AEM?",
+        "a": "AEM is where I’m strongest, but international SEO principles are universal. I’ve also worked with WordPress, e-commerce platforms and custom systems."
+      },
+      {
+        "q": "Which languages do you work in?",
+        "a": "Communication and documentation in English or Polish."
+      }
+    ]
+  }
+}

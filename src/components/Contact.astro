@@ -1,0 +1,326 @@
+---
+import { site } from '../config';
+import Portrait from './Portrait.astro';
+import { photo } from '../lib/photo';
+import { getDict, type Lang } from '../i18n';
+interface Props { lang: Lang; topic?: string; next?: { title: string; items: readonly { t: string; d: string }[] } }
+const { topic, next } = Astro.props;
+const t = getDict(Astro.props.lang);
+const c = t.contact;
+---
+
+<section class="section section--black contact" id={t.ids.contact} data-dark aria-labelledby="kontakt-h">
+  <div class="aura" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="wrap">
+    <header class="head">
+      <h2 class="h2 ai" id="kontakt-h" data-reveal>{c.title}</h2>
+      <p class="lead" data-reveal style="--d:1">{c.lead}</p>
+      {photo && (
+        <p class="who" data-reveal style="--d:2">
+          <Portrait size={48} />
+          <span><b>{site.name}</b><span>{t.hero.pill}</span></span>
+        </p>
+      )}
+    </header>
+
+    {next && (
+      <ol class="next" aria-label={next.title}>
+        {next.items.map((n, i) => (
+          <li data-reveal style={`--d:${i}`}>
+            <span class="n">{i + 1}</span>
+            <b>{n.t}</b>
+            <span>{n.d}</span>
+          </li>
+        ))}
+      </ol>
+    )}
+
+    <form
+      class="form"
+      action={`mailto:${site.email}`}
+      method="get"
+      data-form
+      data-reveal
+      data-email={site.email}
+      data-endpoint={site.formEndpoint || undefined}
+      data-sending={c.sending}
+      data-subject={c.subject}
+      data-l-topics={c.bodyTopics}
+      data-l-url={c.bodyUrl}
+    >
+      <input type="hidden" name="subject" value={c.subject} />
+      {site.formAccessKey && <input type="hidden" name="access_key" value={site.formAccessKey} />}
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <fieldset>
+        <legend>{c.topicsLabel}</legend>
+        <div class="chips">
+          {c.topics.map((tp) => (
+            <label class="chip">
+              <input type="checkbox" name="topic" value={tp} checked={tp === topic} />
+              <span>{tp}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+      <label class="field">
+        <span>{c.urlLabel}</span>
+        <input type="url" name="url" placeholder={c.urlPlaceholder} autocomplete="url" inputmode="url" />
+      </label>
+      <label class="field">
+        <span>{c.msgLabel}</span>
+        <textarea name="body" rows="4" placeholder={c.msgPlaceholder} required></textarea>
+      </label>
+      <div class="actions">
+        <button class="btn" type="submit" data-magnet>{c.submit}</button>
+        <p class="direct">
+          {c.orEmail}: <a class="more" href={`mailto:${site.email}`}>{site.email}</a>
+        </p>
+      </div>
+      <p class="fnote">{c.note} <a href={t.privacy.path}>{t.privacy.label}</a>.</p>
+      <p class="status ok" data-ok hidden role="status">{c.success}</p>
+      <p class="status err" data-err hidden role="alert">{c.error} <a href={`mailto:${site.email}`}>{site.email}</a></p>
+      {site.bookingUrl && (
+        <p class="book">{c.booking} <a class="more" href={site.bookingUrl} target="_blank" rel="noopener" data-event="book_call_click">{c.bookingBtn}</a></p>
+      )}
+    </form>
+  </div>
+</section>
+
+<style>
+  .who {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+    text-align: left;
+    font-size: 0.875rem;
+    line-height: 1.3;
+  }
+  .who > span {
+    display: grid;
+  }
+  .who b {
+    color: #f5f5f7;
+    font-weight: 600;
+  }
+  .who > span > span {
+    color: var(--dark-muted);
+  }
+  .contact {
+    position: relative;
+    overflow: hidden;
+  }
+  .contact > .wrap {
+    position: relative;
+  }
+  /* Soft blobs are radial gradients moved with transform only: no blur filter,
+     so the animation stays on the compositor instead of repainting every frame. */
+  .aura {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  .aura i {
+    position: absolute;
+    width: 62vw;
+    max-width: 860px;
+    aspect-ratio: 1;
+    margin: -8vw;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, var(--c), transparent);
+    animation: drift 18s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+  .aura i:nth-child(1) { left: 5%; top: 40%; --c: rgb(8 148 255 / 0.45); }
+  .aura i:nth-child(2) { right: 8%; top: 25%; --c: rgb(201 89 221 / 0.4); animation-duration: 22s; animation-delay: -6s; }
+  .aura i:nth-child(3) { left: 35%; bottom: -20%; --c: rgb(255 46 84 / 0.3); animation-duration: 26s; animation-delay: -12s; }
+  @keyframes drift {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(8vw, -6vh) scale(1.15); }
+    100% { transform: translate(-6vw, 4vh) scale(0.9); }
+  }
+  .contact .h2 {
+    font-size: clamp(2.75rem, 1.6rem + 4.6vw, 5.5rem);
+    padding-bottom: 0.06em;
+    background-size: 250% 100%;
+    animation: flow 10s ease-in-out infinite;
+  }
+  @keyframes flow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  .form {
+    transition: box-shadow 0.6s var(--ease-out);
+  }
+  .form:focus-within {
+    box-shadow: 0 0 0 1px rgb(41 151 255 / 0.4), 0 30px 80px -30px rgb(41 151 255 / 0.35);
+  }
+  .next {
+    max-width: 920px;
+    margin: 0 auto clamp(40px, 6vw, 64px);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .next li {
+    display: grid;
+    gap: 6px;
+    padding: 22px;
+    border-radius: var(--r);
+    background: rgb(255 255 255 / 0.05);
+    border: 1px solid rgb(255 255 255 / 0.08);
+  }
+  .next .n {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    margin-bottom: 6px;
+    border-radius: 50%;
+    background: #f5f5f7;
+    color: #000;
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+  .next b {
+    font-size: 1.0625rem;
+    font-weight: 600;
+  }
+  .next span:last-child {
+    color: var(--dark-muted);
+    font-size: 0.9375rem;
+  }
+  @media (max-width: 760px) {
+    .next { grid-template-columns: 1fr; }
+  }
+  .form {
+    max-width: 720px;
+    margin-inline: auto;
+    display: grid;
+    gap: 24px;
+    padding: clamp(24px, 4vw, 48px);
+    border-radius: var(--r-lg);
+    background: rgb(22 22 23 / 0.78);
+    border: 1px solid rgb(255 255 255 / 0.08);
+  }
+  fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+  legend,
+  .field > span {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #f5f5f7;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .chip input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .chip span {
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 1px var(--dark-line);
+    color: #d2d2d7;
+    font-size: 0.9375rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  }
+  .chip:hover span {
+    box-shadow: inset 0 0 0 1px var(--dark-muted);
+  }
+  .chip input:checked + span {
+    background: #f5f5f7;
+    color: var(--ink);
+    box-shadow: none;
+  }
+  .chip input:focus-visible + span {
+    outline: 2px solid var(--link-dark);
+    outline-offset: 2px;
+  }
+  .field input,
+  .field textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--dark-line);
+    background: var(--black);
+    color: #f5f5f7;
+    font-size: 1.0625rem;
+    resize: vertical;
+    transition: border-color 0.2s;
+  }
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: var(--dark-muted);
+  }
+  .field input:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--link-dark);
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 24px;
+  }
+  .hp {
+    position: absolute;
+    left: -9999px;
+  }
+  .fnote a {
+    color: var(--link-dark);
+  }
+  .fnote {
+    margin-top: -8px;
+    color: var(--dark-muted);
+    font-size: 0.8125rem;
+  }
+  .status {
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+  }
+  .status.ok {
+    background: rgb(48 209 88 / 0.14);
+    color: #7ee29a;
+  }
+  .status.err {
+    background: rgb(255 69 58 / 0.14);
+    color: #ff9b94;
+  }
+  .status a {
+    color: inherit;
+    text-decoration: underline;
+  }
+  .book {
+    padding-top: 18px;
+    border-top: 1px solid var(--dark-line);
+    color: #d2d2d7;
+  }
+  .direct {
+    color: var(--dark-muted);
+    font-size: 0.9375rem;
+  }
+  .direct .more {
+    font-size: 0.9375rem;
+  }
+  .direct .more::after {
+    content: none;
+  }
+</style>

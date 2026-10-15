@@ -1,0 +1,178 @@
+---
+import '@fontsource-variable/inter-tight/index.css';
+import '../styles/global.css';
+import { site } from '../config';
+import { getDict, otherLang, type Lang } from '../i18n';
+import Consent from '../components/Consent.astro';
+import { services, ui } from '../data/services';
+import { getImage } from 'astro:assets';
+import { photo } from '../lib/photo';
+
+interface Props {
+  lang: Lang;
+  // Optional per-page overrides (service pages). Defaults = homepage.
+  title?: string;
+  description?: string;
+  path?: string;
+  altPath?: string;
+  extraLd?: Record<string, unknown>[];
+  noindex?: boolean;
+}
+const { lang, extraLd = [], noindex = false } = Astro.props;
+const t = getDict(lang);
+const alt = getDict(otherLang(lang));
+const isHome = !Astro.props.path;
+const title = Astro.props.title ?? t.meta.title;
+const description = Astro.props.description ?? t.meta.description;
+const path = Astro.props.path ?? t.path;
+const altPath = Astro.props.altPath ?? alt.path;
+const plPath = lang === 'pl' ? path : altPath;
+
+const canonical = new URL(path, site.url).href;
+const altUrl = new URL(altPath, site.url).href;
+const plUrl = new URL(plPath, site.url).href;
+const ogImage = new URL(`/og-${lang}.png`, site.url).href;
+const personImage = photo
+  ? new URL((await getImage({ src: photo, width: 800, height: 800, fit: 'cover', position: 'top', format: 'jpg' })).src, site.url).href
+  : null;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${site.url}/#person`,
+      name: site.name,
+      jobTitle: 'Technical SEO & AI Search Consultant',
+      url: `${site.url}/`,
+      email: site.email,
+      description: t.meta.description,
+      ...(personImage ? { image: personImage } : {}),
+      knowsLanguage: ['pl', 'en'],
+      knowsAbout: ['Technical SEO', 'AI search', 'Generative Engine Optimization', 'Adobe Experience Manager', 'International SEO', 'E-commerce SEO', 'Site migrations', ...t.tools.items],
+      ...(site.linkedin ? { sameAs: [site.linkedin] } : {}),
+    },
+    {
+      '@type': 'ProfessionalService',
+      '@id': `${site.url}/#business`,
+      name: `${site.name} — Technical SEO & AI Search`,
+      url: `${site.url}/`,
+      email: site.email,
+      image: new URL('/og-pl.png', site.url).href,
+      // a consultancy without a public office: country-level address (required for this type)
+      address: { '@type': 'PostalAddress', addressCountry: 'PL' },
+      description: t.meta.description,
+      founder: { '@id': `${site.url}/#person` },
+      areaServed: [{ '@type': 'Country', name: 'Poland' }, 'Worldwide'],
+      knowsLanguage: ['pl', 'en'],
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: t.services.title,
+        itemListElement: services.map((s) => ({
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: s[lang].name,
+            description: s[lang].card.desc,
+            url: new URL(`${ui[lang].base}${s[lang].slug}/`, site.url).href,
+          },
+        })),
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${site.url}/#website`,
+      url: `${site.url}/`,
+      name: site.name,
+      inLanguage: ['pl-PL', 'en-GB'],
+      publisher: { '@id': `${site.url}/#person` },
+    },
+    ...(isHome ? [] : extraLd),
+    ...(!isHome ? [] : [{
+      '@type': 'WebPage',
+      '@id': `${canonical}#webpage`,
+      url: canonical,
+      name: t.meta.title,
+      description: t.meta.description,
+      inLanguage: lang === 'pl' ? 'pl-PL' : 'en-GB',
+      isPartOf: { '@id': `${site.url}/#website` },
+      about: { '@id': `${site.url}/#business` },
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${canonical}#faq`,
+      mainEntity: t.faq.items.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    }]),
+  ],
+};
+---
+
+<!doctype html>
+<html lang={lang === 'pl' ? 'pl' : 'en-GB'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {!noindex && (
+      <>
+        <link rel="canonical" href={canonical} />
+        <link rel="alternate" hreflang="pl" href={lang === 'pl' ? canonical : altUrl} />
+        <link rel="alternate" hreflang="en" href={lang === 'en' ? canonical : altUrl} />
+        <link rel="alternate" hreflang="x-default" href={plUrl} />
+      </>
+    )}
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="author" content={site.name} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={t.locale} />
+    <meta property="og:locale:alternate" content={alt.locale} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <script is:inline>document.documentElement.classList.add('js');addEventListener('pagereveal',function(e){if(e.viewTransition){var h=document.documentElement;h.classList.add('vt');e.viewTransition.finished.finally(function(){h.classList.remove('vt')})}});</script>
+    {site.gtmId && (
+      <script is:inline define:vars={{ gtmId: site.gtmId }}>
+        // Consent Mode v2: everything denied until the visitor decides.
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag;
+        gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied', wait_for_update: 500 });
+        try {
+          if (localStorage.getItem('mz-consent') === 'granted') {
+            gtag('consent', 'update', { ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted', analytics_storage: 'granted' });
+          }
+        } catch (e) {}
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',gtmId);
+      </script>
+    )}
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    {site.gtmId && (
+      <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${site.gtmId}`} height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    )}
+    <a class="skip" href="#main">{t.skip}</a>
+    <slot />
+    {site.gtmId && <Consent lang={lang} />}
+  </body>
+</html>
