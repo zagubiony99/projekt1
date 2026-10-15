@@ -1,0 +1,202 @@
+{
+  "pl": {
+    "name": "Planowanie treści",
+    "card": {
+      "desc": "Plan treści oparty na tym, czego szukają Twoi klienci w Google i o co pytają AI. Tematy, struktura i briefy ułożone od tych, które przyniosą najwięcej ruchu i sprzedaży.",
+      "tags": [
+        "Analiza tematów",
+        "Architektura treści",
+        "Briefy",
+        "Treści pod AI search"
+      ]
+    },
+    "metaTitle": "Planowanie treści SEO i pod AI search | Maciej Zięciak",
+    "metaDescription": "Plan treści oparty na danych: analiza tematów, architektura i linkowanie, briefy dla autorów. Treści, które rankują w Google i trafiają do odpowiedzi AI.",
+    "eyebrow": "Planowanie treści",
+    "title": "Pisz to, czego szukają klienci. W dobrej kolejności.",
+    "lead": "Najdroższa treść to ta, której nikt nie szuka. Układam plan na podstawie danych: czego szukają Twoi klienci, o co pytają AI i co już masz. Dostajesz tematy, strukturę i briefy ułożone od tych, które przyniosą najwięcej.",
+    "painTitle": "Brzmi znajomo?",
+    "pains": [
+      "Blog rośnie, a ruch z niego stoi w miejscu.",
+      "Kilka artykułów konkuruje ze sobą o to samo zapytanie.",
+      "Copywriterzy piszą „pod frazy”, ale bez planu i struktury.",
+      "Nie wiesz, które tematy mają szansę trafić do odpowiedzi AI.",
+      "Strony kategorii i usług nie mają treści, które odpowiadają na realne pytania klientów."
+    ],
+    "getTitle": "Co dostajesz",
+    "gets": [
+      {
+        "t": "Analizę tematów i zapytań",
+        "d": "Czego szukają Twoi klienci, z jaką intencją i jak duży jest popyt, na podstawie danych z Search Console i narzędzi SEO."
+      },
+      {
+        "t": "Inwentaryzację obecnych treści",
+        "d": "Co działa, co się dubluje, co połączyć, poprawić albo usunąć."
+      },
+      {
+        "t": "Architekturę treści",
+        "d": "Klastry tematyczne, strony główne tematów i linkowanie wewnętrzne, które wzmacnia całość."
+      },
+      {
+        "t": "Plan od najważniejszych",
+        "d": "Tematy ułożone według potencjału ruchu, wartości dla biznesu i nakładu pracy."
+      },
+      {
+        "t": "Briefy dla autorów",
+        "d": "Cel, intencja, struktura nagłówków, pytania do odpowiedzenia i linki wewnętrzne dla każdego tekstu."
+      },
+      {
+        "t": "Treści pod odpowiedzi AI",
+        "d": "Jak pisać tak, żeby modele mogły cytować konkretne fragmenty: jasne odpowiedzi, fakty, dane i źródła."
+      }
+    ],
+    "stepsTitle": "Jak to przebiega",
+    "steps": [
+      {
+        "t": "Dane",
+        "when": "Tydzień 1",
+        "d": "Search Console, analityka, obecne treści i cele biznesowe."
+      },
+      {
+        "t": "Analiza",
+        "when": "Tydzień 1–2",
+        "d": "Tematy, intencje, popyt, konkurencja i luki w treściach."
+      },
+      {
+        "t": "Plan i architektura",
+        "when": "Tydzień 2–3",
+        "d": "Klastry, priorytety i plan publikacji."
+      },
+      {
+        "t": "Briefy i opieka",
+        "when": "Kolejne miesiące",
+        "d": "Briefy dla autorów, odbiór tekstów i pomiar efektów."
+      }
+    ],
+    "forTitle": "Dla kogo to jest",
+    "forYes": [
+      "Firmy z blogiem albo bazą wiedzy, która nie przynosi ruchu",
+      "Sklepy, które chcą treści wspierających kategorie i produkty",
+      "Marki B2B z długim procesem decyzyjnym",
+      "Zespoły content, które potrzebują planu opartego na danych"
+    ],
+    "forNo": [
+      "Firmy szukające samego pisania tekstów bez strategii"
+    ],
+    "proof": "Jako jedyny specjalista SEO katalogu firm z ponad 1,1 mln podstron decydowałem, jakie strony powstają i jak są ze sobą połączone. W agencji przygotowywałem strategie SEO dla sklepów na rynkach polskim i czeskim, a dziś zajmuję się widocznością w odpowiedziach AI.",
+    "faq": [
+      {
+        "q": "Czy piszesz teksty?",
+        "a": "Przygotowuję plan, architekturę i briefy oraz odbieram gotowe teksty pod kątem SEO. Same teksty piszą Twoi autorzy albo wspólnie dobierzemy wykonawcę."
+      },
+      {
+        "q": "Czy to działa też w AI search?",
+        "a": "Tak. Modele chętniej cytują treści, które jasno odpowiadają na pytania i podają konkretne fakty, a to uwzględniam w planie i briefach."
+      },
+      {
+        "q": "Ile trwa przygotowanie planu?",
+        "a": "Zwykle 2–3 tygodnie, zależnie od wielkości serwisu i liczby obecnych treści."
+      }
+    ]
+  },
+  "en": {
+    "name": "Content planning",
+    "card": {
+      "desc": "A content plan built on what your customers search for in Google and ask AI. Topics, structure and briefs ordered by what will bring the most traffic and revenue.",
+      "tags": [
+        "Topic research",
+        "Content architecture",
+        "Briefs",
+        "Content for AI search"
+      ]
+    },
+    "metaTitle": "SEO & AI Search Content Planning | Maciej Zięciak",
+    "metaDescription": "A data-led content plan: topic research, architecture and internal linking, writer briefs. Content that ranks in Google and makes it into AI answers.",
+    "eyebrow": "Content planning",
+    "title": "Write what customers search for. In the right order.",
+    "lead": "The most expensive content is the content nobody searches for. I build the plan from data: what your customers search for, what they ask AI and what you already have. You get topics, structure and briefs ordered by what will bring the most.",
+    "painTitle": "Sound familiar?",
+    "pains": [
+      "The blog keeps growing, but its traffic does not.",
+      "Several articles compete with each other for the same query.",
+      "Copywriters write \"for keywords\" without a plan or structure.",
+      "You do not know which topics have a chance of making it into AI answers.",
+      "Category and service pages do not answer customers’ real questions."
+    ],
+    "getTitle": "What you get",
+    "gets": [
+      {
+        "t": "Topic and query research",
+        "d": "What your customers search for, with what intent and how much demand there is, based on Search Console and SEO tool data."
+      },
+      {
+        "t": "A content inventory",
+        "d": "What works, what overlaps, and what to merge, improve or remove."
+      },
+      {
+        "t": "Content architecture",
+        "d": "Topic clusters, hub pages and internal links that strengthen the whole."
+      },
+      {
+        "t": "A prioritised plan",
+        "d": "Topics ordered by traffic potential, business value and effort."
+      },
+      {
+        "t": "Writer briefs",
+        "d": "Goal, intent, heading structure, questions to answer and internal links for every piece."
+      },
+      {
+        "t": "Content for AI answers",
+        "d": "How to write so models can cite specific passages: clear answers, facts, data and sources."
+      }
+    ],
+    "stepsTitle": "How it works",
+    "steps": [
+      {
+        "t": "Data",
+        "when": "Week 1",
+        "d": "Search Console, analytics, existing content and business goals."
+      },
+      {
+        "t": "Research",
+        "when": "Week 1–2",
+        "d": "Topics, intent, demand, competitors and content gaps."
+      },
+      {
+        "t": "Plan and architecture",
+        "when": "Week 2–3",
+        "d": "Clusters, priorities and a publishing plan."
+      },
+      {
+        "t": "Briefs and support",
+        "when": "Following months",
+        "d": "Writer briefs, SEO review of drafts and measuring results."
+      }
+    ],
+    "forTitle": "Who it is for",
+    "forYes": [
+      "Companies with a blog or knowledge base that brings no traffic",
+      "Online stores that want content supporting categories and products",
+      "B2B brands with a long decision process",
+      "Content teams that need a data-led plan"
+    ],
+    "forNo": [
+      "Companies looking for copywriting only, without a strategy"
+    ],
+    "proof": "As the only SEO specialist of a Polish business directory with over 1.1 million pages, I decided which pages were created and how they linked together. At an agency I prepared SEO strategies for online stores in Poland and the Czech Republic, and today I work on visibility in AI answers.",
+    "faq": [
+      {
+        "q": "Do you write the content?",
+        "a": "I prepare the plan, architecture and briefs and review drafts for SEO. Your writers produce the content, or we can pick someone together."
+      },
+      {
+        "q": "Does this work for AI search too?",
+        "a": "Yes. Models are more likely to cite content that answers questions clearly and gives specific facts, and that is built into the plan and briefs."
+      },
+      {
+        "q": "How long does the plan take?",
+        "a": "Usually 2–3 weeks, depending on the size of the site and how much content already exists."
+      }
+    ]
+  }
+}

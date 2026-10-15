@@ -185,6 +185,17 @@
     "label": "Experience",
     "title": "9 years in SEO",
     "intro": "From an agency and my own project, through consulting, to enterprise teams at Accenture Song and Philip Morris International.",
+    "industriesLabel": "Industries I have worked in",
+    "industries": [
+      "Hospitality",
+      "Healthcare",
+      "Beauty",
+      "Automotive",
+      "Tobacco",
+      "Trading",
+      "E-commerce",
+      "Adult"
+    ],
     "items": [
       {
         "when": "2026 — present",
@@ -270,7 +281,11 @@
       },
       {
         "q": "Do you work with large and enterprise websites?",
-        "a": "Yes, that’s my specialty: sites with hundreds of thousands of URLs, platforms such as Adobe Experience Manager, multiple markets and languages, and working within development processes."
+        "a": "Yes, that’s my specialty: sites with hundreds of thousands of URLs, enterprise CMSs such as Sitecore and Adobe Experience Manager, multiple markets and languages, and working within development processes."
+      },
+      {
+        "q": "Which industries have you worked in?",
+        "a": "Among others: hospitality, healthcare, beauty, automotive, tobacco, trading, e-commerce and adult. Technical SEO works much the same everywhere; the differences, such as regulation, seasonality or advertising restrictions, go into the plan."
       },
       {
         "q": "Do you advise or also implement?",
@@ -300,8 +315,11 @@
       "AI search",
       "Large website",
       "E-commerce",
-      "Enterprise / AEM",
+      "Enterprise / CMS",
       "Migration",
+      "Structured data",
+      "WebOps",
+      "Content planning",
       "Ongoing work"
     ],
     "urlLabel": "Website",

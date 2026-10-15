@@ -11,6 +11,15 @@ const v = {
   q: pl ? 'Jakiego konsultanta SEO wybrać do dużego serwisu?' : 'Who is a good technical SEO consultant?',
   a: pl ? 'Najlepiej kogoś z doświadczeniem w dużych serwisach i AI search, np.' : 'Consider specialists with large-site and AI search experience, e.g.',
   indexed: pl ? 'zaindeksowane' : 'indexed',
+  richUrl: pl ? 'twojsklep.pl › buty › bieganie' : 'yourstore.com › shoes › running',
+  richTitle: pl ? 'Buty do biegania Pegasus 41 – damskie' : 'Pegasus 41 running shoes – women’s',
+  richReviews: pl ? '127 opinii' : '127 reviews',
+  richStock: pl ? 'Dostępny' : 'In stock',
+  blocked: pl ? 'zatrzymane' : 'blocked',
+  hub: pl ? 'Buty do biegania' : 'Running shoes',
+  topics: pl
+    ? ['Na maraton', 'Dla początkujących', 'Rozmiary', 'Trail', 'Amortyzacja', 'Ranking 2026']
+    : ['For a marathon', 'For beginners', 'Sizing', 'Trail', 'Cushioning', 'Best of 2026'],
   noindex: 'noindex',
 };
 const nodes = [[50, 22], [24, 46], [76, 46], [12, 74], [38, 74], [62, 74], [88, 74]];
@@ -20,6 +29,12 @@ const redirects = [
   ['/produkt.php?id=812', '/buty/sneaker-air'],
   ['/oferta/seo', '/uslugi/technical-seo'],
 ];
+const schemaTypes = ['Product', 'Offer', 'AggregateRating'];
+const pipeline: [string, string][] = pl
+  ? [['Build i testy', 'ok'], ['SEO: canonical, hreflang', 'ok'], ['SEO: noindex na /kategorie/', 'stop'], ['Wdrożenie', 'wait']]
+  : [['Build & tests', 'ok'], ['SEO: canonical, hreflang', 'ok'], ['SEO: noindex on /categories/', 'stop'], ['Deploy', 'wait']];
+// six topics around the hub (x, y in %)
+const topicPos = [[20, 12], [80, 12], [10, 50], [90, 50], [20, 88], [80, 88]];
 const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-CZ', '/cz/'], ['x-default', '/']];
 ---
 
@@ -35,42 +50,68 @@ const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-
       </header>
     </div>
       <ul class="track" data-track>
-        {pages.map((p) => ({ name: p[lang].name, ...p[lang].card })).map((it, i) => (
-          <li class:list={['card', `v${i}`, { dark: i === 1 }]} data-card data-tilt>
+        {pages.map((p) => ({ key: p.key, slug: p[lang].slug, name: p[lang].name, ...p[lang].card })).map((it) => (
+          <li class:list={['card', `v-${it.key}`, { dark: it.key === 'ai' }]} data-card data-tilt>
             <div class="vis" aria-hidden="true">
-              {i === 0 && (
+              {it.key === 'audit' && (
                 <svg viewBox="0 0 100 90" class="crawl">
                   {edges.map(([a, b], k) => <line x1={nodes[a][0]} y1={nodes[a][1]} x2={nodes[b][0]} y2={nodes[b][1]} style={`--k:${k}`} />)}
                   {nodes.map(([x, y], k) => <circle cx={x} cy={y} r="5.5" style={`--k:${k}`} />)}
                 </svg>
               )}
-              {i === 1 && (
+              {it.key === 'ai' && (
                 <div class="chat">
                   <p class="bubble q">{v.q}</p>
                   <p class="bubble a">{v.a} <span class="cite">maciejzieciak.com</span></p>
                 </div>
               )}
-              {i === 2 && (
+              {it.key === 'large' && (
                 <div class="pages">
-                  {Array.from({ length: 96 }).map((_, k) => <i style={`--k:${(k * 37) % 96}`} class:list={{ off: k % 11 === 7 }} />)}
+                  {Array.from({ length: 72 }).map((_, k) => <i style={`--k:${(k * 37) % 72}`} class:list={{ off: k % 11 === 7 }} />)}
                   <span class="legend"><b></b>{v.indexed}<b class="o"></b>{v.noindex}</span>
                 </div>
               )}
-              {i === 3 && (
+              {it.key === 'intl' && (
                 <ul class="code">
                   {hreflang.map(([l, h], k) => (
                     <li style={`--k:${k}`}><span class="tag">&lt;link</span> <span class="attr">hreflang</span>="<span class="val">{l}</span>" <span class="attr">href</span>="<span class="val">{h}</span>"&gt; <span class="ok">✓</span></li>
                   ))}
                 </ul>
               )}
-              {i === 4 && (
+              {it.key === 'migration' && (
                 <ul class="redir">
                   {redirects.map(([a, b], k) => (
                     <li style={`--k:${k}`}><span class="old">{a}</span><span class="badge">301</span><span class="new">{b}</span></li>
                   ))}
                 </ul>
               )}
-              {i === 5 && (
+              {it.key === 'schema' && (
+                <div class="rich">
+                  <p class="r-url">{v.richUrl}</p>
+                  <p class="r-title">{v.richTitle}</p>
+                  <p class="r-meta"><span class="stars">★★★★★</span> 4,8 · {v.richReviews} · <b>349 zł</b> · <span class="instock">{v.richStock}</span></p>
+                  <ul class="r-ld">
+                    {schemaTypes.map((ty, k) => <li style={`--k:${k}`}><span class="attr">"@type"</span>: <span class="val">"{ty}"</span> <span class="ok">✓</span></li>)}
+                  </ul>
+                </div>
+              )}
+              {it.key === 'webops' && (
+                <ul class="pipe">
+                  {pipeline.map(([label, st], k) => (
+                    <li class={`s-${st}`} style={`--k:${k}`}><i aria-hidden="true"></i><span>{label}</span><b>{st === 'ok' ? '✓' : st === 'stop' ? v.blocked : ''}</b></li>
+                  ))}
+                </ul>
+              )}
+              {it.key === 'content' && (
+                <div class="cluster">
+                  <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                    {topicPos.map(([x, y], k) => <line x1="50" y1="50" x2={x} y2={y} style={`--k:${k}`} />)}
+                  </svg>
+                  <span class="hub">{v.hub}</span>
+                  {v.topics.map((tp, k) => <span class="tp" style={`--k:${k};left:${topicPos[k][0]}%;top:${topicPos[k][1]}%`}>{tp}</span>)}
+                </div>
+              )}
+              {it.key === 'ecom' && (
                 <div class="shop">
                   <div class="facets"><span class="on">Sneakers</span><span>42</span><span class="x">?color=&amp;sort=</span></div>
                   <div class="grid">{Array.from({ length: 6 }).map((_, k) => <i style={`--k:${k}`} />)}</div>
@@ -78,10 +119,10 @@ const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-
               )}
             </div>
             <div class="txt">
-              <h3 class:list={{ ai: i === 1 }} data-vt-title>{it.name}</h3>
+              <h3 class:list={{ ai: it.key === 'ai' }} data-vt-title>{it.name}</h3>
               <p>{it.desc}</p>
               <p class="tags">{it.tags.join(' · ')}</p>
-              <a class="more go" href={`${ui[lang].base}${pages[i][lang].slug}/`}>{ui[lang].more}<span class="sr-only">: {it.name}</span></a>
+              <a class="more go" href={`${ui[lang].base}${it.slug}/`}>{ui[lang].more}<span class="sr-only">: {it.name}</span></a>
             </div>
           </li>
         ))}
@@ -266,6 +307,42 @@ const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-
   .grid i { aspect-ratio: 4 / 5; border-radius: 12px; background: linear-gradient(160deg, var(--gray), var(--gray-2)); opacity: 0; transform: scale(0.9); }
   .card.is-on .grid i { animation: pop 0.5s var(--ease-out) forwards; animation-delay: calc(0.15s + var(--k) * 0.1s); }
 
+  /* schema: a rich result and the JSON-LD types behind it */
+  .rich { width: 100%; max-width: 360px; display: grid; gap: 3px; padding: 14px 16px; border-radius: 16px; background: var(--gray); }
+  .r-url { font-size: 0.6875rem; color: var(--muted); }
+  .r-title { font-size: 0.9375rem; font-weight: 600; color: #1a0dab; letter-spacing: -0.01em; }
+  .r-meta { font-size: 0.75rem; color: var(--muted); opacity: 0; transform: translateY(6px); }
+  .r-meta b { color: var(--ink); }
+  .stars { color: #f5a623; letter-spacing: 1px; }
+  .instock { color: #1e8e3e; }
+  .r-ld { margin-top: 8px; padding: 10px 14px; border-radius: 12px; background: #1d1d1f; font: 500 0.6875rem/1.85 ui-monospace, 'SF Mono', Menlo, monospace; color: #e8e8ed; letter-spacing: 0; }
+  .r-ld li { opacity: 0; transform: translateX(-8px); }
+  .card.is-on .r-ld li { animation: pop 0.45s var(--ease-out) forwards; animation-delay: calc(0.2s + var(--k) * 0.18s); }
+  .card.is-on .r-meta { animation: pop 0.6s var(--ease-out) 1s forwards; }
+
+  /* webops: a release pipeline that stops a noindex before production */
+  .pipe { width: 100%; max-width: 340px; display: grid; gap: 6px; }
+  .pipe li { display: grid; grid-template-columns: 9px 1fr auto; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 11px; background: var(--gray); font-size: 0.75rem; opacity: 0; transform: translateY(10px); }
+  .pipe i { width: 9px; height: 9px; border-radius: 50%; background: var(--gray-2); }
+  .pipe .s-ok i { background: #30d158; }
+  .pipe .s-ok b { color: #1e8e3e; }
+  .pipe .s-stop { background: #fff1f0; box-shadow: inset 0 0 0 1px rgb(255 69 58 / 0.35); }
+  .pipe .s-stop i { background: #ff453a; }
+  .pipe .s-stop b { font-size: 0.6875rem; font-weight: 700; color: #fff; background: #ff453a; padding: 2px 8px; border-radius: 999px; }
+  .pipe .s-wait { color: var(--muted); }
+  .card.is-on .pipe li { animation: pop 0.45s var(--ease-out) forwards; animation-delay: calc(0.2s + var(--k) * 0.32s); }
+
+  /* content: a topic cluster around a hub page */
+  .cluster { position: relative; width: 100%; max-width: 360px; height: 160px; }
+  .cluster svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .cluster line { stroke: var(--gray-2); stroke-width: 0.6; vector-effect: non-scaling-stroke; }
+  .card.is-on .cluster line { stroke: #0071e3; stroke-dasharray: 80; stroke-dashoffset: 80; animation: draw 0.6s var(--ease-out) forwards; animation-delay: calc(0.3s + var(--k) * 0.15s); }
+  .hub, .tp { position: absolute; translate: -50% -50%; white-space: nowrap; border-radius: 999px; }
+  .hub { left: 50%; top: 50%; padding: 9px 16px; background: var(--ai); color: #fff; font-size: 0.875rem; font-weight: 650; box-shadow: 0 10px 30px -10px rgb(201 89 221 / 0.6); }
+  .tp { padding: 6px 11px; background: var(--white); box-shadow: inset 0 0 0 1px var(--line); font-size: 0.75rem; opacity: 0; scale: 0.8; }
+  .card.is-on .tp { animation: tp 0.5s var(--ease-out) forwards; animation-delay: calc(0.5s + var(--k) * 0.15s); }
+  @keyframes tp { to { opacity: 1; scale: 1; } }
+
   /* Mobile: native swipe carousel instead of the pinned scene */
   @media (max-height: 820px) and (min-width: 900px) {
     .svc .lead { display: none; }
@@ -282,6 +359,7 @@ const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-
     .bar { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .bubble, .code li, .redir li, .grid i { opacity: 1; transform: none; }
+    .bubble, .code li, .redir li, .grid i, .r-meta, .r-ld li, .pipe li { opacity: 1; transform: none; }
+    .tp { opacity: 1; scale: 1; }
   }
 </style>

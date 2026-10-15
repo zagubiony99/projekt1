@@ -15,6 +15,10 @@ const big = (when: string) => when.replace(/^(\d{4})\s*—\s*(obecnie|present)$/
       <p class="eyebrow" data-reveal>{e.label}</p>
       <h2 class="h2" id="exp-h" data-reveal>{e.title}</h2>
       <p class="lead" data-reveal style="--d:1">{e.intro}</p>
+      <div class="ind" data-reveal style="--d:2">
+        <p class="ind-l">{e.industriesLabel}</p>
+        <ul aria-label={e.industriesLabel}>{e.industries.map((x) => <li>{x}</li>)}</ul>
+      </div>
     </header>
 
     <div class="layout" data-exp>
@@ -46,6 +50,33 @@ const big = (when: string) => when.replace(/^(\d{4})\s*—\s*(obecnie|present)$/
 </section>
 
 <style>
+  /* industries: quiet pill row under the intro */
+  .ind {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    margin-top: 10px;
+  }
+  .ind-l {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .ind ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    max-width: 720px;
+  }
+  .ind li {
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: var(--gray);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
   .head :global(.me) {
     margin-bottom: 14px;
   }

@@ -143,6 +143,8 @@ COPY = [
         s('label', 'Nadtytuł'),
         s('title', 'Nagłówek'),
         t('intro', 'Wstęp'),
+        s('industriesLabel', 'Nagłówek listy branż'),
+        strings('industries', 'Branże'),
         items('items', 'Etapy kariery', [
             s('when', 'Lata', 'Np. 2021 — 2026 albo 2026 — obecnie.'),
             s('org', 'Firma'),
@@ -237,8 +239,11 @@ SERVICE = [
 ]
 
 SERVICES = [  # key, label in the CMS menu
-    ('audit', 'Audyt Technical SEO'),
+    ('audit', 'Technical SEO (audyty)'),
     ('ai', 'Widoczność w odpowiedziach AI'),
+    ('schema', 'Dane strukturalne'),
+    ('webops', 'WebOps i SEO Operations'),
+    ('content', 'Planowanie treści'),
     ('large', 'Duże serwisy i programmatic SEO'),
     ('intl', 'Enterprise i SEO międzynarodowe'),
     ('migration', 'Migracje i przebudowy stron'),
