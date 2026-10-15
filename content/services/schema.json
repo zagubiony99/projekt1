@@ -1,0 +1,210 @@
+{
+  "pl": {
+    "name": "Dane strukturalne (Schema.org)",
+    "card": {
+      "desc": "Projektuję i wdrażam dane strukturalne, dzięki którym Google i modele AI rozumieją, kim jesteś i co oferujesz. Produkty, usługi, organizacja, FAQ: spójnie w całym serwisie i bez błędów.",
+      "tags": [
+        "JSON-LD",
+        "Rich results",
+        "Encje i marka",
+        "Walidacja na skalę"
+      ]
+    },
+    "metaTitle": "Dane strukturalne i Schema.org | Maciej Zięciak",
+    "metaDescription": "Projekt i wdrożenie danych strukturalnych Schema.org (JSON-LD): produkty, usługi, organizacja, FAQ. Rich results w Google i marka, którą AI rozumie.",
+    "eyebrow": "Dane strukturalne (Schema.org)",
+    "title": "Powiedz Google i AI wprost, kim jesteś.",
+    "lead": "Dane strukturalne to język, w którym strona opisuje się wyszukiwarkom i modelom AI. Dobrze zaprojektowane dają rich results w Google i pomagają AI poprawnie przedstawić Twoją markę. Źle wdrożone nie dają nic albo zbierają błędy w Search Console.",
+    "painTitle": "Brzmi znajomo?",
+    "pains": [
+      "Search Console pokazuje błędy i ostrzeżenia w danych strukturalnych, a nikt ich nie naprawia.",
+      "Konkurencja ma w wynikach gwiazdki, ceny i dostępność, a Ty zwykły link.",
+      "Każdy szablon ma inne dane strukturalne, bo dopisywały je różne osoby i wtyczki.",
+      "ChatGPT albo Google AI źle opisują Twoją firmę, produkty albo ceny.",
+      "Wtyczka do SEO generuje schema, ale nie wiesz, co dokładnie i czy jest poprawne."
+    ],
+    "getTitle": "Co dostajesz",
+    "gets": [
+      {
+        "t": "Audyt obecnych danych",
+        "d": "Co jest wdrożone na każdym typie strony, co jest błędne, co się dubluje, a czego brakuje."
+      },
+      {
+        "t": "Model danych dla serwisu",
+        "d": "Jedna, spójna mapa typów Schema.org i powiązań między nimi: organizacja, produkty, usługi, artykuły, osoby."
+      },
+      {
+        "t": "Gotowe szablony JSON-LD",
+        "d": "Przykłady dla każdego typu strony z opisem, skąd brać dane, do wklejenia w zadania dla programistów."
+      },
+      {
+        "t": "Marka jako encja",
+        "d": "Spójne informacje o firmie i powiązania z profilami zewnętrznymi, żeby Google i AI jednoznacznie Cię rozpoznawały."
+      },
+      {
+        "t": "Walidację na skalę",
+        "d": "Sprawdzenie tysięcy stron crawlem, a nie pojedynczych adresów w testerze."
+      },
+      {
+        "t": "Monitoring po wdrożeniu",
+        "d": "Raporty rich results w Search Console i kontrola, czy kolejne wydania niczego nie psują."
+      }
+    ],
+    "stepsTitle": "Jak to przebiega",
+    "steps": [
+      {
+        "t": "Audyt",
+        "when": "Tydzień 1",
+        "d": "Crawl serwisu i przegląd obecnych danych strukturalnych na wszystkich typach stron."
+      },
+      {
+        "t": "Model danych",
+        "when": "Tydzień 1–2",
+        "d": "Projekt typów i powiązań, dopasowany do Twojego biznesu i wyników, na których Ci zależy."
+      },
+      {
+        "t": "Szablony i zadania",
+        "when": "Tydzień 2–3",
+        "d": "Szablony JSON-LD i zadania dla programistów albo konfiguracja w CMS."
+      },
+      {
+        "t": "Walidacja",
+        "when": "Po wdrożeniu",
+        "d": "Crawl testowy, raporty w Search Console i poprawki, aż wszystko jest czyste."
+      }
+    ],
+    "forTitle": "Dla kogo to jest",
+    "forYes": [
+      "Sklepy internetowe, które chcą cen, ocen i dostępności w wynikach",
+      "Serwisy z usługami, ofertami pracy, wydarzeniami albo artykułami",
+      "Marki, które chcą, żeby AI poprawnie je opisywało",
+      "Serwisy z błędami danych strukturalnych w Search Console"
+    ],
+    "forNo": [
+      "Strony-wizytówki z kilkoma podstronami, gdzie wystarczy podstawowa konfiguracja wtyczki"
+    ],
+    "proof": "Dane strukturalne są stałym elementem moich audytów i wdrożeń od 2018 roku: w sklepach internetowych w agencji, w serwisach międzynarodowych marek na Adobe Experience Manager, a dziś w pracy nad widocznością w AI search w Philip Morris International.",
+    "faq": [
+      {
+        "q": "Czy dane strukturalne poprawiają pozycje?",
+        "a": "Bezpośrednio nie. Dają za to rozszerzone wyniki (np. ceny, oceny), które zwiększają klikalność, i pomagają wyszukiwarkom oraz AI poprawnie zrozumieć Twoje treści."
+      },
+      {
+        "q": "Czy to działa w ChatGPT i AI Overviews?",
+        "a": "Spójne dane o marce, produktach i ofercie ułatwiają modelom poprawne opisanie firmy. Nie ma tu jednak gwarancji: to jeden z elementów widoczności w AI, obok dostępu botów i treści."
+      },
+      {
+        "q": "Czy wystarczy wtyczka?",
+        "a": "Na małej stronie często tak. W większych serwisach wtyczki generują dane niepełne albo sprzeczne z treścią, a dopiero spójny model danych daje pełny efekt."
+      },
+      {
+        "q": "Kto wdraża zmiany?",
+        "a": "Zwykle przygotowuję szablony i zadania dla Twoich programistów, a potem sprawdzam wdrożenie. Proste rzeczy mogę skonfigurować sam w CMS."
+      }
+    ]
+  },
+  "en": {
+    "name": "Structured data (Schema.org)",
+    "card": {
+      "desc": "I design and implement structured data that helps Google and AI models understand who you are and what you offer. Products, services, organisation, FAQ: consistent across the site and error-free.",
+      "tags": [
+        "JSON-LD",
+        "Rich results",
+        "Entities & brand",
+        "Validation at scale"
+      ]
+    },
+    "metaTitle": "Structured Data & Schema.org | Maciej Zięciak",
+    "metaDescription": "Schema.org structured data (JSON-LD) designed and implemented: products, services, organisation, FAQ. Rich results in Google and a brand AI understands.",
+    "eyebrow": "Structured data (Schema.org)",
+    "title": "Tell Google and AI exactly who you are.",
+    "lead": "Structured data is how a website describes itself to search engines and AI models. Designed well, it earns rich results in Google and helps AI describe your brand correctly. Done badly, it does nothing or piles up errors in Search Console.",
+    "painTitle": "Sound familiar?",
+    "pains": [
+      "Search Console shows structured data errors and warnings that nobody fixes.",
+      "Competitors show stars, prices and availability in results; you show a plain link.",
+      "Every template has different markup because different people and plugins added it.",
+      "ChatGPT or Google AI gets your company, products or prices wrong.",
+      "An SEO plugin outputs schema, but nobody knows exactly what or whether it is valid."
+    ],
+    "getTitle": "What you get",
+    "gets": [
+      {
+        "t": "An audit of current markup",
+        "d": "What is implemented on every page type, what is broken or duplicated and what is missing."
+      },
+      {
+        "t": "A data model for the site",
+        "d": "One consistent map of Schema.org types and how they connect: organisation, products, services, articles, people."
+      },
+      {
+        "t": "Ready JSON-LD templates",
+        "d": "Examples for every page type with notes on where the data comes from, ready to paste into dev tickets."
+      },
+      {
+        "t": "Your brand as an entity",
+        "d": "Consistent company information and links to external profiles, so Google and AI recognise you unambiguously."
+      },
+      {
+        "t": "Validation at scale",
+        "d": "Checking thousands of pages with a crawl, not single URLs in a testing tool."
+      },
+      {
+        "t": "Post-launch monitoring",
+        "d": "Rich result reports in Search Console and checks that later releases do not break anything."
+      }
+    ],
+    "stepsTitle": "How it works",
+    "steps": [
+      {
+        "t": "Audit",
+        "when": "Week 1",
+        "d": "A crawl of the site and a review of existing structured data on every page type."
+      },
+      {
+        "t": "Data model",
+        "when": "Week 1–2",
+        "d": "Types and relationships designed around your business and the results you care about."
+      },
+      {
+        "t": "Templates and tickets",
+        "when": "Week 2–3",
+        "d": "JSON-LD templates and dev tickets, or configuration in your CMS."
+      },
+      {
+        "t": "Validation",
+        "when": "After release",
+        "d": "A test crawl, Search Console reports and fixes until everything is clean."
+      }
+    ],
+    "forTitle": "Who it is for",
+    "forYes": [
+      "Online stores that want prices, ratings and availability in results",
+      "Sites with services, job listings, events or articles",
+      "Brands that want AI to describe them correctly",
+      "Sites with structured data errors in Search Console"
+    ],
+    "forNo": [
+      "Small brochure sites where a basic plugin setup is enough"
+    ],
+    "proof": "Structured data has been part of my audits and implementation work since 2018: for online stores at an agency, for international brands on Adobe Experience Manager, and today in AI search visibility work at Philip Morris International.",
+    "faq": [
+      {
+        "q": "Does structured data improve rankings?",
+        "a": "Not directly. It earns rich results (such as prices and ratings) that improve click-through, and helps search engines and AI understand your content correctly."
+      },
+      {
+        "q": "Does it help in ChatGPT and AI Overviews?",
+        "a": "Consistent data about your brand, products and offer makes it easier for models to describe you correctly. There is no guarantee: it is one part of AI visibility, alongside crawler access and content."
+      },
+      {
+        "q": "Isn’t a plugin enough?",
+        "a": "On a small site, often yes. On larger sites plugins output incomplete markup or markup that contradicts the page, and only a consistent data model delivers the full effect."
+      },
+      {
+        "q": "Who implements the changes?",
+        "a": "Usually I prepare templates and tickets for your developers, then check the release. Simple things I can configure myself in the CMS."
+      }
+    ]
+  }
+}

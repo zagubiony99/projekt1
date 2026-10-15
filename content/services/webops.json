@@ -1,0 +1,202 @@
+{
+  "pl": {
+    "name": "WebOps i SEO Operations",
+    "card": {
+      "desc": "SEO wpięte w procesy, a nie doklejane na końcu. Kontrola każdego wydania, automatyczne testy SEO, monitoring i alerty, żeby błędy nie trafiały na produkcję i nie wisiały tygodniami.",
+      "tags": [
+        "Kontrola wydań",
+        "Testy SEO",
+        "Monitoring i alerty",
+        "Procesy i standardy"
+      ]
+    },
+    "metaTitle": "WebOps i SEO Operations | Maciej Zięciak",
+    "metaDescription": "SEO w procesach wydań: wymagania w zadaniach, testy przed publikacją, monitoring i alerty. Mniej błędów na produkcji i szybsze wdrożenia zmian SEO.",
+    "eyebrow": "WebOps i SEO Operations",
+    "title": "Błędy SEO łap przed wdrożeniem, nie po spadku ruchu.",
+    "lead": "W dużych serwisach ruch najczęściej nie spada przez konkurencję, tylko przez własne wydania: przypadkowy noindex, zmieniony szablon, zgubione przekierowania. Wpinam SEO w procesy tak, żeby takie rzeczy wychodziły przed publikacją, a nie po miesiącu w Search Console.",
+    "painTitle": "Brzmi znajomo?",
+    "pains": [
+      "Nowe wydanie przypadkiem dało noindex albo zmieniło canonicale i nikt tego nie zauważył.",
+      "O problemie dowiadujecie się z wykresu ruchu, a nie z alertu.",
+      "Wymagania SEO giną między marketingiem, produktem i programistami.",
+      "Każdy rynek i każda agencja robią SEO po swojemu.",
+      "Poprawki SEO czekają miesiącami w kolejce, bo nikt nie umie ich ocenić i ułożyć."
+    ],
+    "getTitle": "Co dostajesz",
+    "gets": [
+      {
+        "t": "SEO w procesie wydań",
+        "d": "Wymagania SEO w zadaniach, warunki odbioru i kontrola przed publikacją, wpisane w to, jak pracuje Twój zespół."
+      },
+      {
+        "t": "Automatyczne testy SEO",
+        "d": "Testy, które przed wdrożeniem sprawdzają m.in. noindex, canonicale, przekierowania, hreflang i dane strukturalne."
+      },
+      {
+        "t": "Monitoring i alerty",
+        "d": "Regularne crawle, logi serwera i Search Console z powiadomieniem, gdy coś istotnego się zmieni."
+      },
+      {
+        "t": "Standardy i dokumentacja",
+        "d": "Jedne zasady SEO dla zespołów, rynków i agencji, spisane tak, żeby dało się z nich korzystać."
+      },
+      {
+        "t": "Priorytety i backlog",
+        "d": "Zadania SEO ocenione według wpływu i kosztu, w formie zrozumiałej dla właściciela produktu."
+      },
+      {
+        "t": "Raportowanie operacyjne",
+        "d": "Stan techniczny serwisu, incydenty i postęp prac w jednym miejscu, także dla zarządu."
+      }
+    ],
+    "stepsTitle": "Jak to przebiega",
+    "steps": [
+      {
+        "t": "Mapa procesu",
+        "when": "Tydzień 1",
+        "d": "Jak dziś powstają i wychodzą zmiany, kto za co odpowiada i gdzie SEO wypada z obiegu."
+      },
+      {
+        "t": "Projekt",
+        "when": "Tydzień 2–3",
+        "d": "Punkty kontroli, testy, alerty i standardy dopasowane do Waszych narzędzi."
+      },
+      {
+        "t": "Wdrożenie",
+        "when": "Tydzień 3–6",
+        "d": "Konfiguracja testów i monitoringu oraz przeszkolenie zespołów."
+      },
+      {
+        "t": "Stała opieka",
+        "when": "Kolejne miesiące",
+        "d": "Kontrola wydań, reagowanie na alerty i rozwój procesu."
+      }
+    ],
+    "forTitle": "Dla kogo to jest",
+    "forYes": [
+      "Serwisy, które wydają zmiany co tydzień albo częściej",
+      "Organizacje z kilkoma zespołami, rynkami albo agencjami",
+      "Firmy, które straciły ruch przez własne wdrożenie",
+      "Serwisy na platformach enterprise, np. Adobe Experience Manager"
+    ],
+    "forNo": [
+      "Małe strony bez regularnych wdrożeń i bez zespołu programistów"
+    ],
+    "proof": "SEO Operations to moja codzienna praca: dziś jako Manager SEO & AI Search Operations w Philip Morris International, wcześniej jako Tech SEO Operations Senior Specialist. Wcześniej w Accenture Song i IG pracowałem przy serwisach międzynarodowych marek na Adobe Experience Manager.",
+    "faq": [
+      {
+        "q": "Czym WebOps różni się od audytu?",
+        "a": "Audyt mówi, co jest zepsute dziś. WebOps pilnuje, żeby nowe błędy nie powstawały i żeby poprawki szybko trafiały na produkcję."
+      },
+      {
+        "q": "Czy potrzebujemy nowych narzędzi?",
+        "a": "Zwykle nie. Najpierw wykorzystuję to, co już macie (crawlery, Search Console, system zadań i wdrożeń), a nowe narzędzia dobieram tylko tam, gdzie naprawdę czegoś brakuje."
+      },
+      {
+        "q": "Czy pracujesz z naszymi programistami i agencjami?",
+        "a": "Tak, to sedno tej usługi. Ustalam z nimi zasady, przygotowuję wymagania i sprawdzam wdrożenia."
+      }
+    ]
+  },
+  "en": {
+    "name": "WebOps & SEO operations",
+    "card": {
+      "desc": "SEO built into the process, not bolted on at the end. Release checks, automated SEO tests, monitoring and alerts, so mistakes do not reach production or sit there for weeks.",
+      "tags": [
+        "Release checks",
+        "SEO tests",
+        "Monitoring & alerts",
+        "Process & standards"
+      ]
+    },
+    "metaTitle": "WebOps & SEO Operations | Maciej Zięciak",
+    "metaDescription": "SEO built into your release process: requirements in tickets, pre-release tests, monitoring and alerts. Fewer production mistakes, faster SEO changes.",
+    "eyebrow": "WebOps & SEO operations",
+    "title": "Catch SEO mistakes before release, not after the traffic drop.",
+    "lead": "On large sites traffic rarely drops because of competitors. It drops because of your own releases: an accidental noindex, a changed template, lost redirects. I build SEO into the process so these show up before publishing, not a month later in Search Console.",
+    "painTitle": "Sound familiar?",
+    "pains": [
+      "A release accidentally added noindex or changed canonicals and nobody noticed.",
+      "You learn about problems from the traffic chart, not from an alert.",
+      "SEO requirements get lost between marketing, product and developers.",
+      "Every market and every agency does SEO its own way.",
+      "SEO fixes wait months in the backlog because nobody can size and prioritise them."
+    ],
+    "getTitle": "What you get",
+    "gets": [
+      {
+        "t": "SEO in the release process",
+        "d": "SEO requirements in tickets, acceptance criteria and pre-release checks, built into how your team already works."
+      },
+      {
+        "t": "Automated SEO tests",
+        "d": "Pre-release tests for noindex, canonicals, redirects, hreflang, structured data and more."
+      },
+      {
+        "t": "Monitoring and alerts",
+        "d": "Regular crawls, server logs and Search Console, with a notification when something important changes."
+      },
+      {
+        "t": "Standards and documentation",
+        "d": "One set of SEO rules for teams, markets and agencies, written so people actually use it."
+      },
+      {
+        "t": "Priorities and backlog",
+        "d": "SEO tasks sized by impact and cost, in a form a product owner can work with."
+      },
+      {
+        "t": "Operational reporting",
+        "d": "Technical health, incidents and progress in one place, including for leadership."
+      }
+    ],
+    "stepsTitle": "How it works",
+    "steps": [
+      {
+        "t": "Process map",
+        "when": "Week 1",
+        "d": "How changes are made and shipped today, who owns what and where SEO falls out of the loop."
+      },
+      {
+        "t": "Design",
+        "when": "Week 2–3",
+        "d": "Checkpoints, tests, alerts and standards that fit your tools."
+      },
+      {
+        "t": "Roll-out",
+        "when": "Week 3–6",
+        "d": "Setting up tests and monitoring, and training the teams."
+      },
+      {
+        "t": "Ongoing support",
+        "when": "Following months",
+        "d": "Release checks, alert handling and improving the process."
+      }
+    ],
+    "forTitle": "Who it is for",
+    "forYes": [
+      "Sites that ship changes weekly or more often",
+      "Organisations with several teams, markets or agencies",
+      "Companies that lost traffic because of their own release",
+      "Sites on enterprise platforms such as Adobe Experience Manager"
+    ],
+    "forNo": [
+      "Small sites without regular releases or a development team"
+    ],
+    "proof": "SEO operations is my day job: today as Manager SEO & AI Search Operations at Philip Morris International, previously as Tech SEO Operations Senior Specialist. Before that, at Accenture Song and IG, I worked on international brand sites built on Adobe Experience Manager.",
+    "faq": [
+      {
+        "q": "How is WebOps different from an audit?",
+        "a": "An audit tells you what is broken today. WebOps makes sure new problems do not appear and that fixes reach production quickly."
+      },
+      {
+        "q": "Do we need new tools?",
+        "a": "Usually not. I start with what you already have (crawlers, Search Console, your ticketing and release tools) and add new tools only where something is genuinely missing."
+      },
+      {
+        "q": "Do you work with our developers and agencies?",
+        "a": "Yes, that is the core of this service. I agree the rules with them, write the requirements and check releases."
+      }
+    ]
+  }
+}

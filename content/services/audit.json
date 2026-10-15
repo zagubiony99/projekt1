@@ -1,8 +1,8 @@
 {
   "pl": {
-    "name": "Audyt Technical SEO",
+    "name": "Technical SEO",
     "card": {
-      "desc": "Sprawdzam wszystko, co decyduje o tym, jak Google czyta Twoją stronę: indeksację, JavaScript, przekierowania, szybkość i logi serwera. Dostajesz listę problemów od najważniejszych, z gotowymi zadaniami dla programistów.",
+      "desc": "Audyty techniczne, które wskazują konkretne problemy: indeksacja, JavaScript, przekierowania, szybkość i logi serwera. Dostajesz listę od najważniejszych, z gotowymi zadaniami dla programistów.",
       "tags": [
         "Indeksacja",
         "JavaScript",
@@ -12,7 +12,7 @@
     },
     "metaTitle": "Audyt Technical SEO dużych serwisów | Maciej Zięciak",
     "metaDescription": "Audyt Technical SEO: crawl, JavaScript, indeksacja, logi serwera i Core Web Vitals. Problemy od najważniejszych i gotowe zadania dla programistów.",
-    "eyebrow": "Audyt Technical SEO",
+    "eyebrow": "Technical SEO · audyt techniczny",
     "title": "Dowiedz się, co naprawdę blokuje Twój ruch.",
     "lead": "Nie dostaniesz 80-stronicowego PDF-a, którego nikt nie przeczyta. Dostaniesz listę problemów ułożoną według wpływu na ruch i przychód, z gotowymi zadaniami dla programistów.",
     "painTitle": "Brzmi znajomo?",
@@ -107,9 +107,9 @@
     ]
   },
   "en": {
-    "name": "Technical SEO audit",
+    "name": "Technical SEO",
     "card": {
-      "desc": "Crawling, JavaScript rendering, indexation, canonicals, redirects, Core Web Vitals and server logs. You get issues ranked by traffic impact, with ready-to-ship developer tickets.",
+      "desc": "Technical audits that pinpoint specific issues: indexation, JavaScript, redirects, speed and server logs. You get a prioritised list with dev-ready tickets.",
       "tags": [
         "Crawl & rendering",
         "Indexation",
@@ -119,7 +119,7 @@
     },
     "metaTitle": "Technical SEO Audit for Large Sites | Maciej Zięciak",
     "metaDescription": "Technical SEO audit: crawling, JavaScript rendering, indexation, server logs and Core Web Vitals. Issues ranked by impact, with dev-ready tickets.",
-    "eyebrow": "Technical SEO audit",
+    "eyebrow": "Technical SEO · technical audit",
     "title": "Find out what is really holding your traffic back.",
     "lead": "No 80-page PDF that nobody reads. You get a list of issues ranked by impact on traffic and revenue, with ready-to-ship tickets for your developers.",
     "painTitle": "Sound familiar?",

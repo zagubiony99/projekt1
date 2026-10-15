@@ -237,8 +237,11 @@ SERVICE = [
 ]
 
 SERVICES = [  # key, label in the CMS menu
-    ('audit', 'Audyt Technical SEO'),
+    ('audit', 'Technical SEO (audyty)'),
     ('ai', 'Widoczność w odpowiedziach AI'),
+    ('schema', 'Dane strukturalne'),
+    ('webops', 'WebOps i SEO Operations'),
+    ('content', 'Planowanie treści'),
     ('large', 'Duże serwisy i programmatic SEO'),
     ('intl', 'Enterprise i SEO międzynarodowe'),
     ('migration', 'Migracje i przebudowy stron'),
