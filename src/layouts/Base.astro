@@ -13,8 +13,9 @@ interface Props {
   path?: string;
   altPath?: string;
   extraLd?: Record<string, unknown>[];
+  noindex?: boolean;
 }
-const { lang, extraLd = [] } = Astro.props;
+const { lang, extraLd = [], noindex = false } = Astro.props;
 const t = getDict(lang);
 const alt = getDict(otherLang(lang));
 const isHome = !Astro.props.path;
@@ -37,8 +38,10 @@ const jsonLd = {
       '@id': `${site.url}/#person`,
       name: site.name,
       jobTitle: 'Technical SEO & AI Search Consultant',
-      url: site.url,
-      email: `mailto:${site.email}`,
+      url: `${site.url}/`,
+      email: site.email,
+      description: t.meta.description,
+      ...(site.photo ? { image: new URL(site.photo, site.url).href } : {}),
       knowsLanguage: ['pl', 'en'],
       knowsAbout: ['Technical SEO', 'AI search', 'Generative Engine Optimization', 'Adobe Experience Manager', 'International SEO', 'E-commerce SEO', 'Site migrations', ...t.tools.items],
       ...(site.linkedin ? { sameAs: [site.linkedin] } : {}),
@@ -47,12 +50,15 @@ const jsonLd = {
       '@type': 'ProfessionalService',
       '@id': `${site.url}/#business`,
       name: `${site.name} — Technical SEO & AI Search`,
-      url: new URL(t.path, site.url).href,
+      url: `${site.url}/`,
       email: site.email,
+      image: new URL('/og-pl.png', site.url).href,
+      // a consultancy without a public office: country-level address (required for this type)
+      address: { '@type': 'PostalAddress', addressCountry: 'PL' },
       description: t.meta.description,
       founder: { '@id': `${site.url}/#person` },
       areaServed: [{ '@type': 'Country', name: 'Poland' }, 'Worldwide'],
-      availableLanguage: ['Polish', 'English'],
+      knowsLanguage: ['pl', 'en'],
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
         name: t.services.title,
@@ -65,7 +71,7 @@ const jsonLd = {
     {
       '@type': 'WebSite',
       '@id': `${site.url}/#website`,
-      url: site.url,
+      url: `${site.url}/`,
       name: site.name,
       inLanguage: ['pl-PL', 'en-GB'],
       publisher: { '@id': `${site.url}/#person` },
@@ -101,11 +107,15 @@ const jsonLd = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="pl" href={lang === 'pl' ? canonical : altUrl} />
-    <link rel="alternate" hreflang="en" href={lang === 'en' ? canonical : altUrl} />
-    <link rel="alternate" hreflang="x-default" href={plUrl} />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    {!noindex && (
+      <>
+        <link rel="canonical" href={canonical} />
+        <link rel="alternate" hreflang="pl" href={lang === 'pl' ? canonical : altUrl} />
+        <link rel="alternate" hreflang="en" href={lang === 'en' ? canonical : altUrl} />
+        <link rel="alternate" hreflang="x-default" href={plUrl} />
+      </>
+    )}
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
     <meta name="theme-color" content="#ffffff" />
     <meta name="author" content={site.name} />
 
@@ -125,6 +135,7 @@ const jsonLd = {
     <meta name="twitter:image" content={ogImage} />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <script is:inline>document.documentElement.classList.add('js');addEventListener('pagereveal',function(e){if(e.viewTransition){var h=document.documentElement;h.classList.add('vt');e.viewTransition.finished.finally(function(){h.classList.remove('vt')})}});</script>

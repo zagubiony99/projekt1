@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import { getDict } from '../i18n';
+const t = getDict('pl');
+const en = getDict('en');
+---
+
+<!-- One bilingual 404: hosts (Cloudflare Pages, Netlify, Vercel) serve /404.html for any missing URL -->
+<Base lang="pl" title="404 | Maciej Zięciak" description="Nie ma takiej strony. Page not found." path="/404/" altPath="/en/" noindex>
+  <Nav lang="pl" altHref="/en/" contactHref={`/#${t.ids.contact}`} />
+  <main id="main" class="nf wrap">
+    <p class="code ai">404</p>
+    <h1>Nie ma takiej strony.</h1>
+    <p class="lead">Możliwe, że adres się zmienił. Zacznij od strony głównej albo napisz do mnie.</p>
+    <p class="links"><a class="btn" href="/">Strona główna</a> <a class="more" href={`/#${t.ids.contact}`}>Kontakt</a></p>
+    <p class="en" lang="en-GB">Page not found. <a href="/en/">Go to the English homepage</a> or <a href={`/en/#${en.ids.contact}`}>get in touch</a>.</p>
+  </main>
+</Base>
+
+<style>
+  .nf {
+    min-height: 100svh;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 18px;
+    text-align: center;
+    padding-block: 120px 80px;
+  }
+  .code {
+    font-size: clamp(5rem, 3rem + 10vw, 11rem);
+    font-weight: 700;
+    letter-spacing: -0.06em;
+    line-height: 0.9;
+    padding-bottom: 0.05em;
+  }
+  h1 {
+    font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+  }
+  .lead {
+    max-width: 44ch;
+  }
+  .links {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .en {
+    margin-top: 24px;
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+  .en a {
+    color: var(--link);
+  }
+</style>

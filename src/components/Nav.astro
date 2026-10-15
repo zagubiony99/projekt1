@@ -1,10 +1,12 @@
 ---
 import { getDict, otherLang, type Lang } from '../i18n';
-interface Props { lang: Lang; altHref?: string }
+interface Props { lang: Lang; altHref?: string; contactHref?: string }
 const { lang } = Astro.props;
 const t = getDict(lang);
 const alt = getDict(otherLang(lang));
 const altHref = Astro.props.altHref ?? alt.path;
+// pages without their own contact form pass the homepage form here
+const contactHref = Astro.props.contactHref ?? `#${t.ids.contact}`;
 // anchors always point at the homepage sections, so they work from service pages too
 const h = (a: string) => `${t.path}${a}`;
 const links = [
@@ -23,7 +25,7 @@ const links = [
         {links.map(([href, label]) => <a href={href}>{label}</a>)}
         <a href={altHref} hreflang={alt.lang} aria-label={`${alt.lang.toUpperCase()}: ${t.nav.switchLabel}`}>{alt.lang.toUpperCase()}</a>
       </nav>
-      <a class="cta" href={`#${t.ids.contact}`}>{t.nav.cta}</a>
+      <a class="cta" href={contactHref}>{t.nav.cta}</a>
       <button class="burger" type="button" aria-expanded="false" aria-controls="mobile-menu" data-burger>
         <span class="sr-only" data-burger-label data-open={t.nav.menu} data-close={t.nav.close}>{t.nav.menu}</span>
         <i></i><i></i>
@@ -33,7 +35,7 @@ const links = [
 
   <div class="sheet" id="mobile-menu" data-sheet hidden>
     <nav class="wrap sheet__in" aria-label="Mobile">
-      {[...links, [`#${t.ids.contact}`, t.nav.contact]].map(([href, label]) => <a href={href}>{label}</a>)}
+      {[...links, [contactHref, t.nav.contact]].map(([href, label]) => <a href={href}>{label}</a>)}
       <a class="sw" href={altHref} hreflang={alt.lang}>{t.nav.switchLabel}</a>
     </nav>
   </div>

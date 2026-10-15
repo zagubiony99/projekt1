@@ -2,11 +2,13 @@
 import { site } from '../config';
 import { getDict, otherLang, type Lang } from '../i18n';
 import { services, ui } from '../data/services';
-interface Props { lang: Lang; altHref?: string }
+interface Props { lang: Lang; altHref?: string; contactHref?: string }
 const { lang } = Astro.props;
 const t = getDict(lang);
 const alt = getDict(otherLang(lang));
 const altHref = Astro.props.altHref ?? alt.path;
+// pages without their own contact form pass the homepage form here
+const contactHref = Astro.props.contactHref ?? `#${t.ids.contact}`;
 const year = new Date().getFullYear();
 ---
 
@@ -23,7 +25,7 @@ const year = new Date().getFullYear();
           <li><a href={`${t.path}#${t.ids.experience}`}>{t.nav.experience}</a></li>
           <li><a href={`${t.path}#${t.ids.process}`}>{t.nav.process}</a></li>
           <li><a href={`${t.path}#${t.ids.faq}`}>{t.nav.faq}</a></li>
-          <li><a href={`#${t.ids.contact}`}>{t.nav.contact}</a></li>
+          <li><a href={contactHref}>{t.nav.contact}</a></li>
         </ul>
       </div>
     </div>

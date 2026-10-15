@@ -12,10 +12,10 @@ const other = getDict(lang === 'pl' ? 'en' : 'pl');
 const tracking = Boolean(site.gtmId);
 ---
 
-<Base lang={lang} title={`${t.privacy.label} | ${site.name}`} description={t.privacy.label} path={t.privacy.path} altPath={other.privacy.path}>
-  <Nav lang={lang} altHref={other.privacy.path} />
+<Base lang={lang} title={`${t.privacy.label} | ${site.name}`} description={t.privacy.description} path={t.privacy.path} altPath={other.privacy.path}>
+  <Nav lang={lang} altHref={other.privacy.path} contactHref={`${t.path}#${t.ids.contact}`} />
   <main id="main" class="wrap doc">
-    <h1>{t.privacy.label}</h1>
+    <h1 id="top">{t.privacy.label}</h1>
     {pl ? (
       <>
         <h2>Administrator danych</h2>
@@ -44,7 +44,7 @@ const tracking = Boolean(site.gtmId);
       </>
     )}
   </main>
-  <Footer lang={lang} altHref={other.privacy.path} />
+  <Footer lang={lang} altHref={other.privacy.path} contactHref={`${t.path}#${t.ids.contact}`} />
 </Base>
 
 <style>

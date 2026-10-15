@@ -50,6 +50,12 @@ W `src/config.ts`:
 
 Strona ma `hreflang` (pl, en, x-default), canonical, sitemapę z alternatywnymi wersjami językowymi, `robots.txt` i dane strukturalne JSON-LD (Person, ProfessionalService, WebSite, WebPage, FAQPage).
 
+## Kontrola SEO
+
+Po `npm run build` uruchom `python3 scripts/seo-audit.py dist`. Skrypt sprawdza na każdej stronie: canonical, hreflang (wzajemność i x-default), długość title i description, jeden H1, kolejność nagłówków, poprawność JSON-LD, linki wewnętrzne i kotwice, alt obrazów i og:image. Jedyne oczekiwane uwagi dotyczą strony 404 (ma `noindex`, więc celowo nie ma canonical ani hreflang).
+
+Pliki dla wyszukiwarek i AI generują się same przy buildzie: `sitemap-index.xml` (z hreflang dla wszystkich par PL/EN), `robots.txt`, `llms.txt` (mapa serwisu dla asystentów AI) i `404.html`.
+
 ## Wdrożenie
 
 Folder `dist/` to zwykłe pliki statyczne, więc działa na każdym hostingu: Cloudflare Pages, Netlify, Vercel albo GitHub Pages.

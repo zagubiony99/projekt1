@@ -5,9 +5,9 @@ export const en: Dict = {
   locale: 'en_GB',
   path: '/en/',
   meta: {
-    title: 'Technical SEO & AI Search Consultant | Maciej Zięciak, 9 years of experience',
+    title: 'Technical SEO & AI Search Consultant | Maciej Zięciak',
     description:
-      'Technical SEO and AI search visibility for large websites, e-commerce and enterprise. 9 years of experience: audits, rendering, indexation, migrations, hreflang and AI crawler access.',
+      'Technical SEO consultant with 9 years of experience. Audits, migrations and AI search visibility for large websites, online stores and enterprise brands.',
   },
   ids: { services: 'services', experience: 'experience', process: 'process', faq: 'faq', contact: 'contact', gets: 'what-you-get' },
   skip: 'Skip to content',
@@ -274,7 +274,11 @@ export const en: Dict = {
     more: 'Privacy policy',
     settings: 'Cookie settings',
   },
-  privacy: { path: '/en/privacy-policy/', label: 'Privacy policy' },
+  privacy: {
+    path: '/en/privacy-policy/',
+    label: 'Privacy policy',
+    description: 'How maciejzieciak.com handles your data: what the contact form collects, why, how long it is kept, which cookies are used and what your rights are.',
+  },
   footer: {
     rights: 'All rights reserved.',
     top: 'Back to top',

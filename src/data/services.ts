@@ -33,9 +33,9 @@ const raw: Pair[] = [
     pl: {
       slug: 'audyt-technical-seo',
       name: 'Audyt Technical SEO',
-      metaTitle: 'Audyt Technical SEO — crawl, rendering, indeksacja | Maciej Zięciak',
+      metaTitle: 'Audyt Technical SEO dużych serwisów | Maciej Zięciak',
       metaDescription:
-        'Audyt Technical SEO dla dużych serwisów i e-commerce: crawl, renderowanie JavaScriptu, indeksacja, logi serwera, Core Web Vitals. Lista problemów według wpływu na ruch i gotowe zadania dla programistów.',
+        'Audyt Technical SEO: crawl, JavaScript, indeksacja, logi serwera i Core Web Vitals. Problemy od najważniejszych i gotowe zadania dla programistów.',
       eyebrow: 'Audyt Technical SEO',
       title: 'Dowiedz się, co naprawdę blokuje Twój ruch.',
       lead:
@@ -88,9 +88,9 @@ const raw: Pair[] = [
     en: {
       slug: 'technical-seo-audit',
       name: 'Technical SEO audit',
-      metaTitle: 'Technical SEO Audit — crawling, rendering, indexation | Maciej Zięciak',
+      metaTitle: 'Technical SEO Audit for Large Sites | Maciej Zięciak',
       metaDescription:
-        'Technical SEO audit for large websites and e-commerce: crawling, JavaScript rendering, indexation, server logs, Core Web Vitals. Issues ranked by traffic impact, with ready-to-ship developer tickets.',
+        'Technical SEO audit: crawling, JavaScript rendering, indexation, server logs and Core Web Vitals. Issues ranked by impact, with dev-ready tickets.',
       eyebrow: 'Technical SEO audit',
       title: 'Find out what is really holding your traffic back.',
       lead:
@@ -147,9 +147,9 @@ const raw: Pair[] = [
     pl: {
       slug: 'widocznosc-w-ai-search',
       name: 'Widoczność w odpowiedziach AI',
-      metaTitle: 'Widoczność w AI search: ChatGPT, Perplexity, AI Overviews | Maciej Zięciak',
+      metaTitle: 'Widoczność w ChatGPT i AI Overviews | Maciej Zięciak',
       metaDescription:
-        'Widoczność marki w ChatGPT, Perplexity, Gemini i Google AI Overviews. Audyt dostępu botów AI, test strony bez JavaScriptu, dane strukturalne i pomiar obecności marki w odpowiedziach AI.',
+        'Sprawdzam, czy ChatGPT, Perplexity i Google AI widzą i cytują Twoją stronę. Dostęp botów AI, dane strukturalne i pomiar obecności marki w AI.',
       eyebrow: 'Widoczność w odpowiedziach AI',
       title: 'Niech AI poleca Ciebie, a nie konkurencję.',
       lead:
@@ -201,9 +201,9 @@ const raw: Pair[] = [
     en: {
       slug: 'ai-search-visibility',
       name: 'AI search & LLM visibility',
-      metaTitle: 'AI Search Visibility: ChatGPT, Perplexity, AI Overviews | Maciej Zięciak',
+      metaTitle: 'AI Search Visibility for ChatGPT | Maciej Zięciak',
       metaDescription:
-        'Brand visibility in ChatGPT, Perplexity, Gemini and Google AI Overviews. AI crawler access audit, no-JavaScript rendering, entities and structured data, plus citation tracking.',
+        'Find out whether ChatGPT, Perplexity and Google AI can see and cite your site. AI crawler access, structured data and brand visibility tracking.',
       eyebrow: 'AI search & LLM visibility',
       title: 'Be in the answer, not just below it.',
       lead:
@@ -261,7 +261,7 @@ const raw: Pair[] = [
       name: 'Duże serwisy i programmatic SEO',
       metaTitle: 'SEO dużych serwisów i programmatic SEO | Maciej Zięciak',
       metaDescription:
-        'SEO dla serwisów z setkami tysięcy URL-i: crawl budget, nawigacja fasetowa, szablony stron i programmatic SEO. Doświadczenie z serwisem, który urósł do ponad 1,1 mln podstron.',
+        'SEO dla serwisów z setkami tysięcy adresów: crawl budget, filtry, szablony i programmatic SEO. Doświadczenie z serwisem, który urósł do 1,1 mln podstron.',
       eyebrow: 'Duże serwisy i programmatic SEO',
       title: 'Milion podstron może pracować na Ciebie. Albo przeciwko Tobie.',
       lead:
@@ -311,7 +311,7 @@ const raw: Pair[] = [
       name: 'Large sites & programmatic SEO',
       metaTitle: 'SEO for Large Websites & Programmatic SEO | Maciej Zięciak',
       metaDescription:
-        'SEO for sites with hundreds of thousands of URLs: crawl budget, faceted navigation, page templates and programmatic SEO. Experience growing a site past 1.1 million pages.',
+        'SEO for sites with hundreds of thousands of URLs: crawl budget, faceted navigation, templates and programmatic SEO, from someone who grew a 1.1M-page site.',
       eyebrow: 'Large sites & programmatic SEO',
       title: 'Scale that works for your traffic, not against it.',
       lead:
@@ -363,9 +363,9 @@ const raw: Pair[] = [
     pl: {
       slug: 'seo-enterprise-miedzynarodowe',
       name: 'Enterprise i SEO międzynarodowe',
-      metaTitle: 'SEO enterprise i międzynarodowe, hreflang, Adobe Experience Manager | Maciej Zięciak',
+      metaTitle: 'SEO międzynarodowe i enterprise (AEM) | Maciej Zięciak',
       metaDescription:
-        'SEO dla marek enterprise i serwisów wielojęzycznych: hreflang, struktura wersji językowych, Adobe Experience Manager, praca z zespołami IT i w procesach korporacyjnych.',
+        'SEO dla marek enterprise i serwisów wielojęzycznych: hreflang, struktura rynków, Adobe Experience Manager i praca z zespołami IT w dużych firmach.',
       eyebrow: 'Enterprise i SEO międzynarodowe',
       title: 'Jedna marka, wiele rynków. Zero chaosu w wynikach.',
       lead:
@@ -413,9 +413,9 @@ const raw: Pair[] = [
     en: {
       slug: 'enterprise-international-seo',
       name: 'Enterprise & international SEO',
-      metaTitle: 'Enterprise & International SEO, hreflang, Adobe Experience Manager | Maciej Zięciak',
+      metaTitle: 'Enterprise & International SEO (AEM) | Maciej Zięciak',
       metaDescription:
-        'SEO for enterprise brands and multilingual sites: hreflang, language version structure, Adobe Experience Manager, working with dev teams and corporate processes.',
+        'SEO for enterprise brands and multilingual sites: hreflang, market structure, Adobe Experience Manager and work with dev teams in large organisations.',
       eyebrow: 'Enterprise & international SEO',
       title: 'One brand, many markets. No chaos in search.',
       lead:
@@ -469,7 +469,7 @@ const raw: Pair[] = [
       name: 'Migracje i przebudowy stron',
       metaTitle: 'Migracja strony bez utraty ruchu SEO | Maciej Zięciak',
       metaDescription:
-        'Bezpieczna migracja strony: zmiana CMS, domeny lub struktury URL bez utraty ruchu organicznego. Mapa przekierowań, testy przed startem i monitoring po wdrożeniu.',
+        'Migracja strony bez utraty ruchu: zmiana CMS, domeny albo adresów URL. Mapa przekierowań, testy przed startem i opieka po wdrożeniu.',
       eyebrow: 'Migracje i przebudowy stron',
       title: 'Nowa strona. Ten sam ruch. Albo większy.',
       lead:
@@ -516,9 +516,9 @@ const raw: Pair[] = [
     en: {
       slug: 'website-migration-seo',
       name: 'Migrations & relaunches',
-      metaTitle: 'Website Migration Without Losing SEO Traffic | Maciej Zięciak',
+      metaTitle: 'Website Migration Without Losing Traffic | Maciej Zięciak',
       metaDescription:
-        'Safe website migration: changing CMS, domain or URL structure without losing organic traffic. Redirect mapping, pre-launch testing and post-launch monitoring.',
+        'Website migration without losing organic traffic: a new CMS, domain or URL structure. Redirect mapping, pre-launch testing and post-launch monitoring.',
       eyebrow: 'Migrations & relaunches',
       title: 'New website. Same traffic. Or more.',
       lead:
@@ -569,9 +569,9 @@ const raw: Pair[] = [
     pl: {
       slug: 'seo-ecommerce',
       name: 'SEO dla e-commerce',
-      metaTitle: 'SEO dla e-commerce: kategorie, filtry, karty produktów | Maciej Zięciak',
+      metaTitle: 'SEO dla e-commerce: kategorie i filtry | Maciej Zięciak',
       metaDescription:
-        'SEO dla sklepów internetowych: architektura kategorii, nawigacja fasetowa, karty produktów i kontrola indeksacji. PrestaShop, Magento, WordPress, Shoper, RedCart i systemy autorskie.',
+        'SEO dla sklepów internetowych: kategorie, filtry, karty produktów i indeksacja. PrestaShop, Magento, WordPress, Shoper, RedCart i systemy autorskie.',
       eyebrow: 'SEO dla e-commerce',
       title: 'Więcej sprzedaży z wyszukiwarki, nie tylko więcej wejść.',
       lead:
@@ -618,9 +618,9 @@ const raw: Pair[] = [
     en: {
       slug: 'ecommerce-seo',
       name: 'E-commerce SEO',
-      metaTitle: 'E-commerce SEO: categories, filters, product pages | Maciej Zięciak',
+      metaTitle: 'E-commerce SEO: Categories & Filters | Maciej Zięciak',
       metaDescription:
-        'SEO for online stores: category architecture, faceted navigation, product pages and indexation control. PrestaShop, Magento, WordPress, Shoper, RedCart and custom platforms.',
+        'SEO for online stores: categories, faceted navigation, product pages and indexation. PrestaShop, Magento, WordPress, Shoper, RedCart and custom builds.',
       eyebrow: 'E-commerce SEO',
       title: 'More sales from search, not just more visits.',
       lead:

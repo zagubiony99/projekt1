@@ -274,7 +274,11 @@ export const pl = {
     more: 'Polityka prywatności',
     settings: 'Ustawienia cookies',
   },
-  privacy: { path: '/polityka-prywatnosci/', label: 'Polityka prywatności' },
+  privacy: {
+    path: '/polityka-prywatnosci/',
+    label: 'Polityka prywatności',
+    description: 'Jak maciejzieciak.com przetwarza Twoje dane: co zbiera formularz kontaktowy, w jakim celu i jak długo, jakie są pliki cookies i jakie masz prawa.',
+  },
   footer: {
     rights: 'Wszelkie prawa zastrzeżone.',
     top: 'Do góry',
