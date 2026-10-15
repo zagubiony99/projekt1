@@ -51,7 +51,7 @@ SITE = [
     s('email', 'E-mail kontaktowy', 'Adres w stopce, formularzu i polityce prywatności.', required=True),
     s('linkedin', 'Profil LinkedIn', 'Pełny adres, np. https://www.linkedin.com/in/… Puste = ukryty. Trafia też do schema (sameAs).'),
     {'name': 'photo', 'label': 'Zdjęcie', 'type': 'image',
-     'description': 'Twoje zdjęcie do danych strukturalnych (Person). Najlepiej kwadratowe, min. 600×600 px.'},
+     'description': 'Portret: pokazuje się w sekcji Doświadczenie, przy formularzu kontaktowym i w „Dlaczego ja” na podstronach usług, trafia też do schema. Najlepiej min. 1000×1000 px, twarz w górnej części kadru. Strona sama przytnie i odchudzi plik.'},
     s('formEndpoint', 'Adres formularza (Formspree / Web3Forms)',
       'Np. https://formspree.io/f/xxxx albo https://api.web3forms.com/submit. Puste = formularz otwiera program pocztowy.'),
     s('formAccessKey', 'Klucz Web3Forms', 'Tylko dla Web3Forms. Dla Formspree zostaw puste.'),
@@ -246,7 +246,8 @@ SERVICES = [  # key, label in the CMS menu
 ]
 
 config = {
-    'media': {'input': 'public/media', 'output': '/media', 'categories': ['image']},
+    # photos go to src/assets so Astro can crop/resize/convert them at build time
+    'media': {'input': 'src/assets/media', 'output': '/media', 'categories': ['image']},
     'content': [
         {'name': 'settings', 'label': 'Ustawienia i kontakt', 'type': 'file', 'path': 'content/site.json', 'format': 'json',
          'description': 'Dane kontaktowe, formularz, kalendarz, analityka.', 'fields': SITE},

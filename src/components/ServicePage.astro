@@ -5,6 +5,7 @@ import Contact from './Contact.astro';
 import Footer from './Footer.astro';
 import StickyCta from './StickyCta.astro';
 import AiDemo from './AiDemo.astro';
+import Portrait from './Portrait.astro';
 import { site } from '../config';
 import { getDict, otherLang, type Lang } from '../i18n';
 import { services, ui } from '../data/services';
@@ -165,6 +166,7 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
     <!-- Proof -->
     <section class="section proof" aria-labelledby="proof-h">
       <div class="wrap">
+        <Portrait size={96} ring reveal class="me" />
         <p class="eyebrow" data-reveal>{u.proofTitle}</p>
         <p class="quote" id="proof-h" data-reveal>{s.proof}</p>
         <dl class="mini">
@@ -521,6 +523,9 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
   .no { color: var(--ink-2); }
 
   /* ---------- Proof ---------- */
+  .proof :global(.me) {
+    margin-bottom: 18px;
+  }
   .proof .wrap {
     display: grid;
     justify-items: center;

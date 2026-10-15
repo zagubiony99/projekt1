@@ -1,0 +1,73 @@
+---
+// Round portrait from the CMS photo, optimised at build time (square crop, AVIF/WebP, 1x–3x).
+// ring: slowly turning Apple-Intelligence gradient around it. Renders nothing without a photo.
+import { Picture } from 'astro:assets';
+import { photo } from '../lib/photo';
+import { site } from '../config';
+interface Props { size: number; ring?: boolean; reveal?: boolean; class?: string }
+const { size, ring = false, reveal = false } = Astro.props;
+---
+
+{photo && (
+  <span class:list={['portrait', { ring }, Astro.props.class]} style={`--s:${size}px`} {...(reveal ? { 'data-reveal': '' } : {})}>
+    <Picture
+      src={photo}
+      alt={site.name}
+      width={size}
+      height={size}
+      widths={[size, size * 2, size * 3]}
+      sizes={`${size}px`}
+      formats={['avif', 'webp']}
+      fit="cover"
+      position="top"
+      loading="lazy"
+      decoding="async"
+    />
+  </span>
+)}
+
+<style>
+  .portrait {
+    position: relative;
+    display: inline-grid;
+    flex: none;
+    width: var(--s);
+    height: var(--s);
+    border-radius: 50%;
+  }
+  .portrait :global(img) {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: 50% 20%;
+    background: var(--gray-2);
+  }
+  /* gradient ring + soft glow, both turned with transform only (no repaint per frame) */
+  .ring {
+    padding: calc(var(--s) * 0.035);
+    width: calc(var(--s) * 1.07);
+    height: calc(var(--s) * 1.07);
+  }
+  .ring::before,
+  .ring::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, #0894ff, #c959dd, #ff2e54, #ff9004, #0894ff);
+    animation: turn 8s linear infinite;
+    will-change: transform;
+  }
+  .ring::after {
+    inset: 10%;
+    filter: blur(calc(var(--s) * 0.16));
+    opacity: 0.55;
+    z-index: -1;
+  }
+  @keyframes turn {
+    to { transform: rotate(1turn); }
+  }
+</style>

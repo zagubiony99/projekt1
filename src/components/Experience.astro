@@ -1,5 +1,6 @@
 ---
 import { getDict, type Lang } from '../i18n';
+import Portrait from './Portrait.astro';
 interface Props { lang: Lang }
 const t = getDict(Astro.props.lang);
 const e = t.experience;
@@ -10,6 +11,7 @@ const big = (when: string) => when.replace(/^(\d{4})\s*—\s*(obecnie|present)$/
 <section class="section" id={t.ids.experience} aria-labelledby="exp-h">
   <div class="wrap">
     <header class="head">
+      <Portrait size={120} ring reveal class="me" />
       <p class="eyebrow" data-reveal>{e.label}</p>
       <h2 class="h2" id="exp-h" data-reveal>{e.title}</h2>
       <p class="lead" data-reveal style="--d:1">{e.intro}</p>
@@ -44,6 +46,9 @@ const big = (when: string) => when.replace(/^(\d{4})\s*—\s*(obecnie|present)$/
 </section>
 
 <style>
+  .head :global(.me) {
+    margin-bottom: 14px;
+  }
   .layout {
     display: grid;
     grid-template-columns: 1fr 1.1fr;

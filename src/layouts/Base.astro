@@ -5,6 +5,8 @@ import { site } from '../config';
 import { getDict, otherLang, type Lang } from '../i18n';
 import Consent from '../components/Consent.astro';
 import { services, ui } from '../data/services';
+import { getImage } from 'astro:assets';
+import { photo } from '../lib/photo';
 
 interface Props {
   lang: Lang;
@@ -30,6 +32,9 @@ const canonical = new URL(path, site.url).href;
 const altUrl = new URL(altPath, site.url).href;
 const plUrl = new URL(plPath, site.url).href;
 const ogImage = new URL(`/og-${lang}.png`, site.url).href;
+const personImage = photo
+  ? new URL((await getImage({ src: photo, width: 800, height: 800, fit: 'cover', position: 'top', format: 'jpg' })).src, site.url).href
+  : null;
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -42,7 +47,7 @@ const jsonLd = {
       url: `${site.url}/`,
       email: site.email,
       description: t.meta.description,
-      ...(site.photo ? { image: new URL(site.photo, site.url).href } : {}),
+      ...(personImage ? { image: personImage } : {}),
       knowsLanguage: ['pl', 'en'],
       knowsAbout: ['Technical SEO', 'AI search', 'Generative Engine Optimization', 'Adobe Experience Manager', 'International SEO', 'E-commerce SEO', 'Site migrations', ...t.tools.items],
       ...(site.linkedin ? { sameAs: [site.linkedin] } : {}),

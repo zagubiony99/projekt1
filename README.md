@@ -39,7 +39,7 @@ Polskich „sierotek” (w, i, z, o, a na końcu linii) nie musisz pilnować: st
 | Ustawienia, kontakt | `content/site.json` |
 | Teksty PL / EN | `content/pl.json`, `content/en.json` |
 | Usługi (PL + EN w jednym pliku) | `content/services/<klucz>.json` |
-| Zdjęcia wgrane w CMS | `public/media/` |
+| Zdjęcia wgrane w CMS (przy buildzie strona sama je przycina i kompresuje) | `src/assets/media/` |
 | Konfiguracja CMS (generowana) | `.pages.yml` ← `scripts/cms/build-config.py` |
 
 Pages CMS zapisuje tylko pola opisane w konfiguracji. Jeśli dodasz w kodzie nowe pole tekstowe, dopisz je w `scripts/cms/build-config.py`, a potem uruchom:
