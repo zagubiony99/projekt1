@@ -1,4 +1,4 @@
-/* Apple-inspired system: white / #f5f5f7 / black, #1d1d1f ink, blue actions, AI gradient. */
+/* Apple-inspired system: white / #f5f5f7 / black, #1d1d1f ink, blue actions, own accent gradient. */
 /* Scroll-driven values used only on the element they are set on. Registered as
    non-inherited so updating them every frame does not restyle the whole subtree. */
 @property --h { syntax: '<number>'; inherits: false; initial-value: 0; }
@@ -60,7 +60,14 @@
   --ok: #30d158;
   --warn: #ff9f0a;
   --err: #ff453a;
-  --ai: linear-gradient(90deg, #0894ff 0%, #c959dd 34%, #ff2e54 68%, #ff9004 100%);
+  /* Accent gradient stops: the single place the site's signature colours live.
+     Components mix them with color-mix() for glows, so changing these four recolours everything
+     (public/favicon.svg is static and carries its own copy). */
+  --a1: #2f5bff;
+  --a2: #0096d6;
+  --a3: #00a87e;
+  --a4: #3a9e00;
+  --ai: linear-gradient(90deg, var(--a1) 0%, var(--a2) 34%, var(--a3) 68%, var(--a4) 100%);
 
   /* Real SF Pro on Apple devices, Inter Tight everywhere else. */
   --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter Tight Variable', 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
