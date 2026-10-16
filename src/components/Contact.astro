@@ -133,9 +133,9 @@ const c = t.contact;
     animation: drift 18s ease-in-out infinite alternate;
     will-change: transform;
   }
-  .aura i:nth-child(1) { left: 5%; top: 40%; --c: rgb(8 148 255 / 0.45); }
-  .aura i:nth-child(2) { right: 8%; top: 25%; --c: rgb(201 89 221 / 0.4); animation-duration: 22s; animation-delay: -6s; }
-  .aura i:nth-child(3) { left: 35%; bottom: -20%; --c: rgb(255 46 84 / 0.3); animation-duration: 26s; animation-delay: -12s; }
+  .aura i:nth-child(1) { left: 5%; top: 40%; --c: color-mix(in srgb, var(--a1) 45%, transparent); }
+  .aura i:nth-child(2) { right: 8%; top: 25%; --c: color-mix(in srgb, var(--a2) 40%, transparent); animation-duration: 22s; animation-delay: -6s; }
+  .aura i:nth-child(3) { left: 35%; bottom: -20%; --c: color-mix(in srgb, var(--a3) 30%, transparent); animation-duration: 26s; animation-delay: -12s; }
   @keyframes drift {
     0% { transform: translate(0, 0) scale(1); }
     50% { transform: translate(8vw, -6vh) scale(1.15); }
