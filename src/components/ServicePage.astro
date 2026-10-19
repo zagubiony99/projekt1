@@ -1,4 +1,5 @@
 ---
+import TrustLogos from './TrustLogos.astro';
 import Base from '../layouts/Base.astro';
 import Nav from './Nav.astro';
 import Contact from './Contact.astro';
@@ -59,7 +60,6 @@ const extraLd = [
     mainEntity: s.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
   },
 ];
-const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
 ---
 
 <Base lang={lang} title={s.metaTitle} description={s.metaDescription} path={path} altPath={altPath} extraLd={extraLd}>
@@ -72,15 +72,18 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
         <nav class="crumbs intro" aria-label="Breadcrumb">
           <a href={t.path}>{u.home}</a><span>›</span><a href={`${t.path}#${t.ids.services}`}>{u.services}</a><span>›</span><span aria-current="page">{s.name}</span>
         </nav>
-        <p class="eyebrow intro vt-target" data-vt-target>{s.eyebrow}</p>
-        <h1 class="intro">{s.title}</h1>
+        <!-- The service name is part of the H1 (styled as the eyebrow), so the heading carries the keyword -->
+        <h1>
+          <span class="eyebrow intro vt-target" data-vt-target>{s.eyebrow}</span><span class="sr-only">: </span>
+          <span class="t intro">{s.title}</span>
+        </h1>
         <p class="lead intro">{s.lead}</p>
         <div class="ctas intro">
           <a class="btn" href={`#${t.ids.contact}`} data-magnet>{u.cta}</a>
           <a class="more" href={`#${t.ids.gets}`}>{u.seeWhat}</a>
         </div>
         <p class="cnote intro">{t.hero.ctaNote}</p>
-        <p class="trust intro">{orgs.join('  ·  ')}</p>
+        <div class="trust intro"><TrustLogos label={t.hero.trustLabel} /></div>
       </div>
       {pair.key === 'ai' && <div class="wrap"><AiDemo lang={lang} /></div>}
     </section>
@@ -134,7 +137,7 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
         <ol class="steps">
           {s.steps.map((st, i) => (
             <li data-reveal style={`--d:${i}`}>
-              <span class="num">{String(i + 1).padStart(2, '0')}</span>
+              <span class="num">{String(i + 1).padStart(2, '0')}</span>{' '}
               <span class="when">{st.when}</span>
               <h3>{st.t}</h3>
               <p>{st.d}</p>
@@ -266,11 +269,19 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
     color: var(--ink);
   }
   h1 {
+    display: grid;
+    justify-items: center;
+    gap: 20px;
+    font-weight: 700;
+  }
+  h1 .eyebrow {
+    line-height: 1.25;
+  }
+  h1 .t {
     max-width: 16ch;
     font-size: clamp(2.75rem, 1.4rem + 5vw, 5.75rem);
     line-height: 1.02;
     letter-spacing: -0.045em;
-    font-weight: 700;
     text-wrap: balance;
   }
   .top .lead {
@@ -291,11 +302,6 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
   }
   .trust {
     margin-top: 20px;
-    color: var(--muted);
-    font-size: 0.9375rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    white-space: pre-wrap;
   }
   :global(.js) .intro {
     opacity: 0;
@@ -321,6 +327,13 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
   :global(.js) .intro:nth-child(5) { animation-delay: 0.36s; }
   :global(.js) .intro:nth-child(6) { animation-delay: 0.44s; }
   :global(.js) .intro:nth-child(7) { animation-delay: 0.52s; }
+  /* hero order: eyebrow, title, lead, buttons, note (the first two now sit inside the H1) */
+  :global(.js) h1 .eyebrow.intro { animation-delay: 0.08s; }
+  :global(.js) h1 .t.intro { animation-delay: 0.16s; }
+  :global(.js) .top > .lead.intro { animation-delay: 0.26s; }
+  :global(.js) .top > .ctas.intro { animation-delay: 0.36s; }
+  :global(.js) .top > .cnote.intro { animation-delay: 0.44s; }
+  :global(.js) .top > .trust.intro { animation-delay: 0.52s; }
   @keyframes rise {
     to { opacity: 1; filter: none; transform: none; }
   }
@@ -662,6 +675,5 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
   @media (max-width: 680px) {
     .pains, .gets, .fit, .steps, .ocards { grid-template-columns: 1fr; }
     .ctas .btn { width: 100%; }
-    .trust { white-space: normal; }
   }
 </style>

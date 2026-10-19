@@ -1,8 +1,7 @@
 ---
 import { getDict, type Lang } from '../i18n';
-import { Image } from 'astro:assets';
 import AiDemo from './AiDemo.astro';
-import { logos } from '../data/logos';
+import TrustLogos from './TrustLogos.astro';
 interface Props { lang: Lang }
 const t = getDict(Astro.props.lang);
 const h = t.hero;
@@ -19,8 +18,8 @@ const b = words(h.titleB);
   <div class="wrap top" data-hero-inner>
     <p class="eyebrow intro" style="--i:0">{h.pill}</p>
     <h1>
-      <span class="line">{a.map((x) => <span class="w" style={`--i:${x.i + 1}`}>{x.w}</span>)}</span>
-      <span class="line ai-line">{b.map((x) => <span class="w ai" style={`--i:${x.i + 1}`}>{x.w}</span>)}</span>
+      <span class="line">{a.map((x) => <><span class="w" style={`--i:${x.i + 1}`}>{x.w}</span>{' '}</>)}</span>
+      <span class="line ai-line">{b.map((x, j) => <>{j > 0 && ' '}<span class="w ai" style={`--i:${x.i + 1}`}>{x.w}</span></>)}</span>
     </h1>
     <p class="lead intro" style={`--i:${n + 2}`}>{h.lead}</p>
     <div class="ctas intro" style={`--i:${n + 3}`}>
@@ -29,15 +28,7 @@ const b = words(h.titleB);
     </div>
     <p class="note intro" style={`--i:${n + 4}`}>{h.ctaNote}</p>
     <div class="trust intro" style={`--i:${n + 5}`}>
-      <span class="label">{h.trustLabel}</span>
-      <ul>
-        {logos.map((l) => (
-          <li class="logo" style={`--w:${l.w}px`}>
-            <Image class="mono" src={l.mono} alt={l.name} width={l.w} densities={[1, 2]} format="webp" quality={90} loading="eager" />
-            <Image class="color" src={l.color} alt="" aria-hidden="true" width={l.w} densities={[1, 2]} format="webp" quality={90} />
-          </li>
-        ))}
-      </ul>
+      <TrustLogos label={h.trustLabel} eager />
     </div>
   </div>
   <div class="wrap">
@@ -94,12 +85,9 @@ const b = words(h.titleB);
   .line {
     display: block;
   }
+  /* words are separated by real spaces, so the heading reads as a sentence to Google and screen readers */
   .w {
     display: inline-block;
-    margin-right: 0.22em;
-  }
-  .w:last-child {
-    margin-right: 0;
   }
   .ai-line .w {
     padding-bottom: 0.08em;
@@ -128,39 +116,6 @@ const b = words(h.titleB);
   }
   .trust {
     margin-top: 22px;
-    color: var(--muted);
-    font-size: 0.8125rem;
-  }
-  .trust ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 14px 34px;
-    margin: 12px 0 0;
-    padding: 0;
-    list-style: none;
-  }
-  /* Grey logo by default, the brand colours fade in on hover (opacity only) */
-  .logo {
-    position: relative;
-    width: var(--w);
-  }
-  .logo :global(img) {
-    display: block;
-    width: 100%;
-    height: auto;
-    transition: opacity 0.35s var(--ease);
-  }
-  .logo :global(.mono) { opacity: 0.8; }
-  .logo :global(.color) { position: absolute; inset: 0; opacity: 0; }
-  @media (hover: hover) {
-    .logo:hover :global(.color) { opacity: 1; }
-    .logo:hover :global(.mono) { opacity: 0; }
-  }
-  @media (max-width: 600px) {
-    .trust ul { gap: 12px 22px; }
-    .logo { width: calc(var(--w) * 0.74); }
   }
 
   /* Entrance: each word rises out of a blur, staggered */
