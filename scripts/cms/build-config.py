@@ -143,6 +143,7 @@ COPY = [
         s('label', 'Nadtytuł'),
         s('title', 'Nagłówek'),
         t('intro', 'Wstęp'),
+        s('more', 'Link „więcej o mnie” (strona główna)'),
         s('industriesLabel', 'Nagłówek listy branż'),
         strings('industries', 'Branże'),
         items('items', 'Etapy kariery', [
@@ -200,8 +201,26 @@ COPY = [
         s('nextTitle', 'Nagłówek „co dalej”'),
         items('next', 'Co dalej (kroki)', [s('t', 'Krok'), t('d', 'Opis')]),
     ]),
+    obj('guidesUi', 'Poradniki: lista i stałe napisy', [
+        s('metaTitle', 'SEO: tytuł listy poradników', 'Do 60 znaków.'),
+        t('metaDescription', 'SEO: opis listy poradników', 'Do 155 znaków.'),
+        s('eyebrow', 'Nadtytuł'),
+        s('title', 'Nagłówek listy poradników'),
+        t('lead', 'Tekst pod nagłówkiem'),
+        s('toolEyebrow', 'Etykieta karty narzędzia'),
+        s('toc', 'Spis treści'),
+        s('updated', 'Aktualizacja'),
+        s('readTime', 'Min czytania'),
+        s('by', 'Autor'),
+        s('read', 'Link „czytaj poradnik”'),
+        s('all', 'Link „wszystkie poradniki”'),
+        s('others', 'Nagłówek „inne poradniki”'),
+        s('faqTitle', 'Nagłówek FAQ'),
+        s('serviceTitle', 'Ramka usługi: nagłówek'),
+        s('serviceCta', 'Ramka usługi: przycisk'),
+    ]),
     obj('nav', 'Menu', [
-        s('services', 'Usługi'), s('experience', 'Doświadczenie'), s('process', 'Proces'), s('faq', 'FAQ'),
+        s('services', 'Usługi'), s('about', 'O mnie'), s('guides', 'Poradniki'), s('experience', 'Doświadczenie'), s('process', 'Proces'), s('faq', 'FAQ'),
         s('contact', 'Kontakt'), s('cta', 'Przycisk w menu'), s('switchLabel', 'Link do drugiej wersji językowej'),
         s('menu', 'Przycisk menu (telefon)'), s('close', 'Zamknij menu (telefon)'),
     ]),
@@ -238,6 +257,85 @@ SERVICE = [
     items('faq', 'FAQ usługi', [s('q', 'Pytanie'), t('a', 'Odpowiedź')]),
 ]
 
+# ---- About page (content/about.json) --------------------------------------------
+ABOUT = [
+    s('metaTitle', 'SEO: tytuł', 'Do 60 znaków.'),
+    t('metaDescription', 'SEO: opis', 'Do 155 znaków.'),
+    s('eyebrow', 'Nadtytuł (część H1)'),
+    s('title', 'Nagłówek (H1)'),
+    t('lead', 'Tekst pod nagłówkiem'),
+    s('ctaPrimary', 'Przycisk główny'),
+    s('ctaSecondary', 'Link do usług'),
+    s('storyTitle', 'Nagłówek historii'),
+    {'name': 'story', 'label': 'Historia (akapity)', 'type': 'text', 'list': True},
+    s('approachTitle', 'Nagłówek „jak pracuję”'),
+    items('approach', 'Jak pracuję', [s('t', 'Nazwa'), t('d', 'Opis')]),
+    s('kitTitle', 'Nagłówek „platformy i narzędzia”'),
+    s('platformsLabel', 'Nagłówek listy platform'),
+    strings('platforms', 'Platformy'),
+    s('languagesLabel', 'Nagłówek listy języków'),
+    strings('languages', 'Języki'),
+    s('guidesTitle', 'Nagłówek sekcji poradników'),
+    t('guidesLead', 'Tekst sekcji poradników'),
+]
+
+# ---- one language of a guide (content/guides/<key>.json) ----------------------------
+GUIDE = [
+    s('metaTitle', 'SEO: tytuł', 'Do 60 znaków.'),
+    t('metaDescription', 'SEO: opis', 'Do 155 znaków.'),
+    s('title', 'Tytuł (H1)'),
+    t('lead', 'Wstęp'),
+    items('sections', 'Rozdziały', [
+        s('h', 'Nagłówek rozdziału (H2)', 'Trafia też do spisu treści.'),
+        # HTML in a code editor rather than rich text: tables and code blocks survive every save
+        {'name': 'body', 'label': 'Treść (HTML)', 'type': 'code', 'options': {'format': 'html'},
+         'description': 'Akapity <p>, listy <ul>/<ol>, pogrubienie <strong>, linki <a href=\'/…\'>, tabele <table>.'},
+    ]),
+    items('faq', 'FAQ', [s('q', 'Pytanie'), t('a', 'Odpowiedź')]),
+]
+
+GUIDES = [  # key, label in the CMS menu
+    ('ai-bots', 'Boty AI w robots.txt'),
+    ('migration', 'Migracja strony: checklista'),
+    ('audit', 'Audyt techniczny: checklista'),
+    ('hreflang', 'Hreflang: najczęstsze błędy'),
+    ('facets', 'Filtry w sklepie a SEO'),
+]
+
+# ---- robots.txt tool (content/tools/robots-ai.json) ---------------------------------
+TOOL = [
+    s('metaTitle', 'SEO: tytuł', 'Do 60 znaków.'),
+    t('metaDescription', 'SEO: opis', 'Do 155 znaków.'),
+    s('eyebrow', 'Nadtytuł'),
+    s('title', 'Nagłówek (H1)'),
+    t('lead', 'Tekst pod nagłówkiem'),
+    s('inputLabel', 'Pole robots.txt: etykieta'),
+    s('inputHint', 'Pole robots.txt: podpowiedź'),
+    s('pathLabel', 'Pole ścieżki: etykieta'),
+    s('pathHint', 'Pole ścieżki: podpowiedź'),
+    s('check', 'Przycisk „sprawdź”'),
+    s('example', 'Przycisk „wstaw przykład”'),
+    s('colBot', 'Kolumna: bot'),
+    s('colPurpose', 'Kolumna: do czego służy'),
+    s('colStatus', 'Kolumna: dostęp'),
+    s('colRule', 'Kolumna: reguła'),
+    s('allowed', 'Status: ma dostęp'),
+    s('blocked', 'Status: zablokowany'),
+    s('noRule', 'Brak reguły'),
+    s('fromGroup', 'Słowo „grupa”'),
+    s('summary', 'Podsumowanie', 'Zostaw {blocked} i {total}: w ich miejsce wstawiają się liczby.'),
+    s('empty', 'Komunikat przed sprawdzeniem'),
+    obj('groups', 'Nazwy grup botów', [s('search', 'Wyszukiwarki'), s('aiSearch', 'Wyszukiwanie w AI'), s('training', 'Trening modeli'), s('user', 'Na prośbę użytkownika')]),
+    t('userNote', 'Uwaga przy botach „na prośbę użytkownika”'),
+    s('howTitle', 'Nagłówek „jak czytać wynik”'),
+    {'name': 'how', 'label': 'Jak czytać wynik (punkty)', 'type': 'text', 'list': True},
+    items('faq', 'FAQ', [s('q', 'Pytanie'), t('a', 'Odpowiedź')]),
+    s('guideCta', 'Link do poradnika'),
+    s('serviceTitle', 'Ramka usługi: nagłówek'),
+    t('serviceText', 'Ramka usługi: tekst'),
+    s('serviceCta', 'Ramka usługi: przycisk'),
+]
+
 SERVICES = [  # key, label in the CMS menu
     ('audit', 'Technical SEO (audyty)'),
     ('ai', 'Widoczność w odpowiedziach AI'),
@@ -265,6 +363,23 @@ config = {
              'description': 'Adres podstrony jest stały (src/data/routes.ts), zmieniasz tylko treść.',
              'fields': [obj('pl', 'Po polsku', SERVICE), obj('en', 'Po angielsku', SERVICE)]}
             for key, label in SERVICES
+        ]},
+        {'name': 'more-pages', 'label': 'Inne strony', 'type': 'group', 'items': [
+            {'name': 'about', 'label': 'O mnie', 'type': 'file', 'path': 'content/about.json', 'format': 'json',
+             'fields': [obj('pl', 'Po polsku', ABOUT), obj('en', 'Po angielsku', ABOUT)]},
+            {'name': 'tool-robots', 'label': 'Narzędzie: robots.txt dla botów AI', 'type': 'file', 'path': 'content/tools/robots-ai.json', 'format': 'json',
+             'description': 'Lista botów i logika sprawdzania są w kodzie (src/data/ai-bots.ts, src/lib/robots.ts).',
+             'fields': [obj('pl', 'Po polsku', TOOL), obj('en', 'Po angielsku', TOOL)]},
+        ]},
+        {'name': 'guides', 'label': 'Poradniki', 'type': 'group', 'items': [
+            {'name': f'guide-{key}', 'label': label, 'type': 'file', 'path': f'content/guides/{key}.json', 'format': 'json',
+             'description': 'Adres poradnika jest stały (src/data/routes.ts). Po zmianie treści zaktualizuj datę aktualizacji.',
+             'fields': [
+                 {'name': 'published', 'label': 'Data publikacji', 'type': 'date'},
+                 {'name': 'updated', 'label': 'Data aktualizacji', 'type': 'date'},
+                 obj('pl', 'Po polsku', GUIDE), obj('en', 'Po angielsku', GUIDE),
+             ]}
+            for key, label in GUIDES
         ]},
     ],
 }

@@ -185,6 +185,7 @@
     "label": "Doświadczenie",
     "title": "9 lat w SEO",
     "intro": "Od agencji i własnego serwisu, przez własną działalność, po zespoły w Accenture Song i Philip Morris International.",
+    "more": "Więcej o mnie",
     "industriesLabel": "Branże, z którymi pracowałem",
     "industries": [
       "Hospitality",
@@ -369,8 +370,28 @@
       }
     ]
   },
+  "guidesUi": {
+    "metaTitle": "Poradniki Technical SEO i AI search | Maciej Zięciak",
+    "metaDescription": "Praktyczne poradniki SEO: boty AI w robots.txt, migracja strony, audyt techniczny, hreflang i filtry w sklepie. Checklisty, które stosuję u klientów.",
+    "eyebrow": "Poradniki SEO i AI search",
+    "title": "To, co sprawdzam u klientów. Rozpisane krok po kroku.",
+    "lead": "Checklisty i wyjaśnienia z technical SEO i AI search. Bez lania wody, z przykładami, które możesz od razu sprawdzić na swojej stronie.",
+    "toolEyebrow": "Darmowe narzędzie",
+    "toc": "Spis treści",
+    "updated": "Aktualizacja",
+    "readTime": "min czytania",
+    "by": "Autor",
+    "read": "Czytaj poradnik",
+    "all": "Wszystkie poradniki",
+    "others": "Inne poradniki",
+    "faqTitle": "Najczęstsze pytania",
+    "serviceTitle": "Wolisz, żebym zrobił to za Ciebie?",
+    "serviceCta": "Zobacz usługę"
+  },
   "nav": {
     "services": "Usługi",
+    "about": "O mnie",
+    "guides": "Poradniki",
     "experience": "Doświadczenie",
     "process": "Proces",
     "faq": "FAQ",

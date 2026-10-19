@@ -25,7 +25,9 @@ Wszystkie teksty (PL i EN), usługi i ustawienia kontaktowe edytujesz w przeglą
 4. Po lewej masz menu:
    - **Ustawienia i kontakt**: e-mail, LinkedIn, zdjęcie, formularz, kalendarz, Google Tag Manager,
    - **Strona główna**: wszystkie teksty po polsku i po angielsku,
-   - **Usługi**: 6 podstron usług, każda z wersją polską i angielską.
+   - **Usługi**: 9 podstron usług, każda z wersją polską i angielską,
+   - **Inne strony**: „O mnie” i narzędzie „robots.txt dla botów AI”,
+   - **Poradniki**: 5 poradników. Treść rozdziału jest w HTML (akapity `<p>`, listy, tabele), daty publikacji i aktualizacji ustawiasz w kalendarzu.
 5. Zmieniasz tekst i klikasz **Save**. CMS zapisuje zmianę w repozytorium, a hosting (Cloudflare Pages / Netlify / Vercel) w ok. minutę publikuje nową wersję strony.
 
 Polskich „sierotek” (w, i, z, o, a na końcu linii) nie musisz pilnować: strona poprawia je sama.
@@ -39,6 +41,9 @@ Polskich „sierotek” (w, i, z, o, a na końcu linii) nie musisz pilnować: st
 | Ustawienia, kontakt | `content/site.json` |
 | Teksty PL / EN | `content/pl.json`, `content/en.json` |
 | Usługi (PL + EN w jednym pliku) | `content/services/<klucz>.json` |
+| O mnie | `content/about.json` |
+| Poradniki | `content/guides/<klucz>.json` |
+| Narzędzie robots.txt (teksty) | `content/tools/robots-ai.json` |
 | Zdjęcia wgrane w CMS (przy buildzie strona sama je przycina i kompresuje) | `src/assets/media/` |
 | Konfiguracja CMS (generowana) | `.pages.yml` ← `scripts/cms/build-config.py` |
 
@@ -53,9 +58,12 @@ python3 scripts/cms/check.py          # sprawdza, że zapis w CMS niczego nie sk
 
 | Co | Plik |
 | --- | --- |
-| Adresy podstron usług i tematy formularza | `src/data/routes.ts` |
+| Adresy podstron usług, poradników, „O mnie” i narzędzia, tematy formularza | `src/data/routes.ts` |
+| Lista botów w narzędziu robots.txt | `src/data/ai-bots.ts` |
+| Logika sprawdzania robots.txt (RFC 9309) | `src/lib/robots.ts` |
+| Szablony: „O mnie”, poradnik, lista poradników, narzędzie | `src/components/AboutPage.astro`, `GuidePage.astro`, `GuidesIndex.astro`, `RobotsTool.astro` |
 | Szablon podstrony usługi | `src/components/ServicePage.astro` |
-| Kolory (paleta Apple: biel, #f5f5f7, czerń, niebieski + gradient AI), font (SF Pro na Apple, Inter Tight gdzie indziej), przyciski | `src/styles/global.css` (zmienne w `:root`) |
+| Kolory (biel, #f5f5f7, czerń, niebieski + własny gradient: zmienne `--a1`–`--a4`), font (SF Pro na Apple, Inter Tight gdzie indziej), przyciski | `src/styles/global.css` (zmienne w `:root`) |
 | Sekcje strony | `src/components/*.astro` |
 | Interakcje (tekst zapalający się przy scrollu, scena z kartą botów, liczby odliczające w górę, formularz) | `src/scripts/main.ts` |
 | Grafiki do udostępniania (OG) | `public/og-pl.png`, `public/og-en.png` |
@@ -77,7 +85,10 @@ W CMS (**Ustawienia i kontakt**) albo w `content/site.json`:
 
 - `/` to wersja polska (domyślna)
 - `/en/` to wersja angielska
-- `/uslugi/<slug>/` i `/en/services/<slug>/` to podstrony usług (6 × 2 języki), każda z danymi Service, BreadcrumbList i FAQPage
+- `/uslugi/<slug>/` i `/en/services/<slug>/` to podstrony usług (9 × 2 języki), każda z danymi Service, BreadcrumbList i FAQPage
+- `/o-mnie/` i `/en/about/` to strona „O mnie” (ProfilePage)
+- `/poradniki/` i `/en/guides/` to lista poradników, a `/poradniki/<slug>/` i `/en/guides/<slug>/` same poradniki (Article, BreadcrumbList, FAQPage)
+- `/narzedzia/robots-txt-boty-ai/` i `/en/tools/robots-txt-ai-bot-checker/` to darmowe narzędzie (WebApplication)
 
 Strona ma `hreflang` (pl, en, x-default), canonical, sitemapę z alternatywnymi wersjami językowymi, `robots.txt` i dane strukturalne JSON-LD (Person, ProfessionalService, WebSite, WebPage, FAQPage).
 

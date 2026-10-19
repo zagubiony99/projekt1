@@ -1,0 +1,478 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import PageHero from './PageHero.astro';
+import FaqList from './FaqList.astro';
+import { site } from '../config';
+import { getDict, otherLang, type Lang } from '../i18n';
+import { robotsTool, guides } from '../data/pages';
+import { services, ui } from '../data/services';
+import { pageRoutes } from '../data/routes';
+import { bots } from '../data/ai-bots';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getDict(lang);
+const r = robotsTool[lang];
+const path = pageRoutes.robotsTool[lang];
+const altPath = pageRoutes.robotsTool[otherLang(lang)];
+const url = new URL(path, site.url).href;
+const home = new URL(t.path, site.url).href;
+const contactHref = `${t.path}#${t.ids.contact}`;
+const guide = guides.find((g) => g.key === 'ai-bots');
+const svc = services.find((s) => s.key === 'ai');
+const pl = lang === 'pl';
+
+const example = `# ${pl ? 'Wyszukiwarki i wyszukiwanie w AI' : 'Search engines and AI search'}
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: OAI-SearchBot
+User-agent: Claude-SearchBot
+User-agent: PerplexityBot
+Disallow: ${pl ? '/koszyk/' : '/cart/'}
+
+# ${pl ? 'Trening modeli' : 'Model training'}
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: Google-Extended
+User-agent: CCBot
+Disallow: /
+
+User-agent: *
+Disallow: ${pl ? '/koszyk/' : '/cart/'}`;
+
+// Strings and bot list for the client script (rendered with textContent, never as HTML)
+const clientData = {
+  bots: bots.map((b) => ({ token: b.token, company: b.company, group: b.group, purpose: b.purpose[lang] })),
+  groups: r.groups,
+  allowed: r.allowed,
+  blocked: r.blocked,
+  noRule: r.noRule,
+  fromGroup: r.fromGroup,
+  summary: r.summary,
+  userNote: r.userNote,
+  example,
+};
+
+const extraLd = [
+  {
+    '@type': 'WebApplication',
+    '@id': `${url}#app`,
+    name: r.title,
+    description: r.metaDescription,
+    url,
+    applicationCategory: 'DeveloperApplication',
+    operatingSystem: 'Any',
+    isAccessibleForFree: true,
+    offers: { '@type': 'Offer', price: 0, priceCurrency: pl ? 'PLN' : 'EUR' },
+    inLanguage: pl ? 'pl-PL' : 'en-GB',
+    author: { '@id': `${site.url}/#person` },
+  },
+  {
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: r.metaTitle,
+    description: r.metaDescription,
+    inLanguage: pl ? 'pl-PL' : 'en-GB',
+    isPartOf: { '@id': `${site.url}/#website` },
+    mainEntity: { '@id': `${url}#app` },
+    breadcrumb: { '@id': `${url}#breadcrumb` },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: t.serviceUi.home, item: home },
+      { '@type': 'ListItem', position: 2, name: r.title, item: url },
+    ],
+  },
+  {
+    '@type': 'FAQPage',
+    '@id': `${url}#faq`,
+    mainEntity: r.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+
+<Base lang={lang} title={r.metaTitle} description={r.metaDescription} path={path} altPath={altPath} extraLd={extraLd}>
+  <Nav lang={lang} altHref={altPath} contactHref={contactHref} />
+  <main id="main">
+    <PageHero compact eyebrowInH1={false} crumbs={[{ href: t.path, label: t.serviceUi.home }, { label: r.title }]} eyebrow={r.eyebrow} title={r.title} lead={r.lead} />
+
+    <section class="tool-sec" aria-label={r.title}>
+      <div class="wrap wrap--wide">
+        <form class="tool" data-robots novalidate>
+          <div class="inputs">
+            <label class="f">
+              <span class="l">{r.inputLabel}</span>
+              <textarea name="txt" rows="14" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="User-agent: *&#10;Disallow:"></textarea>
+              <span class="h">{r.inputHint}</span>
+            </label>
+            <label class="f">
+              <span class="l">{r.pathLabel}</span>
+              <input name="path" type="text" value="/" spellcheck="false" autocapitalize="off" autocomplete="off" />
+              <span class="h">{r.pathHint}</span>
+            </label>
+            <div class="btns">
+              <button class="btn" type="submit">{r.check}</button>
+              <button class="ghost" type="button" data-example>{r.example}</button>
+            </div>
+          </div>
+
+          <div class="out" aria-live="polite">
+            <p class="empty" data-empty>{r.empty}</p>
+            <div data-result hidden>
+              <p class="sum" data-sum></p>
+              <table>
+                <thead>
+                  <tr><th scope="col">{r.colBot}</th><th scope="col">{r.colStatus}</th><th scope="col">{r.colRule}</th></tr>
+                </thead>
+                <tbody data-rows></tbody>
+              </table>
+            </div>
+          </div>
+        </form>
+        <script type="application/json" id="robots-data" set:html={JSON.stringify(clientData)} />
+      </div>
+    </section>
+
+    <section class="section section--gray" aria-labelledby="how-h">
+      <div class="wrap">
+        <header class="head">
+          <h2 class="h2" id="how-h" data-reveal>{r.howTitle}</h2>
+        </header>
+        <ol class="how">{r.how.map((x, i) => <li data-reveal style={`--d:${i}`}>{x}</li>)}</ol>
+        <p class="links" data-reveal>
+          {guide && <a class="more" href={guide[lang].path}>{r.guideCta}</a>}
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="tfaq-h">
+      <div class="wrap">
+        <header class="head">
+          <h2 class="h2" id="tfaq-h" data-reveal>{t.guidesUi.faqTitle}</h2>
+        </header>
+        <FaqList items={r.faq} />
+        {svc && (
+          <aside class="svc" data-reveal>
+            <p class="svc-h">{r.serviceTitle}</p>
+            <p class="svc-d">{r.serviceText}</p>
+            <div class="svc-ctas">
+              <a class="btn" href={`${ui[lang].base}${svc[lang].slug}/`}>{r.serviceCta}</a>
+              <a class="more" href={contactHref}>{t.nav.cta}</a>
+            </div>
+          </aside>
+        )}
+      </div>
+    </section>
+  </main>
+  <Footer lang={lang} altHref={altPath} contactHref={contactHref} />
+</Base>
+
+<script>
+  import '../scripts/main.ts';
+  import { parseRobots, check } from '../lib/robots';
+
+  type Data = {
+    bots: { token: string; company: string; group: string; purpose: string }[];
+    groups: Record<string, string>;
+    allowed: string;
+    blocked: string;
+    noRule: string;
+    fromGroup: string;
+    summary: string;
+    userNote: string;
+    example: string;
+  };
+  const form = document.querySelector<HTMLFormElement>('[data-robots]');
+  const raw = document.getElementById('robots-data')?.textContent;
+  if (form && raw) {
+    const d: Data = JSON.parse(raw);
+    const txt = form.elements.namedItem('txt') as HTMLTextAreaElement;
+    const pathIn = form.elements.namedItem('path') as HTMLInputElement;
+    const rows = form.querySelector<HTMLTableSectionElement>('[data-rows]')!;
+    const result = form.querySelector<HTMLElement>('[data-result]')!;
+    const empty = form.querySelector<HTMLElement>('[data-empty]')!;
+    const sum = form.querySelector<HTMLElement>('[data-sum]')!;
+
+    const el = (tag: string, cls?: string, text?: string) => {
+      const n = document.createElement(tag);
+      if (cls) n.className = cls;
+      if (text != null) n.textContent = text;
+      return n;
+    };
+
+    const run = () => {
+      const value = txt.value.trim();
+      if (!value) {
+        result.hidden = true;
+        empty.hidden = false;
+        return;
+      }
+      let path = pathIn.value.trim() || '/';
+      if (!path.startsWith('/')) path = '/' + path.replace(/^https?:\/\/[^/]+/i, '').replace(/^\/?/, '');
+      const groups = parseRobots(value);
+      rows.replaceChildren();
+      let blocked = 0;
+      let lastGroup = '';
+      for (const b of d.bots) {
+        if (b.group !== lastGroup) {
+          lastGroup = b.group;
+          const tr = el('tr', 'grp');
+          const th = el('th', '', d.groups[b.group]);
+          th.setAttribute('colspan', '3');
+          th.setAttribute('scope', 'colgroup');
+          tr.append(th);
+          rows.append(tr);
+          if (b.group === 'user') {
+            const note = el('tr', 'note');
+            const td = el('td', '', d.userNote);
+            td.setAttribute('colspan', '3');
+            note.append(td);
+            rows.append(note);
+          }
+        }
+        const v = check(groups, b.token, path);
+        if (!v.allowed) blocked++;
+        const tr = el('tr');
+        const who = el('td', 'who');
+        who.append(el('b', '', b.token), el('span', '', `${b.company} · ${b.purpose}`));
+        const st = el('td');
+        st.append(el('span', v.allowed ? 'pill ok' : 'pill no', v.allowed ? d.allowed : d.blocked));
+        const rule = el('td', 'rule');
+        if (v.rule) {
+          rule.append(el('code', '', `${v.rule.allow ? 'Allow' : 'Disallow'}: ${v.rule.path}`), el('span', '', `${d.fromGroup}: ${v.group}`));
+        } else {
+          rule.append(el('span', '', v.group ? `${d.noRule} (${d.fromGroup}: ${v.group})` : d.noRule));
+        }
+        tr.append(who, st, rule);
+        rows.append(tr);
+      }
+      sum.textContent = d.summary.replace('{blocked}', String(blocked)).replace('{total}', String(d.bots.length));
+      empty.hidden = true;
+      result.hidden = false;
+    };
+
+    let timer = 0;
+    const later = () => {
+      clearTimeout(timer);
+      timer = window.setTimeout(run, 250);
+    };
+    txt.addEventListener('input', later);
+    pathIn.addEventListener('input', later);
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      run();
+    });
+    form.querySelector('[data-example]')?.addEventListener('click', () => {
+      txt.value = d.example;
+      run();
+    });
+  }
+</script>
+
+<style>
+  .tool-sec {
+    padding-bottom: clamp(64px, 8vw, 112px);
+  }
+  .tool {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(20px, 3vw, 40px);
+    padding: clamp(20px, 3vw, 36px);
+    border-radius: var(--r-lg);
+    background: var(--gray);
+  }
+  .inputs {
+    display: grid;
+    align-content: start;
+    gap: 18px;
+  }
+  .f {
+    display: grid;
+    gap: 8px;
+  }
+  .l {
+    font-weight: 650;
+    letter-spacing: -0.015em;
+  }
+  .h {
+    color: var(--muted);
+    font-size: 0.8125rem;
+  }
+  textarea,
+  input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--white);
+    color: var(--ink);
+    font: 0.875rem/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 260px;
+  }
+  textarea:focus,
+  input:focus {
+    outline: 2px solid var(--a1);
+    outline-offset: 1px;
+  }
+  .btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .btns .btn {
+    border: 0;
+    cursor: pointer;
+    font: inherit;
+  }
+  .ghost {
+    padding: 12px 22px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--white);
+    color: var(--ink);
+    font: inherit;
+    font-weight: 550;
+    cursor: pointer;
+  }
+  .ghost:hover {
+    border-color: var(--ink-2);
+  }
+  .out {
+    min-width: 0;
+    padding: clamp(16px, 2vw, 24px);
+    border-radius: var(--r);
+    background: var(--white);
+  }
+  .empty:not([hidden]) {
+    display: grid;
+    place-items: center;
+    min-height: 240px;
+    color: var(--muted);
+    text-align: center;
+  }
+  .sum {
+    margin-bottom: 14px;
+    font-size: 1.125rem;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+  /* rows are built by the script, so they carry no scope attribute: style them via :global */
+  .out :global(th),
+  .out :global(td) {
+    padding: 10px 10px 10px 0;
+    border-bottom: 1px solid var(--gray-2);
+    text-align: left;
+    vertical-align: top;
+  }
+  .out thead :global(th) {
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .out :global(tr.grp th) {
+    padding-top: 18px;
+    color: var(--ink);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    border-bottom-color: var(--line);
+  }
+  .out :global(tr.note td) {
+    color: var(--muted);
+    font-size: 0.75rem;
+  }
+  .out :global(td.who b) {
+    display: block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.8125rem;
+  }
+  .out :global(td.who span),
+  .out :global(td.rule span) {
+    display: block;
+    margin-top: 2px;
+    color: var(--muted);
+    font-size: 0.75rem;
+  }
+  .out :global(td.rule code) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.8125rem;
+    word-break: break-all;
+  }
+  .out :global(.pill) {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 650;
+    white-space: nowrap;
+  }
+  .out :global(.pill.ok) {
+    background: color-mix(in srgb, var(--ok) 16%, white);
+    color: #116329;
+  }
+  .out :global(.pill.no) {
+    background: color-mix(in srgb, var(--err) 14%, white);
+    color: #b3261e;
+  }
+  .how {
+    display: grid;
+    gap: 14px;
+    max-width: 760px;
+    margin-inline: auto;
+    padding-left: 1.3em;
+    list-style: decimal;
+    color: var(--ink-2);
+    font-size: 1.0625rem;
+  }
+  .links {
+    max-width: 760px;
+    margin: 28px auto 0;
+  }
+  .svc {
+    max-width: 860px;
+    margin: clamp(48px, 6vw, 72px) auto 0;
+    padding: clamp(28px, 4vw, 40px);
+    border-radius: var(--r-lg);
+    background: var(--dark);
+    background-image: radial-gradient(110% 90% at 100% 0%, color-mix(in srgb, var(--a2) 28%, transparent), transparent 60%);
+    color: #fff;
+  }
+  .svc-h {
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+  }
+  .svc-d {
+    margin-top: 10px;
+    max-width: 56ch;
+    color: var(--dark-muted);
+  }
+  .svc-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 28px;
+    margin-top: 22px;
+  }
+  .svc .more {
+    color: var(--link-dark);
+  }
+  @media (max-width: 900px) {
+    .tool {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,73 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import PageHero from './PageHero.astro';
+import GuideCards from './GuideCards.astro';
+import { site } from '../config';
+import { getDict, otherLang, type Lang } from '../i18n';
+import { guides } from '../data/pages';
+import { pageRoutes } from '../data/routes';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getDict(lang);
+const u = t.guidesUi;
+const path = pageRoutes.guides[lang];
+const altPath = pageRoutes.guides[otherLang(lang)];
+const url = new URL(path, site.url).href;
+const home = new URL(t.path, site.url).href;
+const contactHref = `${t.path}#${t.ids.contact}`;
+
+const extraLd = [
+  {
+    '@type': 'CollectionPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: u.metaTitle,
+    description: u.metaDescription,
+    inLanguage: lang === 'pl' ? 'pl-PL' : 'en-GB',
+    isPartOf: { '@id': `${site.url}/#website` },
+    breadcrumb: { '@id': `${url}#breadcrumb` },
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: guides.map((g, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        url: new URL(g[lang].path, site.url).href,
+        name: g[lang].title,
+      })),
+    },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: t.serviceUi.home, item: home },
+      { '@type': 'ListItem', position: 2, name: t.nav.guides, item: url },
+    ],
+  },
+];
+---
+
+<Base lang={lang} title={u.metaTitle} description={u.metaDescription} path={path} altPath={altPath} extraLd={extraLd}>
+  <Nav lang={lang} altHref={altPath} contactHref={contactHref} />
+  <main id="main">
+    <PageHero crumbs={[{ href: t.path, label: t.serviceUi.home }, { label: t.nav.guides }]} eyebrow={u.eyebrow} title={u.title} lead={u.lead} compact />
+    <section class="list" aria-label={t.nav.guides}>
+      <div class="wrap wrap--wide">
+        <GuideCards lang={lang} tool />
+      </div>
+    </section>
+  </main>
+  <Footer lang={lang} altHref={altPath} contactHref={contactHref} />
+</Base>
+
+<script>
+  import '../scripts/main.ts';
+</script>
+
+<style>
+  .list {
+    padding-bottom: clamp(80px, 10vw, 140px);
+  }
+</style>

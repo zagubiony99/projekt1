@@ -2,6 +2,8 @@
 import { site } from '../config';
 import { getDict, otherLang, type Lang } from '../i18n';
 import { services, ui } from '../data/services';
+import { guides, robotsTool } from '../data/pages';
+import { pageRoutes } from '../data/routes';
 interface Props { lang: Lang; altHref?: string; contactHref?: string }
 const { lang } = Astro.props;
 const t = getDict(lang);
@@ -20,8 +22,16 @@ const year = new Date().getFullYear();
         <ul>{services.map((p) => <li><a href={`${ui[lang].base}${p[lang].slug}/`}>{p[lang].name}</a></li>)}</ul>
       </div>
       <div>
+        <p class="ch"><a href={pageRoutes.guides[lang]}>{t.nav.guides}</a></p>
+        <ul>
+          {guides.map((g) => <li><a href={g[lang].path}>{g[lang].title}</a></li>)}
+          <li><a href={pageRoutes.robotsTool[lang]}>{robotsTool[lang].title}</a></li>
+        </ul>
+      </div>
+      <div>
         <p class="ch">{site.name}</p>
         <ul>
+          <li><a href={pageRoutes.about[lang]}>{t.nav.about}</a></li>
           <li><a href={`${t.path}#${t.ids.experience}`}>{t.nav.experience}</a></li>
           <li><a href={`${t.path}#${t.ids.process}`}>{t.nav.process}</a></li>
           <li><a href={`${t.path}#${t.ids.faq}`}>{t.nav.faq}</a></li>
@@ -59,6 +69,9 @@ const year = new Date().getFullYear();
     padding: 14px 0 22px;
     border-bottom: 1px solid var(--line);
     margin-bottom: 14px;
+  }
+  .ch a:hover {
+    text-decoration: underline;
   }
   .ch {
     color: var(--ink);

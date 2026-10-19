@@ -15,6 +15,9 @@ import Compare from './Compare.astro';
 import StickyCta from './StickyCta.astro';
 import { getDict } from '../i18n';
 import Footer from './Footer.astro';
+import GuideCards from './GuideCards.astro';
+import { about } from '../data/pages';
+import { pageRoutes } from '../data/routes';
 import type { Lang } from '../i18n';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -32,10 +35,21 @@ const toContact = `#${t.ids.contact}`;
     <Services lang={lang} />
     <CtaBand {...t.bands.afterServices} href={toContact} />
     <Compare lang={lang} />
-    <Experience lang={lang} />
+    <Experience lang={lang} more />
     <Process lang={lang} />
     <CtaBand {...t.bands.afterProcess} href={toContact} />
     <Faq lang={lang} />
+    <section class="section guides" aria-labelledby="hg-h">
+      <div class="wrap wrap--wide">
+        <header class="head">
+          <p class="eyebrow" data-reveal>{t.nav.guides}</p>
+          <h2 class="h2" id="hg-h" data-reveal>{about[lang].guidesTitle}</h2>
+          <p class="lead" data-reveal style="--d:1">{about[lang].guidesLead}</p>
+        </header>
+        <GuideCards lang={lang} limit={2} tool />
+        <p class="all" data-reveal><a class="more" href={pageRoutes.guides[lang]}>{t.guidesUi.all}</a></p>
+      </div>
+    </section>
     <Contact lang={lang} />
   </main>
   <Footer lang={lang} />
@@ -45,3 +59,10 @@ const toContact = `#${t.ids.contact}`;
 <script>
   import '../scripts/main.ts';
 </script>
+
+<style>
+  .all {
+    margin-top: 28px;
+    text-align: center;
+  }
+</style>

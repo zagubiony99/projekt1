@@ -1,5 +1,6 @@
 ---
 import TrustLogos from './TrustLogos.astro';
+import FaqList from './FaqList.astro';
 import Base from '../layouts/Base.astro';
 import Nav from './Nav.astro';
 import Contact from './Contact.astro';
@@ -10,6 +11,8 @@ import Portrait from './Portrait.astro';
 import { site } from '../config';
 import { getDict, otherLang, type Lang } from '../i18n';
 import { services, ui } from '../data/services';
+import { guides, robotsTool } from '../data/pages';
+import { pageRoutes } from '../data/routes';
 interface Props { lang: Lang; key: string }
 const { lang, key } = Astro.props;
 const other = otherLang(lang);
@@ -22,6 +25,7 @@ const altPath = `${ui[other].base}${pair[other].slug}/`;
 const url = new URL(path, site.url).href;
 const home = new URL(t.path, site.url).href;
 const rest = services.filter((p) => p.key !== key);
+const guide = guides.find((g) => g.service === key);
 
 const extraLd = [
   {
@@ -189,14 +193,13 @@ const extraLd = [
         <header class="head">
           <h2 class="h2" id="sfaq-h" data-reveal>{u.faqTitle}</h2>
         </header>
-        <div class="faq">
-          {s.faq.map((f, i) => (
-            <details class="q" open={i === 0} data-acc>
-              <summary><span>{f.q}</span><span class="pm" aria-hidden="true"></span></summary>
-              <p class="a">{f.a}</p>
-            </details>
-          ))}
-        </div>
+        <FaqList items={s.faq} />
+        {(guide || pair.key === 'ai') && (
+          <p class="reads">
+            {guide && <a class="more" href={guide[lang].path}>{t.guidesUi.read}: {guide[lang].title}</a>}
+            {pair.key === 'ai' && <a class="more" href={pageRoutes.robotsTool[lang]}>{robotsTool[lang].title}</a>}
+          </p>
+        )}
       </div>
     </section>
 
@@ -577,59 +580,14 @@ const extraLd = [
     font-size: 0.9375rem;
   }
 
-  /* ---------- FAQ ---------- */
-  .faq {
-    max-width: 860px;
-    margin-inline: auto;
+  .reads {
     display: grid;
-    gap: 12px;
+    justify-items: center;
+    gap: 10px;
+    max-width: 860px;
+    margin: 28px auto 0;
+    text-align: center;
   }
-  .q {
-    border-radius: var(--r);
-    background: var(--white);
-  }
-  summary {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 24px;
-    padding: 24px 28px;
-    cursor: pointer;
-    list-style: none;
-    font-size: 1.1875rem;
-    font-weight: 600;
-    letter-spacing: -0.025em;
-  }
-  summary::-webkit-details-marker { display: none; }
-  summary:hover { color: var(--blue); }
-  .pm {
-    position: relative;
-    flex: none;
-    width: 22px;
-    height: 22px;
-    transition: transform 0.4s var(--ease-out);
-  }
-  .pm::before,
-  .pm::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 16px;
-    height: 1.75px;
-    border-radius: 2px;
-    background: currentColor;
-    translate: -50% -50%;
-  }
-  .pm::after { rotate: 90deg; }
-  .q[open] .pm { transform: rotate(45deg); }
-  .a {
-    padding: 0 28px 26px;
-    color: var(--muted);
-    font-size: 1.0625rem;
-    transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
-  }
-  .q.is-closing .a { opacity: 0; transform: translateY(-8px); }
 
   /* ---------- Other services ---------- */
   .ocards {

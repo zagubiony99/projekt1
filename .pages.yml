@@ -326,6 +326,9 @@ content:
       - name: intro
         label: Wstęp
         type: text
+      - name: more
+        label: Link „więcej o mnie” (strona główna)
+        type: string
       - name: industriesLabel
         label: Nagłówek listy branż
         type: string
@@ -520,12 +523,72 @@ content:
           label: Opis
           type: text
         list: true
+    - name: guidesUi
+      label: 'Poradniki: lista i stałe napisy'
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł listy poradników'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis listy poradników'
+        type: text
+        description: Do 155 znaków.
+      - name: eyebrow
+        label: Nadtytuł
+        type: string
+      - name: title
+        label: Nagłówek listy poradników
+        type: string
+      - name: lead
+        label: Tekst pod nagłówkiem
+        type: text
+      - name: toolEyebrow
+        label: Etykieta karty narzędzia
+        type: string
+      - name: toc
+        label: Spis treści
+        type: string
+      - name: updated
+        label: Aktualizacja
+        type: string
+      - name: readTime
+        label: Min czytania
+        type: string
+      - name: by
+        label: Autor
+        type: string
+      - name: read
+        label: Link „czytaj poradnik”
+        type: string
+      - name: all
+        label: Link „wszystkie poradniki”
+        type: string
+      - name: others
+        label: Nagłówek „inne poradniki”
+        type: string
+      - name: faqTitle
+        label: Nagłówek FAQ
+        type: string
+      - name: serviceTitle
+        label: 'Ramka usługi: nagłówek'
+        type: string
+      - name: serviceCta
+        label: 'Ramka usługi: przycisk'
+        type: string
     - name: nav
       label: Menu
       type: object
       fields:
       - name: services
         label: Usługi
+        type: string
+      - name: about
+        label: O mnie
+        type: string
+      - name: guides
+        label: Poradniki
         type: string
       - name: experience
         label: Doświadczenie
@@ -873,6 +936,9 @@ content:
       - name: intro
         label: Wstęp
         type: text
+      - name: more
+        label: Link „więcej o mnie” (strona główna)
+        type: string
       - name: industriesLabel
         label: Nagłówek listy branż
         type: string
@@ -1067,12 +1133,72 @@ content:
           label: Opis
           type: text
         list: true
+    - name: guidesUi
+      label: 'Poradniki: lista i stałe napisy'
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł listy poradników'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis listy poradników'
+        type: text
+        description: Do 155 znaków.
+      - name: eyebrow
+        label: Nadtytuł
+        type: string
+      - name: title
+        label: Nagłówek listy poradników
+        type: string
+      - name: lead
+        label: Tekst pod nagłówkiem
+        type: text
+      - name: toolEyebrow
+        label: Etykieta karty narzędzia
+        type: string
+      - name: toc
+        label: Spis treści
+        type: string
+      - name: updated
+        label: Aktualizacja
+        type: string
+      - name: readTime
+        label: Min czytania
+        type: string
+      - name: by
+        label: Autor
+        type: string
+      - name: read
+        label: Link „czytaj poradnik”
+        type: string
+      - name: all
+        label: Link „wszystkie poradniki”
+        type: string
+      - name: others
+        label: Nagłówek „inne poradniki”
+        type: string
+      - name: faqTitle
+        label: Nagłówek FAQ
+        type: string
+      - name: serviceTitle
+        label: 'Ramka usługi: nagłówek'
+        type: string
+      - name: serviceCta
+        label: 'Ramka usługi: przycisk'
+        type: string
     - name: nav
       label: Menu
       type: object
       fields:
       - name: services
         label: Usługi
+        type: string
+      - name: about
+        label: O mnie
+        type: string
+      - name: guides
+        label: Poradniki
         type: string
       - name: experience
         label: Doświadczenie
@@ -2986,6 +3112,912 @@ content:
         type: text
       - name: faq
         label: FAQ usługi
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+- name: more-pages
+  label: Inne strony
+  type: group
+  items:
+  - name: about
+    label: O mnie
+    type: file
+    path: content/about.json
+    format: json
+    fields:
+    - name: pl
+      label: Po polsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: eyebrow
+        label: Nadtytuł (część H1)
+        type: string
+      - name: title
+        label: Nagłówek (H1)
+        type: string
+      - name: lead
+        label: Tekst pod nagłówkiem
+        type: text
+      - name: ctaPrimary
+        label: Przycisk główny
+        type: string
+      - name: ctaSecondary
+        label: Link do usług
+        type: string
+      - name: storyTitle
+        label: Nagłówek historii
+        type: string
+      - name: story
+        label: Historia (akapity)
+        type: text
+        list: true
+      - name: approachTitle
+        label: Nagłówek „jak pracuję”
+        type: string
+      - name: approach
+        label: Jak pracuję
+        type: object
+        fields:
+        - name: t
+          label: Nazwa
+          type: string
+        - name: d
+          label: Opis
+          type: text
+        list: true
+      - name: kitTitle
+        label: Nagłówek „platformy i narzędzia”
+        type: string
+      - name: platformsLabel
+        label: Nagłówek listy platform
+        type: string
+      - name: platforms
+        label: Platformy
+        type: string
+        list: true
+      - name: languagesLabel
+        label: Nagłówek listy języków
+        type: string
+      - name: languages
+        label: Języki
+        type: string
+        list: true
+      - name: guidesTitle
+        label: Nagłówek sekcji poradników
+        type: string
+      - name: guidesLead
+        label: Tekst sekcji poradników
+        type: text
+    - name: en
+      label: Po angielsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: eyebrow
+        label: Nadtytuł (część H1)
+        type: string
+      - name: title
+        label: Nagłówek (H1)
+        type: string
+      - name: lead
+        label: Tekst pod nagłówkiem
+        type: text
+      - name: ctaPrimary
+        label: Przycisk główny
+        type: string
+      - name: ctaSecondary
+        label: Link do usług
+        type: string
+      - name: storyTitle
+        label: Nagłówek historii
+        type: string
+      - name: story
+        label: Historia (akapity)
+        type: text
+        list: true
+      - name: approachTitle
+        label: Nagłówek „jak pracuję”
+        type: string
+      - name: approach
+        label: Jak pracuję
+        type: object
+        fields:
+        - name: t
+          label: Nazwa
+          type: string
+        - name: d
+          label: Opis
+          type: text
+        list: true
+      - name: kitTitle
+        label: Nagłówek „platformy i narzędzia”
+        type: string
+      - name: platformsLabel
+        label: Nagłówek listy platform
+        type: string
+      - name: platforms
+        label: Platformy
+        type: string
+        list: true
+      - name: languagesLabel
+        label: Nagłówek listy języków
+        type: string
+      - name: languages
+        label: Języki
+        type: string
+        list: true
+      - name: guidesTitle
+        label: Nagłówek sekcji poradników
+        type: string
+      - name: guidesLead
+        label: Tekst sekcji poradników
+        type: text
+  - name: tool-robots
+    label: 'Narzędzie: robots.txt dla botów AI'
+    type: file
+    path: content/tools/robots-ai.json
+    format: json
+    description: Lista botów i logika sprawdzania są w kodzie (src/data/ai-bots.ts, src/lib/robots.ts).
+    fields:
+    - name: pl
+      label: Po polsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: eyebrow
+        label: Nadtytuł
+        type: string
+      - name: title
+        label: Nagłówek (H1)
+        type: string
+      - name: lead
+        label: Tekst pod nagłówkiem
+        type: text
+      - name: inputLabel
+        label: 'Pole robots.txt: etykieta'
+        type: string
+      - name: inputHint
+        label: 'Pole robots.txt: podpowiedź'
+        type: string
+      - name: pathLabel
+        label: 'Pole ścieżki: etykieta'
+        type: string
+      - name: pathHint
+        label: 'Pole ścieżki: podpowiedź'
+        type: string
+      - name: check
+        label: Przycisk „sprawdź”
+        type: string
+      - name: example
+        label: Przycisk „wstaw przykład”
+        type: string
+      - name: colBot
+        label: 'Kolumna: bot'
+        type: string
+      - name: colPurpose
+        label: 'Kolumna: do czego służy'
+        type: string
+      - name: colStatus
+        label: 'Kolumna: dostęp'
+        type: string
+      - name: colRule
+        label: 'Kolumna: reguła'
+        type: string
+      - name: allowed
+        label: 'Status: ma dostęp'
+        type: string
+      - name: blocked
+        label: 'Status: zablokowany'
+        type: string
+      - name: noRule
+        label: Brak reguły
+        type: string
+      - name: fromGroup
+        label: Słowo „grupa”
+        type: string
+      - name: summary
+        label: Podsumowanie
+        type: string
+        description: 'Zostaw {blocked} i {total}: w ich miejsce wstawiają się liczby.'
+      - name: empty
+        label: Komunikat przed sprawdzeniem
+        type: string
+      - name: groups
+        label: Nazwy grup botów
+        type: object
+        fields:
+        - name: search
+          label: Wyszukiwarki
+          type: string
+        - name: aiSearch
+          label: Wyszukiwanie w AI
+          type: string
+        - name: training
+          label: Trening modeli
+          type: string
+        - name: user
+          label: Na prośbę użytkownika
+          type: string
+      - name: userNote
+        label: Uwaga przy botach „na prośbę użytkownika”
+        type: text
+      - name: howTitle
+        label: Nagłówek „jak czytać wynik”
+        type: string
+      - name: how
+        label: Jak czytać wynik (punkty)
+        type: text
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+      - name: guideCta
+        label: Link do poradnika
+        type: string
+      - name: serviceTitle
+        label: 'Ramka usługi: nagłówek'
+        type: string
+      - name: serviceText
+        label: 'Ramka usługi: tekst'
+        type: text
+      - name: serviceCta
+        label: 'Ramka usługi: przycisk'
+        type: string
+    - name: en
+      label: Po angielsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: eyebrow
+        label: Nadtytuł
+        type: string
+      - name: title
+        label: Nagłówek (H1)
+        type: string
+      - name: lead
+        label: Tekst pod nagłówkiem
+        type: text
+      - name: inputLabel
+        label: 'Pole robots.txt: etykieta'
+        type: string
+      - name: inputHint
+        label: 'Pole robots.txt: podpowiedź'
+        type: string
+      - name: pathLabel
+        label: 'Pole ścieżki: etykieta'
+        type: string
+      - name: pathHint
+        label: 'Pole ścieżki: podpowiedź'
+        type: string
+      - name: check
+        label: Przycisk „sprawdź”
+        type: string
+      - name: example
+        label: Przycisk „wstaw przykład”
+        type: string
+      - name: colBot
+        label: 'Kolumna: bot'
+        type: string
+      - name: colPurpose
+        label: 'Kolumna: do czego służy'
+        type: string
+      - name: colStatus
+        label: 'Kolumna: dostęp'
+        type: string
+      - name: colRule
+        label: 'Kolumna: reguła'
+        type: string
+      - name: allowed
+        label: 'Status: ma dostęp'
+        type: string
+      - name: blocked
+        label: 'Status: zablokowany'
+        type: string
+      - name: noRule
+        label: Brak reguły
+        type: string
+      - name: fromGroup
+        label: Słowo „grupa”
+        type: string
+      - name: summary
+        label: Podsumowanie
+        type: string
+        description: 'Zostaw {blocked} i {total}: w ich miejsce wstawiają się liczby.'
+      - name: empty
+        label: Komunikat przed sprawdzeniem
+        type: string
+      - name: groups
+        label: Nazwy grup botów
+        type: object
+        fields:
+        - name: search
+          label: Wyszukiwarki
+          type: string
+        - name: aiSearch
+          label: Wyszukiwanie w AI
+          type: string
+        - name: training
+          label: Trening modeli
+          type: string
+        - name: user
+          label: Na prośbę użytkownika
+          type: string
+      - name: userNote
+        label: Uwaga przy botach „na prośbę użytkownika”
+        type: text
+      - name: howTitle
+        label: Nagłówek „jak czytać wynik”
+        type: string
+      - name: how
+        label: Jak czytać wynik (punkty)
+        type: text
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+      - name: guideCta
+        label: Link do poradnika
+        type: string
+      - name: serviceTitle
+        label: 'Ramka usługi: nagłówek'
+        type: string
+      - name: serviceText
+        label: 'Ramka usługi: tekst'
+        type: text
+      - name: serviceCta
+        label: 'Ramka usługi: przycisk'
+        type: string
+- name: guides
+  label: Poradniki
+  type: group
+  items:
+  - name: guide-ai-bots
+    label: Boty AI w robots.txt
+    type: file
+    path: content/guides/ai-bots.json
+    format: json
+    description: Adres poradnika jest stały (src/data/routes.ts). Po zmianie treści zaktualizuj datę aktualizacji.
+    fields:
+    - name: published
+      label: Data publikacji
+      type: date
+    - name: updated
+      label: Data aktualizacji
+      type: date
+    - name: pl
+      label: Po polsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: title
+        label: Tytuł (H1)
+        type: string
+      - name: lead
+        label: Wstęp
+        type: text
+      - name: sections
+        label: Rozdziały
+        type: object
+        fields:
+        - name: h
+          label: Nagłówek rozdziału (H2)
+          type: string
+          description: Trafia też do spisu treści.
+        - name: body
+          label: Treść (HTML)
+          type: code
+          options:
+            format: html
+          description: Akapity <p>, listy <ul>/<ol>, pogrubienie <strong>, linki <a href='/…'>, tabele <table>.
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+    - name: en
+      label: Po angielsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: title
+        label: Tytuł (H1)
+        type: string
+      - name: lead
+        label: Wstęp
+        type: text
+      - name: sections
+        label: Rozdziały
+        type: object
+        fields:
+        - name: h
+          label: Nagłówek rozdziału (H2)
+          type: string
+          description: Trafia też do spisu treści.
+        - name: body
+          label: Treść (HTML)
+          type: code
+          options:
+            format: html
+          description: Akapity <p>, listy <ul>/<ol>, pogrubienie <strong>, linki <a href='/…'>, tabele <table>.
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+  - name: guide-migration
+    label: 'Migracja strony: checklista'
+    type: file
+    path: content/guides/migration.json
+    format: json
+    description: Adres poradnika jest stały (src/data/routes.ts). Po zmianie treści zaktualizuj datę aktualizacji.
+    fields:
+    - name: published
+      label: Data publikacji
+      type: date
+    - name: updated
+      label: Data aktualizacji
+      type: date
+    - name: pl
+      label: Po polsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: title
+        label: Tytuł (H1)
+        type: string
+      - name: lead
+        label: Wstęp
+        type: text
+      - name: sections
+        label: Rozdziały
+        type: object
+        fields:
+        - name: h
+          label: Nagłówek rozdziału (H2)
+          type: string
+          description: Trafia też do spisu treści.
+        - name: body
+          label: Treść (HTML)
+          type: code
+          options:
+            format: html
+          description: Akapity <p>, listy <ul>/<ol>, pogrubienie <strong>, linki <a href='/…'>, tabele <table>.
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+    - name: en
+      label: Po angielsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: title
+        label: Tytuł (H1)
+        type: string
+      - name: lead
+        label: Wstęp
+        type: text
+      - name: sections
+        label: Rozdziały
+        type: object
+        fields:
+        - name: h
+          label: Nagłówek rozdziału (H2)
+          type: string
+          description: Trafia też do spisu treści.
+        - name: body
+          label: Treść (HTML)
+          type: code
+          options:
+            format: html
+          description: Akapity <p>, listy <ul>/<ol>, pogrubienie <strong>, linki <a href='/…'>, tabele <table>.
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+  - name: guide-audit
+    label: 'Audyt techniczny: checklista'
+    type: file
+    path: content/guides/audit.json
+    format: json
+    description: Adres poradnika jest stały (src/data/routes.ts). Po zmianie treści zaktualizuj datę aktualizacji.
+    fields:
+    - name: published
+      label: Data publikacji
+      type: date
+    - name: updated
+      label: Data aktualizacji
+      type: date
+    - name: pl
+      label: Po polsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: title
+        label: Tytuł (H1)
+        type: string
+      - name: lead
+        label: Wstęp
+        type: text
+      - name: sections
+        label: Rozdziały
+        type: object
+        fields:
+        - name: h
+          label: Nagłówek rozdziału (H2)
+          type: string
+          description: Trafia też do spisu treści.
+        - name: body
+          label: Treść (HTML)
+          type: code
+          options:
+            format: html
+          description: Akapity <p>, listy <ul>/<ol>, pogrubienie <strong>, linki <a href='/…'>, tabele <table>.
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+    - name: en
+      label: Po angielsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: title
+        label: Tytuł (H1)
+        type: string
+      - name: lead
+        label: Wstęp
+        type: text
+      - name: sections
+        label: Rozdziały
+        type: object
+        fields:
+        - name: h
+          label: Nagłówek rozdziału (H2)
+          type: string
+          description: Trafia też do spisu treści.
+        - name: body
+          label: Treść (HTML)
+          type: code
+          options:
+            format: html
+          description: Akapity <p>, listy <ul>/<ol>, pogrubienie <strong>, linki <a href='/…'>, tabele <table>.
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+  - name: guide-hreflang
+    label: 'Hreflang: najczęstsze błędy'
+    type: file
+    path: content/guides/hreflang.json
+    format: json
+    description: Adres poradnika jest stały (src/data/routes.ts). Po zmianie treści zaktualizuj datę aktualizacji.
+    fields:
+    - name: published
+      label: Data publikacji
+      type: date
+    - name: updated
+      label: Data aktualizacji
+      type: date
+    - name: pl
+      label: Po polsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: title
+        label: Tytuł (H1)
+        type: string
+      - name: lead
+        label: Wstęp
+        type: text
+      - name: sections
+        label: Rozdziały
+        type: object
+        fields:
+        - name: h
+          label: Nagłówek rozdziału (H2)
+          type: string
+          description: Trafia też do spisu treści.
+        - name: body
+          label: Treść (HTML)
+          type: code
+          options:
+            format: html
+          description: Akapity <p>, listy <ul>/<ol>, pogrubienie <strong>, linki <a href='/…'>, tabele <table>.
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+    - name: en
+      label: Po angielsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: title
+        label: Tytuł (H1)
+        type: string
+      - name: lead
+        label: Wstęp
+        type: text
+      - name: sections
+        label: Rozdziały
+        type: object
+        fields:
+        - name: h
+          label: Nagłówek rozdziału (H2)
+          type: string
+          description: Trafia też do spisu treści.
+        - name: body
+          label: Treść (HTML)
+          type: code
+          options:
+            format: html
+          description: Akapity <p>, listy <ul>/<ol>, pogrubienie <strong>, linki <a href='/…'>, tabele <table>.
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+  - name: guide-facets
+    label: Filtry w sklepie a SEO
+    type: file
+    path: content/guides/facets.json
+    format: json
+    description: Adres poradnika jest stały (src/data/routes.ts). Po zmianie treści zaktualizuj datę aktualizacji.
+    fields:
+    - name: published
+      label: Data publikacji
+      type: date
+    - name: updated
+      label: Data aktualizacji
+      type: date
+    - name: pl
+      label: Po polsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: title
+        label: Tytuł (H1)
+        type: string
+      - name: lead
+        label: Wstęp
+        type: text
+      - name: sections
+        label: Rozdziały
+        type: object
+        fields:
+        - name: h
+          label: Nagłówek rozdziału (H2)
+          type: string
+          description: Trafia też do spisu treści.
+        - name: body
+          label: Treść (HTML)
+          type: code
+          options:
+            format: html
+          description: Akapity <p>, listy <ul>/<ol>, pogrubienie <strong>, linki <a href='/…'>, tabele <table>.
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+    - name: en
+      label: Po angielsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: title
+        label: Tytuł (H1)
+        type: string
+      - name: lead
+        label: Wstęp
+        type: text
+      - name: sections
+        label: Rozdziały
+        type: object
+        fields:
+        - name: h
+          label: Nagłówek rozdziału (H2)
+          type: string
+          description: Trafia też do spisu treści.
+        - name: body
+          label: Treść (HTML)
+          type: code
+          options:
+            format: html
+          description: Akapity <p>, listy <ul>/<ol>, pogrubienie <strong>, linki <a href='/…'>, tabele <table>.
+        list: true
+      - name: faq
+        label: FAQ
         type: object
         fields:
         - name: q

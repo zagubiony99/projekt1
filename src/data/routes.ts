@@ -14,3 +14,20 @@ export const serviceRoutes = [
 ] as const;
 
 export const serviceBase = { pl: '/uslugi/', en: '/en/services/' } as const;
+
+// Standalone pages. Paths are public URLs, so they live in code (changing one needs a redirect).
+export const pageRoutes = {
+  about: { pl: '/o-mnie/', en: '/en/about/' },
+  guides: { pl: '/poradniki/', en: '/en/guides/' },
+  robotsTool: { pl: '/narzedzia/robots-txt-boty-ai/', en: '/en/tools/robots-txt-ai-bot-checker/' },
+} as const;
+
+// Guides: key, URL slugs and the service each guide leads to.
+// The article copy lives in content/guides/<key>.json.
+export const guideRoutes = [
+  { key: 'ai-bots', service: 'ai', slug: { pl: 'boty-ai-robots-txt', en: 'ai-bots-robots-txt' } },
+  { key: 'migration', service: 'migration', slug: { pl: 'migracja-strony-checklista-seo', en: 'website-migration-seo-checklist' } },
+  { key: 'audit', service: 'audit', slug: { pl: 'audyt-techniczny-seo-checklista', en: 'technical-seo-audit-checklist' } },
+  { key: 'hreflang', service: 'intl', slug: { pl: 'hreflang-najczestsze-bledy', en: 'hreflang-common-mistakes' } },
+  { key: 'facets', service: 'ecom', slug: { pl: 'filtry-w-sklepie-seo', en: 'faceted-navigation-seo' } },
+] as const;

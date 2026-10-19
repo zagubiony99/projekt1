@@ -1,0 +1,112 @@
+{
+  "published": "2026-10-19",
+  "updated": "2026-10-19",
+  "pl": {
+    "metaTitle": "Audyt techniczny SEO: checklista krok po kroku",
+    "metaDescription": "Co sprawdzić w audycie technicznym SEO: crawl, indeksacja, JavaScript, linkowanie, logi serwera, Core Web Vitals i dane strukturalne. Checklista.",
+    "title": "Audyt techniczny SEO: co sprawdzić, krok po kroku",
+    "lead": "Dobry audyt techniczny nie kończy się listą 300 ostrzeżeń z narzędzia. Kończy się kilkunastoma problemami ułożonymi według tego, ile kosztują Cię ruchu. Oto obszary, które sprawdzam w każdym audycie, i pytania, na które szukam odpowiedzi.",
+    "sections": [
+      {
+        "h": "1. Crawl i dostępność",
+        "body": "<p>Zaczynam od pełnego crawla strony i odpowiedzi na pytanie: czy Google może dotrzeć do wszystkiego, co ważne, i tylko do tego?</p><ul><li>robots.txt: czy nie blokuje ważnych sekcji, zasobów CSS i JS ani botów, na których Ci zależy,</li><li>kody odpowiedzi: błędy 4xx i 5xx, przekierowania i ich łańcuchy,</li><li>strony osierocone: ważne adresy, do których nie prowadzi żaden link wewnętrzny,</li><li>mapy witryn XML: czy zawierają tylko kanoniczne adresy zwracające 200.</li></ul>"
+      },
+      {
+        "h": "2. Indeksacja",
+        "body": "<ul><li>Raport indeksowania stron w Google Search Console: które strony są wykluczone i dlaczego.</li><li>Tagi canonical: czy wskazują właściwe adresy i czy Google je respektuje.</li><li>Meta robots i nagłówek X-Robots-Tag: czy <code>noindex</code> nie trafił tam, gdzie nie powinien.</li><li>Duplikaty: wersje z i bez ukośnika, z parametrami, http i https, z www i bez.</li><li>Strony o niskiej wartości, które zjadają crawl budget: puste wyniki wyszukiwania, filtry, archiwa.</li></ul>"
+      },
+      {
+        "h": "3. Renderowanie JavaScriptu",
+        "body": "<p>Porównuję surowy HTML z wersją wyrenderowaną. Jeśli treść, linki albo tagi canonical pojawiają się dopiero po wykonaniu JavaScriptu, indeksacja jest wolniejsza i mniej pewna, a większość botów AI takiej treści w ogóle nie zobaczy.</p><ul><li>Czy kluczowa treść i linki są w HTML z serwera?</li><li>Co pokazuje narzędzie do sprawdzania adresów URL w Search Console?</li><li>Czy linki są prawdziwymi elementami <code>&lt;a href&gt;</code>, a nie przyciskami z obsługą kliknięcia?</li></ul>"
+      },
+      {
+        "h": "4. Architektura i linkowanie wewnętrzne",
+        "body": "<ul><li>Głębokość kliknięć: do najważniejszych stron powinno dać się dojść w kilku kliknięciach od strony głównej.</li><li>Rozkład linków: czy strony, które mają zarabiać, dostają najwięcej linków wewnętrznych?</li><li>Teksty linków: czy mówią, dokąd prowadzą.</li><li>Paginacja i nawigacja fasetowa: czy nie tworzą nieskończonej liczby adresów.</li></ul>"
+      },
+      {
+        "h": "5. Logi serwera",
+        "body": "<p>Crawl pokazuje, co jest na stronie. Logi pokazują, co Googlebot naprawdę odwiedza. W dużych serwisach to często największe źródło wniosków:</p><ul><li>jaki odsetek wizyt Googlebota trafia w strony, które w ogóle nie powinny być indeksowane,</li><li>czy ważne sekcje są odwiedzane rzadko albo wcale,</li><li>jakie kody odpowiedzi dostaje Googlebot i czy serwer nie zwalnia pod jego ruchem,</li><li>czy boty AI odwiedzają stronę i co dostają w odpowiedzi.</li></ul>"
+      },
+      {
+        "h": "6. Wydajność i Core Web Vitals",
+        "body": "<p>Patrzę na dane od prawdziwych użytkowników (raport w Search Console, dane CrUX), a nie tylko na pojedynczy test. Progi „dobrego” wyniku według Google:</p><table><thead><tr><th>Wskaźnik</th><th>Co mierzy</th><th>Dobry wynik</th></tr></thead><tbody><tr><td>LCP</td><td>Wczytanie głównej treści</td><td>do 2,5 s</td></tr><tr><td>INP</td><td>Reakcja na interakcję</td><td>do 200 ms</td></tr><tr><td>CLS</td><td>Stabilność układu</td><td>do 0,1</td></tr></tbody></table><p>Ważniejsze od pojedynczego wyniku są szablony: jeśli wolny jest szablon karty produktu, problem dotyczy tysięcy stron naraz.</p>"
+      },
+      {
+        "h": "7. Dane strukturalne i międzynarodowość",
+        "body": "<ul><li>Dane strukturalne: czy są poprawne (test wyników z elementami rozszerzonymi, Schema.org Validator), spójne z treścią i obecne na wszystkich szablonach.</li><li>Hreflang: kody języków, linki zwrotne i zgodność z tagami canonical. Najczęstsze błędy opisałem w poradniku <a href='/poradniki/hreflang-najczestsze-bledy/'>hreflang: najczęstsze błędy</a>.</li></ul>"
+      },
+      {
+        "h": "8. Priorytety i zadania",
+        "body": "<p>Ostatni krok jest najważniejszy. Każdy problem oceniam według dwóch pytań: ile ruchu lub przychodu kosztuje i ile pracy wymaga naprawa. Wynikiem jest krótka lista zadań dla programistów, z opisem problemu, przykładowymi adresami i kryterium „gotowe”.</p><p>Jeśli wolisz, żebym zrobił taki audyt dla Twojej strony, zobacz usługę <a href='/uslugi/audyt-technical-seo/'>audyt Technical SEO</a>.</p>"
+      }
+    ],
+    "faq": [
+      {
+        "q": "Jak często robić audyt techniczny?",
+        "a": "Pełny audyt warto zrobić przed i po dużych zmianach: migracji, nowym szablonie, zmianie CMS-a. Między nimi lepiej sprawdza się stały monitoring niż audyt raz na kilka lat."
+      },
+      {
+        "q": "Jakich narzędzi używasz?",
+        "a": "Do crawla Screaming Frog, Botify, Lumar albo OnCrawl, zależnie od skali serwisu. Do tego Google Search Console, logi serwera i narzędzia przeglądarki do sprawdzania renderowania."
+      },
+      {
+        "q": "Czy audyt z darmowego narzędzia wystarczy?",
+        "a": "To dobry początek, ale narzędzie pokaże setki ostrzeżeń bez kontekstu. Wartość audytu to wybór kilku problemów, które naprawdę wpływają na ruch, i zamiana ich w konkretne zadania."
+      }
+    ]
+  },
+  "en": {
+    "metaTitle": "Technical SEO Audit Checklist, Step by Step",
+    "metaDescription": "What to check in a technical SEO audit: crawling, indexation, JavaScript, internal links, server logs, Core Web Vitals and structured data. A checklist.",
+    "title": "Technical SEO audit: what to check, step by step",
+    "lead": "A good technical audit doesn’t end with a list of 300 tool warnings. It ends with a dozen or so issues ranked by how much traffic they cost you. These are the areas I check in every audit, and the questions I want answered.",
+    "sections": [
+      {
+        "h": "1. Crawling and access",
+        "body": "<p>I start with a full crawl of the site and one question: can Google reach everything that matters, and only that?</p><ul><li>robots.txt: does it block important sections, CSS and JS resources, or bots you care about?</li><li>status codes: 4xx and 5xx errors, redirects and redirect chains,</li><li>orphan pages: important URLs with no internal links pointing to them,</li><li>XML sitemaps: do they list only canonical URLs that return 200?</li></ul>"
+      },
+      {
+        "h": "2. Indexation",
+        "body": "<ul><li>The page indexing report in Google Search Console: which pages are excluded, and why.</li><li>Canonical tags: do they point to the right URLs, and does Google respect them?</li><li>Meta robots and the X-Robots-Tag header: has <code>noindex</code> ended up where it shouldn’t?</li><li>Duplicates: with and without a trailing slash, with parameters, http and https, www and non-www.</li><li>Low-value pages eating crawl budget: empty search results, filters, archives.</li></ul>"
+      },
+      {
+        "h": "3. JavaScript rendering",
+        "body": "<p>I compare the raw HTML with the rendered version. If content, links or canonical tags only appear after JavaScript runs, indexation is slower and less reliable, and most AI bots won’t see that content at all.</p><ul><li>Are key content and links in the HTML from the server?</li><li>What does the URL Inspection tool in Search Console show?</li><li>Are links real <code>&lt;a href&gt;</code> elements, not buttons with click handlers?</li></ul>"
+      },
+      {
+        "h": "4. Architecture and internal linking",
+        "body": "<ul><li>Click depth: your most important pages should be a few clicks from the homepage.</li><li>Link distribution: do the pages meant to make money get the most internal links?</li><li>Anchor text: does it say where the link leads?</li><li>Pagination and faceted navigation: do they create an endless number of URLs?</li></ul>"
+      },
+      {
+        "h": "5. Server logs",
+        "body": "<p>A crawl shows what is on the site. Logs show what Googlebot actually visits. On large sites they are often the richest source of findings:</p><ul><li>what share of Googlebot’s visits goes to pages that shouldn’t be indexed at all,</li><li>whether important sections are visited rarely or not at all,</li><li>which status codes Googlebot gets, and whether the server slows down under its load,</li><li>whether AI bots visit the site and what they get back.</li></ul>"
+      },
+      {
+        "h": "6. Performance and Core Web Vitals",
+        "body": "<p>I look at real-user data (the Search Console report, CrUX data), not just a single lab test. Google’s thresholds for a “good” result:</p><table><thead><tr><th>Metric</th><th>What it measures</th><th>Good</th></tr></thead><tbody><tr><td>LCP</td><td>Main content loading</td><td>up to 2.5 s</td></tr><tr><td>INP</td><td>Responsiveness to interaction</td><td>up to 200 ms</td></tr><tr><td>CLS</td><td>Layout stability</td><td>up to 0.1</td></tr></tbody></table><p>Templates matter more than single scores: if the product page template is slow, the problem hits thousands of pages at once.</p>"
+      },
+      {
+        "h": "7. Structured data and international setup",
+        "body": "<ul><li>Structured data: is it valid (Rich Results Test, Schema.org Validator), consistent with the content, and present on every template?</li><li>Hreflang: language codes, return links and consistency with canonical tags. I cover the most common mistakes in <a href='/en/guides/hreflang-common-mistakes/'>hreflang: common mistakes</a>.</li></ul>"
+      },
+      {
+        "h": "8. Priorities and tickets",
+        "body": "<p>The last step matters most. I score every issue on two questions: how much traffic or revenue does it cost, and how much work is the fix? The result is a short list of developer tickets, each with the problem, example URLs and a definition of done.</p><p>If you would rather I ran this audit for your site, see the <a href='/en/services/technical-seo-audit/'>technical SEO audit</a> service.</p>"
+      }
+    ],
+    "faq": [
+      {
+        "q": "How often should I run a technical audit?",
+        "a": "A full audit is worth doing before and after big changes: a migration, a new template, a CMS switch. In between, continuous monitoring works better than an audit every few years."
+      },
+      {
+        "q": "Which tools do you use?",
+        "a": "For crawling, Screaming Frog, Botify, Lumar or OnCrawl, depending on the size of the site. On top of that, Google Search Console, server logs and browser tools to check rendering."
+      },
+      {
+        "q": "Is an audit from a free tool enough?",
+        "a": "It is a good start, but a tool shows hundreds of warnings without context. The value of an audit is picking the few issues that really affect traffic and turning them into concrete tasks."
+      }
+    ]
+  }
+}

@@ -1,7 +1,8 @@
 ---
 import { getDict, type Lang } from '../i18n';
 import Portrait from './Portrait.astro';
-interface Props { lang: Lang }
+import { pageRoutes } from '../data/routes';
+interface Props { lang: Lang; more?: boolean }
 const t = getDict(Astro.props.lang);
 const e = t.experience;
 // Big sticky years: an open-ended range reads better (and fits) as "Since 2026"
@@ -19,6 +20,7 @@ const big = (when: string) => when.replace(/^(\d{4})\s*—\s*(obecnie|present)$/
         <p class="ind-l">{e.industriesLabel}</p>
         <ul aria-label={e.industriesLabel}>{e.industries.map((x) => <li>{x}</li>)}</ul>
       </div>
+      {Astro.props.more && <a class="more about" href={pageRoutes.about[Astro.props.lang]} data-reveal style="--d:3">{e.more}</a>}
     </header>
 
     <div class="layout" data-exp>
@@ -50,6 +52,9 @@ const big = (when: string) => when.replace(/^(\d{4})\s*—\s*(obecnie|present)$/
 </section>
 
 <style>
+  .about {
+    margin-top: 20px;
+  }
   /* industries: quiet pill row under the intro */
   .ind {
     display: grid;

@@ -1,0 +1,110 @@
+{
+  "pl": {
+    "metaTitle": "O mnie: Maciej Zięciak, konsultant Technical SEO",
+    "metaDescription": "Konsultant Technical SEO i AI search z 9-letnim doświadczeniem: od własnego serwisu z 1,1 mln podstron po Accenture Song i Philip Morris International.",
+    "eyebrow": "Maciej Zięciak · konsultant Technical SEO i AI search",
+    "title": "Zacząłem od własnego serwisu. Dziś pracuję dla globalnych marek.",
+    "lead": "Od 9 lat pomagam dużym serwisom, sklepom i markom enterprise rosnąć w Google, a teraz także w odpowiedziach ChatGPT, Perplexity i AI Overviews. Znajduję to, co blokuje ruch, i zamieniam to w zadania, które zespół może wdrożyć.",
+    "ctaPrimary": "Umów bezpłatną konsultację",
+    "ctaSecondary": "Zobacz usługi",
+    "storyTitle": "Jak do tego doszedłem",
+    "story": [
+      "Zaczynałem w 2017 roku od własnego projektu: polskiego katalogu firm, który współtworzyłem i w którym byłem jedynym specjalistą SEO. Serwis urósł do ponad 1,1 mln podstron, 670 tys. adresów w indeksie Google i 115 tys. wizyt z wyszukiwarki miesięcznie. Tam zobaczyłem, jak skala zmienia SEO: crawl budget, szablony i indeksacja przestają być teorią, a każdy błąd mnoży się przez setki tysięcy adresów.",
+      "W latach 2018–2019 pracowałem w agencji SEO w Krakowie przy sklepach internetowych na rynkach polskim i czeskim. Robiłem audyty, strategie i wdrożenia na wielu platformach sklepowych, prowadziłem warsztaty dla klientów i koordynowałem pracę w 20-osobowym zespole.",
+      "Potem przyszły duże organizacje. W IG jako Technical SEO Specialist optymalizowałem serwisy na Adobe Experience Manager. W Accenture Song, najpierw jako Senior Technical SEO Expert, a potem Digital Marketing Senior Strategy Analyst, budowałem strategie SEO dla marek międzynarodowych. Równolegle, w latach 2020–2022, prowadziłem własną działalność: audyty i doradztwo.",
+      "Od 2026 roku pracuję w Philip Morris International jako Manager SEO & AI Search Operations. Konsultacje prowadzę osobiście, po polsku i po angielsku."
+    ],
+    "approachTitle": "Jak pracuję",
+    "approach": [
+      {
+        "t": "Zadania zamiast raportów",
+        "d": "Nie dostajesz 80-stronicowego PDF-a. Dostajesz listę problemów ułożoną według wpływu na ruch i przychód, z zadaniami gotowymi dla programistów."
+      },
+      {
+        "t": "Bezpośrednio ze mną",
+        "d": "Od audytu po odbiór wdrożenia pracujesz ze mną, bez opiekuna klienta i juniora po drodze."
+      },
+      {
+        "t": "SEO w procesie wydań",
+        "d": "Wymagania SEO trafiają do zadań, a zmiany sprawdzam przed publikacją, nie dopiero po spadku ruchu."
+      },
+      {
+        "t": "Google i AI jednocześnie",
+        "d": "Sprawdzam, czy Twoją stronę widzą i rozumieją i Google, i modele AI: dostęp botów, dane strukturalne, treść."
+      }
+    ],
+    "kitTitle": "Platformy i narzędzia",
+    "platformsLabel": "Platformy, na których pracowałem",
+    "platforms": [
+      "WordPress",
+      "Sitecore",
+      "Adobe Experience Manager",
+      "PrestaShop",
+      "Magento",
+      "Shoper",
+      "RedCart",
+      "Systemy autorskie"
+    ],
+    "languagesLabel": "Języki",
+    "languages": [
+      "Polski",
+      "Angielski"
+    ],
+    "guidesTitle": "Piszę też poradniki",
+    "guidesLead": "Konkretnie, bez lania wody: to, co sprawdzam u klientów, rozpisane krok po kroku."
+  },
+  "en": {
+    "metaTitle": "About Maciej Zięciak, Technical SEO Consultant",
+    "metaDescription": "Technical SEO and AI search consultant with 9 years of experience: from my own site with 1.1M pages to Accenture Song and Philip Morris International.",
+    "eyebrow": "Maciej Zięciak · Technical SEO & AI search consultant",
+    "title": "I started with my own website. Today I work for global brands.",
+    "lead": "For 9 years I have helped large websites, online stores and enterprise brands grow in Google, and now in ChatGPT, Perplexity and AI Overviews answers too. I find what blocks your traffic and turn it into tasks your team can ship.",
+    "ctaPrimary": "Book a free consultation",
+    "ctaSecondary": "See services",
+    "storyTitle": "How I got here",
+    "story": [
+      "I started in 2017 with my own project: a Polish business directory that I co-founded and where I was the only SEO specialist. It grew to more than 1.1 million pages, 670,000 URLs in Google's index and 115,000 organic visits a month. That is where I saw how scale changes SEO: crawl budget, templates and indexation stop being theory, and every mistake is multiplied by hundreds of thousands of URLs.",
+      "In 2018–2019 I worked at an SEO agency in Kraków on online stores for the Polish and Czech markets. I ran audits, strategies and implementations on many e-commerce platforms, led client workshops and coordinated work in a 20-person team.",
+      "Then came large organisations. At IG, as a Technical SEO Specialist, I optimised sites built on Adobe Experience Manager. At Accenture Song, first as a Senior Technical SEO Expert and then as a Digital Marketing Senior Strategy Analyst, I built SEO strategies for international brands. Alongside that, in 2020–2022, I ran my own consultancy: audits and advice.",
+      "Since 2026 I have been working at Philip Morris International as Manager SEO & AI Search Operations. I run consultations myself, in English and Polish."
+    ],
+    "approachTitle": "How I work",
+    "approach": [
+      {
+        "t": "Tasks, not reports",
+        "d": "You don't get an 80-page PDF. You get a list of issues ranked by their impact on traffic and revenue, with tickets ready for your developers."
+      },
+      {
+        "t": "Directly with me",
+        "d": "From the audit to signing off the release, you work with me, with no account manager or junior in between."
+      },
+      {
+        "t": "SEO in the release process",
+        "d": "SEO requirements go into tickets, and I check changes before they go live, not after traffic drops."
+      },
+      {
+        "t": "Google and AI at once",
+        "d": "I check whether both Google and AI models can see and understand your site: bot access, structured data, content."
+      }
+    ],
+    "kitTitle": "Platforms and tools",
+    "platformsLabel": "Platforms I have worked on",
+    "platforms": [
+      "WordPress",
+      "Sitecore",
+      "Adobe Experience Manager",
+      "PrestaShop",
+      "Magento",
+      "Shoper",
+      "RedCart",
+      "Custom builds"
+    ],
+    "languagesLabel": "Languages",
+    "languages": [
+      "English",
+      "Polish"
+    ],
+    "guidesTitle": "I also write guides",
+    "guidesLead": "Practical and to the point: what I check for clients, written up step by step."
+  }
+}

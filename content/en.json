@@ -185,6 +185,7 @@
     "label": "Experience",
     "title": "9 years in SEO",
     "intro": "From an agency and my own project, through consulting, to enterprise teams at Accenture Song and Philip Morris International.",
+    "more": "More about me",
     "industriesLabel": "Industries I have worked in",
     "industries": [
       "Hospitality",
@@ -369,8 +370,28 @@
       }
     ]
   },
+  "guidesUi": {
+    "metaTitle": "Technical SEO & AI Search Guides | Maciej Zięciak",
+    "metaDescription": "Practical SEO guides: AI bots in robots.txt, website migrations, technical audits, hreflang and faceted navigation. The checklists I use with clients.",
+    "eyebrow": "SEO & AI search guides",
+    "title": "What I check for clients. Written up step by step.",
+    "lead": "Checklists and explanations from technical SEO and AI search. No fluff, with examples you can check on your own site right away.",
+    "toolEyebrow": "Free tool",
+    "toc": "Contents",
+    "updated": "Updated",
+    "readTime": "min read",
+    "by": "By",
+    "read": "Read the guide",
+    "all": "All guides",
+    "others": "More guides",
+    "faqTitle": "Frequently asked questions",
+    "serviceTitle": "Would you rather I did it for you?",
+    "serviceCta": "See the service"
+  },
   "nav": {
     "services": "Services",
+    "about": "About",
+    "guides": "Guides",
     "experience": "Experience",
     "process": "Process",
     "faq": "FAQ",
