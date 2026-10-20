@@ -8,6 +8,7 @@ import { site } from '../config';
 import { getDict, otherLang, type Lang } from '../i18n';
 import { guides } from '../data/pages';
 import { pageRoutes } from '../data/routes';
+import { ogPath } from '../data/og';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = getDict(lang);
@@ -49,7 +50,7 @@ const extraLd = [
 ];
 ---
 
-<Base lang={lang} title={u.metaTitle} description={u.metaDescription} path={path} altPath={altPath} extraLd={extraLd}>
+<Base lang={lang} title={u.metaTitle} description={u.metaDescription} path={path} altPath={altPath} extraLd={extraLd} ogImage={ogPath(lang, 'guides')}>
   <Nav lang={lang} altHref={altPath} contactHref={contactHref} />
   <main id="main">
     <PageHero crumbs={[{ href: t.path, label: t.serviceUi.home }, { label: t.nav.guides }]} eyebrow={u.eyebrow} title={u.title} lead={u.lead} compact />

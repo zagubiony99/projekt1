@@ -13,6 +13,7 @@ import { getDict, otherLang, type Lang } from '../i18n';
 import { services, ui } from '../data/services';
 import { guides, robotsTool } from '../data/pages';
 import { pageRoutes } from '../data/routes';
+import { ogPath } from '../data/og';
 interface Props { lang: Lang; key: string }
 const { lang, key } = Astro.props;
 const other = otherLang(lang);
@@ -66,7 +67,7 @@ const extraLd = [
 ];
 ---
 
-<Base lang={lang} title={s.metaTitle} description={s.metaDescription} path={path} altPath={altPath} extraLd={extraLd}>
+<Base lang={lang} title={s.metaTitle} description={s.metaDescription} path={path} altPath={altPath} extraLd={extraLd} ogImage={ogPath(lang, `service-${key}`)}>
   <Nav lang={lang} altHref={altPath} />
   <main id="main">
     <!-- Hero -->

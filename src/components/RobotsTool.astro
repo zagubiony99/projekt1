@@ -9,6 +9,7 @@ import { getDict, otherLang, type Lang } from '../i18n';
 import { robotsTool, guides } from '../data/pages';
 import { services, ui } from '../data/services';
 import { pageRoutes } from '../data/routes';
+import { ogPath } from '../data/og';
 import { bots } from '../data/ai-bots';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -95,7 +96,7 @@ const extraLd = [
 ];
 ---
 
-<Base lang={lang} title={r.metaTitle} description={r.metaDescription} path={path} altPath={altPath} extraLd={extraLd}>
+<Base lang={lang} title={r.metaTitle} description={r.metaDescription} path={path} altPath={altPath} extraLd={extraLd} ogImage={ogPath(lang, 'tool-robots')}>
   <Nav lang={lang} altHref={altPath} contactHref={contactHref} />
   <main id="main">
     <PageHero compact eyebrowInH1={false} crumbs={[{ href: t.path, label: t.serviceUi.home }, { label: r.title }]} eyebrow={r.eyebrow} title={r.title} lead={r.lead} />

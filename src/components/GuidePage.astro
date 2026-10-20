@@ -10,6 +10,7 @@ import { getDict, otherLang, type Lang } from '../i18n';
 import { guides } from '../data/pages';
 import { services, ui } from '../data/services';
 import { pageRoutes } from '../data/routes';
+import { ogPath } from '../data/og';
 interface Props { lang: Lang; key: string }
 const { lang, key } = Astro.props;
 const other = otherLang(lang);
@@ -40,7 +41,7 @@ const extraLd = [
     dateModified: pair.updated,
     author: { '@id': `${site.url}/#person` },
     publisher: { '@id': `${site.url}/#person` },
-    image: new URL(`/og-${lang}.png`, site.url).href,
+    image: new URL(ogPath(lang, `guide-${key}`), site.url).href,
     mainEntityOfPage: { '@id': `${url}#webpage` },
     ...(svc ? { about: { '@type': 'Thing', name: svc[lang].name } } : {}),
   },
@@ -71,7 +72,7 @@ const extraLd = [
 ];
 ---
 
-<Base lang={lang} title={g.metaTitle} description={g.metaDescription} path={path} altPath={altPath} extraLd={extraLd}>
+<Base lang={lang} title={g.metaTitle} description={g.metaDescription} path={path} altPath={altPath} extraLd={extraLd} ogImage={ogPath(lang, `guide-${key}`)}>
   <Nav lang={lang} altHref={altPath} contactHref={contactHref} />
   <main id="main">
     <PageHero
