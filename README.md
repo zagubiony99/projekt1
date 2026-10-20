@@ -27,7 +27,7 @@ Wszystkie teksty (PL i EN), usługi i ustawienia kontaktowe edytujesz w przeglą
    - **Strona główna**: wszystkie teksty po polsku i po angielsku, w tym „Formy współpracy” (konsultacja, projekt, stała współpraca; pole „Cena” puste = „Wycena po rozmowie”),
    - **Usługi**: 9 podstron usług, każda z wersją polską i angielską,
    - **Inne strony**: „O mnie” i narzędzie „robots.txt dla botów AI”,
-   - **Poradniki**: 5 poradników. Treść rozdziału jest w HTML (akapity `<p>`, listy, tabele), daty publikacji i aktualizacji ustawiasz w kalendarzu.
+   - **Poradniki**: 8 poradników. Treść rozdziału jest w HTML (akapity `<p>`, listy, tabele), daty publikacji i aktualizacji ustawiasz w kalendarzu.
 5. Zmieniasz tekst i klikasz **Save**. CMS zapisuje zmianę w repozytorium, a hosting (Cloudflare Pages / Netlify / Vercel) w ok. minutę publikuje nową wersję strony.
 
 Polskich „sierotek” (w, i, z, o, a na końcu linii) nie musisz pilnować: strona poprawia je sama.
