@@ -7,6 +7,7 @@ import Consent from '../components/Consent.astro';
 import { services, ui } from '../data/services';
 import { getImage } from 'astro:assets';
 import { photo } from '../lib/photo';
+import { pageRoutes } from '../data/routes';
 
 interface Props {
   lang: Lang;
@@ -150,6 +151,7 @@ const jsonLd = {
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title={t.guidesUi.metaTitle} href={`${pageRoutes.guides[lang]}rss.xml`} />
 
     <script is:inline>document.documentElement.classList.add('js');addEventListener('pagereveal',function(e){if(e.viewTransition){var h=document.documentElement;h.classList.add('vt');e.viewTransition.finished.finally(function(){h.classList.remove('vt')})}});</script>
     {site.gtmId && (
