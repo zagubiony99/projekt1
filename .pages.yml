@@ -256,19 +256,6 @@ content:
         - name: btn
           label: Przycisk
           type: string
-      - name: afterProcess
-        label: Po procesie
-        type: object
-        fields:
-        - name: title
-          label: Nagłówek
-          type: string
-        - name: text
-          label: Tekst
-          type: text
-        - name: btn
-          label: Przycisk
-          type: string
     - name: compare
       label: Porównanie z agencją
       type: object
@@ -905,19 +892,6 @@ content:
       fields:
       - name: afterServices
         label: Po usługach
-        type: object
-        fields:
-        - name: title
-          label: Nagłówek
-          type: string
-        - name: text
-          label: Tekst
-          type: text
-        - name: btn
-          label: Przycisk
-          type: string
-      - name: afterProcess
-        label: Po procesie
         type: object
         fields:
         - name: title

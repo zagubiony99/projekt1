@@ -125,7 +125,6 @@ COPY = [
     ]),
     obj('bands', 'Paski z wezwaniem do kontaktu', [
         obj('afterServices', 'Po usługach', [s('title', 'Nagłówek'), t('text', 'Tekst'), s('btn', 'Przycisk')]),
-        obj('afterProcess', 'Po procesie', [s('title', 'Nagłówek'), t('text', 'Tekst'), s('btn', 'Przycisk')]),
     ]),
     obj('compare', 'Porównanie z agencją', [
         s('label', 'Nadtytuł'),
