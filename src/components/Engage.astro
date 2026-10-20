@@ -2,12 +2,12 @@
 // "How we can work together": paid consultation, project, ongoing support.
 // Each button jumps to the contact form and ticks the matching topic (see scripts/main.ts).
 import { getDict, type Lang } from '../i18n';
-interface Props { lang: Lang }
+interface Props { lang: Lang; white?: boolean } // white: on pages where the previous section is gray
 const t = getDict(Astro.props.lang);
 const e = t.engage;
 ---
 
-<section class="section section--gray engage" id={Astro.props.lang === 'pl' ? 'wspolpraca' : 'work-together'} aria-labelledby="eng-h">
+<section class:list={['section engage', { 'section--gray': !Astro.props.white }]} id={Astro.props.lang === 'pl' ? 'wspolpraca' : 'work-together'} aria-labelledby="eng-h">
   <div class="wrap wrap--wide">
     <header class="head">
       <p class="eyebrow" data-reveal>{e.label}</p>
@@ -52,6 +52,9 @@ const e = t.engage;
     border-radius: var(--r-lg);
     background: var(--white);
     overflow: hidden;
+  }
+  .engage:not(.section--gray) .model:not(.featured) {
+    background: var(--gray);
   }
   .featured {
     background: var(--dark);
