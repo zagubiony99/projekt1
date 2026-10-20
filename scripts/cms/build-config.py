@@ -159,6 +159,22 @@ COPY = [
         s('title', 'Nagłówek'),
         items('steps', 'Kroki', [s('name', 'Nazwa'), t('desc', 'Opis')]),
     ]),
+    obj('engage', 'Formy współpracy', [
+        s('label', 'Nadtytuł'),
+        s('title', 'Nagłówek'),
+        t('lead', 'Tekst pod nagłówkiem'),
+        s('priceFallback', 'Tekst, gdy nie podasz ceny', 'Np. „Wycena po rozmowie”.'),
+        items('models', 'Formy współpracy', [
+            s('name', 'Nazwa'),
+            s('kind', 'Etykieta nad nazwą', 'Np. „Jednorazowo”.'),
+            s('price', 'Cena', 'Np. „od 600 zł netto”. Puste = tekst zastępczy powyżej.'),
+            t('desc', 'Opis'),
+            strings('points', 'Punkty'),
+            s('cta', 'Przycisk'),
+            s('topic', 'Temat w formularzu', 'Musi być identyczny z jednym z tematów formularza kontaktowego. Puste = żaden.'),
+            b('featured', 'Wyróżnij (ciemna karta)'),
+        ]),
+    ]),
     obj('faq', 'FAQ', [
         s('label', 'Nadtytuł'),
         s('title', 'Nagłówek'),

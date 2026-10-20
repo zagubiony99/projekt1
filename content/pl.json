@@ -264,6 +264,56 @@
       }
     ]
   },
+  "engage": {
+    "label": "Współpraca",
+    "title": "Jak możemy współpracować",
+    "lead": "Każda współpraca zaczyna się od bezpłatnej, 30-minutowej rozmowy. Potem wybierasz formę, która pasuje do Twojego zespołu i budżetu.",
+    "priceFallback": "Wycena po rozmowie",
+    "models": [
+      {
+        "name": "Konsultacja ekspercka",
+        "kind": "Jednorazowo",
+        "price": "",
+        "desc": "Sesja online z Tobą albo Twoim zespołem. Bierzemy na warsztat konkretny problem: spadek ruchu, planowaną migrację, widoczność w AI. Wychodzisz z jasnym planem, co zrobić i w jakiej kolejności.",
+        "points": [
+          "Przegląd Twojej strony przed spotkaniem",
+          "Odpowiedzi na pytania zespołu i programistów",
+          "Priorytety spisane po spotkaniu"
+        ],
+        "cta": "Zapytaj o konsultację",
+        "topic": "Konsultacja",
+        "featured": false
+      },
+      {
+        "name": "Projekt",
+        "kind": "Zakres i termin z góry",
+        "price": "",
+        "desc": "Audyt, migracja, wdrożenie danych strukturalnych albo przygotowanie serwisu pod AI search. Prowadzę projekt od diagnozy po odbiór wdrożenia.",
+        "points": [
+          "Zadania gotowe dla programistów",
+          "Sprawdzam zmiany przed publikacją",
+          "Jedna osoba odpowiedzialna za wynik"
+        ],
+        "cta": "Opowiedz o projekcie",
+        "topic": "",
+        "featured": true
+      },
+      {
+        "name": "Stała współpraca",
+        "kind": "Rozliczenie miesięczne",
+        "price": "",
+        "desc": "Zewnętrzny technical SEO lead dla Twojego zespołu. Pilnuję SEO w każdym wydaniu, monitoruję indeksację i widoczność w AI, odpowiadam na pytania na bieżąco.",
+        "points": [
+          "SEO wpisane w proces wydań",
+          "Monitoring i szybka reakcja na spadki",
+          "Stały kontakt ze mną, bez pośredników"
+        ],
+        "cta": "Zapytaj o stałą współpracę",
+        "topic": "Stała współpraca",
+        "featured": false
+      }
+    ]
+  },
   "faq": {
     "label": "FAQ",
     "title": "Częste pytania",
@@ -312,6 +362,7 @@
     "lead": "Na bezpłatnej, 30-minutowej rozmowie przejrzę Twoją stronę i wskażę 3 rzeczy, które warto poprawić w pierwszej kolejności. Bez zobowiązań.",
     "topicsLabel": "Czego dotyczy projekt?",
     "topics": [
+      "Konsultacja",
       "Audyt techniczny",
       "AI search",
       "Duży serwis",

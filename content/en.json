@@ -264,6 +264,56 @@
       }
     ]
   },
+  "engage": {
+    "label": "Working together",
+    "title": "How we can work together",
+    "lead": "Every engagement starts with a free 30-minute call. Then you choose the format that fits your team and budget.",
+    "priceFallback": "Quoted after a call",
+    "models": [
+      {
+        "name": "Expert consultation",
+        "kind": "One-off",
+        "price": "",
+        "desc": "An online session with you or your team. We take one specific problem apart: a traffic drop, a planned migration, AI visibility. You leave with a clear plan of what to do and in which order.",
+        "points": [
+          "I review your site before we meet",
+          "Answers for your team and developers",
+          "Priorities written up after the call"
+        ],
+        "cta": "Ask about a consultation",
+        "topic": "Consultation",
+        "featured": false
+      },
+      {
+        "name": "Project",
+        "kind": "Scope and timeline agreed upfront",
+        "price": "",
+        "desc": "An audit, a migration, a structured data rollout or getting your site ready for AI search. I run the project from diagnosis to signing off the release.",
+        "points": [
+          "Tickets ready for your developers",
+          "I check changes before they go live",
+          "One person accountable for the result"
+        ],
+        "cta": "Tell me about your project",
+        "topic": "",
+        "featured": true
+      },
+      {
+        "name": "Ongoing support",
+        "kind": "Monthly",
+        "price": "",
+        "desc": "An external technical SEO lead for your team. I keep SEO in every release, monitor indexation and AI visibility, and answer questions as they come up.",
+        "points": [
+          "SEO built into your release process",
+          "Monitoring and fast response to drops",
+          "Direct contact with me, no middlemen"
+        ],
+        "cta": "Ask about ongoing support",
+        "topic": "Ongoing work",
+        "featured": false
+      }
+    ]
+  },
   "faq": {
     "label": "FAQ",
     "title": "Common questions",
@@ -312,6 +362,7 @@
     "lead": "On a free 30-minute call I’ll review your site and point out the 3 things worth fixing first. No strings attached.",
     "topicsLabel": "What is it about?",
     "topics": [
+      "Consultation",
       "Technical audit",
       "AI search",
       "Large website",

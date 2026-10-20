@@ -16,6 +16,7 @@ import StickyCta from './StickyCta.astro';
 import { getDict } from '../i18n';
 import Footer from './Footer.astro';
 import GuideCards from './GuideCards.astro';
+import Engage from './Engage.astro';
 import { about } from '../data/pages';
 import { pageRoutes } from '../data/routes';
 import type { Lang } from '../i18n';
@@ -37,6 +38,7 @@ const toContact = `#${t.ids.contact}`;
     <Compare lang={lang} />
     <Experience lang={lang} more />
     <Process lang={lang} />
+    <Engage lang={lang} />
     <CtaBand {...t.bands.afterProcess} href={toContact} />
     <Faq lang={lang} />
     <section class="section guides" aria-labelledby="hg-h">

@@ -8,6 +8,7 @@ import Experience from './Experience.astro';
 import Contact from './Contact.astro';
 import StickyCta from './StickyCta.astro';
 import GuideCards from './GuideCards.astro';
+import Engage from './Engage.astro';
 import { site } from '../config';
 import { getDict, otherLang, type Lang } from '../i18n';
 import { about } from '../data/pages';
@@ -120,8 +121,10 @@ const extraLd = [
       </div>
     </section>
 
+    <Engage lang={lang} />
+
     <!-- Guides -->
-    <section class="section section--gray" aria-labelledby="g-h">
+    <section class="section" aria-labelledby="g-h">
       <div class="wrap wrap--wide">
         <header class="head">
           <h2 class="h2" id="g-h" data-reveal>{a.guidesTitle}</h2>
