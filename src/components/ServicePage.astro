@@ -26,7 +26,7 @@ const altPath = `${ui[other].base}${pair[other].slug}/`;
 const url = new URL(path, site.url).href;
 const home = new URL(t.path, site.url).href;
 const rest = services.filter((p) => p.key !== key);
-const guide = guides.find((g) => g.service === key);
+const related = guides.filter((g) => g.service === key);
 
 const extraLd = [
   {
@@ -195,9 +195,9 @@ const extraLd = [
           <h2 class="h2" id="sfaq-h" data-reveal>{u.faqTitle}</h2>
         </header>
         <FaqList items={s.faq} />
-        {(guide || pair.key === 'ai') && (
+        {(related.length > 0 || pair.key === 'ai') && (
           <p class="reads">
-            {guide && <a class="more" href={guide[lang].path}>{t.guidesUi.read}: {guide[lang].title}</a>}
+            {related.map((g) => <a class="more" href={g[lang].path}>{t.guidesUi.read}: {g[lang].title}</a>)}
             {pair.key === 'ai' && <a class="more" href={pageRoutes.robotsTool[lang]}>{robotsTool[lang].title}</a>}
           </p>
         )}

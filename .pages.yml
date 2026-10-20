@@ -3596,10 +3596,313 @@ content:
   label: Poradniki
   type: group
   items:
+  - name: guide-ai-overviews
+    label: 'AI Overviews i ChatGPT: jak przygotować stronę'
+    type: file
+    path: content/guides/ai-overviews.json
+    format: json
+    description: Adres poradnika jest stały (src/data/routes.ts). Po zmianie treści zaktualizuj datę aktualizacji.
+    fields:
+    - name: published
+      label: Data publikacji
+      type: date
+    - name: updated
+      label: Data aktualizacji
+      type: date
+    - name: pl
+      label: Po polsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: title
+        label: Tytuł (H1)
+        type: string
+      - name: lead
+        label: Wstęp
+        type: text
+      - name: sections
+        label: Rozdziały
+        type: object
+        fields:
+        - name: h
+          label: Nagłówek rozdziału (H2)
+          type: string
+          description: Trafia też do spisu treści.
+        - name: body
+          label: Treść (HTML)
+          type: code
+          options:
+            format: html
+          description: Akapity <p>, listy <ul>/<ol>, pogrubienie <strong>, linki <a href='/…'>, tabele <table>.
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+    - name: en
+      label: Po angielsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: title
+        label: Tytuł (H1)
+        type: string
+      - name: lead
+        label: Wstęp
+        type: text
+      - name: sections
+        label: Rozdziały
+        type: object
+        fields:
+        - name: h
+          label: Nagłówek rozdziału (H2)
+          type: string
+          description: Trafia też do spisu treści.
+        - name: body
+          label: Treść (HTML)
+          type: code
+          options:
+            format: html
+          description: Akapity <p>, listy <ul>/<ol>, pogrubienie <strong>, linki <a href='/…'>, tabele <table>.
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
   - name: guide-ai-bots
     label: Boty AI w robots.txt
     type: file
     path: content/guides/ai-bots.json
+    format: json
+    description: Adres poradnika jest stały (src/data/routes.ts). Po zmianie treści zaktualizuj datę aktualizacji.
+    fields:
+    - name: published
+      label: Data publikacji
+      type: date
+    - name: updated
+      label: Data aktualizacji
+      type: date
+    - name: pl
+      label: Po polsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: title
+        label: Tytuł (H1)
+        type: string
+      - name: lead
+        label: Wstęp
+        type: text
+      - name: sections
+        label: Rozdziały
+        type: object
+        fields:
+        - name: h
+          label: Nagłówek rozdziału (H2)
+          type: string
+          description: Trafia też do spisu treści.
+        - name: body
+          label: Treść (HTML)
+          type: code
+          options:
+            format: html
+          description: Akapity <p>, listy <ul>/<ol>, pogrubienie <strong>, linki <a href='/…'>, tabele <table>.
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+    - name: en
+      label: Po angielsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: title
+        label: Tytuł (H1)
+        type: string
+      - name: lead
+        label: Wstęp
+        type: text
+      - name: sections
+        label: Rozdziały
+        type: object
+        fields:
+        - name: h
+          label: Nagłówek rozdziału (H2)
+          type: string
+          description: Trafia też do spisu treści.
+        - name: body
+          label: Treść (HTML)
+          type: code
+          options:
+            format: html
+          description: Akapity <p>, listy <ul>/<ol>, pogrubienie <strong>, linki <a href='/…'>, tabele <table>.
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+  - name: guide-audit-cost
+    label: 'Audyt SEO: od czego zależy cena'
+    type: file
+    path: content/guides/audit-cost.json
+    format: json
+    description: Adres poradnika jest stały (src/data/routes.ts). Po zmianie treści zaktualizuj datę aktualizacji.
+    fields:
+    - name: published
+      label: Data publikacji
+      type: date
+    - name: updated
+      label: Data aktualizacji
+      type: date
+    - name: pl
+      label: Po polsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: title
+        label: Tytuł (H1)
+        type: string
+      - name: lead
+        label: Wstęp
+        type: text
+      - name: sections
+        label: Rozdziały
+        type: object
+        fields:
+        - name: h
+          label: Nagłówek rozdziału (H2)
+          type: string
+          description: Trafia też do spisu treści.
+        - name: body
+          label: Treść (HTML)
+          type: code
+          options:
+            format: html
+          description: Akapity <p>, listy <ul>/<ol>, pogrubienie <strong>, linki <a href='/…'>, tabele <table>.
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+    - name: en
+      label: Po angielsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: title
+        label: Tytuł (H1)
+        type: string
+      - name: lead
+        label: Wstęp
+        type: text
+      - name: sections
+        label: Rozdziały
+        type: object
+        fields:
+        - name: h
+          label: Nagłówek rozdziału (H2)
+          type: string
+          description: Trafia też do spisu treści.
+        - name: body
+          label: Treść (HTML)
+          type: code
+          options:
+            format: html
+          description: Akapity <p>, listy <ul>/<ol>, pogrubienie <strong>, linki <a href='/…'>, tabele <table>.
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+  - name: guide-audit
+    label: 'Audyt techniczny: checklista'
+    type: file
+    path: content/guides/audit.json
     format: json
     description: Adres poradnika jest stały (src/data/routes.ts). Po zmianie treści zaktualizuj datę aktualizacji.
     fields:
@@ -3798,10 +4101,10 @@ content:
           label: Odpowiedź
           type: text
         list: true
-  - name: guide-audit
-    label: 'Audyt techniczny: checklista'
+  - name: guide-release
+    label: 'SEO przed wdrożeniem: checklista'
     type: file
-    path: content/guides/audit.json
+    path: content/guides/release.json
     format: json
     description: Adres poradnika jest stały (src/data/routes.ts). Po zmianie treści zaktualizuj datę aktualizacji.
     fields:

@@ -1,0 +1,96 @@
+{
+  "published": "2026-10-20",
+  "updated": "2026-10-20",
+  "pl": {
+    "metaTitle": "Audyt SEO: od czego zależy cena i co powinien zawierać",
+    "metaDescription": "Od czego zależy cena audytu SEO, co powinien zawierać, po czym poznać słaby audyt i jak przygotować się do wyceny, żeby dostać konkretną ofertę.",
+    "title": "Audyt SEO: od czego zależy cena i co powinien zawierać",
+    "lead": "Pytanie „ile kosztuje audyt SEO” ma sens dopiero wtedy, gdy wiadomo, co ma z niego wyjść. Raport wygenerowany z narzędzia i audyt zakończony listą zadań dla programistów to dwie zupełnie różne usługi. Wyjaśniam, co wpływa na wycenę i jak porównywać oferty.",
+    "sections": [
+      {
+        "h": "Co najbardziej wpływa na wycenę",
+        "body": "<ul><li><strong>Liczba szablonów, a nie tylko liczba stron.</strong> Sklep z milionem produktów może mieć kilka szablonów, a serwis firmowy z trzystoma podstronami kilkanaście. Problemy techniczne powtarzają się w szablonach, więc to one wyznaczają ilość pracy.</li><li><strong>Platforma i JavaScript.</strong> Strona renderowana po stronie przeglądarki albo CMS enterprise, taki jak Sitecore czy Adobe Experience Manager, wymaga więcej testów niż prosty WordPress.</li><li><strong>Liczba rynków i języków.</strong> Każdy rynek to osobne hreflangi, osobne dane w Search Console i często osobne problemy.</li><li><strong>Dostęp do danych.</strong> Audyt z dostępem do Search Console, analityki i logów serwera jest dokładniejszy, ale też wymaga więcej analizy niż sam crawl.</li><li><strong>Zakres po audycie.</strong> Sama diagnoza, diagnoza z planem wdrożenia albo diagnoza z odbiorem poprawek to trzy różne wyceny.</li></ul>"
+      },
+      {
+        "h": "Co powinien zawierać dobry audyt",
+        "body": "<p>Niezależnie od ceny, dobry audyt techniczny obejmuje co najmniej:</p><ul><li>crawl i dostępność: robots.txt, kody odpowiedzi, przekierowania, mapy witryn,</li><li>indeksację: raport z Search Console, canonicale, noindex, duplikaty,</li><li>renderowanie JavaScriptu: czy treść i linki są w HTML,</li><li>architekturę i linkowanie wewnętrzne,</li><li>wydajność na danych od prawdziwych użytkowników (Core Web Vitals),</li><li>dane strukturalne i, przy wielu rynkach, hreflang,</li><li>przy dużych serwisach: analizę logów serwera.</li></ul><p>Najważniejsza jest jednak ostatnia część: <strong>priorytety</strong>. Każdy problem powinien mieć ocenę wpływu na ruch i opis zadania, które programista może wziąć do pracy. Pełną listę obszarów opisałem w poradniku <a href='/poradniki/audyt-techniczny-seo-checklista/'>audyt techniczny SEO: co sprawdzić</a>.</p>"
+      },
+      {
+        "h": "Po czym poznać słaby audyt",
+        "body": "<ul><li><strong>Setki ostrzeżeń bez priorytetów.</strong> Eksport z narzędzia to materiał do analizy, a nie wynik audytu.</li><li><strong>Brak pytań o dane.</strong> Ktoś, kto nie prosi o dostęp do Search Console, nie wie, co Google naprawdę indeksuje na Twojej stronie.</li><li><strong>Te same rekomendacje dla każdego.</strong> Jeśli raport mógłby dotyczyć dowolnej strony, nie dotyczy Twojej.</li><li><strong>Obietnice pozycji.</strong> Nikt nie kontroluje algorytmu Google. Uczciwy audyt obiecuje diagnozę i plan, a nie miejsce w wynikach.</li><li><strong>Brak planu na wdrożenie.</strong> Audyt, który kończy się PDF-em, a nie zadaniami dla zespołu, rzadko zmienia cokolwiek na stronie.</li></ul>"
+      },
+      {
+        "h": "Jak przygotować się do wyceny",
+        "body": "<p>Im więcej konkretów podasz na starcie, tym dokładniejsza będzie wycena:</p><ol><li>adres strony i najważniejsze sekcje, które mają zarabiać,</li><li>cel: spadek ruchu do wyjaśnienia, planowana migracja, wejście na nowe rynki, widoczność w AI,</li><li>CMS i technologia, na przykład WordPress, Magento czy aplikacja w React,</li><li>liczba rynków i wersji językowych,</li><li>dostęp, który możesz dać: Search Console, analityka, logi serwera,</li><li>ostatnie duże zmiany: nowy szablon, migracja, zmiana domeny,</li><li>kto będzie wdrażał poprawki: własny zespół, software house, agencja.</li></ol>"
+      },
+      {
+        "h": "Jak wyceniam audyt",
+        "body": "<p>Audyt wyceniam jednorazowo, po krótkiej rozmowie, na której ustalamy cel i zakres. Wynikiem nie jest raport do szuflady, tylko lista problemów ułożona według wpływu na ruch i przychód, z zadaniami gotowymi dla programistów. Jeśli chcesz, mogę też odebrać wdrożone poprawki. Szczegóły znajdziesz na stronie usługi <a href='/uslugi/audyt-technical-seo/'>audyt Technical SEO</a>.</p>"
+      }
+    ],
+    "faq": [
+      {
+        "q": "Ile trwa audyt SEO?",
+        "a": "Zależy od wielkości serwisu, liczby szablonów i rynków oraz od tego, jak szybko dostanę dostęp do danych. Konkretny termin ustalamy razem z zakresem, przed startem."
+      },
+      {
+        "q": "Czy darmowy audyt z narzędzia wystarczy?",
+        "a": "Na początek tak, bo pokaże oczywiste błędy. Nie powie jednak, które z setek ostrzeżeń naprawdę kosztują Cię ruch, a to jest najcenniejsza część audytu."
+      },
+      {
+        "q": "Czy po audycie muszę wdrażać wszystko?",
+        "a": "Nie. Dobry audyt wskazuje kolejność. Zwykle kilka pierwszych zadań daje największą część efektu, a resztę można rozłożyć w czasie."
+      },
+      {
+        "q": "Czy audyt obejmuje widoczność w AI?",
+        "a": "Może. Dostęp botów AI, renderowanie treści bez JavaScriptu i dane strukturalne sprawdzam w ramach audytu technicznego, a szerszą analizę obecności marki w odpowiedziach AI robię jako osobną usługę."
+      }
+    ]
+  },
+  "en": {
+    "metaTitle": "SEO Audit Cost: What Drives the Price and What to Expect",
+    "metaDescription": "What drives the cost of an SEO audit, what it should include, how to spot a weak audit and how to prepare so you get a precise quote.",
+    "title": "SEO audit cost: what drives the price and what it should include",
+    "lead": "“How much does an SEO audit cost” only makes sense once you know what it should deliver. A report generated by a tool and an audit that ends with tickets for your developers are two very different services. Here is what affects the price and how to compare offers.",
+    "sections": [
+      {
+        "h": "What affects the price most",
+        "body": "<ul><li><strong>The number of templates, not just the number of pages.</strong> A store with a million products may have a handful of templates, while a corporate site with three hundred pages may have a dozen. Technical problems repeat across templates, so templates drive the amount of work.</li><li><strong>Platform and JavaScript.</strong> A client-side rendered site or an enterprise CMS such as Sitecore or Adobe Experience Manager needs more testing than a simple WordPress site.</li><li><strong>Markets and languages.</strong> Each market means its own hreflang, its own Search Console data and often its own problems.</li><li><strong>Access to data.</strong> An audit with access to Search Console, analytics and server logs is more accurate, but also takes more analysis than a crawl alone.</li><li><strong>Scope after the audit.</strong> Diagnosis only, diagnosis with an implementation plan, or diagnosis with sign-off of the fixes are three different quotes.</li></ul>"
+      },
+      {
+        "h": "What a good audit should include",
+        "body": "<p>Whatever the price, a good technical audit covers at least:</p><ul><li>crawling and access: robots.txt, status codes, redirects, sitemaps,</li><li>indexation: the Search Console report, canonicals, noindex, duplicates,</li><li>JavaScript rendering: are content and links in the HTML?</li><li>architecture and internal linking,</li><li>performance based on real-user data (Core Web Vitals),</li><li>structured data and, for multiple markets, hreflang,</li><li>for large sites: server log analysis.</li></ul><p>The most important part comes last: <strong>priorities</strong>. Every issue should come with an estimate of its traffic impact and a task description a developer can pick up. I cover the full list of areas in <a href='/en/guides/technical-seo-audit-checklist/'>technical SEO audit: what to check</a>.</p>"
+      },
+      {
+        "h": "How to spot a weak audit",
+        "body": "<ul><li><strong>Hundreds of warnings without priorities.</strong> A tool export is material for analysis, not the result of an audit.</li><li><strong>No questions about data.</strong> Someone who doesn’t ask for Search Console access doesn’t know what Google actually indexes on your site.</li><li><strong>The same recommendations for everyone.</strong> If the report could be about any site, it isn’t about yours.</li><li><strong>Ranking promises.</strong> Nobody controls Google’s algorithm. An honest audit promises a diagnosis and a plan, not a position.</li><li><strong>No plan for implementation.</strong> An audit that ends with a PDF rather than tickets for your team rarely changes anything on the site.</li></ul>"
+      },
+      {
+        "h": "How to prepare for a quote",
+        "body": "<p>The more specifics you share upfront, the more precise the quote:</p><ol><li>the site URL and the key sections that should make money,</li><li>the goal: a traffic drop to explain, a planned migration, new markets, AI visibility,</li><li>CMS and technology, for example WordPress, Magento or a React app,</li><li>the number of markets and language versions,</li><li>the access you can give: Search Console, analytics, server logs,</li><li>recent big changes: a new template, a migration, a domain change,</li><li>who will implement the fixes: your own team, a software house, an agency.</li></ol>"
+      },
+      {
+        "h": "How I price an audit",
+        "body": "<p>I price audits as a one-off, after a short call where we agree the goal and scope. The result is not a report for the drawer but a list of issues ranked by their impact on traffic and revenue, with tickets ready for your developers. If you like, I can also sign off the fixes once they are live. See the <a href='/en/services/technical-seo-audit/'>technical SEO audit</a> service for details.</p>"
+      }
+    ],
+    "faq": [
+      {
+        "q": "How long does an SEO audit take?",
+        "a": "It depends on the size of the site, the number of templates and markets, and how quickly I get access to the data. We agree a specific timeline together with the scope, before we start."
+      },
+      {
+        "q": "Is a free audit from a tool enough?",
+        "a": "As a start, yes, because it shows the obvious errors. It won’t tell you which of the hundreds of warnings really cost you traffic, and that is the most valuable part of an audit."
+      },
+      {
+        "q": "Do I have to implement everything after the audit?",
+        "a": "No. A good audit tells you the order. Usually the first few tasks deliver most of the effect, and the rest can be spread over time."
+      },
+      {
+        "q": "Does the audit cover AI visibility?",
+        "a": "It can. AI bot access, rendering without JavaScript and structured data are part of the technical audit, and a broader analysis of how your brand appears in AI answers is a separate service."
+      }
+    ]
+  }
+}

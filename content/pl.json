@@ -268,7 +268,6 @@
       {
         "name": "Konsultacja ekspercka",
         "kind": "Jednorazowo",
-        "price": "",
         "desc": "Sesja online z Tobą albo Twoim zespołem. Bierzemy na warsztat konkretny problem: spadek ruchu, planowaną migrację, widoczność w AI. Wychodzisz z jasnym planem, co zrobić i w jakiej kolejności.",
         "points": [
           "Przegląd Twojej strony przed spotkaniem",
@@ -282,7 +281,6 @@
       {
         "name": "Projekt",
         "kind": "Zakres i termin z góry",
-        "price": "",
         "desc": "Audyt, migracja, wdrożenie danych strukturalnych albo przygotowanie serwisu pod AI search. Prowadzę projekt od diagnozy po odbiór wdrożenia.",
         "points": [
           "Zadania gotowe dla programistów",
@@ -290,13 +288,11 @@
           "Jedna osoba odpowiedzialna za wynik"
         ],
         "cta": "Opowiedz o projekcie",
-        "topic": "",
         "featured": true
       },
       {
         "name": "Stała współpraca",
         "kind": "Rozliczenie miesięczne",
-        "price": "",
         "desc": "Zewnętrzny technical SEO lead dla Twojego zespołu. Pilnuję SEO w każdym wydaniu, monitoruję indeksację i widoczność w AI, odpowiadam na pytania na bieżąco.",
         "points": [
           "SEO wpisane w proces wydań",
@@ -418,7 +414,7 @@
   },
   "guidesUi": {
     "metaTitle": "Poradniki Technical SEO i AI search | Maciej Zięciak",
-    "metaDescription": "Praktyczne poradniki SEO: boty AI w robots.txt, migracja strony, audyt techniczny, hreflang i filtry w sklepie. Checklisty, które stosuję u klientów.",
+    "metaDescription": "Praktyczne poradniki SEO i AI search: AI Overviews, boty AI, audyt, migracja, wdrożenia, hreflang i filtry w sklepie. Checklisty z mojej praktyki.",
     "eyebrow": "Poradniki SEO i AI search",
     "title": "To, co sprawdzam u klientów. Rozpisane krok po kroku.",
     "lead": "Checklisty i wyjaśnienia z technical SEO i AI search. Bez lania wody, z przykładami, które możesz od razu sprawdzić na swojej stronie.",

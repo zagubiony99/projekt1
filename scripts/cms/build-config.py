@@ -310,9 +310,12 @@ GUIDE = [
 ]
 
 GUIDES = [  # key, label in the CMS menu
+    ('ai-overviews', 'AI Overviews i ChatGPT: jak przygotować stronę'),
     ('ai-bots', 'Boty AI w robots.txt'),
-    ('migration', 'Migracja strony: checklista'),
+    ('audit-cost', 'Audyt SEO: od czego zależy cena'),
     ('audit', 'Audyt techniczny: checklista'),
+    ('migration', 'Migracja strony: checklista'),
+    ('release', 'SEO przed wdrożeniem: checklista'),
     ('hreflang', 'Hreflang: najczęstsze błędy'),
     ('facets', 'Filtry w sklepie a SEO'),
 ]

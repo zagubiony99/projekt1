@@ -24,8 +24,9 @@ const year = new Date().getFullYear();
       <div>
         <p class="ch"><a href={pageRoutes.guides[lang]}>{t.nav.guides}</a></p>
         <ul>
-          {guides.map((g) => <li><a href={g[lang].path}>{g[lang].title}</a></li>)}
+          {guides.slice(0, 5).map((g) => <li><a href={g[lang].path}>{g[lang].title}</a></li>)}
           <li><a href={pageRoutes.robotsTool[lang]}>{robotsTool[lang].title}</a></li>
+          <li><a href={pageRoutes.guides[lang]}>{t.guidesUi.all}</a></li>
         </ul>
       </div>
       <div>

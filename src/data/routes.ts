@@ -25,9 +25,12 @@ export const pageRoutes = {
 // Guides: key, URL slugs and the service each guide leads to.
 // The article copy lives in content/guides/<key>.json.
 export const guideRoutes = [
+  { key: 'ai-overviews', service: 'ai', slug: { pl: 'ai-overviews-jak-przygotowac-strone', en: 'ai-overviews-how-to-prepare' } },
   { key: 'ai-bots', service: 'ai', slug: { pl: 'boty-ai-robots-txt', en: 'ai-bots-robots-txt' } },
-  { key: 'migration', service: 'migration', slug: { pl: 'migracja-strony-checklista-seo', en: 'website-migration-seo-checklist' } },
+  { key: 'audit-cost', service: 'audit', slug: { pl: 'audyt-seo-cena', en: 'seo-audit-cost' } },
   { key: 'audit', service: 'audit', slug: { pl: 'audyt-techniczny-seo-checklista', en: 'technical-seo-audit-checklist' } },
+  { key: 'migration', service: 'migration', slug: { pl: 'migracja-strony-checklista-seo', en: 'website-migration-seo-checklist' } },
+  { key: 'release', service: 'webops', slug: { pl: 'seo-przed-wdrozeniem-checklista', en: 'pre-release-seo-checklist' } },
   { key: 'hreflang', service: 'intl', slug: { pl: 'hreflang-najczestsze-bledy', en: 'hreflang-common-mistakes' } },
   { key: 'facets', service: 'ecom', slug: { pl: 'filtry-w-sklepie-seo', en: 'faceted-navigation-seo' } },
 ] as const;

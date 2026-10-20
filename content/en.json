@@ -268,7 +268,6 @@
       {
         "name": "Expert consultation",
         "kind": "One-off",
-        "price": "",
         "desc": "An online session with you or your team. We take one specific problem apart: a traffic drop, a planned migration, AI visibility. You leave with a clear plan of what to do and in which order.",
         "points": [
           "I review your site before we meet",
@@ -282,7 +281,6 @@
       {
         "name": "Project",
         "kind": "Scope and timeline agreed upfront",
-        "price": "",
         "desc": "An audit, a migration, a structured data rollout or getting your site ready for AI search. I run the project from diagnosis to signing off the release.",
         "points": [
           "Tickets ready for your developers",
@@ -290,13 +288,11 @@
           "One person accountable for the result"
         ],
         "cta": "Tell me about your project",
-        "topic": "",
         "featured": true
       },
       {
         "name": "Ongoing support",
         "kind": "Monthly",
-        "price": "",
         "desc": "An external technical SEO lead for your team. I keep SEO in every release, monitor indexation and AI visibility, and answer questions as they come up.",
         "points": [
           "SEO built into your release process",
@@ -418,7 +414,7 @@
   },
   "guidesUi": {
     "metaTitle": "Technical SEO & AI Search Guides | Maciej Zięciak",
-    "metaDescription": "Practical SEO guides: AI bots in robots.txt, website migrations, technical audits, hreflang and faceted navigation. The checklists I use with clients.",
+    "metaDescription": "Practical SEO and AI search guides: AI Overviews, AI bots, audits, migrations, releases, hreflang and faceted navigation. Checklists from my practice.",
     "eyebrow": "SEO & AI search guides",
     "title": "What I check for clients. Written up step by step.",
     "lead": "Checklists and explanations from technical SEO and AI search. No fluff, with examples you can check on your own site right away.",
