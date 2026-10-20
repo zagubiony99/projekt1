@@ -24,7 +24,7 @@ Wszystkie teksty (PL i EN), usługi i ustawienia kontaktowe edytujesz w przeglą
 3. Wybierz repozytorium i gałąź, z której publikuje się strona (np. `main`).
 4. Po lewej masz menu:
    - **Ustawienia i kontakt**: e-mail, LinkedIn, zdjęcie, formularz, kalendarz, Google Tag Manager,
-   - **Strona główna**: wszystkie teksty po polsku i po angielsku,
+   - **Strona główna**: wszystkie teksty po polsku i po angielsku, w tym „Formy współpracy” (konsultacja, projekt, stała współpraca; pole „Cena” puste = „Wycena po rozmowie”),
    - **Usługi**: 9 podstron usług, każda z wersją polską i angielską,
    - **Inne strony**: „O mnie” i narzędzie „robots.txt dla botów AI”,
    - **Poradniki**: 5 poradników. Treść rozdziału jest w HTML (akapity `<p>`, listy, tabele), daty publikacji i aktualizacji ustawiasz w kalendarzu.
@@ -66,7 +66,10 @@ python3 scripts/cms/check.py          # sprawdza, że zapis w CMS niczego nie sk
 | Kolory (biel, #f5f5f7, czerń, niebieski + własny gradient: zmienne `--a1`–`--a4`), font (SF Pro na Apple, Inter Tight gdzie indziej), przyciski | `src/styles/global.css` (zmienne w `:root`) |
 | Sekcje strony | `src/components/*.astro` |
 | Interakcje (tekst zapalający się przy scrollu, scena z kartą botów, liczby odliczające w górę, formularz) | `src/scripts/main.ts` |
-| Grafiki do udostępniania (OG) | `public/og-pl.png`, `public/og-en.png` |
+| Grafika do udostępniania strony głównej (OG) | `public/og-pl.png`, `public/og-en.png` |
+| Grafiki do udostępniania pozostałych stron (generowane przy buildzie z tytułów) | `src/lib/og.ts`, lista: `src/data/og.ts` |
+| Nagłówki cache i bezpieczeństwa (Cloudflare Pages / Netlify) | `public/_headers` |
+| Kanały RSS poradników | `/poradniki/rss.xml`, `/en/guides/rss.xml` (`src/lib/rss.ts`) |
 
 ## Formularz kontaktowy i kalendarz (ważne dla sprzedaży)
 
