@@ -1,0 +1,214 @@
+{
+  "pl": {
+    "name": "Aplikacje w ChatGPT (MCP)",
+    "card": {
+      "desc": "Twoja oferta dostępna bezpośrednio w ChatGPT: aktualne produkty, ceny i rezerwacje zamiast samego linku w odpowiedzi. Planuję aplikację opartą na MCP, prowadzę projekt z programistami i przygotowuję zgłoszenie do OpenAI.",
+      "tags": [
+        "Strategia",
+        "Specyfikacja narzędzi MCP",
+        "Prowadzenie projektu",
+        "Zgłoszenie i pomiar"
+      ]
+    },
+    "metaTitle": "Aplikacja w ChatGPT (MCP): strategia i wdrożenie",
+    "metaDescription": "Aplikacja Twojej firmy w ChatGPT oparta na MCP: czy to ma sens, jakie narzędzia i dane udostępnić, specyfikacja dla programistów, zgłoszenie i pomiar.",
+    "eyebrow": "Aplikacje w ChatGPT (MCP)",
+    "title": "Bądź w ChatGPT nie tylko jako link.",
+    "lead": "Aplikacje w ChatGPT pozwalają klientowi przeglądać Twoją ofertę, sprawdzać dostępność i przechodzić do zakupu bez wychodzenia z rozmowy. Pomagam ocenić, czy to ma sens dla Twojej firmy, zaplanować aplikację opartą na MCP i doprowadzić projekt do publikacji.",
+    "painTitle": "Brzmi znajomo?",
+    "pains": [
+      "Zarząd pyta, czy „powinniśmy mieć aplikację w ChatGPT”, a nikt nie wie, od czego zacząć.",
+      "Konkurencja jest już w ChatGPT, a Ty nie wiesz, czy to dla Ciebie.",
+      "Programiści znają Wasze API, ale nie wiedzą, jak opisać narzędzia, żeby ChatGPT z nich korzystał.",
+      "Nie wiadomo, które dane można bezpiecznie udostępnić, a które muszą zostać w środku.",
+      "Boisz się projektu, który dużo kosztuje, a potem nikt z niego nie korzysta.",
+      "Masz dobrą widoczność w Google, ale w odpowiedziach AI jesteś tylko jednym z linków."
+    ],
+    "getTitle": "Co dostajesz",
+    "gets": [
+      {
+        "t": "Ocenę, czy to ma sens",
+        "d": "Jakie pytania zadają Twoi klienci, jakie dane masz i czy aplikacja da coś, czego nie da zwykła strona."
+      },
+      {
+        "t": "Specyfikację narzędzi MCP",
+        "d": "Jakie akcje ma udostępniać aplikacja, np. wyszukaj, sprawdź dostępność, porównaj, z jakimi danymi wejściowymi i wynikami."
+      },
+      {
+        "t": "Opisy narzędzi zrozumiałe dla modelu",
+        "d": "Nazwy i opisy, dzięki którym ChatGPT wie, kiedy użyć Twojej aplikacji. To trochę jak SEO, tylko dla modelu."
+      },
+      {
+        "t": "Zadania dla programistów",
+        "d": "Wymagania, kryteria odbioru i scenariusze testowe dla Twojego zespołu albo software house’u."
+      },
+      {
+        "t": "Przygotowanie zgłoszenia",
+        "d": "Opis, metadane, scenariusze testowe i wymagania platformy, żeby aplikacja przeszła przegląd OpenAI."
+      },
+      {
+        "t": "Plan pomiaru",
+        "d": "Jak mierzyć użycie aplikacji i ruch, który z niej przychodzi, i co poprawiać po starcie."
+      }
+    ],
+    "stepsTitle": "Jak to przebiega",
+    "steps": [
+      {
+        "t": "Diagnoza",
+        "when": "Start",
+        "d": "Pytania klientów, dostępne dane i API, konkurencja. Decyzja: robimy aplikację czy wystarczy widoczność w AI."
+      },
+      {
+        "t": "Projekt",
+        "when": "Przed kodem",
+        "d": "Lista narzędzi, dane wejściowe i wyniki, opisy dla modelu, zasady bezpieczeństwa i dostępu do danych."
+      },
+      {
+        "t": "Wdrożenie",
+        "when": "Z programistami",
+        "d": "Twój zespół buduje serwer MCP i interfejs, a ja odbieram kolejne etapy i testuję je w trybie deweloperskim ChatGPT."
+      },
+      {
+        "t": "Zgłoszenie i pomiar",
+        "when": "Po publikacji",
+        "d": "Zgłoszenie do OpenAI, poprawki po przeglądzie i regularny pomiar użycia."
+      }
+    ],
+    "forTitle": "Dla kogo to jest",
+    "forYes": [
+      "E-commerce z dużym katalogiem produktów",
+      "Turystyka, hotele i rezerwacje",
+      "Nieruchomości i motoryzacja: wyszukiwarki ofert",
+      "SaaS i narzędzia, które da się użyć w rozmowie"
+    ],
+    "forNo": [
+      "Małe strony firmowe bez danych, które warto udostępniać",
+      "Firmy szukające gwarancji, że aplikacja zostanie wyróżniona w ChatGPT"
+    ],
+    "proof": "Pracuję na styku SEO, AI search i zespołów IT: obecnie jako Manager SEO & AI Search Operations w Philip Morris International, wcześniej przez prawie 5 lat w Accenture Song. Wiem, jak zamienić potrzeby biznesu w konkretne zadania dla programistów.",
+    "faq": [
+      {
+        "q": "Czy sam piszesz kod serwera MCP?",
+        "a": "Nie. Prowadzę projekt: diagnoza, specyfikacja, opisy narzędzi, odbiór i zgłoszenie. Kod piszą Twoi programiści albo software house, z którym pracujesz."
+      },
+      {
+        "q": "Czy aplikacja trafi do ChatGPT automatycznie?",
+        "a": "Nie. OpenAI przegląda zgłoszenia przed publikacją. Przygotowuję zgłoszenie zgodnie z aktualnymi wytycznymi platformy, ale decyzja należy do OpenAI."
+      },
+      {
+        "q": "Czym to się różni od widoczności w AI?",
+        "a": "Widoczność w AI sprawia, że ChatGPT czyta i cytuje Twoją stronę. Aplikacja daje mu bezpośredni dostęp do Twoich danych i funkcji, np. aktualnych cen czy dostępności. Często warto zacząć od widoczności, a aplikację zrobić, gdy ma uzasadnienie."
+      },
+      {
+        "q": "Czy MCP działa tylko w ChatGPT?",
+        "a": "Nie. MCP to otwarty standard i z serwera MCP mogą korzystać też inne asystenty, które go obsługują, na przykład Claude."
+      }
+    ]
+  },
+  "en": {
+    "name": "ChatGPT apps (MCP)",
+    "card": {
+      "desc": "Your offer available right inside ChatGPT: live products, prices and bookings instead of just a link in the answer. I plan an MCP-based app, run the project with your developers and prepare the submission to OpenAI.",
+      "tags": [
+        "Strategy",
+        "MCP tool specification",
+        "Project lead",
+        "Submission and measurement"
+      ]
+    },
+    "metaTitle": "ChatGPT App (MCP): Strategy and Delivery",
+    "metaDescription": "Your company’s app in ChatGPT, built on MCP: whether it makes sense, which tools and data to expose, a spec for developers, submission and measurement.",
+    "eyebrow": "ChatGPT apps (MCP)",
+    "title": "Be in ChatGPT as more than a link.",
+    "lead": "Apps in ChatGPT let customers browse your offer, check availability and move towards a purchase without leaving the conversation. I help you decide whether it makes sense for your business, plan an MCP-based app and see the project through to launch.",
+    "painTitle": "Sound familiar?",
+    "pains": [
+      "The board asks whether “we should have a ChatGPT app”, and nobody knows where to start.",
+      "Competitors are already in ChatGPT, and you don’t know if it is right for you.",
+      "Your developers know your API but not how to describe tools so ChatGPT actually uses them.",
+      "Nobody is sure which data can safely be exposed and which must stay inside.",
+      "You worry about a project that costs a lot and then nobody uses.",
+      "You rank well in Google, but in AI answers you are just one of the links."
+    ],
+    "getTitle": "What you get",
+    "gets": [
+      {
+        "t": "A view on whether it makes sense",
+        "d": "What your customers ask, what data you have, and whether an app offers something a regular site can’t."
+      },
+      {
+        "t": "An MCP tool specification",
+        "d": "Which actions the app should expose, e.g. search, check availability, compare, with their inputs and outputs."
+      },
+      {
+        "t": "Tool descriptions models understand",
+        "d": "Names and descriptions that tell ChatGPT when to use your app. A bit like SEO, but for the model."
+      },
+      {
+        "t": "Tickets for your developers",
+        "d": "Requirements, acceptance criteria and test scenarios for your team or your software house."
+      },
+      {
+        "t": "Submission preparation",
+        "d": "Description, metadata, test scenarios and platform requirements, so the app gets through OpenAI’s review."
+      },
+      {
+        "t": "A measurement plan",
+        "d": "How to measure app usage and the traffic it brings, and what to improve after launch."
+      }
+    ],
+    "stepsTitle": "How it works",
+    "steps": [
+      {
+        "t": "Diagnosis",
+        "when": "Start",
+        "d": "Customer questions, available data and APIs, competitors. The decision: build an app, or is AI visibility enough?"
+      },
+      {
+        "t": "Design",
+        "when": "Before code",
+        "d": "The list of tools, inputs and outputs, descriptions for the model, security and data access rules."
+      },
+      {
+        "t": "Build",
+        "when": "With your developers",
+        "d": "Your team builds the MCP server and the interface, and I sign off each stage and test it in ChatGPT’s developer mode."
+      },
+      {
+        "t": "Submission and measurement",
+        "when": "After launch",
+        "d": "Submission to OpenAI, fixes after review and regular usage measurement."
+      }
+    ],
+    "forTitle": "Who it is for",
+    "forYes": [
+      "E-commerce with a large product catalogue",
+      "Travel, hotels and bookings",
+      "Real estate and automotive: listing search",
+      "SaaS and tools that can be used in a conversation"
+    ],
+    "forNo": [
+      "Small company sites without data worth exposing",
+      "Companies looking for a guarantee their app will be featured in ChatGPT"
+    ],
+    "proof": "I work where SEO, AI search and IT teams meet: currently as Manager SEO & AI Search Operations at Philip Morris International, and before that for almost 5 years at Accenture Song. I know how to turn business needs into concrete developer tasks.",
+    "faq": [
+      {
+        "q": "Do you write the MCP server code yourself?",
+        "a": "No. I run the project: diagnosis, specification, tool descriptions, sign-off and submission. The code is written by your developers or the software house you work with."
+      },
+      {
+        "q": "Will the app appear in ChatGPT automatically?",
+        "a": "No. OpenAI reviews submissions before publishing them. I prepare the submission according to the platform’s current guidelines, but the decision is OpenAI’s."
+      },
+      {
+        "q": "How is this different from AI visibility?",
+        "a": "AI visibility means ChatGPT reads and cites your site. An app gives it direct access to your data and features, such as live prices or availability. It often makes sense to start with visibility and build an app once there is a clear case for it."
+      },
+      {
+        "q": "Does MCP only work in ChatGPT?",
+        "a": "No. MCP is an open standard, and other assistants that support it, such as Claude, can use an MCP server too."
+      }
+    ]
+  }
+}

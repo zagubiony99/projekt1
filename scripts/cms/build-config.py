@@ -310,6 +310,7 @@ GUIDE = [
 ]
 
 GUIDES = [  # key, label in the CMS menu
+    ('chatgpt-apps', 'Aplikacja w ChatGPT (MCP)'),
     ('ai-overviews', 'AI Overviews i ChatGPT: jak przygotować stronę'),
     ('ai-bots', 'Boty AI w robots.txt'),
     ('audit-cost', 'Audyt SEO: od czego zależy cena'),
@@ -357,6 +358,7 @@ TOOL = [
 SERVICES = [  # key, label in the CMS menu
     ('audit', 'Technical SEO (audyty)'),
     ('ai', 'Widoczność w odpowiedziach AI'),
+    ('mcp', 'Aplikacje w ChatGPT (MCP)'),
     ('schema', 'Dane strukturalne'),
     ('webops', 'WebOps i SEO Operations'),
     ('content', 'Planowanie treści'),

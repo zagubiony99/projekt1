@@ -1,0 +1,112 @@
+{
+  "published": "2026-10-21",
+  "updated": "2026-10-21",
+  "pl": {
+    "metaTitle": "Aplikacja w ChatGPT (MCP): co to jest i dla kogo",
+    "metaDescription": "Czym są aplikacje w ChatGPT i MCP, jak korzystają z nich Zillow, Canva czy Booking.com, dla jakich firm mają sens i jak wygląda projekt krok po kroku.",
+    "title": "Aplikacja w ChatGPT (MCP): co to jest i czy Twoja firma jej potrzebuje",
+    "lead": "Do niedawna jedynym sposobem, żeby pojawić się w ChatGPT, było to, że model przeczyta i zacytuje Twoją stronę. Aplikacje w ChatGPT zmieniają to: Twoja firma może dać asystentowi bezpośredni dostęp do swojej oferty. Wyjaśniam, jak to działa, jak robią to duże marki i dla kogo to ma sens.",
+    "sections": [
+      {
+        "h": "Czym jest MCP",
+        "body": "<p>MCP (Model Context Protocol) to otwarty standard, który pozwala asystentom AI łączyć się z zewnętrznymi systemami: bazą produktów, systemem rezerwacji, API firmy. Opublikowało go Anthropic pod koniec 2024 roku, a dziś korzystają z niego także OpenAI i inni.</p><p>W uproszczeniu: firma uruchamia <strong>serwer MCP</strong>, który udostępnia kilka <strong>narzędzi</strong>, na przykład „wyszukaj oferty” albo „sprawdź dostępność”. Asystent czyta opisy tych narzędzi i sam decyduje, kiedy ich użyć, żeby odpowiedzieć użytkownikowi na podstawie aktualnych danych.</p>"
+      },
+      {
+        "h": "Aplikacje w ChatGPT",
+        "body": "<p>W październiku 2025 roku OpenAI pokazało aplikacje w ChatGPT i Apps SDK, zbudowane na MCP. Aplikacja może nie tylko zwrócić dane, ale też pokazać w rozmowie interaktywny interfejs: mapę, listę ofert, edytor. ChatGPT może też sam zaproponować aplikację, gdy pasuje do tematu rozmowy.</p><p>Od grudnia 2025 roku firmy mogą zgłaszać swoje aplikacje do katalogu w ChatGPT. OpenAI przegląda każde zgłoszenie przed publikacją. Platforma szybko się zmienia, także nazwy i zasady, dlatego przed startem projektu zawsze sprawdzam aktualną dokumentację OpenAI.</p>"
+      },
+      {
+        "h": "Przykłady: jak robią to duże marki",
+        "body": "<p>Wśród pierwszych partnerów OpenAI byli Booking.com, Expedia, Zillow, Canva, Spotify, Coursera i Figma. Dwa przykłady opisane przez OpenAI przy premierze:</p><ul><li><strong>Zillow:</strong> podczas rozmowy o kupnie domu ChatGPT może zaproponować aplikację Zillow, a użytkownik przegląda oferty pasujące do budżetu na interaktywnej mapie, bez wychodzenia z czatu.</li><li><strong>Canva:</strong> użytkownik zaczyna od konspektu w rozmowie i prosi Canvę o zamianę go w prezentację.</li></ul><p>Wspólny mianownik: aplikacja nie zastępuje strony, tylko skraca drogę od pytania do działania. Klient nie musi przepisywać kryteriów do wyszukiwarki na stronie, bo robi to za niego asystent.</p>"
+      },
+      {
+        "h": "Czym to się różni od SEO pod AI",
+        "body": "<table><thead><tr><th></th><th>Widoczność w AI</th><th>Aplikacja w ChatGPT</th></tr></thead><tbody><tr><td>Skąd ChatGPT ma dane</td><td>Czyta Twoją stronę</td><td>Pyta Twój system przez MCP</td></tr><tr><td>Aktualność</td><td>Taka, jak przy ostatniej wizycie bota</td><td>Na żywo: ceny, dostępność, oferty</td></tr><tr><td>Co widzi użytkownik</td><td>Odpowiedź z linkiem do źródła</td><td>Interaktywne wyniki w rozmowie</td></tr><tr><td>Kontrola nad treścią</td><td>Niewielka</td><td>Duża: sam definiujesz dane i akcje</td></tr><tr><td>Koszt</td><td>Praca nad stroną i treścią</td><td>Projekt programistyczny i utrzymanie</td></tr></tbody></table><p>To nie jest wybór „albo, albo”. Dla większości firm widoczność w AI jest pierwszym krokiem, a aplikacja kolejnym, gdy jest do tego dobry powód. Więcej o pierwszym kroku w poradniku <a href='/poradniki/ai-overviews-jak-przygotowac-strone/'>AI Overviews, ChatGPT i Perplexity: jak przygotować stronę</a>.</p>"
+      },
+      {
+        "h": "Dla kogo to ma sens",
+        "body": "<p><strong>Tak, jeśli masz dużo danych, które często się zmieniają, i klientów zadających powtarzalne pytania:</strong></p><ul><li>e-commerce z dużym katalogiem,</li><li>turystyka, hotele i rezerwacje,</li><li>nieruchomości i motoryzacja: wyszukiwarki ofert, konfiguratory,</li><li>SaaS i narzędzia, które da się użyć w rozmowie.</li></ul><p><strong>Ostrożnie</strong> w branżach regulowanych, takich jak zdrowie, finanse czy produkty z ograniczeniami reklamowymi: trzeba sprawdzić zasady platformy, prawo i odpowiedzialność za treści generowane w rozmowie.</p><p><strong>Raczej nie</strong>, jeśli masz małą stronę firmową bez danych, które warto udostępniać. Wtedy lepiej zainwestować w widoczność w AI.</p>"
+      },
+      {
+        "h": "Jak wygląda taki projekt",
+        "body": "<ol><li><strong>Pytania klientów:</strong> jakie zadania użytkownicy chcą załatwić w rozmowie i czy aplikacja zrobi to lepiej niż strona.</li><li><strong>Narzędzia i dane:</strong> jakie akcje udostępnić, z jakimi danymi wejściowymi i wynikami, co zostaje prywatne.</li><li><strong>Opisy dla modelu:</strong> nazwy i opisy narzędzi, dzięki którym ChatGPT wie, kiedy ich użyć.</li><li><strong>Wdrożenie:</strong> programiści budują serwer MCP i interfejs, a całość testuje się w trybie deweloperskim ChatGPT.</li><li><strong>Zgłoszenie:</strong> opis, metadane i scenariusze testowe, potem przegląd OpenAI.</li><li><strong>Pomiar:</strong> użycie aplikacji, ruch i konwersje, które z niej przychodzą.</li></ol>"
+      },
+      {
+        "h": "Na co uważać",
+        "body": "<ul><li><strong>Dane osobowe i bezpieczeństwo.</strong> Jeśli aplikacja ma dostęp do kont klientów, potrzebne jest bezpieczne logowanie i jasne zasady, co model może zobaczyć.</li><li><strong>Utrzymanie.</strong> Aplikacja to produkt, nie kampania: zmiany w API, danych i na platformie wymagają opieki.</li><li><strong>Zmiany platformy.</strong> Zasady, nazwy i wymagania OpenAI ewoluują, więc projekt warto planować z zapasem na zmiany.</li><li><strong>Mierzalny cel.</strong> Zanim zaczniesz, ustal, co ma być sukcesem: rezerwacje, leady, zapytania.</li></ul><p>Jeśli chcesz ocenić, czy aplikacja ma sens dla Twojej firmy, zobacz usługę <a href='/uslugi/aplikacja-chatgpt-mcp/'>aplikacje w ChatGPT (MCP)</a>.</p>"
+      }
+    ],
+    "faq": [
+      {
+        "q": "Czy aplikacja w ChatGPT to to samo co dawne pluginy?",
+        "a": "Nie. Pluginy ChatGPT były wcześniejszym mechanizmem, który OpenAI wycofało w 2024 roku. Aplikacje to nowe podejście, oparte na otwartym standardzie MCP, z możliwością pokazania interaktywnego interfejsu w rozmowie."
+      },
+      {
+        "q": "Ile kosztuje zrobienie aplikacji?",
+        "a": "Zależy od liczby narzędzi, stanu Waszego API, interfejsu i wymagań bezpieczeństwa. Dlatego zaczynam od diagnozy: czy aplikacja ma sens i jaki jest najmniejszy zakres, który da wartość."
+      },
+      {
+        "q": "Czy serwer MCP zadziała też w innych asystentach?",
+        "a": "MCP to otwarty standard, więc z serwera MCP mogą korzystać też inne asystenty, które go obsługują, na przykład Claude. Szczegóły integracji i interfejsu różnią się między platformami."
+      },
+      {
+        "q": "Czy muszę mieć aplikację, żeby być widocznym w ChatGPT?",
+        "a": "Nie. ChatGPT może cytować Twoją stronę bez żadnej aplikacji, jeśli boty mają do niej dostęp, a treść jest dobra. Aplikacja to dodatkowy kanał, a nie warunek."
+      }
+    ]
+  },
+  "en": {
+    "metaTitle": "ChatGPT Apps (MCP): What They Are and Who Needs One",
+    "metaDescription": "What ChatGPT apps and MCP are, how Zillow, Canva and Booking.com use them, which businesses they suit and what a project looks like, step by step.",
+    "title": "ChatGPT apps (MCP): what they are and whether your business needs one",
+    "lead": "Until recently, the only way to show up in ChatGPT was for the model to read and cite your site. ChatGPT apps change that: your company can give the assistant direct access to its offer. Here is how it works, how big brands use it, and who it makes sense for.",
+    "sections": [
+      {
+        "h": "What MCP is",
+        "body": "<p>MCP (Model Context Protocol) is an open standard that lets AI assistants connect to external systems: a product database, a booking system, a company API. Anthropic published it in late 2024, and today OpenAI and others use it too.</p><p>Put simply: a company runs an <strong>MCP server</strong> that exposes a few <strong>tools</strong>, such as “search listings” or “check availability”. The assistant reads the tool descriptions and decides on its own when to use them to answer the user with live data.</p>"
+      },
+      {
+        "h": "Apps in ChatGPT",
+        "body": "<p>In October 2025 OpenAI introduced apps in ChatGPT and the Apps SDK, built on MCP. An app can not only return data but also show an interactive interface in the conversation: a map, a list of offers, an editor. ChatGPT can also suggest an app on its own when it fits the conversation.</p><p>Since December 2025, companies can submit their apps to the directory in ChatGPT. OpenAI reviews every submission before it is published. The platform changes quickly, names and rules included, so before starting a project I always check OpenAI’s current documentation.</p>"
+      },
+      {
+        "h": "Examples: how big brands do it",
+        "body": "<p>OpenAI’s first partners included Booking.com, Expedia, Zillow, Canva, Spotify, Coursera and Figma. Two examples OpenAI described at launch:</p><ul><li><strong>Zillow:</strong> during a conversation about buying a home, ChatGPT can suggest the Zillow app, and the user browses listings that match their budget on an interactive map, without leaving the chat.</li><li><strong>Canva:</strong> the user starts with an outline in the conversation and asks Canva to turn it into a slide deck.</li></ul><p>The common thread: the app doesn’t replace the website, it shortens the path from question to action. The customer doesn’t have to retype criteria into a site search, because the assistant does it for them.</p>"
+      },
+      {
+        "h": "How it differs from SEO for AI",
+        "body": "<table><thead><tr><th></th><th>AI visibility</th><th>ChatGPT app</th></tr></thead><tbody><tr><td>Where ChatGPT gets data</td><td>It reads your site</td><td>It queries your system via MCP</td></tr><tr><td>Freshness</td><td>As of the bot’s last visit</td><td>Live: prices, availability, offers</td></tr><tr><td>What the user sees</td><td>An answer with a source link</td><td>Interactive results in the conversation</td></tr><tr><td>Control over content</td><td>Limited</td><td>High: you define the data and actions</td></tr><tr><td>Cost</td><td>Work on the site and content</td><td>A development project and upkeep</td></tr></tbody></table><p>It isn’t an either-or choice. For most companies AI visibility is the first step, and an app the next one, when there is a good reason. More on the first step in <a href='/en/guides/ai-overviews-how-to-prepare/'>AI Overviews, ChatGPT and Perplexity: how to prepare your site</a>.</p>"
+      },
+      {
+        "h": "Who it makes sense for",
+        "body": "<p><strong>Yes, if you have lots of frequently changing data and customers asking repeatable questions:</strong></p><ul><li>e-commerce with a large catalogue,</li><li>travel, hotels and bookings,</li><li>real estate and automotive: listing search, configurators,</li><li>SaaS and tools that can be used in a conversation.</li></ul><p><strong>With care</strong> in regulated industries such as health, finance or products with advertising restrictions: check the platform rules, the law and liability for content generated in the conversation.</p><p><strong>Probably not</strong> if you have a small company site with no data worth exposing. Investing in AI visibility is the better move.</p>"
+      },
+      {
+        "h": "What such a project looks like",
+        "body": "<ol><li><strong>Customer questions:</strong> which tasks users want to get done in a conversation, and whether an app does it better than the site.</li><li><strong>Tools and data:</strong> which actions to expose, with which inputs and outputs, and what stays private.</li><li><strong>Descriptions for the model:</strong> tool names and descriptions that tell ChatGPT when to use them.</li><li><strong>Build:</strong> developers build the MCP server and the interface, and everything is tested in ChatGPT’s developer mode.</li><li><strong>Submission:</strong> description, metadata and test scenarios, then OpenAI’s review.</li><li><strong>Measurement:</strong> app usage, and the traffic and conversions it brings.</li></ol>"
+      },
+      {
+        "h": "What to watch out for",
+        "body": "<ul><li><strong>Personal data and security.</strong> If the app accesses customer accounts, you need secure sign-in and clear rules on what the model can see.</li><li><strong>Upkeep.</strong> An app is a product, not a campaign: changes to the API, the data and the platform need ongoing care.</li><li><strong>Platform changes.</strong> OpenAI’s rules, names and requirements evolve, so plan the project with room for change.</li><li><strong>A measurable goal.</strong> Before you start, agree what success means: bookings, leads, enquiries.</li></ul><p>If you want to assess whether an app makes sense for your business, see the <a href='/en/services/chatgpt-app-mcp/'>ChatGPT apps (MCP)</a> service.</p>"
+      }
+    ],
+    "faq": [
+      {
+        "q": "Is a ChatGPT app the same as the old plugins?",
+        "a": "No. ChatGPT plugins were an earlier mechanism that OpenAI retired in 2024. Apps are a new approach based on the open MCP standard, with the option to show an interactive interface in the conversation."
+      },
+      {
+        "q": "How much does building an app cost?",
+        "a": "It depends on the number of tools, the state of your API, the interface and security requirements. That is why I start with a diagnosis: whether an app makes sense and what the smallest useful scope is."
+      },
+      {
+        "q": "Will an MCP server work in other assistants too?",
+        "a": "MCP is an open standard, so other assistants that support it, such as Claude, can use an MCP server as well. Integration and interface details differ between platforms."
+      },
+      {
+        "q": "Do I need an app to be visible in ChatGPT?",
+        "a": "No. ChatGPT can cite your site without any app, as long as bots can access it and the content is good. An app is an additional channel, not a requirement."
+      }
+    ]
+  }
+}
