@@ -385,6 +385,42 @@ GEN = [
     s('serviceCta', 'Ramka usługi: przycisk'),
 ]
 
+# ---- hreflang checker (content/tools/hreflang.json) -----------------------------------
+HL = [
+    s('metaTitle', 'SEO: tytuł', 'Do 60 znaków.'),
+    t('metaDescription', 'SEO: opis', 'Do 155 znaków.'),
+    s('eyebrow', 'Nadtytuł'),
+    s('title', 'Nagłówek (H1)'),
+    t('lead', 'Tekst pod nagłówkiem'),
+    s('inputLabel', 'Pole: etykieta'),
+    t('inputHint', 'Pole: podpowiedź'),
+    s('urlLabel', 'Adres strony: etykieta'),
+    s('urlHint', 'Adres strony: podpowiedź'),
+    s('check', 'Przycisk „sprawdź”'),
+    s('exampleHtml', 'Przycisk „przykład: tagi”'),
+    s('exampleSitemap', 'Przycisk „przykład: mapa witryny”'),
+    s('empty', 'Komunikat przed sprawdzeniem'),
+    s('modeHtml', 'Tryb: tagi'),
+    s('modeSitemap', 'Tryb: mapa witryny'),
+    s('pagesLabel', 'Etykieta „strony”'),
+    s('summary', 'Podsumowanie', 'Zostaw {e}, {w} i {i}: w ich miejsce wstawiają się liczby.'),
+    s('allGood', 'Komunikat „brak problemów”'),
+    obj('levels', 'Poziomy', [s('error', 'Błąd'), s('warning', 'Ostrzeżenie'), s('info', 'Uwaga')]),
+    obj('messages', 'Komunikaty (zostaw {x}: w jego miejsce wstawia się kod albo adres)', [
+        s('none', 'Brak tagów'), s('codeUnderscore', 'Podkreślnik'), s('codeFormat', 'Zły format'), s('codeRegionOnly', 'Sam kraj'),
+        s('codeLanguage', 'Nieznany język'), s('codeThreeLetter', 'Trzyliterowy język'), s('codeUk', 'Kod UK'),
+        s('codeRegionFormat', 'Region spoza ISO 3166'), s('codeRegion', 'Nieznany kraj'), s('relative', 'Adres względny'),
+        s('duplicate', 'Duplikat kodu'), s('noXDefault', 'Brak x-default'), s('noSelf', 'Brak odwołania do siebie'), s('noReturn', 'Brak linku zwrotnego'),
+    ]),
+    s('guideCta', 'Link do poradnika'),
+    s('howTitle', 'Nagłówek „co sprawdza tester”'),
+    {'name': 'how', 'label': 'Co sprawdza tester (punkty)', 'type': 'text', 'list': True},
+    items('faq', 'FAQ', [s('q', 'Pytanie'), t('a', 'Odpowiedź')]),
+    s('serviceTitle', 'Ramka usługi: nagłówek'),
+    t('serviceText', 'Ramka usługi: tekst'),
+    s('serviceCta', 'Ramka usługi: przycisk'),
+]
+
 SERVICES = [  # key, label in the CMS menu
     ('audit', 'Technical SEO (audyty)'),
     ('ai', 'Widoczność w odpowiedziach AI'),
@@ -422,6 +458,8 @@ config = {
              'fields': [obj('pl', 'Po polsku', TOOL), obj('en', 'Po angielsku', TOOL)]},
             {'name': 'tool-robots-gen', 'label': 'Narzędzie: generator robots.txt', 'type': 'file', 'path': 'content/tools/robots-gen.json', 'format': 'json',
              'fields': [obj('pl', 'Po polsku', GEN), obj('en', 'Po angielsku', GEN)]},
+            {'name': 'tool-hreflang', 'label': 'Narzędzie: tester hreflang', 'type': 'file', 'path': 'content/tools/hreflang.json', 'format': 'json',
+             'fields': [obj('pl', 'Po polsku', HL), obj('en', 'Po angielsku', HL)]},
         ]},
         {'name': 'guides', 'label': 'Poradniki', 'type': 'group', 'items': [
             {'name': f'guide-{key}', 'label': label, 'type': 'file', 'path': f'content/guides/{key}.json', 'format': 'json',

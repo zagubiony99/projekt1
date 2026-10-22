@@ -37,7 +37,7 @@
       },
       {
         "h": "Jak to sprawdzić",
-        "body": "<ol><li>Crawl z raportem hreflang (np. Screaming Frog): brakujące linki zwrotne, złe kody, adresy z przekierowaniem albo noindex.</li><li>Losowe strony z każdego rynku sprawdzone ręcznie w źródle strony.</li><li>Search Console dla każdego rynku: czy w wynikach wyszukiwania danego kraju pojawiają się właściwe adresy.</li></ol><p>Przy wielu rynkach i wielu zespołach hreflang najlepiej generować automatycznie z jednego źródła danych, a nie ręcznie w każdym kraju. Jeśli chcesz to uporządkować, zobacz usługę <a href='/uslugi/seo-enterprise-miedzynarodowe/'>SEO międzynarodowe i enterprise</a>.</p>"
+        "body": "<ol><li>Crawl z raportem hreflang (np. Screaming Frog): brakujące linki zwrotne, złe kody, adresy z przekierowaniem albo noindex.</li><li>Losowe strony z każdego rynku sprawdzone ręcznie w źródle strony.</li><li>Search Console dla każdego rynku: czy w wynikach wyszukiwania danego kraju pojawiają się właściwe adresy.</li></ol><p>Szybki test pojedynczej strony albo fragmentu mapy witryny zrobisz w moim <a href='/narzedzia/tester-hreflang/'>darmowym testerze hreflang</a>.</p><p>Przy wielu rynkach i wielu zespołach hreflang najlepiej generować automatycznie z jednego źródła danych, a nie ręcznie w każdym kraju. Jeśli chcesz to uporządkować, zobacz usługę <a href='/uslugi/seo-enterprise-miedzynarodowe/'>SEO międzynarodowe i enterprise</a>.</p>"
       }
     ],
     "faq": [
@@ -91,7 +91,7 @@
       },
       {
         "h": "How to check it",
-        "body": "<ol><li>A crawl with a hreflang report (e.g. Screaming Frog): missing return links, wrong codes, URLs that redirect or are noindexed.</li><li>Random pages from each market, checked by hand in the page source.</li><li>Search Console for each market: do the right URLs appear in that country’s results?</li></ol><p>With many markets and many teams, it is best to generate hreflang automatically from a single data source rather than by hand in each country. If you want to sort it out, see the <a href='/en/services/enterprise-international-seo/'>enterprise and international SEO</a> service.</p>"
+        "body": "<ol><li>A crawl with a hreflang report (e.g. Screaming Frog): missing return links, wrong codes, URLs that redirect or are noindexed.</li><li>Random pages from each market, checked by hand in the page source.</li><li>Search Console for each market: do the right URLs appear in that country’s results?</li></ol><p>For a quick test of one page or part of your sitemap, use my <a href='/en/tools/hreflang-checker/'>free hreflang checker</a>.</p><p>With many markets and many teams, it is best to generate hreflang automatically from a single data source rather than by hand in each country. If you want to sort it out, see the <a href='/en/services/enterprise-international-seo/'>enterprise and international SEO</a> service.</p>"
       }
     ],
     "faq": [

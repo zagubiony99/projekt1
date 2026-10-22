@@ -1,0 +1,412 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import PageHero from './PageHero.astro';
+import FaqList from './FaqList.astro';
+import { site } from '../config';
+import { getDict, otherLang, type Lang } from '../i18n';
+import { hreflangTool, guides } from '../data/pages';
+import { services, ui } from '../data/services';
+import { pageRoutes } from '../data/routes';
+import { ogPath } from '../data/og';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getDict(lang);
+const r = hreflangTool[lang];
+const path = pageRoutes.hreflangTool[lang];
+const altPath = pageRoutes.hreflangTool[otherLang(lang)];
+const url = new URL(path, site.url).href;
+const home = new URL(t.path, site.url).href;
+const contactHref = `${t.path}#${t.ids.contact}`;
+const guide = guides.find((g) => g.key === 'hreflang');
+const svc = services.find((s) => s.key === 'intl');
+const pl = lang === 'pl';
+
+const exampleHtml = `<link rel="alternate" hreflang="pl" href="https://example.com/pl/" />
+<link rel="alternate" hreflang="en-UK" href="https://example.com/uk/" />
+<link rel="alternate" hreflang="de" href="/de/" />`;
+const exampleSitemap = `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://example.com/pl/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://example.com/pl/" />
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://example.com/uk/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://example.com/" />
+  </url>
+  <url>
+    <loc>https://example.com/uk/</loc>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://example.com/uk/" />
+  </url>
+</urlset>`;
+
+const clientData = { ...r, exampleHtml, exampleSitemap, exampleUrl: 'https://example.com/pl/' };
+
+const extraLd = [
+  {
+    '@type': 'WebApplication',
+    '@id': `${url}#app`,
+    name: r.title,
+    description: r.metaDescription,
+    url,
+    applicationCategory: 'DeveloperApplication',
+    operatingSystem: 'Any',
+    isAccessibleForFree: true,
+    offers: { '@type': 'Offer', price: 0, priceCurrency: pl ? 'PLN' : 'EUR' },
+    inLanguage: pl ? 'pl-PL' : 'en-GB',
+    author: { '@id': `${site.url}/#person` },
+  },
+  {
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: r.metaTitle,
+    description: r.metaDescription,
+    inLanguage: pl ? 'pl-PL' : 'en-GB',
+    isPartOf: { '@id': `${site.url}/#website` },
+    mainEntity: { '@id': `${url}#app` },
+    breadcrumb: { '@id': `${url}#breadcrumb` },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: t.serviceUi.home, item: home },
+      { '@type': 'ListItem', position: 2, name: r.title, item: url },
+    ],
+  },
+  {
+    '@type': 'FAQPage',
+    '@id': `${url}#faq`,
+    mainEntity: r.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+
+<Base lang={lang} title={r.metaTitle} description={r.metaDescription} path={path} altPath={altPath} extraLd={extraLd} ogImage={ogPath(lang, 'tool-hreflang')}>
+  <Nav lang={lang} altHref={altPath} contactHref={contactHref} />
+  <main id="main">
+    <PageHero compact eyebrowInH1={false} crumbs={[{ href: t.path, label: t.serviceUi.home }, { label: r.title }]} eyebrow={r.eyebrow} title={r.title} lead={r.lead} />
+
+    <section class="tool-sec" aria-label={r.title}>
+      <div class="wrap wrap--wide">
+        <form class="tool" data-hl novalidate>
+          <div class="inputs">
+            <label class="f">
+              <span class="l">{r.inputLabel}</span>
+              <textarea name="txt" rows="14" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
+              <span class="h">{r.inputHint}</span>
+            </label>
+            <label class="f">
+              <span class="l">{r.urlLabel}</span>
+              <input name="url" type="url" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="https://" />
+              <span class="h">{r.urlHint}</span>
+            </label>
+            <div class="btns">
+              <button class="btn" type="submit">{r.check}</button>
+              <button class="ghost" type="button" data-ex="html">{r.exampleHtml}</button>
+              <button class="ghost" type="button" data-ex="sitemap">{r.exampleSitemap}</button>
+            </div>
+          </div>
+          <div class="out" aria-live="polite">
+            <p class="empty" data-empty>{r.empty}</p>
+            <div data-result hidden>
+              <p class="mode" data-mode></p>
+              <p class="sum" data-sum></p>
+              <ul class="issues" data-issues></ul>
+            </div>
+          </div>
+        </form>
+        <script type="application/json" id="hl-data" set:html={JSON.stringify(clientData)} />
+      </div>
+    </section>
+
+    <section class="section section--gray" aria-labelledby="how-h">
+      <div class="wrap">
+        <header class="head">
+          <h2 class="h2" id="how-h" data-reveal>{r.howTitle}</h2>
+        </header>
+        <ul class="how">{r.how.map((x, i) => <li data-reveal style={`--d:${i}`}>{x}</li>)}</ul>
+        {guide && <p class="links" data-reveal><a class="more" href={guide[lang].path}>{r.guideCta}</a></p>}
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="hfaq-h">
+      <div class="wrap">
+        <header class="head">
+          <h2 class="h2" id="hfaq-h" data-reveal>{t.guidesUi.faqTitle}</h2>
+        </header>
+        <FaqList items={r.faq} />
+        {svc && (
+          <aside class="svc" data-reveal>
+            <p class="svc-h">{r.serviceTitle}</p>
+            <p class="svc-d">{r.serviceText}</p>
+            <div class="svc-ctas">
+              <a class="btn" href={`${ui[lang].base}${svc[lang].slug}/`}>{r.serviceCta}</a>
+              <a class="more" href={contactHref}>{t.nav.cta}</a>
+            </div>
+          </aside>
+        )}
+      </div>
+    </section>
+  </main>
+  <Footer lang={lang} altHref={altPath} contactHref={contactHref} />
+</Base>
+
+<script>
+  import '../scripts/main.ts';
+  import { parseInput, checkHreflang } from '../lib/hreflang';
+
+  type Data = {
+    modeHtml: string; modeSitemap: string; summary: string; allGood: string;
+    levels: Record<string, string>; messages: Record<string, string>;
+    exampleHtml: string; exampleSitemap: string; exampleUrl: string;
+  };
+  const form = document.querySelector<HTMLFormElement>('[data-hl]');
+  const raw = document.getElementById('hl-data')?.textContent;
+  if (form && raw) {
+    const d: Data = JSON.parse(raw);
+    const txt = form.elements.namedItem('txt') as HTMLTextAreaElement;
+    const urlIn = form.elements.namedItem('url') as HTMLInputElement;
+    const list = form.querySelector<HTMLUListElement>('[data-issues]')!;
+    const result = form.querySelector<HTMLElement>('[data-result]')!;
+    const empty = form.querySelector<HTMLElement>('[data-empty]')!;
+    const key = (code: string) => code.replace(/^code\.(\w)/, (_, c: string) => 'code' + c.toUpperCase());
+    const el = (tag: string, cls: string, text?: string) => {
+      const n = document.createElement(tag);
+      n.className = cls;
+      if (text != null) n.textContent = text;
+      return n;
+    };
+
+    const run = () => {
+      const value = txt.value.trim();
+      if (!value) {
+        result.hidden = true;
+        empty.hidden = false;
+        return;
+      }
+      const parsed = parseInput(value, urlIn.value);
+      const issues = checkHreflang(parsed.pages);
+      const count = (l: string) => issues.filter((i) => i.level === l).length;
+      form.querySelector('[data-mode]')!.textContent = `${parsed.mode === 'sitemap' ? d.modeSitemap : d.modeHtml} · ${parsed.pages.length}`;
+      form.querySelector('[data-sum]')!.textContent = issues.length
+        ? d.summary.replace('{e}', String(count('error'))).replace('{w}', String(count('warning'))).replace('{i}', String(count('info')))
+        : d.allGood;
+      list.replaceChildren(
+        ...issues.map((i) => {
+          const li = el('li', `is-${i.level}`);
+          li.append(el('span', `pill ${i.level}`, d.levels[i.level]));
+          const body = el('span', 'msg', (d.messages[key(i.code)] ?? i.code).replace('{x}', i.detail));
+          if (i.page && parsed.mode === 'sitemap') body.append(el('span', 'pg', i.page));
+          li.append(body);
+          return li;
+        }),
+      );
+      empty.hidden = true;
+      result.hidden = false;
+    };
+
+    let timer = 0;
+    form.addEventListener('input', () => {
+      clearTimeout(timer);
+      timer = window.setTimeout(run, 250);
+    });
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      run();
+    });
+    form.querySelectorAll<HTMLButtonElement>('[data-ex]').forEach((b) =>
+      b.addEventListener('click', () => {
+        const sitemap = b.dataset.ex === 'sitemap';
+        txt.value = sitemap ? d.exampleSitemap : d.exampleHtml;
+        urlIn.value = sitemap ? '' : d.exampleUrl;
+        run();
+      }),
+    );
+  }
+</script>
+
+<style>
+  .tool-sec {
+    padding-bottom: clamp(64px, 8vw, 112px);
+  }
+  .tool {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+    gap: clamp(20px, 3vw, 40px);
+    padding: clamp(20px, 3vw, 36px);
+    border-radius: var(--r-lg);
+    background: var(--gray);
+  }
+  .inputs {
+    display: grid;
+    align-content: start;
+    gap: 18px;
+  }
+  .f {
+    display: grid;
+    gap: 8px;
+  }
+  .l {
+    font-weight: 650;
+    letter-spacing: -0.015em;
+  }
+  .h {
+    color: var(--muted);
+    font-size: 0.8125rem;
+  }
+  textarea,
+  input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--white);
+    color: var(--ink);
+    font: 0.8125rem/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 260px;
+  }
+  textarea:focus,
+  input:focus {
+    outline: 2px solid var(--a1);
+    outline-offset: 1px;
+  }
+  .btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .btns .btn {
+    border: 0;
+    cursor: pointer;
+    font: inherit;
+  }
+  .ghost {
+    padding: 12px 18px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--white);
+    color: var(--ink);
+    font: inherit;
+    font-weight: 550;
+    cursor: pointer;
+  }
+  .out {
+    min-width: 0;
+    padding: clamp(16px, 2vw, 24px);
+    border-radius: var(--r);
+    background: var(--white);
+  }
+  .empty:not([hidden]) {
+    display: grid;
+    place-items: center;
+    min-height: 240px;
+    color: var(--muted);
+    text-align: center;
+  }
+  .mode {
+    color: var(--muted);
+    font-size: 0.8125rem;
+  }
+  .sum {
+    margin: 4px 0 14px;
+    font-size: 1.125rem;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+  }
+  /* list items are built by the script, so they are styled via :global */
+  .issues {
+    display: grid;
+    gap: 8px;
+  }
+  .issues :global(li) {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: var(--gray);
+    font-size: 0.875rem;
+  }
+  .issues :global(.pill) {
+    flex: none;
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+  }
+  .issues :global(.pill.error) {
+    background: color-mix(in srgb, var(--err) 14%, white);
+    color: #b3261e;
+  }
+  .issues :global(.pill.warning) {
+    background: color-mix(in srgb, var(--warn) 18%, white);
+    color: #8a4b00;
+  }
+  .issues :global(.pill.info) {
+    background: color-mix(in srgb, var(--a1) 12%, white);
+    color: #1d3fbf;
+  }
+  .issues :global(.msg) {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .issues :global(.pg) {
+    display: block;
+    margin-top: 2px;
+    color: var(--muted);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.75rem;
+  }
+  .how {
+    display: grid;
+    gap: 12px;
+    max-width: 760px;
+    margin-inline: auto;
+    padding-left: 1.3em;
+    list-style: disc;
+    color: var(--ink-2);
+    font-size: 1.0625rem;
+  }
+  .links {
+    max-width: 760px;
+    margin: 28px auto 0;
+  }
+  .svc {
+    max-width: 860px;
+    margin: clamp(48px, 6vw, 72px) auto 0;
+    padding: clamp(28px, 4vw, 40px);
+    border-radius: var(--r-lg);
+    background: var(--dark);
+    background-image: radial-gradient(110% 90% at 100% 0%, color-mix(in srgb, var(--a2) 28%, transparent), transparent 60%);
+    color: #fff;
+  }
+  .svc-h {
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+  }
+  .svc-d {
+    margin-top: 10px;
+    max-width: 56ch;
+    color: var(--dark-muted);
+  }
+  .svc-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 28px;
+    margin-top: 22px;
+  }
+  .svc .more {
+    color: var(--link-dark);
+  }
+  @media (max-width: 900px) {
+    .tool {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

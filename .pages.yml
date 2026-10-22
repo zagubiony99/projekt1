@@ -4009,6 +4009,312 @@ content:
       - name: serviceCta
         label: 'Ramka usługi: przycisk'
         type: string
+  - name: tool-hreflang
+    label: 'Narzędzie: tester hreflang'
+    type: file
+    path: content/tools/hreflang.json
+    format: json
+    fields:
+    - name: pl
+      label: Po polsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: eyebrow
+        label: Nadtytuł
+        type: string
+      - name: title
+        label: Nagłówek (H1)
+        type: string
+      - name: lead
+        label: Tekst pod nagłówkiem
+        type: text
+      - name: inputLabel
+        label: 'Pole: etykieta'
+        type: string
+      - name: inputHint
+        label: 'Pole: podpowiedź'
+        type: text
+      - name: urlLabel
+        label: 'Adres strony: etykieta'
+        type: string
+      - name: urlHint
+        label: 'Adres strony: podpowiedź'
+        type: string
+      - name: check
+        label: Przycisk „sprawdź”
+        type: string
+      - name: exampleHtml
+        label: 'Przycisk „przykład: tagi”'
+        type: string
+      - name: exampleSitemap
+        label: 'Przycisk „przykład: mapa witryny”'
+        type: string
+      - name: empty
+        label: Komunikat przed sprawdzeniem
+        type: string
+      - name: modeHtml
+        label: 'Tryb: tagi'
+        type: string
+      - name: modeSitemap
+        label: 'Tryb: mapa witryny'
+        type: string
+      - name: pagesLabel
+        label: Etykieta „strony”
+        type: string
+      - name: summary
+        label: Podsumowanie
+        type: string
+        description: 'Zostaw {e}, {w} i {i}: w ich miejsce wstawiają się liczby.'
+      - name: allGood
+        label: Komunikat „brak problemów”
+        type: string
+      - name: levels
+        label: Poziomy
+        type: object
+        fields:
+        - name: error
+          label: Błąd
+          type: string
+        - name: warning
+          label: Ostrzeżenie
+          type: string
+        - name: info
+          label: Uwaga
+          type: string
+      - name: messages
+        label: 'Komunikaty (zostaw {x}: w jego miejsce wstawia się kod albo adres)'
+        type: object
+        fields:
+        - name: none
+          label: Brak tagów
+          type: string
+        - name: codeUnderscore
+          label: Podkreślnik
+          type: string
+        - name: codeFormat
+          label: Zły format
+          type: string
+        - name: codeRegionOnly
+          label: Sam kraj
+          type: string
+        - name: codeLanguage
+          label: Nieznany język
+          type: string
+        - name: codeThreeLetter
+          label: Trzyliterowy język
+          type: string
+        - name: codeUk
+          label: Kod UK
+          type: string
+        - name: codeRegionFormat
+          label: Region spoza ISO 3166
+          type: string
+        - name: codeRegion
+          label: Nieznany kraj
+          type: string
+        - name: relative
+          label: Adres względny
+          type: string
+        - name: duplicate
+          label: Duplikat kodu
+          type: string
+        - name: noXDefault
+          label: Brak x-default
+          type: string
+        - name: noSelf
+          label: Brak odwołania do siebie
+          type: string
+        - name: noReturn
+          label: Brak linku zwrotnego
+          type: string
+      - name: guideCta
+        label: Link do poradnika
+        type: string
+      - name: howTitle
+        label: Nagłówek „co sprawdza tester”
+        type: string
+      - name: how
+        label: Co sprawdza tester (punkty)
+        type: text
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+      - name: serviceTitle
+        label: 'Ramka usługi: nagłówek'
+        type: string
+      - name: serviceText
+        label: 'Ramka usługi: tekst'
+        type: text
+      - name: serviceCta
+        label: 'Ramka usługi: przycisk'
+        type: string
+    - name: en
+      label: Po angielsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: eyebrow
+        label: Nadtytuł
+        type: string
+      - name: title
+        label: Nagłówek (H1)
+        type: string
+      - name: lead
+        label: Tekst pod nagłówkiem
+        type: text
+      - name: inputLabel
+        label: 'Pole: etykieta'
+        type: string
+      - name: inputHint
+        label: 'Pole: podpowiedź'
+        type: text
+      - name: urlLabel
+        label: 'Adres strony: etykieta'
+        type: string
+      - name: urlHint
+        label: 'Adres strony: podpowiedź'
+        type: string
+      - name: check
+        label: Przycisk „sprawdź”
+        type: string
+      - name: exampleHtml
+        label: 'Przycisk „przykład: tagi”'
+        type: string
+      - name: exampleSitemap
+        label: 'Przycisk „przykład: mapa witryny”'
+        type: string
+      - name: empty
+        label: Komunikat przed sprawdzeniem
+        type: string
+      - name: modeHtml
+        label: 'Tryb: tagi'
+        type: string
+      - name: modeSitemap
+        label: 'Tryb: mapa witryny'
+        type: string
+      - name: pagesLabel
+        label: Etykieta „strony”
+        type: string
+      - name: summary
+        label: Podsumowanie
+        type: string
+        description: 'Zostaw {e}, {w} i {i}: w ich miejsce wstawiają się liczby.'
+      - name: allGood
+        label: Komunikat „brak problemów”
+        type: string
+      - name: levels
+        label: Poziomy
+        type: object
+        fields:
+        - name: error
+          label: Błąd
+          type: string
+        - name: warning
+          label: Ostrzeżenie
+          type: string
+        - name: info
+          label: Uwaga
+          type: string
+      - name: messages
+        label: 'Komunikaty (zostaw {x}: w jego miejsce wstawia się kod albo adres)'
+        type: object
+        fields:
+        - name: none
+          label: Brak tagów
+          type: string
+        - name: codeUnderscore
+          label: Podkreślnik
+          type: string
+        - name: codeFormat
+          label: Zły format
+          type: string
+        - name: codeRegionOnly
+          label: Sam kraj
+          type: string
+        - name: codeLanguage
+          label: Nieznany język
+          type: string
+        - name: codeThreeLetter
+          label: Trzyliterowy język
+          type: string
+        - name: codeUk
+          label: Kod UK
+          type: string
+        - name: codeRegionFormat
+          label: Region spoza ISO 3166
+          type: string
+        - name: codeRegion
+          label: Nieznany kraj
+          type: string
+        - name: relative
+          label: Adres względny
+          type: string
+        - name: duplicate
+          label: Duplikat kodu
+          type: string
+        - name: noXDefault
+          label: Brak x-default
+          type: string
+        - name: noSelf
+          label: Brak odwołania do siebie
+          type: string
+        - name: noReturn
+          label: Brak linku zwrotnego
+          type: string
+      - name: guideCta
+        label: Link do poradnika
+        type: string
+      - name: howTitle
+        label: Nagłówek „co sprawdza tester”
+        type: string
+      - name: how
+        label: Co sprawdza tester (punkty)
+        type: text
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+      - name: serviceTitle
+        label: 'Ramka usługi: nagłówek'
+        type: string
+      - name: serviceText
+        label: 'Ramka usługi: tekst'
+        type: text
+      - name: serviceCta
+        label: 'Ramka usługi: przycisk'
+        type: string
 - name: guides
   label: Poradniki
   type: group
