@@ -23,6 +23,7 @@ export const pageRoutes = {
   robotsTool: { pl: '/narzedzia/robots-txt-boty-ai/', en: '/en/tools/robots-txt-ai-bot-checker/' },
   robotsGen: { pl: '/narzedzia/generator-robots-txt/', en: '/en/tools/robots-txt-generator/' },
   hreflangTool: { pl: '/narzedzia/tester-hreflang/', en: '/en/tools/hreflang-checker/' },
+  mcpServer: { pl: '/narzedzia/serwer-mcp/', en: '/en/tools/mcp-server/' },
 } as const;
 
 // Guides: key, URL slugs and the service each guide leads to.

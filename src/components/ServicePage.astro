@@ -12,7 +12,7 @@ import Portrait from './Portrait.astro';
 import { site } from '../config';
 import { getDict, otherLang, type Lang } from '../i18n';
 import { services, ui } from '../data/services';
-import { guides, robotsTool } from '../data/pages';
+import { guides, robotsTool, mcpServer } from '../data/pages';
 import { pageRoutes } from '../data/routes';
 import { ogPath } from '../data/og';
 interface Props { lang: Lang; key: string }
@@ -196,10 +196,11 @@ const extraLd = [
           <h2 class="h2" id="sfaq-h" data-reveal>{u.faqTitle}</h2>
         </header>
         <FaqList items={s.faq} />
-        {(related.length > 0 || pair.key === 'ai') && (
+        {(related.length > 0 || pair.key === 'ai' || pair.key === 'mcp') && (
           <p class="reads">
             {related.map((g) => <a class="more" href={g[lang].path}>{t.guidesUi.read}: {g[lang].title}</a>)}
             {pair.key === 'ai' && <a class="more" href={pageRoutes.robotsTool[lang]}>{robotsTool[lang].title}</a>}
+            {pair.key === 'mcp' && <a class="more" href={pageRoutes.mcpServer[lang]}>{mcpServer[lang].demoCta}</a>}
           </p>
         )}
       </div>

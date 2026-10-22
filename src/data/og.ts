@@ -1,6 +1,6 @@
 import { getDict, type Lang } from '../i18n';
 import { services } from './services';
-import { about, guides, robotsTool, robotsGen, hreflangTool } from './pages';
+import { about, guides, robotsTool, robotsGen, hreflangTool, mcpServer } from './pages';
 
 // One share card per page: /og/<lang>/<key>.png (rendered by src/pages/og/[lang]/[key].png.ts).
 // The home page keeps its hand-made public/og-<lang>.png.
@@ -16,6 +16,7 @@ export const ogCards: OgCard[] = (['pl', 'en'] as const).flatMap((lang) => {
     { lang, key: 'tool-robots', eyebrow: robotsTool[lang].eyebrow, title: robotsTool[lang].title },
     { lang, key: 'tool-robots-gen', eyebrow: robotsGen[lang].eyebrow, title: robotsGen[lang].title },
     { lang, key: 'tool-hreflang', eyebrow: hreflangTool[lang].eyebrow, title: hreflangTool[lang].title },
+    { lang, key: 'tool-mcp', eyebrow: mcpServer[lang].eyebrow, title: mcpServer[lang].title },
   ];
 });
 

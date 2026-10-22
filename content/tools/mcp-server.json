@@ -1,0 +1,244 @@
+{
+  "pl": {
+    "metaTitle": "Serwer MCP z narzędziami SEO dla ChatGPT i Claude",
+    "metaDescription": "Darmowy serwer MCP: podłącz narzędzia SEO do ChatGPT lub Claude. Sprawdzaj robots.txt i hreflang i pytaj o poradniki prosto z rozmowy.",
+    "eyebrow": "Darmowe narzędzie",
+    "title": "Narzędzia SEO w ChatGPT i Claude",
+    "lead": "Podłącz mój serwer MCP do ChatGPT, Claude albo innego asystenta. W rozmowie sprawdzisz robots.txt i hreflang, wygenerujesz plik dla botów AI i dostaniesz odpowiedzi oparte na moich poradnikach, z linkami do źródeł.",
+    "urlLabel": "Adres serwera",
+    "copy": "Kopiuj",
+    "copied": "Skopiowano",
+    "note": "Bez konta i bez klucza. Wszystkie narzędzia tylko odczytują dane.",
+    "toolsTitle": "Co potrafi",
+    "toolsLead": "Siedem narzędzi. Asystent sam wybiera, którego użyć, na podstawie Twojego pytania.",
+    "tools": [
+      {
+        "name": "check_robots_txt",
+        "text": "Sprawdza robots.txt i pokazuje, które wyszukiwarki i boty AI mają dostęp do strony."
+      },
+      {
+        "name": "generate_robots_txt",
+        "text": "Generuje robots.txt, który wpuszcza wybrane boty, a blokuje pozostałe."
+      },
+      {
+        "name": "check_hreflang",
+        "text": "Sprawdza tagi hreflang albo mapę witryny: kody, adresy, linki zwrotne i x-default."
+      },
+      {
+        "name": "search_guides",
+        "text": "Wyszukuje moje poradniki o technical SEO i AI search."
+      },
+      {
+        "name": "get_guide",
+        "text": "Zwraca pełną treść poradnika, żeby asystent mógł odpowiedzieć na jego podstawie."
+      },
+      {
+        "name": "list_services",
+        "text": "Pokazuje, w czym mogę pomóc, z linkami do opisów usług."
+      },
+      {
+        "name": "contact_info",
+        "text": "Podaje, jak umówić bezpłatną konsultację."
+      }
+    ],
+    "examplesTitle": "O co zapytać",
+    "examples": [
+      "Oto mój robots.txt: […]. Czy ChatGPT może cytować moją stronę?",
+      "Wygeneruj robots.txt, który wpuszcza wyszukiwanie AI, blokuje trening modeli i zamyka /koszyk/.",
+      "Sprawdź te tagi hreflang: […]",
+      "Co powinien zawierać audyt techniczny SEO? Odpowiedz na podstawie poradników Macieja Zięciaka."
+    ],
+    "setupTitle": "Jak podłączyć",
+    "setupNote": "Nazwy menu zmieniają się wraz z nowymi wersjami aplikacji. Jeśli coś wygląda inaczej, aktualną instrukcję znajdziesz w pomocy danego asystenta.",
+    "setup": [
+      {
+        "client": "Claude",
+        "steps": [
+          "Otwórz Ustawienia, przejdź do Konektorów i wybierz „Dodaj własny konektor”.",
+          "Wpisz nazwę, np. Maciej Zięciak SEO, i wklej adres serwera. Pola OAuth zostaw puste.",
+          "W nowej rozmowie włącz konektor w menu „+” i zadaj pytanie."
+        ],
+        "note": "Działa także w darmowym planie, który pozwala dodać jeden własny konektor. W planach Team i Enterprise konektor dodaje właściciel organizacji."
+      },
+      {
+        "client": "ChatGPT",
+        "steps": [
+          "Otwórz Ustawienia, przejdź do Aplikacji i w ustawieniach zaawansowanych włącz tryb dewelopera.",
+          "Wybierz „Utwórz”, wpisz nazwę, wklej adres serwera i ustaw uwierzytelnianie na „Brak”.",
+          "W nowej rozmowie wybierz aplikację z menu narzędzi i zadaj pytanie."
+        ],
+        "note": "Tryb dewelopera jest dostępny w wybranych płatnych planach ChatGPT."
+      },
+      {
+        "client": "Claude Code",
+        "steps": [
+          "Wpisz w terminalu:"
+        ],
+        "code": "claude mcp add --transport http maciejzieciak-seo {url}"
+      },
+      {
+        "client": "Cursor i inne edytory",
+        "steps": [
+          "Dodaj serwer HTTP w pliku konfiguracji MCP, np. .cursor/mcp.json:"
+        ],
+        "code": "{\n  \"mcpServers\": {\n    \"maciejzieciak-seo\": {\n      \"url\": \"{url}\"\n    }\n  }\n}"
+      }
+    ],
+    "buildTitle": "Jak to jest zbudowane",
+    "buildLead": "Ten serwer to działający przykład tego, co planuję dla klientów w usłudze aplikacji w ChatGPT. W małej skali, ale na tych samych zasadach.",
+    "build": [
+      "Jeden adres i siedem narzędzi tylko do odczytu, bez logowania.",
+      "Narzędzia korzystają z tego samego kodu co darmowe narzędzia na stronie, więc wynik w rozmowie jest taki sam jak w przeglądarce.",
+      "Treści poradników i usług trafiają do serwera przy każdej publikacji strony. Po zmianie w CMS asystent od razu ma nową wersję.",
+      "Każde narzędzie ma opis, który mówi modelowi, kiedy po nie sięgnąć. Od tych opisów zależy, czy asystent użyje narzędzia we właściwym momencie.",
+      "Odpowiedzi zawierają linki do źródeł, więc rozmowa w ChatGPT czy Claude prowadzi z powrotem na stronę.",
+      "Serwer działa jako funkcja hostingu obok strony, bez osobnej infrastruktury i bez stałych kosztów."
+    ],
+    "faq": [
+      {
+        "q": "Czy to kosztuje?",
+        "a": "Nie. Serwer jest darmowy i nie wymaga konta ani klucza."
+      },
+      {
+        "q": "Czy serwer pobiera moją stronę?",
+        "a": "Nie. Narzędzia sprawdzają to, co dostaną w rozmowie. Wklej robots.txt albo tagi hreflang, albo poproś asystenta, żeby sam pobrał plik, jeśli ma dostęp do internetu."
+      },
+      {
+        "q": "Co dzieje się z danymi, które wysyłam?",
+        "a": "Serwer używa ich tylko do przygotowania odpowiedzi i ich nie zapisuje. Żadne narzędzie niczego nie zmienia ani nie wysyła dalej."
+      },
+      {
+        "q": "Czym jest MCP?",
+        "a": "Model Context Protocol to otwarty standard, przez który asystenci AI korzystają z zewnętrznych narzędzi i danych. Na nim opierają się też aplikacje w ChatGPT."
+      }
+    ],
+    "guideCta": "Przeczytaj poradnik: aplikacje w ChatGPT i MCP",
+    "serviceTitle": "Chcesz takie narzędzie dla swojej firmy?",
+    "serviceText": "Zaplanuję aplikację w ChatGPT albo serwer MCP dla Twojej oferty: narzędzia, ich opisy, dane i pomiar efektów. Kod piszą Twoi programiści, a ja prowadzę projekt do publikacji.",
+    "serviceCta": "Zobacz usługę",
+    "demoTitle": "Zobacz, jak to działa",
+    "demoText": "Mój własny serwer MCP z narzędziami SEO. Możesz go podłączyć do ChatGPT albo Claude w kilka minut.",
+    "demoCta": "Wypróbuj serwer MCP"
+  },
+  "en": {
+    "metaTitle": "SEO MCP Server for ChatGPT and Claude",
+    "metaDescription": "Free MCP server: connect SEO tools to ChatGPT or Claude. Check robots.txt and hreflang and ask about the guides right in the chat.",
+    "eyebrow": "Free tool",
+    "title": "SEO tools in ChatGPT and Claude",
+    "lead": "Connect my MCP server to ChatGPT, Claude or another assistant. Check robots.txt and hreflang, generate a file for AI bots and get answers based on my guides, with links to the sources, all inside the chat.",
+    "urlLabel": "Server URL",
+    "copy": "Copy",
+    "copied": "Copied",
+    "note": "No account and no key. Every tool is read-only.",
+    "toolsTitle": "What it can do",
+    "toolsLead": "Seven tools. The assistant picks the right one based on your question.",
+    "tools": [
+      {
+        "name": "check_robots_txt",
+        "text": "Checks a robots.txt and shows which search engines and AI bots can access the site."
+      },
+      {
+        "name": "generate_robots_txt",
+        "text": "Generates a robots.txt that allows the bots you choose and blocks the rest."
+      },
+      {
+        "name": "check_hreflang",
+        "text": "Checks hreflang tags or a sitemap: codes, URLs, return links and x-default."
+      },
+      {
+        "name": "search_guides",
+        "text": "Searches my technical SEO and AI search guides."
+      },
+      {
+        "name": "get_guide",
+        "text": "Returns the full text of a guide, so the assistant can answer from it."
+      },
+      {
+        "name": "list_services",
+        "text": "Shows what I can help with, with links to the service pages."
+      },
+      {
+        "name": "contact_info",
+        "text": "Explains how to book a free consultation."
+      }
+    ],
+    "examplesTitle": "What to ask",
+    "examples": [
+      "Here is my robots.txt: […]. Can ChatGPT cite my site?",
+      "Generate a robots.txt that allows AI search, blocks model training and closes /cart/.",
+      "Check these hreflang tags: […]",
+      "What should a technical SEO audit include? Answer based on Maciej Zięciak’s guides."
+    ],
+    "setupTitle": "How to connect it",
+    "setupNote": "Menu names change with new app versions. If something looks different, see the assistant’s own help pages for the current steps.",
+    "setup": [
+      {
+        "client": "Claude",
+        "steps": [
+          "Open Settings, go to Connectors and choose “Add custom connector”.",
+          "Enter a name, e.g. Maciej Zięciak SEO, and paste the server URL. Leave the OAuth fields empty.",
+          "In a new chat, turn the connector on in the “+” menu and ask your question."
+        ],
+        "note": "Also works on the free plan, which lets you add one custom connector. On Team and Enterprise plans an organisation owner adds the connector."
+      },
+      {
+        "client": "ChatGPT",
+        "steps": [
+          "Open Settings, go to Apps and turn on developer mode in the advanced settings.",
+          "Choose “Create”, enter a name, paste the server URL and set authentication to “None”.",
+          "In a new chat, pick the app from the tools menu and ask your question."
+        ],
+        "note": "Developer mode is available on selected paid ChatGPT plans."
+      },
+      {
+        "client": "Claude Code",
+        "steps": [
+          "Run in your terminal:"
+        ],
+        "code": "claude mcp add --transport http maciejzieciak-seo {url}"
+      },
+      {
+        "client": "Cursor and other editors",
+        "steps": [
+          "Add an HTTP server to your MCP config file, e.g. .cursor/mcp.json:"
+        ],
+        "code": "{\n  \"mcpServers\": {\n    \"maciejzieciak-seo\": {\n      \"url\": \"{url}\"\n    }\n  }\n}"
+      }
+    ],
+    "buildTitle": "How it is built",
+    "buildLead": "This server is a working example of what I plan for clients in the ChatGPT app service. Small scale, same principles.",
+    "build": [
+      "One URL and seven read-only tools, with no login.",
+      "The tools run the same code as the free tools on this site, so the result in the chat matches the one in your browser.",
+      "Guide and service content reaches the server every time the site is published. After a change in the CMS the assistant has the new version straight away.",
+      "Each tool has a description that tells the model when to use it. Those descriptions decide whether the assistant reaches for the tool at the right moment.",
+      "Answers include source links, so a conversation in ChatGPT or Claude leads back to the site.",
+      "The server runs as a hosting function next to the site, with no separate infrastructure and no fixed costs."
+    ],
+    "faq": [
+      {
+        "q": "Does it cost anything?",
+        "a": "No. The server is free and needs no account or key."
+      },
+      {
+        "q": "Does the server fetch my site?",
+        "a": "No. The tools check whatever they receive in the chat. Paste your robots.txt or hreflang tags, or ask the assistant to fetch the file itself if it has web access."
+      },
+      {
+        "q": "What happens to the data I send?",
+        "a": "The server uses it only to prepare the answer and doesn’t store it. No tool changes anything or passes it on."
+      },
+      {
+        "q": "What is MCP?",
+        "a": "The Model Context Protocol is an open standard that lets AI assistants use external tools and data. ChatGPT apps are built on it too."
+      }
+    ],
+    "guideCta": "Read the guide: ChatGPT apps and MCP",
+    "serviceTitle": "Want a tool like this for your business?",
+    "serviceText": "I will plan a ChatGPT app or MCP server for your offer: the tools, their descriptions, the data and how to measure results. Your developers write the code, and I run the project through to launch.",
+    "serviceCta": "See the service",
+    "demoTitle": "See it working",
+    "demoText": "My own MCP server with SEO tools. You can connect it to ChatGPT or Claude in a few minutes.",
+    "demoCta": "Try the MCP server"
+  }
+}

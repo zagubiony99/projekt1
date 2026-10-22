@@ -4315,6 +4315,263 @@ content:
       - name: serviceCta
         label: 'Ramka usługi: przycisk'
         type: string
+  - name: tool-mcp
+    label: 'Narzędzie: serwer MCP'
+    type: file
+    path: content/tools/mcp-server.json
+    format: json
+    description: Same narzędzia i ich logika są w kodzie (functions/mcp.ts). Tu zmieniasz tylko treść strony.
+    fields:
+    - name: pl
+      label: Po polsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: eyebrow
+        label: Nadtytuł
+        type: string
+      - name: title
+        label: Nagłówek (H1)
+        type: string
+      - name: lead
+        label: Tekst pod nagłówkiem
+        type: text
+      - name: urlLabel
+        label: 'Adres serwera: etykieta'
+        type: string
+      - name: copy
+        label: Przycisk „kopiuj”
+        type: string
+      - name: copied
+        label: Napis po skopiowaniu
+        type: string
+      - name: note
+        label: Dopisek pod adresem
+        type: string
+      - name: toolsTitle
+        label: 'Narzędzia: nagłówek'
+        type: string
+      - name: toolsLead
+        label: 'Narzędzia: wstęp'
+        type: text
+      - name: tools
+        label: Narzędzia
+        type: object
+        fields:
+        - name: name
+          label: Nazwa w kodzie
+          type: string
+          description: 'Nie zmieniaj: to nazwa narzędzia na serwerze (functions/mcp.ts).'
+        - name: text
+          label: Opis
+          type: text
+        list: true
+      - name: examplesTitle
+        label: 'Przykładowe pytania: nagłówek'
+        type: string
+      - name: examples
+        label: Przykładowe pytania
+        type: string
+        list: true
+      - name: setupTitle
+        label: 'Jak podłączyć: nagłówek'
+        type: string
+      - name: setupNote
+        label: 'Jak podłączyć: dopisek'
+        type: text
+      - name: setup
+        label: Jak podłączyć (aplikacje)
+        type: object
+        fields:
+        - name: client
+          label: Aplikacja
+          type: string
+        - name: steps
+          label: Kroki
+          type: text
+          list: true
+        - name: code
+          label: Kod do skopiowania
+          type: text
+          description: Opcjonalnie. {url} zamienia się na adres serwera.
+        - name: note
+          label: Dopisek
+          type: text
+        list: true
+      - name: buildTitle
+        label: 'Jak to jest zbudowane: nagłówek'
+        type: string
+      - name: buildLead
+        label: 'Jak to jest zbudowane: wstęp'
+        type: text
+      - name: build
+        label: Jak to jest zbudowane (punkty)
+        type: text
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+      - name: guideCta
+        label: Link do poradnika
+        type: string
+      - name: serviceTitle
+        label: 'Ramka usługi: nagłówek'
+        type: string
+      - name: serviceText
+        label: 'Ramka usługi: tekst'
+        type: text
+      - name: serviceCta
+        label: 'Ramka usługi: przycisk'
+        type: string
+      - name: demoTitle
+        label: 'Ramka w poradniku i usłudze: nagłówek'
+        type: string
+      - name: demoText
+        label: 'Ramka w poradniku i usłudze: tekst'
+        type: text
+      - name: demoCta
+        label: 'Ramka w poradniku i usłudze: link'
+        type: string
+    - name: en
+      label: Po angielsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: eyebrow
+        label: Nadtytuł
+        type: string
+      - name: title
+        label: Nagłówek (H1)
+        type: string
+      - name: lead
+        label: Tekst pod nagłówkiem
+        type: text
+      - name: urlLabel
+        label: 'Adres serwera: etykieta'
+        type: string
+      - name: copy
+        label: Przycisk „kopiuj”
+        type: string
+      - name: copied
+        label: Napis po skopiowaniu
+        type: string
+      - name: note
+        label: Dopisek pod adresem
+        type: string
+      - name: toolsTitle
+        label: 'Narzędzia: nagłówek'
+        type: string
+      - name: toolsLead
+        label: 'Narzędzia: wstęp'
+        type: text
+      - name: tools
+        label: Narzędzia
+        type: object
+        fields:
+        - name: name
+          label: Nazwa w kodzie
+          type: string
+          description: 'Nie zmieniaj: to nazwa narzędzia na serwerze (functions/mcp.ts).'
+        - name: text
+          label: Opis
+          type: text
+        list: true
+      - name: examplesTitle
+        label: 'Przykładowe pytania: nagłówek'
+        type: string
+      - name: examples
+        label: Przykładowe pytania
+        type: string
+        list: true
+      - name: setupTitle
+        label: 'Jak podłączyć: nagłówek'
+        type: string
+      - name: setupNote
+        label: 'Jak podłączyć: dopisek'
+        type: text
+      - name: setup
+        label: Jak podłączyć (aplikacje)
+        type: object
+        fields:
+        - name: client
+          label: Aplikacja
+          type: string
+        - name: steps
+          label: Kroki
+          type: text
+          list: true
+        - name: code
+          label: Kod do skopiowania
+          type: text
+          description: Opcjonalnie. {url} zamienia się na adres serwera.
+        - name: note
+          label: Dopisek
+          type: text
+        list: true
+      - name: buildTitle
+        label: 'Jak to jest zbudowane: nagłówek'
+        type: string
+      - name: buildLead
+        label: 'Jak to jest zbudowane: wstęp'
+        type: text
+      - name: build
+        label: Jak to jest zbudowane (punkty)
+        type: text
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+      - name: guideCta
+        label: Link do poradnika
+        type: string
+      - name: serviceTitle
+        label: 'Ramka usługi: nagłówek'
+        type: string
+      - name: serviceText
+        label: 'Ramka usługi: tekst'
+        type: text
+      - name: serviceCta
+        label: 'Ramka usługi: przycisk'
+        type: string
+      - name: demoTitle
+        label: 'Ramka w poradniku i usłudze: nagłówek'
+        type: string
+      - name: demoText
+        label: 'Ramka w poradniku i usłudze: tekst'
+        type: text
+      - name: demoCta
+        label: 'Ramka w poradniku i usłudze: link'
+        type: string
 - name: guides
   label: Poradniki
   type: group

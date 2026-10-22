@@ -421,6 +421,43 @@ HL = [
     s('serviceCta', 'Ramka usługi: przycisk'),
 ]
 
+# ---- MCP server page (content/tools/mcp-server.json) --------------------------------
+MCPS = [
+    s('metaTitle', 'SEO: tytuł', 'Do 60 znaków.'),
+    t('metaDescription', 'SEO: opis', 'Do 155 znaków.'),
+    s('eyebrow', 'Nadtytuł'),
+    s('title', 'Nagłówek (H1)'),
+    t('lead', 'Tekst pod nagłówkiem'),
+    s('urlLabel', 'Adres serwera: etykieta'),
+    s('copy', 'Przycisk „kopiuj”'),
+    s('copied', 'Napis po skopiowaniu'),
+    s('note', 'Dopisek pod adresem'),
+    s('toolsTitle', 'Narzędzia: nagłówek'),
+    t('toolsLead', 'Narzędzia: wstęp'),
+    items('tools', 'Narzędzia', [s('name', 'Nazwa w kodzie', 'Nie zmieniaj: to nazwa narzędzia na serwerze (functions/mcp.ts).'), t('text', 'Opis')]),
+    s('examplesTitle', 'Przykładowe pytania: nagłówek'),
+    strings('examples', 'Przykładowe pytania'),
+    s('setupTitle', 'Jak podłączyć: nagłówek'),
+    t('setupNote', 'Jak podłączyć: dopisek'),
+    items('setup', 'Jak podłączyć (aplikacje)', [
+        s('client', 'Aplikacja'),
+        {'name': 'steps', 'label': 'Kroki', 'type': 'text', 'list': True},
+        t('code', 'Kod do skopiowania', 'Opcjonalnie. {url} zamienia się na adres serwera.'),
+        t('note', 'Dopisek'),
+    ]),
+    s('buildTitle', 'Jak to jest zbudowane: nagłówek'),
+    t('buildLead', 'Jak to jest zbudowane: wstęp'),
+    {'name': 'build', 'label': 'Jak to jest zbudowane (punkty)', 'type': 'text', 'list': True},
+    items('faq', 'FAQ', [s('q', 'Pytanie'), t('a', 'Odpowiedź')]),
+    s('guideCta', 'Link do poradnika'),
+    s('serviceTitle', 'Ramka usługi: nagłówek'),
+    t('serviceText', 'Ramka usługi: tekst'),
+    s('serviceCta', 'Ramka usługi: przycisk'),
+    s('demoTitle', 'Ramka w poradniku i usłudze: nagłówek'),
+    t('demoText', 'Ramka w poradniku i usłudze: tekst'),
+    s('demoCta', 'Ramka w poradniku i usłudze: link'),
+]
+
 SERVICES = [  # key, label in the CMS menu
     ('audit', 'Technical SEO (audyty)'),
     ('ai', 'Widoczność w odpowiedziach AI'),
@@ -460,6 +497,9 @@ config = {
              'fields': [obj('pl', 'Po polsku', GEN), obj('en', 'Po angielsku', GEN)]},
             {'name': 'tool-hreflang', 'label': 'Narzędzie: tester hreflang', 'type': 'file', 'path': 'content/tools/hreflang.json', 'format': 'json',
              'fields': [obj('pl', 'Po polsku', HL), obj('en', 'Po angielsku', HL)]},
+            {'name': 'tool-mcp', 'label': 'Narzędzie: serwer MCP', 'type': 'file', 'path': 'content/tools/mcp-server.json', 'format': 'json',
+             'description': 'Same narzędzia i ich logika są w kodzie (functions/mcp.ts). Tu zmieniasz tylko treść strony.',
+             'fields': [obj('pl', 'Po polsku', MCPS), obj('en', 'Po angielsku', MCPS)]},
         ]},
         {'name': 'guides', 'label': 'Poradniki', 'type': 'group', 'items': [
             {'name': f'guide-{key}', 'label': label, 'type': 'file', 'path': f'content/guides/{key}.json', 'format': 'json',

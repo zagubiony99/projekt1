@@ -19,7 +19,7 @@ export const GET: APIRoute = () => {
     site: { name: site.name, url: site.url, email: site.email, linkedin: site.linkedin || null, booking: site.bookingUrl || null },
     contact: Object.fromEntries(langs.map((l) => [l, abs(`${getDict(l).path}#${getDict(l).ids.contact}`)])),
     about: Object.fromEntries(langs.map((l) => [l, abs(pageRoutes.about[l])])),
-    tools: Object.fromEntries(langs.map((l) => [l, { robots: abs(pageRoutes.robotsTool[l]), generator: abs(pageRoutes.robotsGen[l]), hreflang: abs(pageRoutes.hreflangTool[l]) }])),
+    tools: Object.fromEntries(langs.map((l) => [l, { robots: abs(pageRoutes.robotsTool[l]), generator: abs(pageRoutes.robotsGen[l]), hreflang: abs(pageRoutes.hreflangTool[l]), mcp: abs(pageRoutes.mcpServer[l]) }])),
     services: services.map((s) => ({
       key: s.key,
       ...Object.fromEntries(langs.map((l) => [l, { name: plain(s[l].name), description: plain(s[l].card.desc), url: abs(`${ui[l].base}${s[l].slug}/`) }])),

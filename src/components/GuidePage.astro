@@ -7,7 +7,7 @@ import FaqList from './FaqList.astro';
 import GuideCards from './GuideCards.astro';
 import { site } from '../config';
 import { getDict, otherLang, type Lang } from '../i18n';
-import { guides } from '../data/pages';
+import { guides, mcpServer } from '../data/pages';
 import { services, ui } from '../data/services';
 import { pageRoutes } from '../data/routes';
 import { ogPath } from '../data/og';
@@ -103,6 +103,14 @@ const extraLd = [
             <div class="body" set:html={s.body} />
           </section>
         ))}
+
+        {key === 'chatgpt-apps' && (
+          <aside class="demo" aria-label={mcpServer[lang].demoTitle}>
+            <p class="demo-h">{mcpServer[lang].demoTitle}</p>
+            <p class="demo-d">{mcpServer[lang].demoText}</p>
+            <a class="more" href={pageRoutes.mcpServer[lang]}>{mcpServer[lang].demoCta}</a>
+          </aside>
+        )}
 
         {svc && svcHref && (
           <aside class="svc" aria-label={svc[lang].name}>
@@ -337,5 +345,24 @@ const extraLd = [
       border-radius: var(--r);
       background: var(--gray);
     }
+  }
+  .demo {
+    margin-top: 48px;
+    padding: clamp(22px, 3vw, 30px);
+    border: 1px solid color-mix(in srgb, var(--a1) 22%, var(--line));
+    border-radius: var(--r-lg);
+    background: color-mix(in srgb, var(--a1) 5%, var(--white));
+  }
+  .demo + .svc {
+    margin-top: 16px;
+  }
+  .demo-h {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+  .demo-d {
+    margin: 6px 0 12px;
+    color: var(--ink-2);
   }
 </style>

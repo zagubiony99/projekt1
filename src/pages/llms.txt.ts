@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro';
 import { site } from '../config';
 import { getDict } from '../i18n';
 import { services } from '../data/services';
-import { guides, about, robotsTool } from '../data/pages';
+import { guides, about, robotsTool, robotsGen, hreflangTool, mcpServer } from '../data/pages';
 import { pageRoutes } from '../data/routes';
 
 // /llms.txt: a plain-text map of the site for AI assistants (llmstxt.org format),
@@ -35,8 +35,16 @@ export const GET: APIRoute = () => {
     ...guides.map((g) => `- [${plain(g.pl.title)}](${url(g.pl.path)}): ${plain(g.pl.metaDescription)}`),
     '',
     '## Tools',
-    `- [${robotsTool.en.title}](${url(pageRoutes.robotsTool.en)}): ${robotsTool.en.metaDescription}`,
-    `- [${plain(robotsTool.pl.title)}](${url(pageRoutes.robotsTool.pl)}): ${plain(robotsTool.pl.metaDescription)}`,
+    ...([
+      [robotsTool, pageRoutes.robotsTool],
+      [robotsGen, pageRoutes.robotsGen],
+      [hreflangTool, pageRoutes.hreflangTool],
+      [mcpServer, pageRoutes.mcpServer],
+    ] as const).flatMap(([c, r]) => [
+      `- [${c.en.title}](${url(r.en)}): ${c.en.metaDescription}`,
+      `- [${plain(c.pl.title)}](${url(r.pl)}): ${plain(c.pl.metaDescription)}`,
+    ]),
+    `- MCP server (Streamable HTTP, no auth): ${url('/mcp')}`,
     '',
     '## Pages',
     `- [Home (English)](${url('/en/')}): ${en.meta.description}`,

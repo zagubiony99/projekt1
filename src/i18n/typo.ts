@@ -3,7 +3,7 @@
 const glue = (s: string) => s.replace(/(?<![^\s(„])([aiouwzAIOUWZ])[ \t\n]+/g, '$1 ');
 
 // Meta strings (<title>, meta description) are left alone: they are not laid out in lines.
-const SKIP = new Set(['meta', 'metaTitle', 'metaDescription', 'description', 'path', 'slug', 'ids']);
+const SKIP = new Set(['meta', 'metaTitle', 'metaDescription', 'description', 'path', 'slug', 'ids', 'code']);
 
 export const polishTypo = <T>(v: T, key = ''): T => {
   if (SKIP.has(key)) return v;

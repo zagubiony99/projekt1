@@ -4,6 +4,7 @@ import aboutCopy from '../../content/about.json';
 import robotsCopy from '../../content/tools/robots-ai.json';
 import robotsGenCopy from '../../content/tools/robots-gen.json';
 import hreflangCopy from '../../content/tools/hreflang.json';
+import mcpCopy from '../../content/tools/mcp-server.json';
 import { guideRoutes, pageRoutes } from './routes';
 
 // Copy for the standalone pages (About, guides, the robots.txt tool). It lives in content/
@@ -12,6 +13,7 @@ export const about = { pl: polishTypo(aboutCopy.pl), en: aboutCopy.en };
 export const robotsTool = { pl: polishTypo(robotsCopy.pl), en: robotsCopy.en };
 export const robotsGen = { pl: polishTypo(robotsGenCopy.pl), en: robotsGenCopy.en };
 export const hreflangTool = { pl: polishTypo(hreflangCopy.pl), en: hreflangCopy.en };
+export const mcpServer = { pl: polishTypo(mcpCopy.pl), en: mcpCopy.en };
 
 export type GuideCopy = {
   metaTitle: string;
