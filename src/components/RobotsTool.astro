@@ -6,7 +6,7 @@ import PageHero from './PageHero.astro';
 import FaqList from './FaqList.astro';
 import { site } from '../config';
 import { getDict, otherLang, type Lang } from '../i18n';
-import { robotsTool, guides } from '../data/pages';
+import { robotsTool, robotsGen, guides } from '../data/pages';
 import { services, ui } from '../data/services';
 import { pageRoutes } from '../data/routes';
 import { ogPath } from '../data/og';
@@ -146,6 +146,7 @@ const extraLd = [
         <ol class="how">{r.how.map((x, i) => <li data-reveal style={`--d:${i}`}>{x}</li>)}</ol>
         <p class="links" data-reveal>
           {guide && <a class="more" href={guide[lang].path}>{r.guideCta}</a>}
+          <a class="more gen" href={pageRoutes.robotsGen[lang]}>{robotsGen[lang].title}</a>
         </p>
       </div>
     </section>
@@ -439,6 +440,9 @@ const extraLd = [
     font-size: 1.0625rem;
   }
   .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 28px;
     max-width: 760px;
     margin: 28px auto 0;
   }

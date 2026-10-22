@@ -355,6 +355,36 @@ TOOL = [
     s('serviceCta', 'Ramka usługi: przycisk'),
 ]
 
+# ---- robots.txt generator (content/tools/robots-gen.json) ---------------------------
+GEN = [
+    s('metaTitle', 'SEO: tytuł', 'Do 60 znaków.'),
+    t('metaDescription', 'SEO: opis', 'Do 155 znaków.'),
+    s('eyebrow', 'Nadtytuł'),
+    s('title', 'Nagłówek (H1)'),
+    t('lead', 'Tekst pod nagłówkiem'),
+    s('presetsLabel', 'Gotowe ustawienia: etykieta'),
+    obj('presets', 'Gotowe ustawienia', [s('searchOnly', 'Wyszukiwanie tak, trening nie'), s('open', 'Wpuść wszystkie'), s('blockAi', 'Zablokuj boty AI')]),
+    s('botsLabel', 'Lista botów: etykieta'),
+    s('allowLabel', 'Etykieta „wpuszczony”'),
+    s('pathsLabel', 'Ścieżki: etykieta'),
+    s('pathsHint', 'Ścieżki: podpowiedź'),
+    s('sitemapLabel', 'Mapa witryny: etykieta'),
+    s('sitemapPlaceholder', 'Mapa witryny: przykład'),
+    s('outputLabel', 'Wynik: etykieta'),
+    s('copy', 'Przycisk „kopiuj”'),
+    s('copied', 'Napis po skopiowaniu'),
+    s('testCta', 'Link do testera'),
+    s('commentAllow', 'Komentarz w pliku: wpuszczone'),
+    s('commentBlock', 'Komentarz w pliku: zablokowane'),
+    s('commentRest', 'Komentarz w pliku: pozostałe'),
+    s('howTitle', 'Nagłówek „zanim wgrasz plik”'),
+    {'name': 'how', 'label': 'Zanim wgrasz plik (punkty)', 'type': 'text', 'list': True},
+    items('faq', 'FAQ', [s('q', 'Pytanie'), t('a', 'Odpowiedź')]),
+    s('serviceTitle', 'Ramka usługi: nagłówek'),
+    t('serviceText', 'Ramka usługi: tekst'),
+    s('serviceCta', 'Ramka usługi: przycisk'),
+]
+
 SERVICES = [  # key, label in the CMS menu
     ('audit', 'Technical SEO (audyty)'),
     ('ai', 'Widoczność w odpowiedziach AI'),
@@ -390,6 +420,8 @@ config = {
             {'name': 'tool-robots', 'label': 'Narzędzie: robots.txt dla botów AI', 'type': 'file', 'path': 'content/tools/robots-ai.json', 'format': 'json',
              'description': 'Lista botów i logika sprawdzania są w kodzie (src/data/ai-bots.ts, src/lib/robots.ts).',
              'fields': [obj('pl', 'Po polsku', TOOL), obj('en', 'Po angielsku', TOOL)]},
+            {'name': 'tool-robots-gen', 'label': 'Narzędzie: generator robots.txt', 'type': 'file', 'path': 'content/tools/robots-gen.json', 'format': 'json',
+             'fields': [obj('pl', 'Po polsku', GEN), obj('en', 'Po angielsku', GEN)]},
         ]},
         {'name': 'guides', 'label': 'Poradniki', 'type': 'group', 'items': [
             {'name': f'guide-{key}', 'label': label, 'type': 'file', 'path': f'content/guides/{key}.json', 'format': 'json',

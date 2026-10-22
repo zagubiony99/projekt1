@@ -3797,6 +3797,218 @@ content:
       - name: serviceCta
         label: 'Ramka usługi: przycisk'
         type: string
+  - name: tool-robots-gen
+    label: 'Narzędzie: generator robots.txt'
+    type: file
+    path: content/tools/robots-gen.json
+    format: json
+    fields:
+    - name: pl
+      label: Po polsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: eyebrow
+        label: Nadtytuł
+        type: string
+      - name: title
+        label: Nagłówek (H1)
+        type: string
+      - name: lead
+        label: Tekst pod nagłówkiem
+        type: text
+      - name: presetsLabel
+        label: 'Gotowe ustawienia: etykieta'
+        type: string
+      - name: presets
+        label: Gotowe ustawienia
+        type: object
+        fields:
+        - name: searchOnly
+          label: Wyszukiwanie tak, trening nie
+          type: string
+        - name: open
+          label: Wpuść wszystkie
+          type: string
+        - name: blockAi
+          label: Zablokuj boty AI
+          type: string
+      - name: botsLabel
+        label: 'Lista botów: etykieta'
+        type: string
+      - name: allowLabel
+        label: Etykieta „wpuszczony”
+        type: string
+      - name: pathsLabel
+        label: 'Ścieżki: etykieta'
+        type: string
+      - name: pathsHint
+        label: 'Ścieżki: podpowiedź'
+        type: string
+      - name: sitemapLabel
+        label: 'Mapa witryny: etykieta'
+        type: string
+      - name: sitemapPlaceholder
+        label: 'Mapa witryny: przykład'
+        type: string
+      - name: outputLabel
+        label: 'Wynik: etykieta'
+        type: string
+      - name: copy
+        label: Przycisk „kopiuj”
+        type: string
+      - name: copied
+        label: Napis po skopiowaniu
+        type: string
+      - name: testCta
+        label: Link do testera
+        type: string
+      - name: commentAllow
+        label: 'Komentarz w pliku: wpuszczone'
+        type: string
+      - name: commentBlock
+        label: 'Komentarz w pliku: zablokowane'
+        type: string
+      - name: commentRest
+        label: 'Komentarz w pliku: pozostałe'
+        type: string
+      - name: howTitle
+        label: Nagłówek „zanim wgrasz plik”
+        type: string
+      - name: how
+        label: Zanim wgrasz plik (punkty)
+        type: text
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+      - name: serviceTitle
+        label: 'Ramka usługi: nagłówek'
+        type: string
+      - name: serviceText
+        label: 'Ramka usługi: tekst'
+        type: text
+      - name: serviceCta
+        label: 'Ramka usługi: przycisk'
+        type: string
+    - name: en
+      label: Po angielsku
+      type: object
+      fields:
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: eyebrow
+        label: Nadtytuł
+        type: string
+      - name: title
+        label: Nagłówek (H1)
+        type: string
+      - name: lead
+        label: Tekst pod nagłówkiem
+        type: text
+      - name: presetsLabel
+        label: 'Gotowe ustawienia: etykieta'
+        type: string
+      - name: presets
+        label: Gotowe ustawienia
+        type: object
+        fields:
+        - name: searchOnly
+          label: Wyszukiwanie tak, trening nie
+          type: string
+        - name: open
+          label: Wpuść wszystkie
+          type: string
+        - name: blockAi
+          label: Zablokuj boty AI
+          type: string
+      - name: botsLabel
+        label: 'Lista botów: etykieta'
+        type: string
+      - name: allowLabel
+        label: Etykieta „wpuszczony”
+        type: string
+      - name: pathsLabel
+        label: 'Ścieżki: etykieta'
+        type: string
+      - name: pathsHint
+        label: 'Ścieżki: podpowiedź'
+        type: string
+      - name: sitemapLabel
+        label: 'Mapa witryny: etykieta'
+        type: string
+      - name: sitemapPlaceholder
+        label: 'Mapa witryny: przykład'
+        type: string
+      - name: outputLabel
+        label: 'Wynik: etykieta'
+        type: string
+      - name: copy
+        label: Przycisk „kopiuj”
+        type: string
+      - name: copied
+        label: Napis po skopiowaniu
+        type: string
+      - name: testCta
+        label: Link do testera
+        type: string
+      - name: commentAllow
+        label: 'Komentarz w pliku: wpuszczone'
+        type: string
+      - name: commentBlock
+        label: 'Komentarz w pliku: zablokowane'
+        type: string
+      - name: commentRest
+        label: 'Komentarz w pliku: pozostałe'
+        type: string
+      - name: howTitle
+        label: Nagłówek „zanim wgrasz plik”
+        type: string
+      - name: how
+        label: Zanim wgrasz plik (punkty)
+        type: text
+        list: true
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+      - name: serviceTitle
+        label: 'Ramka usługi: nagłówek'
+        type: string
+      - name: serviceText
+        label: 'Ramka usługi: tekst'
+        type: text
+      - name: serviceCta
+        label: 'Ramka usługi: przycisk'
+        type: string
 - name: guides
   label: Poradniki
   type: group

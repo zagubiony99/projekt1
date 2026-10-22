@@ -21,6 +21,7 @@ export const pageRoutes = {
   about: { pl: '/o-mnie/', en: '/en/about/' },
   guides: { pl: '/poradniki/', en: '/en/guides/' },
   robotsTool: { pl: '/narzedzia/robots-txt-boty-ai/', en: '/en/tools/robots-txt-ai-bot-checker/' },
+  robotsGen: { pl: '/narzedzia/generator-robots-txt/', en: '/en/tools/robots-txt-generator/' },
 } as const;
 
 // Guides: key, URL slugs and the service each guide leads to.
