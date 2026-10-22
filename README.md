@@ -24,8 +24,10 @@ Wszystkie teksty (PL i EN), usługi i ustawienia kontaktowe edytujesz w przeglą
 3. Wybierz repozytorium i gałąź, z której publikuje się strona (np. `main`).
 4. Po lewej masz menu:
    - **Ustawienia i kontakt**: e-mail, LinkedIn, zdjęcie, formularz, kalendarz, Google Tag Manager,
-   - **Strona główna**: wszystkie teksty po polsku i po angielsku,
-   - **Usługi**: 6 podstron usług, każda z wersją polską i angielską.
+   - **Strona główna**: wszystkie teksty po polsku i po angielsku, w tym „Formy współpracy” (konsultacja, projekt, stała współpraca; pole „Cena” puste = „Wycena po rozmowie”),
+   - **Usługi**: 10 podstron usług, każda z wersją polską i angielską,
+   - **Inne strony**: „O mnie” i strony narzędzi (tester robots.txt, generator robots.txt, tester hreflang, serwer MCP),
+   - **Poradniki**: 9 poradników. Treść rozdziału jest w HTML (akapity `<p>`, listy, tabele), daty publikacji i aktualizacji ustawiasz w kalendarzu.
 5. Zmieniasz tekst i klikasz **Save**. CMS zapisuje zmianę w repozytorium, a hosting (Cloudflare Pages / Netlify / Vercel) w ok. minutę publikuje nową wersję strony.
 
 Polskich „sierotek” (w, i, z, o, a na końcu linii) nie musisz pilnować: strona poprawia je sama.
@@ -39,6 +41,9 @@ Polskich „sierotek” (w, i, z, o, a na końcu linii) nie musisz pilnować: st
 | Ustawienia, kontakt | `content/site.json` |
 | Teksty PL / EN | `content/pl.json`, `content/en.json` |
 | Usługi (PL + EN w jednym pliku) | `content/services/<klucz>.json` |
+| O mnie | `content/about.json` |
+| Poradniki | `content/guides/<klucz>.json` |
+| Narzędzia (teksty): tester i generator robots.txt, tester hreflang, serwer MCP | `content/tools/robots-ai.json`, `robots-gen.json`, `hreflang.json`, `mcp-server.json` |
 | Zdjęcia wgrane w CMS (przy buildzie strona sama je przycina i kompresuje) | `src/assets/media/` |
 | Konfiguracja CMS (generowana) | `.pages.yml` ← `scripts/cms/build-config.py` |
 
@@ -53,12 +58,20 @@ python3 scripts/cms/check.py          # sprawdza, że zapis w CMS niczego nie sk
 
 | Co | Plik |
 | --- | --- |
-| Adresy podstron usług i tematy formularza | `src/data/routes.ts` |
+| Adresy podstron usług, poradników, „O mnie” i narzędzia, tematy formularza | `src/data/routes.ts` |
+| Lista botów w narzędziu robots.txt | `src/data/ai-bots.ts` |
+| Logika sprawdzania robots.txt (RFC 9309) i generatora | `src/lib/robots.ts`, `src/lib/robots-gen.ts` |
+| Logika testera hreflang | `src/lib/hreflang.ts` |
+| Serwer MCP (narzędzia dla ChatGPT i Claude) | `functions/mcp.ts`, dane: `src/pages/mcp-data.json.ts` |
+| Szablony: „O mnie”, poradnik, lista poradników, narzędzia | `src/components/AboutPage.astro`, `GuidePage.astro`, `GuidesIndex.astro`, `RobotsTool.astro`, `RobotsGen.astro`, `HreflangTool.astro`, `McpServerPage.astro` |
 | Szablon podstrony usługi | `src/components/ServicePage.astro` |
-| Kolory (paleta Apple: biel, #f5f5f7, czerń, niebieski + gradient AI), font (SF Pro na Apple, Inter Tight gdzie indziej), przyciski | `src/styles/global.css` (zmienne w `:root`) |
+| Kolory (biel, #f5f5f7, czerń, niebieski + własny gradient: zmienne `--a1`–`--a4`), font (SF Pro na Apple, Inter Tight gdzie indziej), przyciski | `src/styles/global.css` (zmienne w `:root`) |
 | Sekcje strony | `src/components/*.astro` |
 | Interakcje (tekst zapalający się przy scrollu, scena z kartą botów, liczby odliczające w górę, formularz) | `src/scripts/main.ts` |
-| Grafiki do udostępniania (OG) | `public/og-pl.png`, `public/og-en.png` |
+| Grafika do udostępniania strony głównej (OG) | `public/og-pl.png`, `public/og-en.png` |
+| Grafiki do udostępniania pozostałych stron (generowane przy buildzie z tytułów) | `src/lib/og.ts`, lista: `src/data/og.ts` |
+| Nagłówki cache i bezpieczeństwa (Cloudflare Pages / Netlify) | `public/_headers` |
+| Kanały RSS poradników | `/poradniki/rss.xml`, `/en/guides/rss.xml` (`src/lib/rss.ts`) |
 
 ## Formularz kontaktowy i kalendarz (ważne dla sprzedaży)
 
@@ -77,7 +90,11 @@ W CMS (**Ustawienia i kontakt**) albo w `content/site.json`:
 
 - `/` to wersja polska (domyślna)
 - `/en/` to wersja angielska
-- `/uslugi/<slug>/` i `/en/services/<slug>/` to podstrony usług (6 × 2 języki), każda z danymi Service, BreadcrumbList i FAQPage
+- `/uslugi/<slug>/` i `/en/services/<slug>/` to podstrony usług (10 × 2 języki), każda z danymi Service, BreadcrumbList i FAQPage
+- `/o-mnie/` i `/en/about/` to strona „O mnie” (ProfilePage)
+- `/poradniki/` i `/en/guides/` to lista poradników, a `/poradniki/<slug>/` i `/en/guides/<slug>/` same poradniki (Article, BreadcrumbList, FAQPage)
+- `/narzedzia/…` i `/en/tools/…` to darmowe narzędzia (WebApplication): tester robots.txt, generator robots.txt, tester hreflang i strona serwera MCP
+- `/mcp` to serwer MCP (JSON-RPC przez POST, bez logowania), `/mcp-data.json` to treści, z których korzysta (generowane przy buildzie)
 
 Strona ma `hreflang` (pl, en, x-default), canonical, sitemapę z alternatywnymi wersjami językowymi, `robots.txt` i dane strukturalne JSON-LD (Person, ProfessionalService, WebSite, WebPage, FAQPage).
 
@@ -91,6 +108,15 @@ Pliki dla wyszukiwarek i AI generują się same przy buildzie: `sitemap-index.xm
 
 Folder `dist/` to zwykłe pliki statyczne, więc działa na każdym hostingu: Cloudflare Pages, Netlify, Vercel albo GitHub Pages.
 Build command: `npm run build`, output: `dist`.
+
+**Serwer MCP (`/mcp`) wymaga Cloudflare Pages.** Plik `functions/mcp.ts` to funkcja Cloudflare Pages: wdraża się sama razem ze stroną, bez dodatkowej konfiguracji. Na innym hostingu strona zadziała, ale adres `/mcp` nie. Test lokalny:
+
+```bash
+npm run build
+npx wrangler pages dev dist     # serwer na http://localhost:8788/mcp
+curl -X POST http://localhost:8788/mcp -H 'Content-Type: application/json' \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+```
 
 ## Do uzupełnienia przed startem
 

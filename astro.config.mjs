@@ -1,15 +1,17 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import { serviceRoutes, serviceBase } from './src/data/routes.ts';
+import { serviceRoutes, serviceBase, pageRoutes, guideRoutes } from './src/data/routes.ts';
 
 const SITE = 'https://maciejzieciak.com';
 
-// PL/EN page pairs. Service and privacy pages have different slugs per language,
+// PL/EN page pairs. Service, guide and other pages have different slugs per language,
 // so the sitemap's hreflang links are built from the same data as the pages.
 const pairs = [
   ['/', '/en/'],
   ['/polityka-prywatnosci/', '/en/privacy-policy/'],
   ...serviceRoutes.map((s) => [`${serviceBase.pl}${s.slug.pl}/`, `${serviceBase.en}${s.slug.en}/`]),
+  ...Object.values(pageRoutes).map((r) => [r.pl, r.en]),
+  ...guideRoutes.map((g) => [`${pageRoutes.guides.pl}${g.slug.pl}/`, `${pageRoutes.guides.en}${g.slug.en}/`]),
 ];
 const alternates = new Map();
 for (const [pl, en] of pairs) {

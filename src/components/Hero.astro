@@ -1,6 +1,7 @@
 ---
 import { getDict, type Lang } from '../i18n';
 import AiDemo from './AiDemo.astro';
+import TrustLogos from './TrustLogos.astro';
 interface Props { lang: Lang }
 const t = getDict(Astro.props.lang);
 const h = t.hero;
@@ -17,8 +18,8 @@ const b = words(h.titleB);
   <div class="wrap top" data-hero-inner>
     <p class="eyebrow intro" style="--i:0">{h.pill}</p>
     <h1>
-      <span class="line">{a.map((x) => <span class="w" style={`--i:${x.i + 1}`}>{x.w}</span>)}</span>
-      <span class="line ai-line">{b.map((x) => <span class="w ai" style={`--i:${x.i + 1}`}>{x.w}</span>)}</span>
+      <span class="line">{a.map((x) => <><span class="w" style={`--i:${x.i + 1}`}>{x.w}</span>{' '}</>)}</span>
+      <span class="line ai-line">{b.map((x, j) => <>{j > 0 && ' '}<span class="w ai" style={`--i:${x.i + 1}`}>{x.w}</span></>)}</span>
     </h1>
     <p class="lead intro" style={`--i:${n + 2}`}>{h.lead}</p>
     <div class="ctas intro" style={`--i:${n + 3}`}>
@@ -27,8 +28,7 @@ const b = words(h.titleB);
     </div>
     <p class="note intro" style={`--i:${n + 4}`}>{h.ctaNote}</p>
     <div class="trust intro" style={`--i:${n + 5}`}>
-      <span>{h.trustLabel}</span>
-      <b>Philip Morris International</b><b>Accenture Song</b><b>IG</b>
+      <TrustLogos label={h.trustLabel} eager />
     </div>
   </div>
   <div class="wrap">
@@ -44,7 +44,7 @@ const b = words(h.titleB);
     padding-bottom: clamp(56px, 9vh, 112px);
     overflow: hidden;
   }
-  /* Soft Apple-Intelligence aura behind the headline, breathing slowly */
+  /* Soft accent aura behind the headline, breathing slowly */
   .glow {
     position: absolute;
     left: 50%;
@@ -53,9 +53,9 @@ const b = words(h.titleB);
     aspect-ratio: 2 / 1;
     translate: -50% -50%;
     background:
-      radial-gradient(35% 50% at 30% 50%, rgb(8 148 255 / 0.16), transparent 70%),
-      radial-gradient(35% 50% at 55% 55%, rgb(201 89 221 / 0.14), transparent 70%),
-      radial-gradient(30% 45% at 75% 45%, rgb(255 144 4 / 0.12), transparent 70%);
+      radial-gradient(35% 50% at 30% 50%, color-mix(in srgb, var(--a1) 16%, transparent), transparent 70%),
+      radial-gradient(35% 50% at 55% 55%, color-mix(in srgb, var(--a2) 14%, transparent), transparent 70%),
+      radial-gradient(30% 45% at 75% 45%, color-mix(in srgb, var(--a4) 12%, transparent), transparent 70%);
     opacity: calc(1 - var(--h) * 1.4);
     animation: breathe 9s ease-in-out infinite;
     will-change: transform;
@@ -85,12 +85,9 @@ const b = words(h.titleB);
   .line {
     display: block;
   }
+  /* words are separated by real spaces, so the heading reads as a sentence to Google and screen readers */
   .w {
     display: inline-block;
-    margin-right: 0.22em;
-  }
-  .w:last-child {
-    margin-right: 0;
   }
   .ai-line .w {
     padding-bottom: 0.08em;
@@ -118,20 +115,7 @@ const b = words(h.titleB);
     font-size: 0.875rem;
   }
   .trust {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: baseline;
-    gap: 6px 22px;
-    margin-top: 18px;
-    color: var(--muted);
-    font-size: 0.8125rem;
-  }
-  .trust b {
-    color: #515154;
-    font-size: 1.0625rem;
-    font-weight: 650;
-    letter-spacing: -0.02em;
+    margin-top: 22px;
   }
 
   /* Entrance: each word rises out of a blur, staggered */

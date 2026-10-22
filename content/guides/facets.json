@@ -1,0 +1,88 @@
+{
+  "published": "2026-10-19",
+  "updated": "2026-10-19",
+  "pl": {
+    "metaTitle": "Filtry w sklepie a SEO: nawigacja fasetowa",
+    "metaDescription": "Filtry w sklepie a SEO: które kombinacje indeksować, kiedy robots.txt, noindex i canonical, co z pustymi wynikami i sortowaniem. Praktyczny poradnik.",
+    "title": "Filtry w sklepie a SEO: jak ogarnąć nawigację fasetową",
+    "lead": "Filtry pomagają klientom, ale potrafią wygenerować miliony adresów: kolor razy rozmiar razy marka razy cena razy sortowanie. Googlebot marnuje wtedy czas na kombinacje, których nikt nie szuka, a ważne kategorie i produkty czekają w kolejce. Oto jak to uporządkować.",
+    "sections": [
+      {
+        "h": "Na czym polega problem",
+        "body": "<p>Każdy filtr dopisuje parametr albo fragment ścieżki do adresu. Przy kilku filtrach liczba możliwych kombinacji rośnie wykładniczo, a większość z nich to prawie identyczne listy produktów. Skutki:</p><ul><li>Googlebot zużywa crawl budget na nieistotne adresy, a nowe produkty i zmiany w kategoriach trafiają do indeksu później,</li><li>w indeksie lądują setki niemal identycznych stron,</li><li>siła linków wewnętrznych rozprasza się na tysiące adresów.</li></ul><p>Skalę problemu najlepiej widać w logach serwera: jaki odsetek wizyt Googlebota trafia w adresy z filtrami.</p>"
+      },
+      {
+        "h": "Które kombinacje indeksować",
+        "body": "<p>Indeksuj tylko te kombinacje, których ludzie naprawdę szukają. Przykład: „buty do biegania damskie” albo „buty do biegania Nike” mają własny popyt i zasługują na stronę w indeksie. „Buty do biegania damskie, rozmiar 38, czerwone, sortowanie po cenie” już nie.</p><p>Wybrane kombinacje traktuj jak pełnoprawne kategorie:</p><ul><li>stały, czytelny adres,</li><li>własny tytuł, H1 i krótki opis,</li><li>linki wewnętrzne z kategorii nadrzędnej,</li><li>obecność w mapie witryny XML.</li></ul>"
+      },
+      {
+        "h": "Jak kontrolować resztę",
+        "body": "<table><thead><tr><th>Metoda</th><th>Kiedy</th><th>Na co uważać</th></tr></thead><tbody><tr><td>robots.txt (<code>Disallow</code> dla parametrów)</td><td>Gdy kombinacji jest bardzo dużo i nie chcesz, żeby Googlebot je w ogóle odwiedzał</td><td>Zablokowany adres może trafić do indeksu bez treści, a Google nie zobaczy na nim canonical ani noindex</td></tr><tr><td><code>noindex</code></td><td>Gdy adresów jest umiarkowanie dużo i mają zniknąć z indeksu</td><td>Google musi stronę odwiedzić, żeby zobaczyć noindex, więc nie oszczędzasz crawl budgetu od razu</td></tr><tr><td>canonical do kategorii</td><td>Gdy kombinacja różni się nieznacznie, np. sortowaniem</td><td>To tylko wskazówka. Przy wyraźnie innej liście produktów Google może ją zignorować</td></tr><tr><td>Brak linków do kombinacji</td><td>Dla filtrów, które nie mają być indeksowane</td><td>Filtr może działać bez linku <code>&lt;a href&gt;</code>, np. jako formularz albo fragment adresu po <code>#</code>, którego Google zwykle nie traktuje jako osobnej strony</td></tr></tbody></table><p>W praktyce najlepiej działa połączenie: indeksowalne kombinacje z popytem jako zwykłe linki, a pozostałe filtry bez linków albo zablokowane w robots.txt.</p>"
+      },
+      {
+        "h": "Dobre praktyki, o których się zapomina",
+        "body": "<ul><li><strong>Stała kolejność parametrów.</strong> <code>?kolor=czerwony&amp;rozmiar=38</code> i <code>?rozmiar=38&amp;kolor=czerwony</code> to dla Google dwa różne adresy.</li><li><strong>Puste wyniki zwracają 404.</strong> Kombinacja bez produktów nie powinna być stroną z kodem 200.</li><li><strong>Sortowanie i widok</strong> (siatka, lista, liczba produktów na stronie) nie tworzą stron do indeksowania.</li><li><strong>Paginacja przez zwykłe linki.</strong> Google nie korzysta już z <code>rel=\"next\"</code> i <code>rel=\"prev\"</code>, więc kolejne strony kategorii muszą być dostępne przez linki.</li><li><strong>Narzędzie do parametrów w Search Console już nie istnieje.</strong> Google wyłączyło je w 2022 roku, więc kontrolę trzeba ustawić po stronie sklepu.</li></ul>"
+      },
+      {
+        "h": "Jak sprawdzić, czy masz problem",
+        "body": "<ol><li>Wpisz w Google <code>site:twojsklep.pl inurl:?</code> i zobacz, ile adresów z parametrami jest w indeksie.</li><li>W raporcie indeksowania w Search Console sprawdź strony „zaindeksowane, ale niezgłoszone w mapie witryny” i duplikaty.</li><li>W logach serwera policz, jaki odsetek wizyt Googlebota trafia w adresy z filtrami.</li><li>Crawlem sprawdź, ile unikalnych adresów generują filtry w jednej kategorii.</li></ol><p>Filtry na PrestaShopie, Magento, WordPressie, Shoperze czy w sklepie autorskim konfiguruje się inaczej, ale zasady są te same. Jeśli chcesz to ułożyć u siebie, zobacz usługę <a href='/uslugi/seo-ecommerce/'>SEO dla e-commerce</a>.</p>"
+      }
+    ],
+    "faq": [
+      {
+        "q": "Noindex czy robots.txt dla filtrów?",
+        "a": "Zależy od skali. Przy umiarkowanej liczbie adresów noindex usuwa je z indeksu. Przy milionach kombinacji robots.txt chroni crawl budget, ale nie usunie adresów, które już są w indeksie. Często najpierw stosuje się noindex, a po wypadnięciu adresów z indeksu blokadę w robots.txt."
+      },
+      {
+        "q": "Czy canonical wystarczy?",
+        "a": "Przy sortowaniu i drobnych różnicach zwykle tak. Przy filtrach, które wyraźnie zmieniają listę produktów, Google często ignoruje canonical, bo strony nie są duplikatami."
+      },
+      {
+        "q": "Czy indeksować strony marek i kolorów?",
+        "a": "Tylko jeśli ludzie tego szukają i masz wystarczająco dużo produktów, żeby strona była wartościowa. Sprawdź popyt w danych o frazach, zanim otworzysz indeksację."
+      }
+    ]
+  },
+  "en": {
+    "metaTitle": "Faceted Navigation SEO: Filters in Online Stores",
+    "metaDescription": "Faceted navigation for SEO: which filter combinations to index, when to use robots.txt, noindex or canonical, and how to handle empty results and sorting.",
+    "title": "Faceted navigation and SEO: how to tame your store’s filters",
+    "lead": "Filters help shoppers, but they can generate millions of URLs: colour times size times brand times price times sort order. Googlebot then wastes time on combinations nobody searches for, while important categories and products wait in the queue. Here is how to bring it under control.",
+    "sections": [
+      {
+        "h": "What the problem is",
+        "body": "<p>Each filter adds a parameter or a path segment to the URL. With a few filters, the number of possible combinations grows exponentially, and most of them are near-identical product lists. The effects:</p><ul><li>Googlebot spends crawl budget on irrelevant URLs, so new products and category changes reach the index later,</li><li>hundreds of near-identical pages end up in the index,</li><li>internal link equity is spread across thousands of URLs.</li></ul><p>Server logs show the scale best: what share of Googlebot’s visits goes to filtered URLs.</p>"
+      },
+      {
+        "h": "Which combinations to index",
+        "body": "<p>Index only the combinations people actually search for. For example, “women’s running shoes” or “Nike running shoes” have their own demand and deserve a page in the index. “Women’s running shoes, size 38, red, sorted by price” does not.</p><p>Treat the chosen combinations as proper categories:</p><ul><li>a stable, readable URL,</li><li>their own title, H1 and a short description,</li><li>internal links from the parent category,</li><li>a place in the XML sitemap.</li></ul>"
+      },
+      {
+        "h": "How to control the rest",
+        "body": "<table><thead><tr><th>Method</th><th>When</th><th>Watch out for</th></tr></thead><tbody><tr><td>robots.txt (<code>Disallow</code> for parameters)</td><td>When there are huge numbers of combinations and you don’t want Googlebot to visit them at all</td><td>A blocked URL can still be indexed without content, and Google won’t see its canonical or noindex</td></tr><tr><td><code>noindex</code></td><td>When there is a moderate number of URLs that should leave the index</td><td>Google has to visit the page to see noindex, so you don’t save crawl budget straight away</td></tr><tr><td>canonical to the category</td><td>When a combination differs only slightly, e.g. by sort order</td><td>It is only a hint. With a clearly different product list, Google may ignore it</td></tr><tr><td>No links to combinations</td><td>For filters that shouldn’t be indexed</td><td>A filter can work without an <code>&lt;a href&gt;</code> link, e.g. as a form or a URL fragment after <code>#</code>, which Google generally doesn’t treat as a separate page</td></tr></tbody></table><p>In practice a combination works best: indexable combinations with demand as normal links, and the remaining filters without links or blocked in robots.txt.</p>"
+      },
+      {
+        "h": "Good practices people forget",
+        "body": "<ul><li><strong>A fixed parameter order.</strong> <code>?colour=red&amp;size=38</code> and <code>?size=38&amp;colour=red</code> are two different URLs to Google.</li><li><strong>Empty results return 404.</strong> A combination with no products shouldn’t be a page returning 200.</li><li><strong>Sort order and view</strong> (grid, list, products per page) don’t create pages worth indexing.</li><li><strong>Pagination through normal links.</strong> Google no longer uses <code>rel=\"next\"</code> and <code>rel=\"prev\"</code>, so further category pages must be reachable through links.</li><li><strong>The URL Parameters tool in Search Console is gone.</strong> Google retired it in 2022, so control has to be set up in the store itself.</li></ul>"
+      },
+      {
+        "h": "How to tell if you have a problem",
+        "body": "<ol><li>Search Google for <code>site:yourstore.com inurl:?</code> and see how many parameter URLs are indexed.</li><li>In the Search Console indexing report, check pages “indexed, not submitted in sitemap” and duplicates.</li><li>In your server logs, count what share of Googlebot’s visits goes to filtered URLs.</li><li>Crawl one category and see how many unique URLs its filters generate.</li></ol><p>Filters on PrestaShop, Magento, WordPress, Shoper or a custom store are configured differently, but the principles are the same. If you want this set up properly, see the <a href='/en/services/ecommerce-seo/'>e-commerce SEO</a> service.</p>"
+      }
+    ],
+    "faq": [
+      {
+        "q": "Noindex or robots.txt for filters?",
+        "a": "It depends on scale. With a moderate number of URLs, noindex removes them from the index. With millions of combinations, robots.txt protects crawl budget but won’t remove URLs that are already indexed. A common sequence is noindex first, then a robots.txt block once the URLs have dropped out of the index."
+      },
+      {
+        "q": "Is a canonical tag enough?",
+        "a": "For sort orders and small differences, usually yes. For filters that clearly change the product list, Google often ignores the canonical, because the pages aren’t duplicates."
+      },
+      {
+        "q": "Should I index brand and colour pages?",
+        "a": "Only if people search for them and you have enough products to make the page useful. Check demand in keyword data before you open them up for indexing."
+      }
+    ]
+  }
+}

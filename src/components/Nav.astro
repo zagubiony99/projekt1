@@ -1,5 +1,6 @@
 ---
 import { getDict, otherLang, type Lang } from '../i18n';
+import { pageRoutes } from '../data/routes';
 interface Props { lang: Lang; altHref?: string; contactHref?: string }
 const { lang } = Astro.props;
 const t = getDict(lang);
@@ -11,10 +12,13 @@ const contactHref = Astro.props.contactHref ?? `#${t.ids.contact}`;
 const h = (a: string) => `${t.path}${a}`;
 const links = [
   [h(`#${t.ids.services}`), t.nav.services],
-  [h(`#${t.ids.experience}`), t.nav.experience],
+  [pageRoutes.about[lang], t.nav.about],
+  [pageRoutes.guides[lang], t.nav.guides],
   [h(`#${t.ids.process}`), t.nav.process],
   [h(`#${t.ids.faq}`), t.nav.faq],
 ] as const;
+// the current page's own link is marked for screen readers and styling
+const here = Astro.url.pathname;
 ---
 
 <header class="nav" data-nav>
@@ -22,7 +26,7 @@ const links = [
     <a class="logo" href={t.path} aria-label="Maciej Zięciak — home">Maciej Zięciak</a>
     <div class="end">
       <nav class="links" aria-label="Main">
-        {links.map(([href, label]) => <a href={href}>{label}</a>)}
+        {links.map(([href, label]) => <a href={href} aria-current={here.startsWith(href) && !href.includes('#') ? 'page' : undefined}>{label}</a>)}
         <a href={altHref} hreflang={alt.lang} aria-label={`${alt.lang.toUpperCase()}: ${t.nav.switchLabel}`}>{alt.lang.toUpperCase()}</a>
       </nav>
       <a class="cta" href={contactHref}>{t.nav.cta}</a>
@@ -89,8 +93,12 @@ const links = [
     opacity: 0.8;
     transition: opacity 0.2s;
   }
-  .links a:hover {
+  .links a:hover,
+  .links a[aria-current='page'] {
     opacity: 1;
+  }
+  .links a[aria-current='page'] {
+    font-weight: 600;
   }
   .cta {
     display: inline-flex;

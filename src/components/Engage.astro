@@ -1,0 +1,159 @@
+---
+// "How we can work together": paid consultation, project, ongoing support.
+// Each button jumps to the contact form and ticks the matching topic (see scripts/main.ts).
+import { getDict, type Lang } from '../i18n';
+interface Props { lang: Lang; white?: boolean } // white: on pages where the previous section is gray
+const t = getDict(Astro.props.lang);
+const e = t.engage;
+---
+
+<section class:list={['section engage', { 'section--gray': !Astro.props.white }]} id={Astro.props.lang === 'pl' ? 'wspolpraca' : 'work-together'} aria-labelledby="eng-h">
+  <div class="wrap wrap--wide">
+    <header class="head">
+      <p class="eyebrow" data-reveal>{e.label}</p>
+      <h2 class="h2" id="eng-h" data-reveal>{e.title}</h2>
+      <p class="lead" data-reveal style="--d:1">{e.lead}</p>
+    </header>
+    <ul class="models">
+      {e.models.map((m, i) => (
+        <li class:list={['model', { featured: m.featured }]} data-reveal style={`--d:${i}`}>
+          <p class="kind">{m.kind}</p>
+          <h3>{m.name}</h3>
+          <p class="price">{m.price || e.priceFallback}</p>
+          <p class="desc">{m.desc}</p>
+          <ul class="points">
+            {m.points.map((p) => (
+              <li>
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 8.4 2.6 2.6L12 5.4" /></svg>
+                <span>{p}</span>
+              </li>
+            ))}
+          </ul>
+          <a class={m.featured ? 'btn' : 'go'} href={`#${t.ids.contact}`} data-topic={m.topic || undefined}>{m.cta}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .models {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    align-items: stretch;
+  }
+  .model {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: clamp(28px, 3vw, 40px);
+    border-radius: var(--r-lg);
+    background: var(--white);
+    overflow: hidden;
+  }
+  .engage:not(.section--gray) .model:not(.featured) {
+    background: var(--gray);
+  }
+  .featured {
+    background: var(--dark);
+    color: #fff;
+  }
+  /* soft accent glow on the featured card, a gradient only (no blur, no animation) */
+  .featured::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(90% 70% at 100% 0%, color-mix(in srgb, var(--a2) 30%, transparent), transparent 60%),
+      radial-gradient(70% 60% at 0% 100%, color-mix(in srgb, var(--a4) 18%, transparent), transparent 60%);
+    pointer-events: none;
+  }
+  .model > * {
+    position: relative;
+  }
+  .kind {
+    color: var(--muted);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+  .featured .kind {
+    color: color-mix(in srgb, var(--a3) 65%, white);
+  }
+  h3 {
+    font-size: clamp(1.5rem, 1.25rem + 0.8vw, 1.875rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+  }
+  .price {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    background: var(--ai);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    width: fit-content;
+  }
+  .desc {
+    color: var(--muted);
+  }
+  .featured .desc {
+    color: var(--dark-muted);
+  }
+  .points {
+    display: grid;
+    gap: 10px;
+    margin: 6px 0 10px;
+    font-size: 0.9375rem;
+  }
+  .points li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .points svg {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    padding: 2px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--a1) 14%, transparent);
+    fill: none;
+    stroke: var(--a1);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .featured .points svg {
+    background: rgb(255 255 255 / 0.12);
+    stroke: #fff;
+  }
+  .model > a {
+    margin-top: auto;
+    align-self: flex-start;
+  }
+  .go {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 22px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-weight: 550;
+    transition: border-color 0.2s, background-color 0.2s;
+  }
+  .go:hover {
+    border-color: var(--ink-2);
+    background: var(--gray);
+  }
+  @media (max-width: 1000px) {
+    .models {
+      grid-template-columns: 1fr;
+      max-width: 560px;
+      margin-inline: auto;
+    }
+  }
+</style>

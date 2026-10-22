@@ -1,0 +1,96 @@
+{
+  "published": "2026-10-20",
+  "updated": "2026-10-20",
+  "pl": {
+    "metaTitle": "AI Overviews i ChatGPT: jak przygotować stronę",
+    "metaDescription": "Jak przygotować stronę na AI Overviews, AI Mode, ChatGPT i Perplexity: dostęp i indeksacja, treść, dane strukturalne, marka i pomiar ruchu z AI.",
+    "title": "AI Overviews, ChatGPT i Perplexity: jak przygotować stronę",
+    "lead": "Coraz więcej pytań kończy się odpowiedzią AI z kilkoma linkami do źródeł. Nie ma jednego triku, który sprawi, że będziesz jednym z nich. Są za to rzeczy, bez których szanse spadają prawie do zera, i rzeczy, które możesz zmierzyć. Oto jak do tego podchodzę.",
+    "sections": [
+      {
+        "h": "1. Najpierw podstawy: indeksacja i dostęp",
+        "body": "<p>Według Google strona może pojawić się jako link w AI Overviews i AI Mode, jeśli jest zaindeksowana i może być pokazana w wynikach z fragmentem tekstu. Nie ma osobnych wymagań technicznych ani specjalnych znaczników. To oznacza, że wszystkie problemy z indeksacją, które szkodzą w zwykłych wynikach, szkodzą też w AI.</p><p>Inne asystenty mają własne boty. Jeśli zależy Ci na ChatGPT, Claude czy Perplexity, sprawdź, czy ich boty wyszukiwania mają dostęp do strony, i to nie tylko w robots.txt, ale też w firewallu i CDN. Pomoże Ci w tym mój <a href='/narzedzia/robots-txt-boty-ai/'>tester robots.txt dla botów AI</a> i poradnik <a href='/poradniki/boty-ai-robots-txt/'>boty AI w robots.txt</a>.</p>"
+      },
+      {
+        "h": "2. Treść widoczna bez JavaScriptu",
+        "body": "<p>Googlebot renderuje JavaScript, ale z dostępnych analiz wynika, że większość botów AI tego nie robi. Jeśli opis usługi, cena czy specyfikacja produktu pojawiają się dopiero po wykonaniu skryptów, te boty zobaczą pustą stronę.</p><ul><li>Kluczowa treść i linki powinny być w HTML z serwera.</li><li>Sprawdź stronę z wyłączonym JavaScriptem albo porównaj źródło strony z wersją wyrenderowaną.</li><li>Nie chowaj najważniejszych informacji w zakładkach ładowanych dopiero po kliknięciu.</li></ul>"
+      },
+      {
+        "h": "3. Treść, którą łatwo zacytować",
+        "body": "<ul><li><strong>Konkretna odpowiedź na początku.</strong> Jeśli strona odpowiada na pytanie, niech odpowiedź będzie w pierwszym akapicie, a szczegóły niżej.</li><li><strong>Jasna struktura.</strong> Nagłówki, które mówią, o czym jest sekcja, listy i tabele tam, gdzie porządkują informacje.</li><li><strong>Własne informacje.</strong> Dane, doświadczenie, przykłady i ceny, których nie ma na dziesięciu innych stronach.</li><li><strong>Aktualność.</strong> Data aktualizacji i treść, która się jej zgadza.</li><li><strong>Autor i firma.</strong> Kto to pisze, czym się zajmuje i jak się skontaktować.</li></ul>"
+      },
+      {
+        "h": "4. Dane strukturalne i spójna informacja o marce",
+        "body": "<p>Dane strukturalne nie są przepustką do odpowiedzi AI, ale pomagają jednoznacznie opisać, kim jesteś i co oferujesz: organizację, produkty, usługi, autorów. Ważne, żeby zgadzały się z treścią widoczną na stronie i były takie same w całym serwisie.</p><p>Liczy się też to, co o Twojej marce mówi reszta internetu: profile firmy, katalogi branżowe, recenzje, artykuły, w których jesteś wymieniany. Spójna nazwa, opis i dane kontaktowe w tych miejscach pomagają modelom poprawnie Cię rozpoznać.</p>"
+      },
+      {
+        "h": "5. Jak to mierzyć",
+        "body": "<ul><li><strong>Google Search Console:</strong> ruch z AI Overviews i AI Mode jest wliczany do raportu skuteczności w wyszukiwaniu, razem ze zwykłymi wynikami.</li><li><strong>Analityka:</strong> wejścia z chatgpt.com, perplexity.ai, gemini.google.com czy copilot.microsoft.com widać w źródłach ruchu. Linki z wyszukiwania w ChatGPT zwykle mają parametr <code>utm_source=chatgpt.com</code>.</li><li><strong>Logi serwera:</strong> czy boty AI odwiedzają stronę, które adresy i z jakim kodem odpowiedzi.</li><li><strong>Ręczne testy:</strong> stała lista pytań, które zadają Twoi klienci, sprawdzana co miesiąc w kilku asystentach. Notuj, czy pojawiasz się w odpowiedzi i jako źródło.</li></ul><p>Jeśli chcesz, żebym przeprowadził to dla Twojej strony i marki, zobacz usługę <a href='/uslugi/widocznosc-w-ai-search/'>widoczność w odpowiedziach AI</a>.</p>"
+      }
+    ],
+    "faq": [
+      {
+        "q": "Czy jest specjalna optymalizacja pod AI Overviews?",
+        "a": "Google mówi, że nie ma dodatkowych wymagań: strona musi być zaindeksowana i móc pojawić się w wynikach z fragmentem. W praktyce wygrywają strony dobre technicznie, z jasną, konkretną i aktualną treścią."
+      },
+      {
+        "q": "Czy mogę wyłączyć swoją stronę z AI Overviews?",
+        "a": "Służą do tego te same ustawienia co dla fragmentów w zwykłych wynikach, na przykład nosnippet albo max-snippet. Ograniczają one jednak także wygląd strony w zwykłych wynikach wyszukiwania."
+      },
+      {
+        "q": "Czy llms.txt pomaga w widoczności w AI?",
+        "a": "To propozycja pliku z mapą treści dla modeli językowych. Nie zaszkodzi, ale nie zastąpi indeksacji, dostępu botów i dobrej treści."
+      },
+      {
+        "q": "Jak szybko widać efekty?",
+        "a": "Poprawki dostępu i renderowania mogą zadziałać, gdy boty ponownie odwiedzą stronę. Budowanie rozpoznawalności marki w źródłach, z których korzystają modele, to proces na miesiące."
+      }
+    ]
+  },
+  "en": {
+    "metaTitle": "AI Overviews and ChatGPT: How to Prepare Your Site",
+    "metaDescription": "How to prepare your site for AI Overviews, AI Mode, ChatGPT and Perplexity: access and indexing, content, structured data, brand and measuring AI traffic.",
+    "title": "AI Overviews, ChatGPT and Perplexity: how to prepare your site",
+    "lead": "More and more questions end with an AI answer and a few source links. There is no single trick that makes you one of them. There are, however, things without which your chances drop to almost zero, and things you can measure. Here is how I approach it.",
+    "sections": [
+      {
+        "h": "1. Start with the basics: indexing and access",
+        "body": "<p>According to Google, a page can appear as a link in AI Overviews and AI Mode if it is indexed and eligible to be shown in Search with a snippet. There are no extra technical requirements or special markup. That means every indexing problem that hurts you in regular results hurts you in AI as well.</p><p>Other assistants have their own bots. If ChatGPT, Claude or Perplexity matter to you, check that their search bots can reach your site, not only in robots.txt but also in your firewall and CDN. My <a href='/en/tools/robots-txt-ai-bot-checker/'>robots.txt checker for AI bots</a> and the guide <a href='/en/guides/ai-bots-robots-txt/'>AI bots in robots.txt</a> will help.</p>"
+      },
+      {
+        "h": "2. Content visible without JavaScript",
+        "body": "<p>Googlebot renders JavaScript, but available analyses show that most AI bots don’t. If a service description, a price or a product spec only appears after scripts run, those bots see an empty page.</p><ul><li>Key content and links should be in the HTML from the server.</li><li>Check the page with JavaScript turned off, or compare the page source with the rendered version.</li><li>Don’t hide your most important information in tabs that load only after a click.</li></ul>"
+      },
+      {
+        "h": "3. Content that is easy to cite",
+        "body": "<ul><li><strong>A specific answer up front.</strong> If the page answers a question, put the answer in the first paragraph and the details below.</li><li><strong>Clear structure.</strong> Headings that say what each section is about, and lists and tables where they organise information.</li><li><strong>Your own information.</strong> Data, experience, examples and prices that aren’t on ten other sites.</li><li><strong>Freshness.</strong> An updated date and content that matches it.</li><li><strong>Author and company.</strong> Who wrote it, what they do and how to get in touch.</li></ul>"
+      },
+      {
+        "h": "4. Structured data and consistent brand information",
+        "body": "<p>Structured data is not a ticket into AI answers, but it helps describe unambiguously who you are and what you offer: your organisation, products, services and authors. It should match the visible content and be consistent across the site.</p><p>What the rest of the web says about your brand matters too: company profiles, industry directories, reviews and articles that mention you. A consistent name, description and contact details in those places help models recognise you correctly.</p>"
+      },
+      {
+        "h": "5. How to measure it",
+        "body": "<ul><li><strong>Google Search Console:</strong> traffic from AI Overviews and AI Mode is counted in the Search performance report, together with regular results.</li><li><strong>Analytics:</strong> visits from chatgpt.com, perplexity.ai, gemini.google.com or copilot.microsoft.com show up in your traffic sources. Links from ChatGPT search usually carry <code>utm_source=chatgpt.com</code>.</li><li><strong>Server logs:</strong> do AI bots visit your site, which URLs, and with which status codes?</li><li><strong>Manual tests:</strong> a fixed list of questions your customers ask, checked monthly in several assistants. Note whether you appear in the answer and as a source.</li></ul><p>If you want me to run this for your site and brand, see the <a href='/en/services/ai-search-visibility/'>AI search visibility</a> service.</p>"
+      }
+    ],
+    "faq": [
+      {
+        "q": "Is there special optimisation for AI Overviews?",
+        "a": "Google says there are no additional requirements: the page must be indexed and eligible to appear in Search with a snippet. In practice, technically sound pages with clear, specific and up-to-date content do best."
+      },
+      {
+        "q": "Can I opt my site out of AI Overviews?",
+        "a": "The same controls as for snippets in regular results apply, such as nosnippet or max-snippet. They also limit how your page appears in regular search results."
+      },
+      {
+        "q": "Does llms.txt help with AI visibility?",
+        "a": "It is a proposed file with a content map for language models. It won’t hurt, but it won’t replace indexing, bot access and good content."
+      },
+      {
+        "q": "How quickly will I see results?",
+        "a": "Fixes to access and rendering can work as soon as bots revisit the site. Building brand recognition in the sources models rely on takes months."
+      }
+    ]
+  }
+}

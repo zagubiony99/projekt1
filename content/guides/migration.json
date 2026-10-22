@@ -1,0 +1,96 @@
+{
+  "published": "2026-10-19",
+  "updated": "2026-10-19",
+  "pl": {
+    "metaTitle": "Migracja strony bez utraty ruchu: checklista SEO",
+    "metaDescription": "Checklista SEO na migrację strony: inwentaryzacja adresów, mapa przekierowań 301, testy na stagingu, dzień startu i monitoring. Bez utraty ruchu.",
+    "title": "Migracja strony bez utraty ruchu: checklista SEO",
+    "lead": "Nowy CMS, nowa domena albo nowa struktura adresów to moment, w którym najłatwiej stracić ruch z Google. Prawie zawsze z tych samych powodów: brakujące przekierowania, zablokowany staging, który trafił na produkcję, i zmiany, których nikt nie sprawdził przed startem. Oto checklista, której używam przy migracjach.",
+    "sections": [
+      {
+        "h": "1. Zanim cokolwiek zmienisz: inwentaryzacja",
+        "body": "<p>Nie przeniesiesz tego, czego nie znasz. Zbierz pełną listę adresów starej strony z kilku źródeł, bo każde widzi coś innego:</p><ul><li>pełny crawl obecnej strony (Screaming Frog, Botify, Lumar albo OnCrawl),</li><li>Google Search Console: strony z wyświetleniami i kliknięciami,</li><li>analityka: strony z wejściami z wyszukiwarki,</li><li>mapy witryn XML,</li><li>logi serwera: adresy, które odwiedza Googlebot,</li><li>adresy z linkami zewnętrznymi z narzędzi do analizy linków.</li></ul><p>Zapisz też punkt odniesienia: ruch organiczny, pozycje najważniejszych fraz i liczbę stron w indeksie. Bez tego po starcie nie odróżnisz normalnych wahań od problemu.</p>"
+      },
+      {
+        "h": "2. Mapa przekierowań",
+        "body": "<ul><li><strong>Każdy stary adres przekieruj 301 na najbliższy odpowiednik.</strong> Kategoria na kategorię, produkt na produkt, artykuł na artykuł.</li><li><strong>Nie przekierowuj wszystkiego na stronę główną.</strong> Google traktuje masowe przekierowania na stronę główną jak błąd 404 (tzw. soft 404) i tracisz wartość tych adresów.</li><li><strong>Bez łańcuchów.</strong> Stary adres ma prowadzić prosto na nowy, a nie przez dwa czy trzy kolejne przekierowania. Zaktualizuj też stare przekierowania, które wskazywały na adresy zmieniane teraz.</li><li><strong>Strony, które znikają bez odpowiednika,</strong> mogą zwracać 404 albo 410. To lepsze niż przekierowanie na przypadkową stronę.</li><li><strong>Parametry i wielkość liter.</strong> Sprawdź, jak nowy system traktuje adresy z parametrami, końcowym ukośnikiem i wielkimi literami.</li></ul>"
+      },
+      {
+        "h": "3. Testy na stagingu",
+        "body": "<p>Środowisko testowe zablokuj hasłem, a nie tylko <code>noindex</code> czy robots.txt. Blokada w robots.txt przeniesiona na produkcję to jeden z najczęstszych powodów spadków po migracji.</p><p>Na stagingu sprawdź:</p><ul><li>tytuły, opisy i nagłówki H1 najważniejszych stron (porównaj ze starą wersją),</li><li>tagi canonical, meta robots i hreflang,</li><li>dane strukturalne,</li><li>linkowanie wewnętrzne: menu, okruszki, linki w treści i paginację,</li><li>renderowanie: czy treść i linki są w HTML, a nie tylko po JavaScripcie,</li><li>szybkość ładowania i Core Web Vitals,</li><li>działanie mapy przekierowań na pełnej liście starych adresów.</li></ul>"
+      },
+      {
+        "h": "4. Dzień startu",
+        "body": "<ol><li>Wdróż przekierowania razem z nową stroną, a nie „za kilka dni”.</li><li>Zdejmij blokady ze stagingu: hasło, <code>noindex</code>, regułę <code>Disallow: /</code>.</li><li>Sprawdź robots.txt i mapy witryn XML na produkcji. Mapa ma zawierać nowe adresy kanoniczne zwracające 200.</li><li>Puść crawl listy starych adresów i potwierdź, że każdy kończy się jednym przekierowaniem na stronę z kodem 200.</li><li>Przy zmianie domeny użyj w Search Console narzędzia do zmiany adresu i dodaj nową domenę jako usługę.</li><li>Zgłoś nowe mapy witryn w Search Console.</li></ol>"
+      },
+      {
+        "h": "5. Po starcie: monitoring",
+        "body": "<ul><li>Codziennie przez pierwsze dwa tygodnie przeglądaj błędy 404 i 5xx w logach i w Search Console.</li><li>Obserwuj raport indeksowania stron i statystyki indeksowania w Search Console.</li><li>W logach sprawdź, czy Googlebot dociera do nowych adresów i jakie dostaje kody odpowiedzi.</li><li>Porównuj ruch i pozycje z punktem odniesienia z kroku 1.</li><li>Przekierowania utrzymuj co najmniej rok, a najlepiej na stałe.</li></ul><p>Jeśli planujesz migrację i chcesz, żeby ktoś przeprowadził Cię przez cały proces, zobacz usługę <a href='/uslugi/migracja-strony-seo/'>migracja strony bez utraty ruchu</a>.</p>"
+      }
+    ],
+    "faq": [
+      {
+        "q": "Jak długo trzymać przekierowania po migracji?",
+        "a": "Google zaleca co najmniej rok. W praktyce najlepiej zostawić je na stałe, bo stare adresy żyją dalej w linkach, zakładkach i e-mailach."
+      },
+      {
+        "q": "Czy spadek ruchu po migracji jest normalny?",
+        "a": "Krótkie wahania w pierwszych tygodniach zdarzają się często, bo Google przelicza nowe adresy. Duży spadek, który się utrzymuje, prawie zawsze oznacza błąd: brakujące przekierowania, blokadę indeksowania albo utracone treści."
+      },
+      {
+        "q": "301 czy 302?",
+        "a": "Przy trwałej zmianie adresu użyj 301 (albo 308). To najczytelniejszy sygnał, że stary adres na stałe przeszedł pod nowy."
+      },
+      {
+        "q": "Czy zmieniać przy okazji migracji treści i strukturę?",
+        "a": "Im mniej zmian naraz, tym łatwiej znaleźć przyczynę ewentualnego spadku. Jeśli to możliwe, najpierw przenieś stronę, a dopiero potem przebudowuj treści."
+      }
+    ]
+  },
+  "en": {
+    "metaTitle": "Website Migration Without Losing Traffic: SEO Checklist",
+    "metaDescription": "An SEO checklist for website migrations: URL inventory, 301 redirect mapping, staging tests, launch day and monitoring. Without losing traffic.",
+    "title": "Website migration without losing traffic: an SEO checklist",
+    "lead": "A new CMS, a new domain or a new URL structure is when it is easiest to lose Google traffic. Almost always for the same reasons: missing redirects, a blocked staging setup that made it to production, and changes nobody checked before launch. Here is the checklist I use for migrations.",
+    "sections": [
+      {
+        "h": "1. Before you change anything: inventory",
+        "body": "<p>You can’t move what you don’t know about. Build a full list of the old site’s URLs from several sources, because each one sees something different:</p><ul><li>a full crawl of the current site (Screaming Frog, Botify, Lumar or OnCrawl),</li><li>Google Search Console: pages with impressions and clicks,</li><li>analytics: pages with organic entrances,</li><li>XML sitemaps,</li><li>server logs: URLs Googlebot visits,</li><li>URLs with external links, from your backlink tools.</li></ul><p>Record a baseline too: organic traffic, rankings for your key queries and the number of indexed pages. Without it you won’t be able to tell normal fluctuation from a real problem after launch.</p>"
+      },
+      {
+        "h": "2. The redirect map",
+        "body": "<ul><li><strong>301-redirect every old URL to its closest equivalent.</strong> Category to category, product to product, article to article.</li><li><strong>Don’t redirect everything to the homepage.</strong> Google treats mass redirects to the homepage like a 404 (a so-called soft 404), and you lose the value of those URLs.</li><li><strong>No chains.</strong> An old URL should lead straight to the new one, not through two or three more redirects. Update older redirects that pointed at URLs you are changing now.</li><li><strong>Pages that disappear without an equivalent</strong> can return 404 or 410. That is better than redirecting to a random page.</li><li><strong>Parameters and letter case.</strong> Check how the new system handles URLs with parameters, trailing slashes and capital letters.</li></ul>"
+      },
+      {
+        "h": "3. Testing on staging",
+        "body": "<p>Protect the staging environment with a password, not just <code>noindex</code> or robots.txt. A robots.txt block carried over to production is one of the most common causes of post-migration drops.</p><p>On staging, check:</p><ul><li>titles, descriptions and H1s of your key pages (compare with the old version),</li><li>canonical tags, meta robots and hreflang,</li><li>structured data,</li><li>internal linking: menus, breadcrumbs, in-content links and pagination,</li><li>rendering: whether content and links are in the HTML, not only after JavaScript,</li><li>load speed and Core Web Vitals,</li><li>the redirect map, run against the full list of old URLs.</li></ul>"
+      },
+      {
+        "h": "4. Launch day",
+        "body": "<ol><li>Ship the redirects together with the new site, not “in a few days”.</li><li>Remove the staging blocks: password, <code>noindex</code>, <code>Disallow: /</code>.</li><li>Check robots.txt and XML sitemaps in production. The sitemap should list new canonical URLs that return 200.</li><li>Crawl the list of old URLs and confirm each ends in a single redirect to a page returning 200.</li><li>For a domain change, use the Change of Address tool in Search Console and add the new domain as a property.</li><li>Submit the new sitemaps in Search Console.</li></ol>"
+      },
+      {
+        "h": "5. After launch: monitoring",
+        "body": "<ul><li>Every day for the first two weeks, review 404 and 5xx errors in your logs and in Search Console.</li><li>Watch the page indexing report and crawl stats in Search Console.</li><li>Check in the logs that Googlebot reaches the new URLs and which status codes it gets.</li><li>Compare traffic and rankings with the baseline from step 1.</li><li>Keep redirects for at least a year, ideally for good.</li></ul><p>If you are planning a migration and want someone to guide you through the whole process, see the <a href='/en/services/website-migration-seo/'>website migration</a> service.</p>"
+      }
+    ],
+    "faq": [
+      {
+        "q": "How long should I keep redirects after a migration?",
+        "a": "Google recommends at least a year. In practice it is best to keep them for good, because old URLs live on in links, bookmarks and emails."
+      },
+      {
+        "q": "Is a traffic drop after a migration normal?",
+        "a": "Short fluctuations in the first weeks are common while Google processes the new URLs. A large drop that persists almost always means a mistake: missing redirects, blocked indexing or lost content."
+      },
+      {
+        "q": "301 or 302?",
+        "a": "For a permanent URL change, use 301 (or 308). It is the clearest signal that the old URL has moved to the new one for good."
+      },
+      {
+        "q": "Should I change content and structure during the migration?",
+        "a": "The fewer changes at once, the easier it is to find the cause of a drop. If you can, move the site first and rework the content afterwards."
+      }
+    ]
+  }
+}

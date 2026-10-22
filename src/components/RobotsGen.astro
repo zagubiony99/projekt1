@@ -1,0 +1,414 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import PageHero from './PageHero.astro';
+import FaqList from './FaqList.astro';
+import { site } from '../config';
+import { getDict, otherLang, type Lang } from '../i18n';
+import { robotsGen, robotsTool } from '../data/pages';
+import { services, ui } from '../data/services';
+import { pageRoutes } from '../data/routes';
+import { ogPath } from '../data/og';
+import { bots } from '../data/ai-bots';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getDict(lang);
+const r = robotsGen[lang];
+const groupNames = robotsTool[lang].groups;
+const path = pageRoutes.robotsGen[lang];
+const altPath = pageRoutes.robotsGen[otherLang(lang)];
+const url = new URL(path, site.url).href;
+const home = new URL(t.path, site.url).href;
+const contactHref = `${t.path}#${t.ids.contact}`;
+const svc = services.find((s) => s.key === 'ai');
+const pl = lang === 'pl';
+const groups = ['search', 'aiSearch', 'training', 'user'] as const;
+
+const clientData = {
+  comments: { allow: r.commentAllow, block: r.commentBlock, rest: r.commentRest },
+  copied: r.copied,
+  copy: r.copy,
+  presets: {
+    searchOnly: bots.filter((b) => b.group !== 'training').map((b) => b.token),
+    open: bots.map((b) => b.token),
+    blockAi: bots.filter((b) => b.group === 'search').map((b) => b.token),
+  },
+};
+
+const extraLd = [
+  {
+    '@type': 'WebApplication',
+    '@id': `${url}#app`,
+    name: r.title,
+    description: r.metaDescription,
+    url,
+    applicationCategory: 'DeveloperApplication',
+    operatingSystem: 'Any',
+    isAccessibleForFree: true,
+    offers: { '@type': 'Offer', price: 0, priceCurrency: pl ? 'PLN' : 'EUR' },
+    inLanguage: pl ? 'pl-PL' : 'en-GB',
+    author: { '@id': `${site.url}/#person` },
+  },
+  {
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: r.metaTitle,
+    description: r.metaDescription,
+    inLanguage: pl ? 'pl-PL' : 'en-GB',
+    isPartOf: { '@id': `${site.url}/#website` },
+    mainEntity: { '@id': `${url}#app` },
+    breadcrumb: { '@id': `${url}#breadcrumb` },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: t.serviceUi.home, item: home },
+      { '@type': 'ListItem', position: 2, name: r.title, item: url },
+    ],
+  },
+  {
+    '@type': 'FAQPage',
+    '@id': `${url}#faq`,
+    mainEntity: r.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+
+<Base lang={lang} title={r.metaTitle} description={r.metaDescription} path={path} altPath={altPath} extraLd={extraLd} ogImage={ogPath(lang, 'tool-robots-gen')}>
+  <Nav lang={lang} altHref={altPath} contactHref={contactHref} />
+  <main id="main">
+    <PageHero compact eyebrowInH1={false} crumbs={[{ href: t.path, label: t.serviceUi.home }, { label: r.title }]} eyebrow={r.eyebrow} title={r.title} lead={r.lead} />
+
+    <section class="tool-sec" aria-label={r.title}>
+      <div class="wrap wrap--wide">
+        <form class="tool" data-gen novalidate>
+          <div class="inputs">
+            <fieldset class="presets">
+              <legend class="l">{r.presetsLabel}</legend>
+              <div class="chips">
+                <button type="button" class="chip on" data-preset="searchOnly">{r.presets.searchOnly}</button>
+                <button type="button" class="chip" data-preset="open">{r.presets.open}</button>
+                <button type="button" class="chip" data-preset="blockAi">{r.presets.blockAi}</button>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend class="l">{r.botsLabel}</legend>
+              {groups.map((g) => (
+                <div class="grp">
+                  <p class="gname">{groupNames[g]}</p>
+                  <ul>
+                    {bots.filter((b) => b.group === g).map((b) => (
+                      <li>
+                        <label>
+                          <input type="checkbox" name="bot" value={b.token} checked={b.group !== 'training'} />
+                          <span class="tok">{b.token}</span>
+                          <span class="co">{b.company}</span>
+                        </label>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </fieldset>
+            <label class="f">
+              <span class="l">{r.pathsLabel}</span>
+              <textarea name="paths" rows="3" spellcheck="false" autocapitalize="off">{pl ? '/koszyk/' : '/cart/'}</textarea>
+              <span class="h">{r.pathsHint}</span>
+            </label>
+            <label class="f">
+              <span class="l">{r.sitemapLabel}</span>
+              <input name="sitemap" type="url" placeholder={r.sitemapPlaceholder} spellcheck="false" autocapitalize="off" />
+            </label>
+          </div>
+
+          <div class="out">
+            <div class="out-head">
+              <p class="l">{r.outputLabel}</p>
+              <button type="button" class="ghost" data-copy>{r.copy}</button>
+            </div>
+            <pre><code data-result></code></pre>
+            <a class="more" href={pageRoutes.robotsTool[lang]}>{r.testCta}</a>
+          </div>
+        </form>
+        <script type="application/json" id="gen-data" set:html={JSON.stringify(clientData)} />
+      </div>
+    </section>
+
+    <section class="section section--gray" aria-labelledby="how-h">
+      <div class="wrap">
+        <header class="head">
+          <h2 class="h2" id="how-h" data-reveal>{r.howTitle}</h2>
+        </header>
+        <ol class="how">{r.how.map((x, i) => <li data-reveal style={`--d:${i}`}>{x}</li>)}</ol>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="gfaq-h">
+      <div class="wrap">
+        <header class="head">
+          <h2 class="h2" id="gfaq-h" data-reveal>{t.guidesUi.faqTitle}</h2>
+        </header>
+        <FaqList items={r.faq} />
+        {svc && (
+          <aside class="svc" data-reveal>
+            <p class="svc-h">{r.serviceTitle}</p>
+            <p class="svc-d">{r.serviceText}</p>
+            <div class="svc-ctas">
+              <a class="btn" href={`${ui[lang].base}${svc[lang].slug}/`}>{r.serviceCta}</a>
+              <a class="more" href={contactHref}>{t.nav.cta}</a>
+            </div>
+          </aside>
+        )}
+      </div>
+    </section>
+  </main>
+  <Footer lang={lang} altHref={altPath} contactHref={contactHref} />
+</Base>
+
+<script>
+  import '../scripts/main.ts';
+  import { generateRobots } from '../lib/robots-gen';
+
+  type Data = { comments: { allow: string; block: string; rest: string }; copied: string; copy: string; presets: Record<string, string[]> };
+  const form = document.querySelector<HTMLFormElement>('[data-gen]');
+  const raw = document.getElementById('gen-data')?.textContent;
+  if (form && raw) {
+    const d: Data = JSON.parse(raw);
+    const boxes = [...form.querySelectorAll<HTMLInputElement>('input[name="bot"]')];
+    const paths = form.elements.namedItem('paths') as HTMLTextAreaElement;
+    const sitemap = form.elements.namedItem('sitemap') as HTMLInputElement;
+    const out = form.querySelector<HTMLElement>('[data-result]')!;
+    const chips = [...form.querySelectorAll<HTMLButtonElement>('[data-preset]')];
+
+    const run = () => {
+      out.textContent = generateRobots({
+        allow: boxes.filter((b) => b.checked).map((b) => b.value),
+        block: boxes.filter((b) => !b.checked).map((b) => b.value),
+        disallow: paths.value.split('\n'),
+        sitemap: sitemap.value,
+        comments: d.comments,
+      });
+    };
+    chips.forEach((c) =>
+      c.addEventListener('click', () => {
+        const allowed = new Set(d.presets[c.dataset.preset!]);
+        boxes.forEach((b) => (b.checked = allowed.has(b.value)));
+        chips.forEach((x) => x.classList.toggle('on', x === c));
+        run();
+      }),
+    );
+    form.addEventListener('input', (e) => {
+      if ((e.target as HTMLInputElement).name === 'bot') chips.forEach((x) => x.classList.remove('on'));
+      run();
+    });
+    const copyBtn = form.querySelector<HTMLButtonElement>('[data-copy]')!;
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(out.textContent ?? '');
+        copyBtn.textContent = d.copied;
+        setTimeout(() => (copyBtn.textContent = d.copy), 1600);
+      } catch {}
+    });
+    run();
+  }
+</script>
+
+<style>
+  .tool-sec {
+    padding-bottom: clamp(64px, 8vw, 112px);
+  }
+  .tool {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+    gap: clamp(20px, 3vw, 40px);
+    padding: clamp(20px, 3vw, 36px);
+    border-radius: var(--r-lg);
+    background: var(--gray);
+  }
+  .inputs {
+    display: grid;
+    align-content: start;
+    gap: 22px;
+  }
+  fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+  }
+  .l {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 650;
+    letter-spacing: -0.015em;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .chip {
+    padding: 8px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--white);
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+  .chip.on {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: #fff;
+  }
+  .grp + .grp {
+    margin-top: 14px;
+  }
+  .gname {
+    margin-bottom: 6px;
+    color: var(--muted);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+  .grp ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .grp label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: var(--white);
+    cursor: pointer;
+  }
+  .grp input {
+    accent-color: var(--a1);
+  }
+  .tok {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.8125rem;
+  }
+  .co {
+    margin-left: auto;
+    color: var(--muted);
+    font-size: 0.75rem;
+  }
+  .f {
+    display: grid;
+    gap: 8px;
+  }
+  .f .l {
+    margin-bottom: 0;
+  }
+  .h {
+    color: var(--muted);
+    font-size: 0.8125rem;
+  }
+  textarea,
+  input[type='url'] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--white);
+    color: var(--ink);
+    font: 0.875rem/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  textarea:focus,
+  input:focus {
+    outline: 2px solid var(--a1);
+    outline-offset: 1px;
+  }
+  .out {
+    display: grid;
+    align-content: start;
+    gap: 12px;
+    min-width: 0;
+  }
+  .out-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .out-head .l {
+    margin: 0;
+  }
+  pre {
+    margin: 0;
+    overflow-x: auto;
+    padding: 20px 22px;
+    border-radius: var(--r);
+    background: var(--dark);
+    color: #f5f5f7;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    min-height: 320px;
+  }
+  .ghost {
+    padding: 8px 16px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--white);
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 550;
+    cursor: pointer;
+  }
+  .how {
+    display: grid;
+    gap: 14px;
+    max-width: 760px;
+    margin-inline: auto;
+    padding-left: 1.3em;
+    list-style: decimal;
+    color: var(--ink-2);
+    font-size: 1.0625rem;
+  }
+  .svc {
+    max-width: 860px;
+    margin: clamp(48px, 6vw, 72px) auto 0;
+    padding: clamp(28px, 4vw, 40px);
+    border-radius: var(--r-lg);
+    background: var(--dark);
+    background-image: radial-gradient(110% 90% at 100% 0%, color-mix(in srgb, var(--a2) 28%, transparent), transparent 60%);
+    color: #fff;
+  }
+  .svc-h {
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+  }
+  .svc-d {
+    margin-top: 10px;
+    max-width: 56ch;
+    color: var(--dark-muted);
+  }
+  .svc-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 28px;
+    margin-top: 22px;
+  }
+  .svc .more {
+    color: var(--link-dark);
+  }
+  @media (max-width: 900px) {
+    .tool {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 480px) {
+    .grp ul {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

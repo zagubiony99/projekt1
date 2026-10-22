@@ -1,0 +1,121 @@
+---
+// Hero for standalone pages (About, guides, tools): breadcrumbs, H1 made of the eyebrow
+// (keyword) and the headline, lead, and an optional slot for buttons or meta lines.
+interface Props {
+  crumbs: { href?: string; label: string }[];
+  eyebrow: string;
+  title: string;
+  lead?: string;
+  compact?: boolean;
+  // true: the eyebrow is part of the H1 (keyword + headline). false: the H1 is the title alone.
+  eyebrowInH1?: boolean;
+}
+const { crumbs, eyebrow, title, lead, compact = false, eyebrowInH1 = true } = Astro.props;
+---
+
+<section class:list={['ph', { compact }]} id="top">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="wrap top">
+    <nav class="crumbs intro" aria-label="Breadcrumb">
+      {crumbs.map((c, i) => (
+        <>
+          {i > 0 && <span aria-hidden="true">›</span>}
+          {c.href ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}
+        </>
+      ))}
+    </nav>
+    {eyebrowInH1 ? (
+      <h1>
+        <span class="eyebrow intro">{eyebrow}</span><span class="sr-only">: </span>
+        <span class="t intro">{title}</span>
+      </h1>
+    ) : (
+      <>
+        <p class="eyebrow intro">{eyebrow}</p>
+        <h1><span class="t intro">{title}</span></h1>
+      </>
+    )}
+    {lead && <p class="lead intro">{lead}</p>}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .ph {
+    position: relative;
+    padding: clamp(120px, 14vw, 180px) 0 clamp(64px, 8vw, 112px);
+    overflow: hidden;
+  }
+  .ph.compact {
+    padding-bottom: clamp(40px, 5vw, 64px);
+  }
+  .glow {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    width: min(1100px, 120vw);
+    aspect-ratio: 2 / 1;
+    translate: -50% -50%;
+    background:
+      radial-gradient(35% 50% at 30% 50%, color-mix(in srgb, var(--a1) 14%, transparent), transparent 70%),
+      radial-gradient(35% 50% at 55% 55%, color-mix(in srgb, var(--a2) 12%, transparent), transparent 70%),
+      radial-gradient(30% 45% at 75% 45%, color-mix(in srgb, var(--a4) 10%, transparent), transparent 70%);
+    pointer-events: none;
+  }
+  .top {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+  .crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+  .crumbs a:hover {
+    color: var(--ink);
+  }
+  h1 {
+    display: grid;
+    justify-items: center;
+    gap: 20px;
+    font-weight: 700;
+  }
+  h1 .eyebrow {
+    line-height: 1.25;
+  }
+  h1 .t {
+    max-width: 18ch;
+    font-size: clamp(2.5rem, 1.3rem + 4.4vw, 5.25rem);
+    line-height: 1.03;
+    letter-spacing: -0.045em;
+    text-wrap: balance;
+  }
+  .top .lead {
+    max-width: 46ch;
+  }
+  /* slotted content (buttons, meta line) */
+  .top > :global(*:not(nav):not(h1):not(.lead):not(.eyebrow)) {
+    margin-top: 6px;
+  }
+  /* .intro also animates slotted content passed in by the page */
+  :global(.js) .ph :global(.intro) {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(20px);
+    animation: rise 1.2s var(--ease-out) forwards;
+  }
+  :global(.js) h1 .eyebrow.intro,
+  :global(.js) .top > .eyebrow.intro { animation-delay: 0.08s; }
+  :global(.js) h1 .t.intro { animation-delay: 0.16s; }
+  :global(.js) .top > .lead.intro { animation-delay: 0.26s; }
+  :global(.js) .top > :global(.intro:not(.lead):not(nav):not(.eyebrow)) { animation-delay: 0.36s; }
+  @keyframes rise {
+    to { opacity: 1; filter: none; transform: none; }
+  }
+</style>

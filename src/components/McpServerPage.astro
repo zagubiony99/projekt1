@@ -1,0 +1,391 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import PageHero from './PageHero.astro';
+import FaqList from './FaqList.astro';
+import { site } from '../config';
+import { getDict, otherLang, type Lang } from '../i18n';
+import { mcpServer, guides } from '../data/pages';
+import { services, ui } from '../data/services';
+import { pageRoutes } from '../data/routes';
+import { ogPath } from '../data/og';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getDict(lang);
+const r = mcpServer[lang];
+const path = pageRoutes.mcpServer[lang];
+const altPath = pageRoutes.mcpServer[otherLang(lang)];
+const url = new URL(path, site.url).href;
+const home = new URL(t.path, site.url).href;
+const endpoint = new URL('/mcp', site.url).href;
+const contactHref = `${t.path}#${t.ids.contact}`;
+const guide = guides.find((g) => g.key === 'chatgpt-apps');
+const svc = services.find((s) => s.key === 'mcp');
+const pl = lang === 'pl';
+const fill = (s: string) => s.replaceAll('{url}', endpoint);
+
+const extraLd = [
+  {
+    '@type': 'WebApplication',
+    '@id': `${url}#app`,
+    name: r.title,
+    description: r.metaDescription,
+    url,
+    applicationCategory: 'DeveloperApplication',
+    operatingSystem: 'Any',
+    isAccessibleForFree: true,
+    offers: { '@type': 'Offer', price: 0, priceCurrency: pl ? 'PLN' : 'EUR' },
+    featureList: r.tools.map((x) => x.text),
+    inLanguage: pl ? 'pl-PL' : 'en-GB',
+    author: { '@id': `${site.url}/#person` },
+  },
+  {
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: r.metaTitle,
+    description: r.metaDescription,
+    inLanguage: pl ? 'pl-PL' : 'en-GB',
+    isPartOf: { '@id': `${site.url}/#website` },
+    mainEntity: { '@id': `${url}#app` },
+    breadcrumb: { '@id': `${url}#breadcrumb` },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: t.serviceUi.home, item: home },
+      { '@type': 'ListItem', position: 2, name: r.title, item: url },
+    ],
+  },
+  {
+    '@type': 'FAQPage',
+    '@id': `${url}#faq`,
+    mainEntity: r.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+
+<Base lang={lang} title={r.metaTitle} description={r.metaDescription} path={path} altPath={altPath} extraLd={extraLd} ogImage={ogPath(lang, 'tool-mcp')}>
+  <Nav lang={lang} altHref={altPath} contactHref={contactHref} />
+  <main id="main">
+    <PageHero compact eyebrowInH1={false} crumbs={[{ href: t.path, label: t.serviceUi.home }, { label: r.title }]} eyebrow={r.eyebrow} title={r.title} lead={r.lead}>
+      <div class="ep intro">
+        <p class="ep-l" id="ep-l">{r.urlLabel}</p>
+        <div class="ep-box">
+          <code aria-labelledby="ep-l">{endpoint}</code>
+          <button type="button" class="btn" data-copy={endpoint} data-done={r.copied}>{r.copy}</button>
+        </div>
+        <p class="ep-n">{r.note}</p>
+      </div>
+    </PageHero>
+
+    <section class="section section--gray" aria-labelledby="tools-h">
+      <div class="wrap wrap--wide">
+        <header class="head">
+          <h2 class="h2" id="tools-h" data-reveal>{r.toolsTitle}</h2>
+          <p class="sub" data-reveal>{r.toolsLead}</p>
+        </header>
+        <ul class="tools">
+          {r.tools.map((x, i) => (
+            <li data-reveal style={`--d:${i % 3}`}>
+              <code class="tn">{x.name}</code>
+              <p>{x.text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="setup-h">
+      <div class="wrap wrap--wide">
+        <header class="head">
+          <h2 class="h2" id="setup-h" data-reveal>{r.setupTitle}</h2>
+        </header>
+        <div class="setup">
+          {r.setup.map((c, i) => (
+            <article class="client" data-reveal style={`--d:${i % 2}`}>
+              <h3>{c.client}</h3>
+              {c.steps.length > 1 ? <ol>{c.steps.map((x) => <li>{x}</li>)}</ol> : <p>{c.steps[0]}</p>}
+              {c.code && (
+                <div class="code">
+                  <button type="button" class="ghost" data-copy={fill(c.code)} data-done={r.copied}>{r.copy}</button>
+                  <pre><code>{fill(c.code)}</code></pre>
+                </div>
+              )}
+              {c.note && <p class="cn">{c.note}</p>}
+            </article>
+          ))}
+        </div>
+        <p class="setup-n" data-reveal>{r.setupNote}</p>
+      </div>
+    </section>
+
+    <section class="section section--gray" aria-labelledby="ask-h">
+      <div class="wrap">
+        <header class="head">
+          <h2 class="h2" id="ask-h" data-reveal>{r.examplesTitle}</h2>
+        </header>
+        <ul class="asks">{r.examples.map((x, i) => <li data-reveal style={`--d:${i}`}>{x}</li>)}</ul>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="build-h">
+      <div class="wrap">
+        <header class="head">
+          <h2 class="h2" id="build-h" data-reveal>{r.buildTitle}</h2>
+          <p class="sub" data-reveal>{r.buildLead}</p>
+        </header>
+        <ul class="how">{r.build.map((x, i) => <li data-reveal style={`--d:${i}`}>{x}</li>)}</ul>
+        {guide && <p class="links" data-reveal><a class="more" href={guide[lang].path}>{r.guideCta}</a></p>}
+      </div>
+    </section>
+
+    <section class="section section--gray" aria-labelledby="mfaq-h">
+      <div class="wrap">
+        <header class="head">
+          <h2 class="h2" id="mfaq-h" data-reveal>{t.guidesUi.faqTitle}</h2>
+        </header>
+        <FaqList items={r.faq} />
+        {svc && (
+          <aside class="svc" data-reveal>
+            <p class="svc-h">{r.serviceTitle}</p>
+            <p class="svc-d">{r.serviceText}</p>
+            <div class="svc-ctas">
+              <a class="btn" href={`${ui[lang].base}${svc[lang].slug}/`}>{r.serviceCta}</a>
+              <a class="more" href={contactHref}>{t.nav.cta}</a>
+            </div>
+          </aside>
+        )}
+      </div>
+    </section>
+  </main>
+  <Footer lang={lang} altHref={altPath} contactHref={contactHref} />
+</Base>
+
+<script>
+  import '../scripts/main.ts';
+
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((b) => {
+    const label = b.textContent;
+    b.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(b.dataset.copy ?? '');
+        b.textContent = b.dataset.done ?? label;
+        setTimeout(() => (b.textContent = label), 1600);
+      } catch {
+        /* clipboard blocked: the text stays visible to copy by hand */
+      }
+    });
+  });
+</script>
+
+<style>
+  .ep {
+    max-width: 640px;
+    margin-top: 32px;
+  }
+  .ep-l {
+    font-weight: 650;
+    letter-spacing: -0.015em;
+  }
+  .ep-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 8px 8px 8px 18px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--white);
+    box-shadow: 0 10px 30px -18px color-mix(in srgb, var(--a1) 60%, transparent);
+  }
+  .ep-box code {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    font: 600 0.9375rem/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  .ep-box .btn {
+    flex: none;
+    border: 0;
+    cursor: pointer;
+    font: inherit;
+  }
+  .ep-n {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+  .sub {
+    max-width: 60ch;
+    margin: 12px auto 0;
+    color: var(--ink-2);
+    font-size: 1.0625rem;
+  }
+  .tools {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: 14px;
+  }
+  .tools li {
+    padding: 22px 24px;
+    border-radius: var(--r);
+    background: var(--white);
+  }
+  .tn {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--a1) 9%, white);
+    color: #1d3fbf;
+    font: 600 0.8125rem/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  .tools p {
+    margin-top: 10px;
+    color: var(--ink-2);
+  }
+  .setup {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .client {
+    display: grid;
+    align-content: start;
+    gap: 12px;
+    min-width: 0;
+    padding: clamp(22px, 3vw, 32px);
+    border-radius: var(--r-lg);
+    background: var(--gray);
+  }
+  .client h3 {
+    font-size: 1.375rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+  .client ol {
+    display: grid;
+    gap: 8px;
+    padding-left: 1.3em;
+    list-style: decimal;
+    color: var(--ink-2);
+  }
+  .client > p {
+    color: var(--ink-2);
+  }
+  .code {
+    display: grid;
+    min-width: 0;
+    border-radius: 14px;
+    background: var(--dark);
+  }
+  .code pre {
+    margin: 0;
+    padding: 0 18px 16px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    color: #e9ecf5;
+    font: 0.8125rem/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  .code .ghost {
+    justify-self: end;
+    margin: 8px 8px 4px;
+    padding: 5px 12px;
+    border: 1px solid rgb(255 255 255 / 0.2);
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.08);
+    color: #fff;
+    font: inherit;
+    font-size: 0.8125rem;
+    font-weight: 550;
+    cursor: pointer;
+  }
+  .cn {
+    color: var(--muted) !important;
+    font-size: 0.875rem;
+  }
+  .setup-n {
+    max-width: 760px;
+    margin: 24px auto 0;
+    color: var(--muted);
+    font-size: 0.875rem;
+    text-align: center;
+  }
+  .asks {
+    display: grid;
+    gap: 12px;
+    max-width: 720px;
+    margin-inline: auto;
+  }
+  .asks li {
+    justify-self: end;
+    max-width: 88%;
+    padding: 14px 18px;
+    border-radius: 22px 22px 6px 22px;
+    background: var(--white);
+    box-shadow: 0 1px 0 var(--line);
+    font-size: 1.0625rem;
+  }
+  .asks li:nth-child(even) {
+    justify-self: start;
+    border-radius: 22px 22px 22px 6px;
+  }
+  .how {
+    display: grid;
+    gap: 12px;
+    max-width: 760px;
+    margin-inline: auto;
+    padding-left: 1.3em;
+    list-style: disc;
+    color: var(--ink-2);
+    font-size: 1.0625rem;
+  }
+  .links {
+    max-width: 760px;
+    margin: 28px auto 0;
+  }
+  .svc {
+    max-width: 860px;
+    margin: clamp(48px, 6vw, 72px) auto 0;
+    padding: clamp(28px, 4vw, 40px);
+    border-radius: var(--r-lg);
+    background: var(--dark);
+    background-image: radial-gradient(110% 90% at 100% 0%, color-mix(in srgb, var(--a3) 28%, transparent), transparent 60%);
+    color: #fff;
+  }
+  .svc-h {
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+  }
+  .svc-d {
+    margin-top: 10px;
+    max-width: 56ch;
+    color: var(--dark-muted);
+  }
+  .svc-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 22px;
+    margin-top: 22px;
+  }
+  .svc .more {
+    color: #fff;
+  }
+  @media (max-width: 760px) {
+    .setup {
+      grid-template-columns: 1fr;
+    }
+    .ep-box {
+      flex-wrap: wrap;
+      border-radius: 18px;
+      padding: 12px;
+    }
+    .ep-box .btn {
+      width: 100%;
+    }
+  }
+</style>

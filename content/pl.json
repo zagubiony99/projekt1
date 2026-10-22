@@ -11,7 +11,7 @@
     "ctaPrimary": "Umów bezpłatną konsultację",
     "ctaSecondary": "Zobacz doświadczenie",
     "ctaNote": "30 minut · online · bez zobowiązań",
-    "trustLabel": "Pracowałem m.in. w",
+    "trustLabel": "Współpracowałem m.in. z",
     "demo": {
       "app": "Odpowiedź AI",
       "note": "Przykład poglądowy",
@@ -131,11 +131,6 @@
       "title": "Nie wiesz, od czego zacząć?",
       "text": "Na bezpłatnej konsultacji przejrzę Twoją stronę i wskażę 3 rzeczy, które warto poprawić w pierwszej kolejności.",
       "btn": "Umów bezpłatną konsultację"
-    },
-    "afterProcess": {
-      "title": "Pierwszy krok zajmuje 30 minut.",
-      "text": "Krótka rozmowa, konkretne wnioski, zero zobowiązań.",
-      "btn": "Umów rozmowę"
     }
   },
   "compare": {
@@ -185,6 +180,7 @@
     "label": "Doświadczenie",
     "title": "9 lat w SEO",
     "intro": "Od agencji i własnego serwisu, przez własną działalność, po zespoły w Accenture Song i Philip Morris International.",
+    "more": "Więcej o mnie",
     "industriesLabel": "Branże, z którymi pracowałem",
     "industries": [
       "Hospitality",
@@ -263,6 +259,52 @@
       }
     ]
   },
+  "engage": {
+    "label": "Współpraca",
+    "title": "Jak możemy współpracować",
+    "lead": "Każda współpraca zaczyna się od bezpłatnej, 30-minutowej rozmowy. Potem wybierasz formę, która pasuje do Twojego zespołu i budżetu.",
+    "priceFallback": "Wycena po rozmowie",
+    "models": [
+      {
+        "name": "Konsultacja ekspercka",
+        "kind": "Jednorazowo",
+        "desc": "Sesja online z Tobą albo Twoim zespołem. Bierzemy na warsztat konkretny problem: spadek ruchu, planowaną migrację, widoczność w AI. Wychodzisz z jasnym planem, co zrobić i w jakiej kolejności.",
+        "points": [
+          "Przegląd Twojej strony przed spotkaniem",
+          "Odpowiedzi na pytania zespołu i programistów",
+          "Priorytety spisane po spotkaniu"
+        ],
+        "cta": "Zapytaj o konsultację",
+        "topic": "Konsultacja",
+        "featured": false
+      },
+      {
+        "name": "Projekt",
+        "kind": "Zakres i termin z góry",
+        "desc": "Audyt, migracja, wdrożenie danych strukturalnych albo przygotowanie serwisu pod AI search. Prowadzę projekt od diagnozy po odbiór wdrożenia.",
+        "points": [
+          "Zadania gotowe dla programistów",
+          "Sprawdzam zmiany przed publikacją",
+          "Jedna osoba odpowiedzialna za wynik"
+        ],
+        "cta": "Opowiedz o projekcie",
+        "featured": true
+      },
+      {
+        "name": "Stała współpraca",
+        "kind": "Rozliczenie miesięczne",
+        "desc": "Zewnętrzny technical SEO lead dla Twojego zespołu. Pilnuję SEO w każdym wydaniu, monitoruję indeksację i widoczność w AI, odpowiadam na pytania na bieżąco.",
+        "points": [
+          "SEO wpisane w proces wydań",
+          "Monitoring i szybka reakcja na spadki",
+          "Stały kontakt ze mną, bez pośredników"
+        ],
+        "cta": "Zapytaj o stałą współpracę",
+        "topic": "Stała współpraca",
+        "featured": false
+      }
+    ]
+  },
   "faq": {
     "label": "FAQ",
     "title": "Częste pytania",
@@ -311,8 +353,10 @@
     "lead": "Na bezpłatnej, 30-minutowej rozmowie przejrzę Twoją stronę i wskażę 3 rzeczy, które warto poprawić w pierwszej kolejności. Bez zobowiązań.",
     "topicsLabel": "Czego dotyczy projekt?",
     "topics": [
+      "Konsultacja",
       "Audyt techniczny",
       "AI search",
+      "Aplikacja w ChatGPT",
       "Duży serwis",
       "E-commerce",
       "Enterprise / CMS",
@@ -369,8 +413,28 @@
       }
     ]
   },
+  "guidesUi": {
+    "metaTitle": "Poradniki Technical SEO i AI search | Maciej Zięciak",
+    "metaDescription": "Praktyczne poradniki SEO i AI search: AI Overviews, boty AI, audyt, migracja, wdrożenia, hreflang i filtry w sklepie. Checklisty z mojej praktyki.",
+    "eyebrow": "Poradniki SEO i AI search",
+    "title": "To, co sprawdzam u klientów. Rozpisane krok po kroku.",
+    "lead": "Checklisty i wyjaśnienia z technical SEO i AI search. Bez lania wody, z przykładami, które możesz od razu sprawdzić na swojej stronie.",
+    "toolEyebrow": "Darmowe narzędzie",
+    "toc": "Spis treści",
+    "updated": "Aktualizacja",
+    "readTime": "min czytania",
+    "by": "Autor",
+    "read": "Czytaj poradnik",
+    "all": "Wszystkie poradniki",
+    "others": "Inne poradniki",
+    "faqTitle": "Najczęstsze pytania",
+    "serviceTitle": "Wolisz, żebym zrobił to za Ciebie?",
+    "serviceCta": "Zobacz usługę"
+  },
   "nav": {
     "services": "Usługi",
+    "about": "O mnie",
+    "guides": "Poradniki",
     "experience": "Doświadczenie",
     "process": "Proces",
     "faq": "FAQ",
