@@ -12,6 +12,7 @@ export const serviceRoutes = [
   { key: 'intl', slug: { pl: 'seo-enterprise-miedzynarodowe', en: 'enterprise-international-seo' }, topic: { pl: 'Enterprise / CMS', en: 'Enterprise / CMS' } },
   { key: 'migration', slug: { pl: 'migracja-strony-seo', en: 'website-migration-seo' }, topic: { pl: 'Migracja', en: 'Migration' } },
   { key: 'ecom', slug: { pl: 'seo-ecommerce', en: 'ecommerce-seo' }, topic: { pl: 'E-commerce', en: 'E-commerce' } },
+  { key: 'ha', slug: { pl: 'home-assistant-krakow', en: 'home-assistant-krakow' }, topic: { pl: 'Home Assistant', en: 'Home Assistant' } },
 ] as const;
 
 export const serviceBase = { pl: '/uslugi/', en: '/en/services/' } as const;

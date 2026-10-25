@@ -22,6 +22,8 @@ const t = getDict(lang);
 const u = ui[lang];
 const pair = services.find((p) => p.key === key)!;
 const s = pair[lang];
+// services outside SEO (Home Assistant): no SEO client logos, SEO stats or SEO engagement models
+const local = pair.key === 'ha';
 const path = `${u.base}${s.slug}/`;
 const altPath = `${ui[other].base}${pair[other].slug}/`;
 const url = new URL(path, site.url).href;
@@ -38,7 +40,10 @@ const extraLd = [
     description: s.metaDescription,
     url,
     provider: { '@id': `${site.url}/#person` },
-    areaServed: [{ '@type': 'Country', name: 'Poland' }, 'Worldwide'],
+    // Home Assistant: on-site work in Kraków, remote help across Poland
+    areaServed: pair.key === 'ha'
+      ? [{ '@type': 'City', name: 'Kraków' }, { '@type': 'Country', name: 'Poland' }]
+      : [{ '@type': 'Country', name: 'Poland' }, 'Worldwide'],
   },
   {
     '@type': 'WebPage',
@@ -89,7 +94,7 @@ const extraLd = [
           <a class="more" href={`#${t.ids.gets}`}>{u.seeWhat}</a>
         </div>
         <p class="cnote intro">{t.hero.ctaNote}</p>
-        <div class="trust intro"><TrustLogos label={t.hero.trustLabel} /></div>
+        {!local && <div class="trust intro"><TrustLogos label={t.hero.trustLabel} /></div>}
       </div>
       {pair.key === 'ai' && <div class="wrap"><AiDemo lang={lang} /></div>}
     </section>
@@ -178,14 +183,14 @@ const extraLd = [
         <Portrait size={96} ring reveal class="me" />
         <p class="eyebrow" data-reveal>{u.proofTitle}</p>
         <p class="quote" id="proof-h" data-reveal>{s.proof}</p>
-        <dl class="mini">
+        {!local && <dl class="mini">
           {t.stats.items.map((st, i) => (
             <div data-reveal style={`--d:${i}`}>
               <dt>{st.k}</dt>
               <dd data-count>{st.v}</dd>
             </div>
           ))}
-        </dl>
+        </dl>}
       </div>
     </section>
 
@@ -206,9 +211,9 @@ const extraLd = [
       </div>
     </section>
 
-    <Engage lang={lang} white />
+    {!local && <Engage lang={lang} white />}
 
-    <Contact lang={lang} topic={pair.topic[lang]} next={{ title: u.nextTitle, items: u.next }} />
+    <Contact lang={lang} topic={pair.topic[lang]} title={s.contact?.title} lead={s.contact?.lead} next={{ title: u.nextTitle, items: s.contact?.next ?? u.next }} />
 
     <!-- Other services -->
     <section class="section others" aria-labelledby="oth-h">

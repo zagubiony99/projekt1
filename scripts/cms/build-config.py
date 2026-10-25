@@ -460,6 +460,15 @@ MCPS = [
     s('demoCta', 'Ramka w poradniku i usłudze: link'),
 ]
 
+# services outside SEO get their own contact heading (shown instead of the SEO one)
+SERVICE_LOCAL = SERVICE + [
+    obj('contact', 'Sekcja kontaktu', [
+        s('title', 'Nagłówek'), t('lead', 'Tekst pod nagłówkiem'),
+        items('next', 'Co się stanie, gdy napiszesz', [s('t', 'Krok'), t('d', 'Opis')]),
+    ]),
+]
+LOCAL_SERVICES = {'ha'}
+
 SERVICES = [  # key, label in the CMS menu
     ('audit', 'Technical SEO (audyty)'),
     ('ai', 'Widoczność w odpowiedziach AI'),
@@ -471,6 +480,7 @@ SERVICES = [  # key, label in the CMS menu
     ('intl', 'Enterprise i SEO międzynarodowe'),
     ('migration', 'Migracje i przebudowy stron'),
     ('ecom', 'SEO dla e-commerce'),
+    ('ha', 'Home Assistant i inteligentny dom'),
 ]
 
 config = {
@@ -486,8 +496,9 @@ config = {
         {'name': 'services', 'label': 'Usługi', 'type': 'group', 'items': [
             {'name': f'service-{key}', 'label': label, 'type': 'file', 'path': f'content/services/{key}.json', 'format': 'json',
              'description': 'Adres podstrony jest stały (src/data/routes.ts), zmieniasz tylko treść.',
-             'fields': [obj('pl', 'Po polsku', SERVICE), obj('en', 'Po angielsku', SERVICE)]}
+             'fields': [obj('pl', 'Po polsku', F), obj('en', 'Po angielsku', F)]}
             for key, label in SERVICES
+            for F in [SERVICE_LOCAL if key in LOCAL_SERVICES else SERVICE]
         ]},
         {'name': 'more-pages', 'label': 'Inne strony', 'type': 'group', 'items': [
             {'name': 'about', 'label': 'O mnie', 'type': 'file', 'path': 'content/about.json', 'format': 'json',

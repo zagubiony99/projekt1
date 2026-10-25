@@ -3400,6 +3400,253 @@ content:
           label: Odpowiedź
           type: text
         list: true
+  - name: service-ha
+    label: Home Assistant i inteligentny dom
+    type: file
+    path: content/services/ha.json
+    format: json
+    description: Adres podstrony jest stały (src/data/routes.ts), zmieniasz tylko treść.
+    fields:
+    - name: pl
+      label: Po polsku
+      type: object
+      fields:
+      - name: name
+        label: Nazwa usługi
+        type: string
+        description: Menu, karty, okruszki. Zmieniaj w obu językach.
+      - name: card
+        label: Karta na stronie głównej
+        type: object
+        fields:
+        - name: desc
+          label: Opis na karcie
+          type: text
+        - name: tags
+          label: Tagi
+          type: string
+          list: true
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: eyebrow
+        label: Nadtytuł
+        type: string
+      - name: title
+        label: Nagłówek (H1)
+        type: string
+      - name: lead
+        label: Tekst pod nagłówkiem
+        type: text
+      - name: painTitle
+        label: Nagłówek „brzmi znajomo?”
+        type: string
+      - name: pains
+        label: Problemy klienta
+        type: string
+        list: true
+      - name: getTitle
+        label: Nagłówek „co dostajesz”
+        type: string
+      - name: gets
+        label: Co dostajesz
+        type: object
+        fields:
+        - name: t
+          label: Nazwa
+          type: string
+        - name: d
+          label: Opis
+          type: text
+        list: true
+      - name: stepsTitle
+        label: Nagłówek „jak to przebiega”
+        type: string
+      - name: steps
+        label: Etapy
+        type: object
+        fields:
+        - name: t
+          label: Nazwa
+          type: string
+        - name: when
+          label: Kiedy
+          type: string
+        - name: d
+          label: Opis
+          type: text
+        list: true
+      - name: forTitle
+        label: Nagłówek „dla kogo”
+        type: string
+      - name: forYes
+        label: Dla kogo tak
+        type: string
+        list: true
+      - name: forNo
+        label: Dla kogo nie
+        type: string
+        list: true
+      - name: proof
+        label: Dlaczego ja (doświadczenie)
+        type: text
+      - name: faq
+        label: FAQ usługi
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+      - name: contact
+        label: Sekcja kontaktu
+        type: object
+        fields:
+        - name: title
+          label: Nagłówek
+          type: string
+        - name: lead
+          label: Tekst pod nagłówkiem
+          type: text
+        - name: next
+          label: Co się stanie, gdy napiszesz
+          type: object
+          fields:
+          - name: t
+            label: Krok
+            type: string
+          - name: d
+            label: Opis
+            type: text
+          list: true
+    - name: en
+      label: Po angielsku
+      type: object
+      fields:
+      - name: name
+        label: Nazwa usługi
+        type: string
+        description: Menu, karty, okruszki. Zmieniaj w obu językach.
+      - name: card
+        label: Karta na stronie głównej
+        type: object
+        fields:
+        - name: desc
+          label: Opis na karcie
+          type: text
+        - name: tags
+          label: Tagi
+          type: string
+          list: true
+      - name: metaTitle
+        label: 'SEO: tytuł'
+        type: string
+        description: Do 60 znaków.
+      - name: metaDescription
+        label: 'SEO: opis'
+        type: text
+        description: Do 155 znaków.
+      - name: eyebrow
+        label: Nadtytuł
+        type: string
+      - name: title
+        label: Nagłówek (H1)
+        type: string
+      - name: lead
+        label: Tekst pod nagłówkiem
+        type: text
+      - name: painTitle
+        label: Nagłówek „brzmi znajomo?”
+        type: string
+      - name: pains
+        label: Problemy klienta
+        type: string
+        list: true
+      - name: getTitle
+        label: Nagłówek „co dostajesz”
+        type: string
+      - name: gets
+        label: Co dostajesz
+        type: object
+        fields:
+        - name: t
+          label: Nazwa
+          type: string
+        - name: d
+          label: Opis
+          type: text
+        list: true
+      - name: stepsTitle
+        label: Nagłówek „jak to przebiega”
+        type: string
+      - name: steps
+        label: Etapy
+        type: object
+        fields:
+        - name: t
+          label: Nazwa
+          type: string
+        - name: when
+          label: Kiedy
+          type: string
+        - name: d
+          label: Opis
+          type: text
+        list: true
+      - name: forTitle
+        label: Nagłówek „dla kogo”
+        type: string
+      - name: forYes
+        label: Dla kogo tak
+        type: string
+        list: true
+      - name: forNo
+        label: Dla kogo nie
+        type: string
+        list: true
+      - name: proof
+        label: Dlaczego ja (doświadczenie)
+        type: text
+      - name: faq
+        label: FAQ usługi
+        type: object
+        fields:
+        - name: q
+          label: Pytanie
+          type: string
+        - name: a
+          label: Odpowiedź
+          type: text
+        list: true
+      - name: contact
+        label: Sekcja kontaktu
+        type: object
+        fields:
+        - name: title
+          label: Nagłówek
+          type: string
+        - name: lead
+          label: Tekst pod nagłówkiem
+          type: text
+        - name: next
+          label: Co się stanie, gdy napiszesz
+          type: object
+          fields:
+          - name: t
+            label: Krok
+            type: string
+          - name: d
+            label: Opis
+            type: text
+          list: true
 - name: more-pages
   label: Inne strony
   type: group
