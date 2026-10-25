@@ -4405,6 +4405,20 @@ content:
           label: Dopisek
           type: text
         list: true
+      - name: sourcesTitle
+        label: 'Źródła: nagłówek'
+        type: string
+      - name: sources
+        label: Źródła (oficjalna dokumentacja)
+        type: object
+        fields:
+        - name: label
+          label: Nazwa
+          type: string
+        - name: url
+          label: Adres
+          type: string
+        list: true
       - name: buildTitle
         label: 'Jak to jest zbudowane: nagłówek'
         type: string
@@ -4529,6 +4543,20 @@ content:
         - name: note
           label: Dopisek
           type: text
+        list: true
+      - name: sourcesTitle
+        label: 'Źródła: nagłówek'
+        type: string
+      - name: sources
+        label: Źródła (oficjalna dokumentacja)
+        type: object
+        fields:
+        - name: label
+          label: Nazwa
+          type: string
+        - name: url
+          label: Adres
+          type: string
         list: true
       - name: buildTitle
         label: 'Jak to jest zbudowane: nagłówek'

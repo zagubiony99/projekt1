@@ -445,6 +445,8 @@ MCPS = [
         t('code', 'Kod do skopiowania', 'Opcjonalnie. {url} zamienia się na adres serwera.'),
         t('note', 'Dopisek'),
     ]),
+    s('sourcesTitle', 'Źródła: nagłówek'),
+    items('sources', 'Źródła (oficjalna dokumentacja)', [s('label', 'Nazwa'), s('url', 'Adres')]),
     s('buildTitle', 'Jak to jest zbudowane: nagłówek'),
     t('buildLead', 'Jak to jest zbudowane: wstęp'),
     {'name': 'build', 'label': 'Jak to jest zbudowane (punkty)', 'type': 'text', 'list': True},

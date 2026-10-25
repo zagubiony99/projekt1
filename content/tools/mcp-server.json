@@ -67,7 +67,7 @@
           "Wybierz „Utwórz”, wpisz nazwę, wklej adres serwera i ustaw uwierzytelnianie na „Brak”.",
           "W nowej rozmowie wybierz aplikację z menu narzędzi i zadaj pytanie."
         ],
-        "note": "Tryb dewelopera jest dostępny w wybranych płatnych planach ChatGPT."
+        "note": "Tryb dewelopera działa w przeglądarce w planach Plus, Pro, Business, Enterprise i Edu."
       },
       {
         "client": "Claude Code",
@@ -82,6 +82,29 @@
           "Dodaj serwer HTTP w pliku konfiguracji MCP, np. .cursor/mcp.json:"
         ],
         "code": "{\n  \"mcpServers\": {\n    \"maciejzieciak-seo\": {\n      \"url\": \"{url}\"\n    }\n  }\n}"
+      }
+    ],
+    "sourcesTitle": "Źródła",
+    "sources": [
+      {
+        "label": "Claude: własne konektory (zdalny MCP)",
+        "url": "https://support.claude.com/en/articles/11175166-getting-started-with-custom-connectors-using-remote-mcp"
+      },
+      {
+        "label": "OpenAI: tryb dewelopera w ChatGPT",
+        "url": "https://developers.openai.com/api/docs/guides/developer-mode"
+      },
+      {
+        "label": "Claude Code: podłączanie serwerów MCP",
+        "url": "https://code.claude.com/docs/en/mcp-quickstart"
+      },
+      {
+        "label": "Cursor: konfiguracja MCP",
+        "url": "https://cursor.com/docs/context/mcp"
+      },
+      {
+        "label": "Specyfikacja Model Context Protocol",
+        "url": "https://modelcontextprotocol.io/"
       }
     ],
     "buildTitle": "Jak to jest zbudowane",
@@ -188,7 +211,7 @@
           "Choose “Create”, enter a name, paste the server URL and set authentication to “None”.",
           "In a new chat, pick the app from the tools menu and ask your question."
         ],
-        "note": "Developer mode is available on selected paid ChatGPT plans."
+        "note": "Developer mode works on the web on Plus, Pro, Business, Enterprise and Edu plans."
       },
       {
         "client": "Claude Code",
@@ -203,6 +226,29 @@
           "Add an HTTP server to your MCP config file, e.g. .cursor/mcp.json:"
         ],
         "code": "{\n  \"mcpServers\": {\n    \"maciejzieciak-seo\": {\n      \"url\": \"{url}\"\n    }\n  }\n}"
+      }
+    ],
+    "sourcesTitle": "Sources",
+    "sources": [
+      {
+        "label": "Claude: custom connectors (remote MCP)",
+        "url": "https://support.claude.com/en/articles/11175166-getting-started-with-custom-connectors-using-remote-mcp"
+      },
+      {
+        "label": "OpenAI: ChatGPT developer mode",
+        "url": "https://developers.openai.com/api/docs/guides/developer-mode"
+      },
+      {
+        "label": "Claude Code: connecting MCP servers",
+        "url": "https://code.claude.com/docs/en/mcp-quickstart"
+      },
+      {
+        "label": "Cursor: MCP configuration",
+        "url": "https://cursor.com/docs/context/mcp"
+      },
+      {
+        "label": "Model Context Protocol specification",
+        "url": "https://modelcontextprotocol.io/"
       }
     ],
     "buildTitle": "How it is built",

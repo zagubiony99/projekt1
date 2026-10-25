@@ -119,6 +119,10 @@ const extraLd = [
           ))}
         </div>
         <p class="setup-n" data-reveal>{r.setupNote}</p>
+        <div class="src" data-reveal>
+          <p class="src-h">{r.sourcesTitle}</p>
+          <ul>{r.sources.map((x) => <li><a href={x.url} rel="noopener" target="_blank">{x.label}</a></li>)}</ul>
+        </div>
       </div>
     </section>
 
@@ -312,6 +316,26 @@ const extraLd = [
     color: var(--muted);
     font-size: 0.875rem;
     text-align: center;
+  }
+  .src {
+    max-width: 760px;
+    margin: 20px auto 0;
+    text-align: center;
+  }
+  .src-h {
+    font-size: 0.8125rem;
+    font-weight: 650;
+  }
+  .src ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 18px;
+    margin-top: 6px;
+    font-size: 0.8125rem;
+  }
+  .src a {
+    color: var(--a1);
   }
   .asks {
     display: grid;
