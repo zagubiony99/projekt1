@@ -88,7 +88,8 @@ export function checkHreflang(pages: Page[]): Issue[] {
       for (const a of p.alts) {
         const target = byUrl.get(norm(a.href));
         if (!target || norm(a.href) === norm(p.url) || a.code.toLowerCase() === 'x-default') continue;
-        if (!target.alts.some((b) => norm(b.href) === norm(p.url))) issues.push({ level: 'error', code: 'noReturn', page, detail: a.href });
+        // x-default does not count: the target must name this page with a language code
+        if (!target.alts.some((b) => norm(b.href) === norm(p.url) && b.code.toLowerCase() !== 'x-default')) issues.push({ level: 'error', code: 'noReturn', page, detail: a.href });
       }
     }
   }

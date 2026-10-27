@@ -102,6 +102,8 @@ Strona ma `hreflang` (pl, en, x-default), canonical, sitemapę z alternatywnymi 
 
 Po `npm run build` uruchom `python3 scripts/seo-audit.py dist`. Skrypt sprawdza na każdej stronie: canonical, hreflang (wzajemność i x-default), długość title i description, jeden H1, kolejność nagłówków, poprawność JSON-LD, linki wewnętrzne i kotwice, alt obrazów i og:image. Jedyne oczekiwane uwagi dotyczą strony 404 (ma `noindex`, więc celowo nie ma canonical ani hreflang).
 
+Logikę narzędzi (robots.txt, generator, hreflang) sprawdza `npm test`: 35 przypadków, bez dodatkowych zależności.
+
 Pliki dla wyszukiwarek i AI generują się same przy buildzie: `sitemap-index.xml` (z hreflang dla wszystkich par PL/EN), `robots.txt`, `llms.txt` (mapa serwisu dla asystentów AI) i `404.html`.
 
 ## Wdrożenie
