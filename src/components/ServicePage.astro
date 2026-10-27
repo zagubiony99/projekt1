@@ -1,4 +1,7 @@
 ---
+import TrustLogos from './TrustLogos.astro';
+import FaqList from './FaqList.astro';
+import Engage from './Engage.astro';
 import Base from '../layouts/Base.astro';
 import Nav from './Nav.astro';
 import Contact from './Contact.astro';
@@ -9,6 +12,9 @@ import Portrait from './Portrait.astro';
 import { site } from '../config';
 import { getDict, otherLang, type Lang } from '../i18n';
 import { services, ui } from '../data/services';
+import { guides, robotsTool, mcpServer } from '../data/pages';
+import { pageRoutes } from '../data/routes';
+import { ogPath } from '../data/og';
 interface Props { lang: Lang; key: string }
 const { lang, key } = Astro.props;
 const other = otherLang(lang);
@@ -16,11 +22,14 @@ const t = getDict(lang);
 const u = ui[lang];
 const pair = services.find((p) => p.key === key)!;
 const s = pair[lang];
+// services outside SEO (Home Assistant): no SEO client logos, SEO stats or SEO engagement models
+const local = pair.key === 'ha';
 const path = `${u.base}${s.slug}/`;
 const altPath = `${ui[other].base}${pair[other].slug}/`;
 const url = new URL(path, site.url).href;
 const home = new URL(t.path, site.url).href;
 const rest = services.filter((p) => p.key !== key);
+const related = guides.filter((g) => g.service === key);
 
 const extraLd = [
   {
@@ -31,7 +40,10 @@ const extraLd = [
     description: s.metaDescription,
     url,
     provider: { '@id': `${site.url}/#person` },
-    areaServed: [{ '@type': 'Country', name: 'Poland' }, 'Worldwide'],
+    // Home Assistant: on-site work in Kraków, remote help across Poland
+    areaServed: pair.key === 'ha'
+      ? [{ '@type': 'City', name: 'Kraków' }, { '@type': 'Country', name: 'Poland' }]
+      : [{ '@type': 'Country', name: 'Poland' }, 'Worldwide'],
   },
   {
     '@type': 'WebPage',
@@ -59,10 +71,9 @@ const extraLd = [
     mainEntity: s.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
   },
 ];
-const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
 ---
 
-<Base lang={lang} title={s.metaTitle} description={s.metaDescription} path={path} altPath={altPath} extraLd={extraLd}>
+<Base lang={lang} title={s.metaTitle} description={s.metaDescription} path={path} altPath={altPath} extraLd={extraLd} ogImage={ogPath(lang, `service-${key}`)}>
   <Nav lang={lang} altHref={altPath} />
   <main id="main">
     <!-- Hero -->
@@ -72,15 +83,18 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
         <nav class="crumbs intro" aria-label="Breadcrumb">
           <a href={t.path}>{u.home}</a><span>›</span><a href={`${t.path}#${t.ids.services}`}>{u.services}</a><span>›</span><span aria-current="page">{s.name}</span>
         </nav>
-        <p class="eyebrow intro vt-target" data-vt-target>{s.eyebrow}</p>
-        <h1 class="intro">{s.title}</h1>
+        <!-- The service name is part of the H1 (styled as the eyebrow), so the heading carries the keyword -->
+        <h1>
+          <span class="eyebrow intro vt-target" data-vt-target>{s.eyebrow}</span><span class="sr-only">: </span>
+          <span class="t intro">{s.title}</span>
+        </h1>
         <p class="lead intro">{s.lead}</p>
         <div class="ctas intro">
           <a class="btn" href={`#${t.ids.contact}`} data-magnet>{u.cta}</a>
           <a class="more" href={`#${t.ids.gets}`}>{u.seeWhat}</a>
         </div>
         <p class="cnote intro">{t.hero.ctaNote}</p>
-        <p class="trust intro">{orgs.join('  ·  ')}</p>
+        {!local && <div class="trust intro"><TrustLogos label={t.hero.trustLabel} /></div>}
       </div>
       {pair.key === 'ai' && <div class="wrap"><AiDemo lang={lang} /></div>}
     </section>
@@ -134,7 +148,7 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
         <ol class="steps">
           {s.steps.map((st, i) => (
             <li data-reveal style={`--d:${i}`}>
-              <span class="num">{String(i + 1).padStart(2, '0')}</span>
+              <span class="num">{String(i + 1).padStart(2, '0')}</span>{' '}
               <span class="when">{st.when}</span>
               <h3>{st.t}</h3>
               <p>{st.d}</p>
@@ -169,14 +183,14 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
         <Portrait size={96} ring reveal class="me" />
         <p class="eyebrow" data-reveal>{u.proofTitle}</p>
         <p class="quote" id="proof-h" data-reveal>{s.proof}</p>
-        <dl class="mini">
+        {!local && <dl class="mini">
           {t.stats.items.map((st, i) => (
             <div data-reveal style={`--d:${i}`}>
               <dt>{st.k}</dt>
               <dd data-count>{st.v}</dd>
             </div>
           ))}
-        </dl>
+        </dl>}
       </div>
     </section>
 
@@ -186,18 +200,20 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
         <header class="head">
           <h2 class="h2" id="sfaq-h" data-reveal>{u.faqTitle}</h2>
         </header>
-        <div class="faq">
-          {s.faq.map((f, i) => (
-            <details class="q" open={i === 0} data-acc>
-              <summary><span>{f.q}</span><span class="pm" aria-hidden="true"></span></summary>
-              <p class="a">{f.a}</p>
-            </details>
-          ))}
-        </div>
+        <FaqList items={s.faq} />
+        {(related.length > 0 || pair.key === 'ai' || pair.key === 'mcp') && (
+          <p class="reads">
+            {related.map((g) => <a class="more" href={g[lang].path}>{t.guidesUi.read}: {g[lang].title}</a>)}
+            {pair.key === 'ai' && <a class="more" href={pageRoutes.robotsTool[lang]}>{robotsTool[lang].title}</a>}
+            {pair.key === 'mcp' && <a class="more" href={pageRoutes.mcpServer[lang]}>{mcpServer[lang].demoCta}</a>}
+          </p>
+        )}
       </div>
     </section>
 
-    <Contact lang={lang} topic={pair.topic[lang]} next={{ title: u.nextTitle, items: u.next }} />
+    {!local && <Engage lang={lang} white />}
+
+    <Contact lang={lang} topic={pair.topic[lang]} title={s.contact?.title} lead={s.contact?.lead} next={{ title: u.nextTitle, items: s.contact?.next ?? u.next }} />
 
     <!-- Other services -->
     <section class="section others" aria-labelledby="oth-h">
@@ -242,9 +258,9 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
     aspect-ratio: 2 / 1;
     translate: -50% -50%;
     background:
-      radial-gradient(35% 50% at 30% 50%, rgb(8 148 255 / 0.14), transparent 70%),
-      radial-gradient(35% 50% at 55% 55%, rgb(201 89 221 / 0.12), transparent 70%),
-      radial-gradient(30% 45% at 75% 45%, rgb(255 144 4 / 0.1), transparent 70%);
+      radial-gradient(35% 50% at 30% 50%, color-mix(in srgb, var(--a1) 14%, transparent), transparent 70%),
+      radial-gradient(35% 50% at 55% 55%, color-mix(in srgb, var(--a2) 12%, transparent), transparent 70%),
+      radial-gradient(30% 45% at 75% 45%, color-mix(in srgb, var(--a4) 10%, transparent), transparent 70%);
     pointer-events: none;
   }
   .top {
@@ -266,11 +282,19 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
     color: var(--ink);
   }
   h1 {
+    display: grid;
+    justify-items: center;
+    gap: 20px;
+    font-weight: 700;
+  }
+  h1 .eyebrow {
+    line-height: 1.25;
+  }
+  h1 .t {
     max-width: 16ch;
     font-size: clamp(2.75rem, 1.4rem + 5vw, 5.75rem);
     line-height: 1.02;
     letter-spacing: -0.045em;
-    font-weight: 700;
     text-wrap: balance;
   }
   .top .lead {
@@ -291,11 +315,6 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
   }
   .trust {
     margin-top: 20px;
-    color: var(--muted);
-    font-size: 0.9375rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    white-space: pre-wrap;
   }
   :global(.js) .intro {
     opacity: 0;
@@ -321,6 +340,13 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
   :global(.js) .intro:nth-child(5) { animation-delay: 0.36s; }
   :global(.js) .intro:nth-child(6) { animation-delay: 0.44s; }
   :global(.js) .intro:nth-child(7) { animation-delay: 0.52s; }
+  /* hero order: eyebrow, title, lead, buttons, note (the first two now sit inside the H1) */
+  :global(.js) h1 .eyebrow.intro { animation-delay: 0.08s; }
+  :global(.js) h1 .t.intro { animation-delay: 0.16s; }
+  :global(.js) .top > .lead.intro { animation-delay: 0.26s; }
+  :global(.js) .top > .ctas.intro { animation-delay: 0.36s; }
+  :global(.js) .top > .cnote.intro { animation-delay: 0.44s; }
+  :global(.js) .top > .trust.intro { animation-delay: 0.52s; }
   @keyframes rise {
     to { opacity: 1; filter: none; transform: none; }
   }
@@ -564,59 +590,14 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
     font-size: 0.9375rem;
   }
 
-  /* ---------- FAQ ---------- */
-  .faq {
-    max-width: 860px;
-    margin-inline: auto;
+  .reads {
     display: grid;
-    gap: 12px;
+    justify-items: center;
+    gap: 10px;
+    max-width: 860px;
+    margin: 28px auto 0;
+    text-align: center;
   }
-  .q {
-    border-radius: var(--r);
-    background: var(--white);
-  }
-  summary {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 24px;
-    padding: 24px 28px;
-    cursor: pointer;
-    list-style: none;
-    font-size: 1.1875rem;
-    font-weight: 600;
-    letter-spacing: -0.025em;
-  }
-  summary::-webkit-details-marker { display: none; }
-  summary:hover { color: var(--blue); }
-  .pm {
-    position: relative;
-    flex: none;
-    width: 22px;
-    height: 22px;
-    transition: transform 0.4s var(--ease-out);
-  }
-  .pm::before,
-  .pm::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 16px;
-    height: 1.75px;
-    border-radius: 2px;
-    background: currentColor;
-    translate: -50% -50%;
-  }
-  .pm::after { rotate: 90deg; }
-  .q[open] .pm { transform: rotate(45deg); }
-  .a {
-    padding: 0 28px 26px;
-    color: var(--muted);
-    font-size: 1.0625rem;
-    transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
-  }
-  .q.is-closing .a { opacity: 0; transform: translateY(-8px); }
 
   /* ---------- Other services ---------- */
   .ocards {
@@ -662,6 +643,5 @@ const orgs = ['Philip Morris International', 'Accenture Song', 'IG'];
   @media (max-width: 680px) {
     .pains, .gets, .fit, .steps, .ocards { grid-template-columns: 1fr; }
     .ctas .btn { width: 100%; }
-    .trust { white-space: normal; }
   }
 </style>

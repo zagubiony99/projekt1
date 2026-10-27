@@ -1,0 +1,112 @@
+{
+  "published": "2026-10-19",
+  "updated": "2026-10-19",
+  "pl": {
+    "metaTitle": "Hreflang: najczęstsze błędy i jak je naprawić",
+    "metaDescription": "Najczęstsze błędy hreflang: brak linków zwrotnych, złe kody języków, konflikt z canonical, x-default i przekierowania po IP. Jak je znaleźć i naprawić.",
+    "title": "Hreflang: najczęstsze błędy i jak je naprawić",
+    "lead": "Hreflang mówi Google, którą wersję językową albo regionalną strony pokazać danemu użytkownikowi. Na papierze to kilka linijek kodu. W praktyce w serwisach z wieloma rynkami prawie zawsze coś w nim nie działa, a skutek to niemiecka strona w polskich wynikach albo rynki konkurujące ze sobą o te same frazy.",
+    "sections": [
+      {
+        "h": "Jak działa hreflang w skrócie",
+        "body": "<p>Każda wersja strony wskazuje wszystkie swoje odpowiedniki, łącznie z samą sobą:</p><pre><code>&lt;link rel=\"alternate\" hreflang=\"pl\" href=\"https://example.com/pl/\" /&gt;\n&lt;link rel=\"alternate\" hreflang=\"en-GB\" href=\"https://example.com/uk/\" /&gt;\n&lt;link rel=\"alternate\" hreflang=\"de-DE\" href=\"https://example.com/de/\" /&gt;\n&lt;link rel=\"alternate\" hreflang=\"x-default\" href=\"https://example.com/\" /&gt;</code></pre><p>Te same informacje można podać w nagłówku HTTP albo w mapie witryny XML. Ważne, żeby wybrać jedną metodę i trzymać się jej na całej stronie.</p>"
+      },
+      {
+        "h": "Błąd 1: brak linków zwrotnych",
+        "body": "<p>Jeśli strona polska wskazuje angielską, angielska musi wskazywać polską. Bez potwierdzenia z drugiej strony Google może zignorować całą parę. To najczęstszy błąd, zwykle wynik tego, że jeden rynek zmienił adresy albo usunął stronę, a pozostałe tego nie wiedzą.</p>"
+      },
+      {
+        "h": "Błąd 2: złe kody języków i regionów",
+        "body": "<ul><li>Język zapisuje się kodem ISO 639-1 (<code>pl</code>, <code>en</code>, <code>de</code>), a region kodem ISO 3166-1 Alpha 2 (<code>GB</code>, <code>DE</code>).</li><li><code>en-UK</code> jest błędne, poprawnie: <code>en-GB</code>.</li><li>Sam region bez języka (<code>hreflang=\"GB\"</code>) nie zadziała.</li><li>Kod opisuje stronę docelową, a nie stronę, na której stoi tag.</li></ul>"
+      },
+      {
+        "h": "Błąd 3: hreflang wskazuje złe adresy",
+        "body": "<p>Każdy adres w hreflang powinien zwracać kod 200, być indeksowalny i kanoniczny. Typowe problemy:</p><ul><li>adresy z przekierowaniem albo błędem 404,</li><li>strony z <code>noindex</code>,</li><li>adresy, których canonical wskazuje inną stronę,</li><li>wersje z parametrami albo bez końcowego ukośnika, kiedy kanoniczna go ma.</li></ul>"
+      },
+      {
+        "h": "Błąd 4: canonical na inną wersję językową",
+        "body": "<p>Strona niemiecka z tagiem canonical wskazującym wersję angielską mówi Google: „to tylko kopia angielskiej”. Wtedy wersja niemiecka może w ogóle nie trafić do indeksu. Każda wersja językowa powinna mieć canonical wskazujący na samą siebie, a powiązania między wersjami opisuje hreflang.</p>"
+      },
+      {
+        "h": "Błąd 5: automatyczne przekierowania po IP lub języku przeglądarki",
+        "body": "<p>Jeśli serwis przekierowuje użytkownika na wersję lokalną na podstawie adresu IP, Googlebot, który crawluje głównie z adresów w USA, może nigdy nie zobaczyć pozostałych wersji. Lepiej zaproponować zmianę wersji banerem albo przełącznikiem i zostawić użytkownikowi wybór. Do strony z wyborem kraju albo języka dobrze pasuje <code>x-default</code>.</p>"
+      },
+      {
+        "h": "Błąd 6: niespójne metody i zapomniane szablony",
+        "body": "<p>Hreflang w HTML mówi jedno, mapa witryny drugie. Albo hreflang jest na stronach kategorii, ale nie na kartach produktów. W dużych serwisach na CMS-ach enterprise, takich jak Sitecore czy Adobe Experience Manager, każdy szablon i każdy rynek trzeba sprawdzić osobno.</p>"
+      },
+      {
+        "h": "Jak to sprawdzić",
+        "body": "<ol><li>Crawl z raportem hreflang (np. Screaming Frog): brakujące linki zwrotne, złe kody, adresy z przekierowaniem albo noindex.</li><li>Losowe strony z każdego rynku sprawdzone ręcznie w źródle strony.</li><li>Search Console dla każdego rynku: czy w wynikach wyszukiwania danego kraju pojawiają się właściwe adresy.</li></ol><p>Szybki test pojedynczej strony albo fragmentu mapy witryny zrobisz w moim <a href='/narzedzia/tester-hreflang/'>darmowym testerze hreflang</a>.</p><p>Przy wielu rynkach i wielu zespołach hreflang najlepiej generować automatycznie z jednego źródła danych, a nie ręcznie w każdym kraju. Jeśli chcesz to uporządkować, zobacz usługę <a href='/uslugi/seo-enterprise-miedzynarodowe/'>SEO międzynarodowe i enterprise</a>.</p>"
+      }
+    ],
+    "faq": [
+      {
+        "q": "Czy hreflang poprawia pozycje?",
+        "a": "Nie bezpośrednio. Hreflang pomaga Google pokazać właściwą wersję strony właściwemu użytkownikowi. Pośrednio pomaga, bo rynki przestają konkurować ze sobą, a użytkownicy trafiają na stronę w swoim języku."
+      },
+      {
+        "q": "Czy potrzebuję x-default?",
+        "a": "Nie jest obowiązkowy, ale warto go dodać. Wskazuje stronę dla użytkowników, dla których nie masz dedykowanej wersji, na przykład stronę wyboru kraju albo wersję międzynarodową."
+      },
+      {
+        "q": "HTML, nagłówek HTTP czy mapa witryny?",
+        "a": "Wszystkie trzy działają. Przy dużej liczbie wersji językowych mapa witryny często jest najwygodniejsza, bo nie obciąża kodu każdej strony. Najważniejsze, żeby używać jednej metody konsekwentnie."
+      }
+    ]
+  },
+  "en": {
+    "metaTitle": "Hreflang: Common Mistakes and How to Fix Them",
+    "metaDescription": "The most common hreflang mistakes: missing return links, wrong language codes, canonical conflicts, x-default and IP redirects. How to find and fix them.",
+    "title": "Hreflang: common mistakes and how to fix them",
+    "lead": "Hreflang tells Google which language or regional version of a page to show to which user. On paper it is a few lines of code. In practice, on sites with many markets something in it is almost always broken, and the result is a German page in Polish results, or markets competing with each other for the same queries.",
+    "sections": [
+      {
+        "h": "How hreflang works, in short",
+        "body": "<p>Each version of a page lists all its equivalents, including itself:</p><pre><code>&lt;link rel=\"alternate\" hreflang=\"pl\" href=\"https://example.com/pl/\" /&gt;\n&lt;link rel=\"alternate\" hreflang=\"en-GB\" href=\"https://example.com/uk/\" /&gt;\n&lt;link rel=\"alternate\" hreflang=\"de-DE\" href=\"https://example.com/de/\" /&gt;\n&lt;link rel=\"alternate\" hreflang=\"x-default\" href=\"https://example.com/\" /&gt;</code></pre><p>The same information can go in an HTTP header or in the XML sitemap. What matters is choosing one method and sticking to it across the site.</p>"
+      },
+      {
+        "h": "Mistake 1: missing return links",
+        "body": "<p>If the Polish page points to the English one, the English page must point back to the Polish one. Without confirmation from the other side, Google may ignore the whole pair. It is the most common mistake, usually because one market changed its URLs or removed a page and the others don’t know.</p>"
+      },
+      {
+        "h": "Mistake 2: wrong language and region codes",
+        "body": "<ul><li>Language uses an ISO 639-1 code (<code>pl</code>, <code>en</code>, <code>de</code>) and region an ISO 3166-1 Alpha 2 code (<code>GB</code>, <code>DE</code>).</li><li><code>en-UK</code> is wrong; the correct code is <code>en-GB</code>.</li><li>A region on its own (<code>hreflang=\"GB\"</code>) won’t work.</li><li>The code describes the target page, not the page the tag sits on.</li></ul>"
+      },
+      {
+        "h": "Mistake 3: hreflang points to the wrong URLs",
+        "body": "<p>Every URL in hreflang should return 200, be indexable and be canonical. Typical problems:</p><ul><li>URLs that redirect or return 404,</li><li>pages with <code>noindex</code>,</li><li>URLs whose canonical points to another page,</li><li>versions with parameters or without a trailing slash when the canonical has one.</li></ul>"
+      },
+      {
+        "h": "Mistake 4: canonical pointing to another language",
+        "body": "<p>A German page with a canonical tag pointing to the English version tells Google: “this is just a copy of the English page”. The German version may then never be indexed. Each language version should have a self-referencing canonical, and hreflang describes how the versions relate.</p>"
+      },
+      {
+        "h": "Mistake 5: automatic redirects by IP or browser language",
+        "body": "<p>If the site redirects users to a local version based on their IP address, Googlebot, which crawls mostly from US addresses, may never see the other versions. It is better to suggest a version with a banner or a switcher and let the user choose. A country or language selector page is a good fit for <code>x-default</code>.</p>"
+      },
+      {
+        "h": "Mistake 6: inconsistent methods and forgotten templates",
+        "body": "<p>The HTML says one thing and the sitemap another. Or hreflang is on category pages but not on product pages. On large sites built on enterprise CMSs such as Sitecore or Adobe Experience Manager, every template and every market has to be checked separately.</p>"
+      },
+      {
+        "h": "How to check it",
+        "body": "<ol><li>A crawl with a hreflang report (e.g. Screaming Frog): missing return links, wrong codes, URLs that redirect or are noindexed.</li><li>Random pages from each market, checked by hand in the page source.</li><li>Search Console for each market: do the right URLs appear in that country’s results?</li></ol><p>For a quick test of one page or part of your sitemap, use my <a href='/en/tools/hreflang-checker/'>free hreflang checker</a>.</p><p>With many markets and many teams, it is best to generate hreflang automatically from a single data source rather than by hand in each country. If you want to sort it out, see the <a href='/en/services/enterprise-international-seo/'>enterprise and international SEO</a> service.</p>"
+      }
+    ],
+    "faq": [
+      {
+        "q": "Does hreflang improve rankings?",
+        "a": "Not directly. Hreflang helps Google show the right version of a page to the right user. It helps indirectly, because markets stop competing with each other and users land on a page in their language."
+      },
+      {
+        "q": "Do I need x-default?",
+        "a": "It is not mandatory, but worth adding. It points to the page for users you don’t have a dedicated version for, such as a country selector or an international version."
+      },
+      {
+        "q": "HTML, HTTP header or sitemap?",
+        "a": "All three work. With many language versions the sitemap is often the most convenient, because it keeps the markup of each page lighter. What matters most is using one method consistently."
+      }
+    ]
+  }
+}

@@ -7,6 +7,7 @@ import Consent from '../components/Consent.astro';
 import { services, ui } from '../data/services';
 import { getImage } from 'astro:assets';
 import { photo } from '../lib/photo';
+import { pageRoutes } from '../data/routes';
 
 interface Props {
   lang: Lang;
@@ -17,6 +18,7 @@ interface Props {
   altPath?: string;
   extraLd?: Record<string, unknown>[];
   noindex?: boolean;
+  ogImage?: string; // site-relative path of this page's share card (default: the home page card)
 }
 const { lang, extraLd = [], noindex = false } = Astro.props;
 const t = getDict(lang);
@@ -31,7 +33,7 @@ const plPath = lang === 'pl' ? path : altPath;
 const canonical = new URL(path, site.url).href;
 const altUrl = new URL(altPath, site.url).href;
 const plUrl = new URL(plPath, site.url).href;
-const ogImage = new URL(`/og-${lang}.png`, site.url).href;
+const ogImage = new URL(Astro.props.ogImage ?? `/og-${lang}.png`, site.url).href;
 const personImage = photo
   ? new URL((await getImage({ src: photo, width: 800, height: 800, fit: 'cover', position: 'top', format: 'jpg' })).src, site.url).href
   : null;
@@ -49,7 +51,7 @@ const jsonLd = {
       description: t.meta.description,
       ...(personImage ? { image: personImage } : {}),
       knowsLanguage: ['pl', 'en'],
-      knowsAbout: ['Technical SEO', 'AI search', 'Generative Engine Optimization', 'Adobe Experience Manager', 'Sitecore', 'WordPress', 'International SEO', 'E-commerce SEO', 'Site migrations', ...t.tools.items],
+      knowsAbout: ['Technical SEO', 'AI search', 'Generative Engine Optimization', 'Model Context Protocol', 'Adobe Experience Manager', 'Sitecore', 'WordPress', 'International SEO', 'E-commerce SEO', 'Site migrations', ...t.tools.items],
       ...(site.linkedin ? { sameAs: [site.linkedin] } : {}),
     },
     {
@@ -140,6 +142,7 @@ const jsonLd = {
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -148,6 +151,7 @@ const jsonLd = {
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title={t.guidesUi.metaTitle} href={`${pageRoutes.guides[lang]}rss.xml`} />
 
     <script is:inline>document.documentElement.classList.add('js');addEventListener('pagereveal',function(e){if(e.viewTransition){var h=document.documentElement;h.classList.add('vt');e.viewTransition.finished.finally(function(){h.classList.remove('vt')})}});</script>
     {site.gtmId && (

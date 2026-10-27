@@ -378,3 +378,11 @@ form?.addEventListener('submit', async (e) => {
     if (btn) { btn.disabled = false; btn.textContent = label; }
   }
 });
+
+/* ---------- "How we can work together": tick the matching topic in the contact form ---------- */
+document.addEventListener('click', (e) => {
+  const a = (e.target as Element).closest?.<HTMLAnchorElement>('a[data-topic]');
+  if (!a) return;
+  const box = [...document.querySelectorAll<HTMLInputElement>('[data-form] input[name="topic"]')].find((i) => i.value === a.dataset.topic);
+  if (box) box.checked = true;
+});

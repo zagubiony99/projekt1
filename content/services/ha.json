@@ -1,0 +1,258 @@
+{
+  "pl": {
+    "name": "Home Assistant i inteligentny dom",
+    "card": {
+      "desc": "Dashboardy, automatyzacje i rozbudowa Home Assistant. Pomagam zdalnie w całej Polsce, a w Krakowie i okolicach także na miejscu, z montażem urządzeń.",
+      "tags": [
+        "Dashboardy",
+        "Automatyzacje",
+        "Konsultacje",
+        "Montaż w Krakowie"
+      ]
+    },
+    "metaTitle": "Home Assistant Kraków: konfiguracja i dashboardy",
+    "metaDescription": "Konfiguracja i rozbudowa Home Assistant: dashboardy, automatyzacje, integracje i konsultacje. Zdalnie w całej Polsce, z montażem w Krakowie i okolicach.",
+    "eyebrow": "Home Assistant",
+    "title": "Inteligentny dom, który po prostu działa.",
+    "lead": "Pomagam zaplanować, skonfigurować i rozbudować Home Assistant: od pierwszej instalacji, przez automatyzacje i integracje, po dashboardy, z których korzysta cała rodzina. Zdalnie w całej Polsce albo na miejscu w Krakowie i okolicach.",
+    "painTitle": "Brzmi znajomo?",
+    "pains": [
+      "Do świateł, ogrzewania i kamer masz osobne aplikacje i każda działa inaczej.",
+      "Home Assistant działa, ale dashboard to długa lista przełączników, z której korzystasz tylko Ty.",
+      "Automatyzacje raz działają, a raz nie, i nie wiesz dlaczego.",
+      "Po aktualizacji coś przestało działać, a kopii zapasowej nie ma.",
+      "Chcesz widzieć zużycie prądu i produkcję z fotowoltaiki w jednym miejscu.",
+      "Nie wiesz, które urządzenia kupić, żeby działały lokalnie, bez chmury producenta."
+    ],
+    "getTitle": "W czym pomagam",
+    "gets": [
+      {
+        "t": "Konsultacja i plan",
+        "d": "Co już masz, co chcesz osiągnąć i jakie urządzenia kupić. Dostajesz listę zakupów i plan krok po kroku, zanim wydasz pieniądze."
+      },
+      {
+        "t": "Instalacja i porządki",
+        "d": "Home Assistant na Home Assistant Green, Raspberry Pi albo małym serwerze, z kopiami zapasowymi i bezpiecznym dostępem spoza domu. Albo porządek w systemie, który już masz."
+      },
+      {
+        "t": "Dashboardy",
+        "d": "Czytelne panele na telefon, tablet na ścianie i komputer. Osobne widoki dla Ciebie, domowników i gości."
+      },
+      {
+        "t": "Automatyzacje",
+        "d": "Światło, ogrzewanie, rolety, powiadomienia i scenariusze „wychodzę z domu”, które działają przewidywalnie i łatwo je zmienić."
+      },
+      {
+        "t": "Integracje i energia",
+        "d": "Zigbee, Matter i urządzenia Wi-Fi w jednym systemie. Panel energii z fotowoltaiką, magazynem energii i taryfą."
+      },
+      {
+        "t": "Montaż w Krakowie",
+        "d": "Montaż i parowanie czujników, termostatów, kamer i tabletów ściennych na miejscu w Krakowie i okolicach."
+      }
+    ],
+    "stepsTitle": "Jak to przebiega",
+    "steps": [
+      {
+        "t": "Rozmowa",
+        "when": "Start",
+        "d": "Krótka rozmowa o tym, co masz i czego potrzebujesz. Ustalamy, czy wystarczy pomoc zdalna, czy potrzebna jest wizyta."
+      },
+      {
+        "t": "Plan",
+        "when": "Przed zakupami",
+        "d": "Lista urządzeń, plan automatyzacji i układ dashboardów. Znasz koszt, zanim cokolwiek kupisz."
+      },
+      {
+        "t": "Wdrożenie",
+        "when": "Zdalnie lub na miejscu",
+        "d": "Instalacja, konfiguracja, montaż i testy razem z domownikami."
+      },
+      {
+        "t": "Rozbudowa",
+        "when": "Później",
+        "d": "Pokazuję, jak samodzielnie zmieniać automatyzacje i dashboardy. Gdy chcesz dodać coś nowego, pomagam przy rozbudowie."
+      }
+    ],
+    "forTitle": "Dla kogo to jest",
+    "forYes": [
+      "Osoby, które mają już Home Assistant i chcą go uporządkować albo rozbudować",
+      "Właściciele domów i mieszkań, którzy chcą zacząć od dobrego planu",
+      "Domy z fotowoltaiką, pompą ciepła albo magazynem energii",
+      "Mieszkańcy Krakowa i okolic, którzy wolą montaż na miejscu"
+    ],
+    "forNo": [
+      "Osoby, które szukają gotowego systemu jednego producenta, bez żadnej konfiguracji",
+      "Projekty całej instalacji elektrycznej w budowanym domu"
+    ],
+    "proof": "Na co dzień porządkuję procesy, automatyzacje i raporty w dużych firmach, obecnie jako Manager SEO & AI Search Operations w Philip Morris International. W Home Assistant stosuję to samo podejście: najpierw plan, potem porządna konfiguracja i czytelne dane.",
+    "faq": [
+      {
+        "q": "Czy pomagasz zdalnie?",
+        "a": "Tak. Konsultacje, konfigurację, dashboardy i automatyzacje robię zdalnie w całej Polsce. Na miejscu pracuję w Krakowie i okolicach."
+      },
+      {
+        "q": "Jakiego sprzętu potrzebuję?",
+        "a": "Wystarczy Home Assistant Green, Raspberry Pi albo mały komputer. Doradzę, co wybrać do Twojego domu, zanim cokolwiek kupisz."
+      },
+      {
+        "q": "Czy muszę kupować nowe urządzenia?",
+        "a": "Nie zawsze. Home Assistant obsługuje urządzenia bardzo wielu producentów, więc najpierw sprawdzam, co da się podłączyć z tego, co już masz."
+      },
+      {
+        "q": "Czy potem poradzę sobie sam?",
+        "a": "Tak. Pokazuję, jak działa system i jak zmieniać automatyzacje i dashboardy. Możesz też wrócić po pomoc przy rozbudowie."
+      },
+      {
+        "q": "Ile to kosztuje?",
+        "a": "Zależy od zakresu: inaczej wycenia się jedną konsultację, a inaczej pełne wdrożenie z montażem. Wycenę dostaniesz po krótkiej, bezpłatnej rozmowie."
+      }
+    ],
+    "contact": {
+      "title": "Porozmawiajmy o Twoim domu.",
+      "lead": "Na bezpłatnej, 30-minutowej rozmowie opowiesz, co już masz i czego potrzebujesz. Powiem, od czego zacząć i czy wystarczy pomoc zdalna. Bez zobowiązań.",
+      "next": [
+        {
+          "t": "Krótka rozmowa",
+          "d": "Bezpłatnie, ok. 30 minut. Opowiadasz o domu, urządzeniach i pomysłach."
+        },
+        {
+          "t": "Propozycja",
+          "d": "Dostajesz zakres, termin i wycenę: zdalnie albo z wizytą."
+        },
+        {
+          "t": "Start",
+          "d": "Ustalamy dostęp do systemu albo termin wizyty w Krakowie."
+        }
+      ]
+    }
+  },
+  "en": {
+    "name": "Home Assistant & smart home",
+    "card": {
+      "desc": "Home Assistant dashboards, automations and upgrades. Remote help across Poland, and on site in Kraków and the surrounding area, including device installation.",
+      "tags": [
+        "Dashboards",
+        "Automations",
+        "Consultations",
+        "Installation in Kraków"
+      ]
+    },
+    "metaTitle": "Home Assistant in Kraków: Setup and Dashboards",
+    "metaDescription": "Home Assistant setup and upgrades: dashboards, automations, integrations and consultations. Remote across Poland, with installation in Kraków.",
+    "eyebrow": "Home Assistant",
+    "title": "A smart home that simply works.",
+    "lead": "I help you plan, set up and extend Home Assistant: from the first install, through automations and integrations, to dashboards the whole family actually uses. Remotely anywhere in Poland, or on site in Kraków and the surrounding area.",
+    "painTitle": "Sound familiar?",
+    "pains": [
+      "Lights, heating and cameras each have their own app, and each works differently.",
+      "Home Assistant runs, but the dashboard is a long list of switches only you use.",
+      "Automations work sometimes and fail other times, and you don’t know why.",
+      "An update broke something, and there is no backup.",
+      "You want to see power use and solar production in one place.",
+      "You don’t know which devices to buy so they work locally, without the maker’s cloud."
+    ],
+    "getTitle": "How I help",
+    "gets": [
+      {
+        "t": "Consultation and plan",
+        "d": "What you have, what you want and which devices to buy. You get a shopping list and a step-by-step plan before you spend any money."
+      },
+      {
+        "t": "Install and clean-up",
+        "d": "Home Assistant on a Home Assistant Green, a Raspberry Pi or a small server, with backups and secure access from outside the home. Or a tidy-up of the system you already have."
+      },
+      {
+        "t": "Dashboards",
+        "d": "Clear panels for your phone, a wall tablet and your computer. Separate views for you, your family and guests."
+      },
+      {
+        "t": "Automations",
+        "d": "Lighting, heating, blinds, notifications and “leaving home” scenes that behave predictably and are easy to change."
+      },
+      {
+        "t": "Integrations and energy",
+        "d": "Zigbee, Matter and Wi-Fi devices in one system. An energy dashboard with solar, battery storage and your tariff."
+      },
+      {
+        "t": "Installation in Kraków",
+        "d": "Mounting and pairing sensors, thermostats, cameras and wall tablets on site in Kraków and the surrounding area."
+      }
+    ],
+    "stepsTitle": "How it works",
+    "steps": [
+      {
+        "t": "Call",
+        "when": "Start",
+        "d": "A short call about what you have and what you need. We decide whether remote help is enough or a visit makes sense."
+      },
+      {
+        "t": "Plan",
+        "when": "Before you buy",
+        "d": "A device list, an automation plan and the dashboard layout. You know the cost before you buy anything."
+      },
+      {
+        "t": "Set-up",
+        "when": "Remote or on site",
+        "d": "Installation, configuration, mounting and testing together with your household."
+      },
+      {
+        "t": "Upgrades",
+        "when": "Later",
+        "d": "I show you how to change automations and dashboards yourself. When you want to add something new, I help with the upgrade."
+      }
+    ],
+    "forTitle": "Who it’s for",
+    "forYes": [
+      "People who already run Home Assistant and want to tidy it up or extend it",
+      "Home and flat owners who want to start with a good plan",
+      "Homes with solar panels, a heat pump or battery storage",
+      "People in and around Kraków who prefer installation on site"
+    ],
+    "forNo": [
+      "People looking for a ready-made single-brand system with no configuration",
+      "Complete electrical installations in a house under construction"
+    ],
+    "proof": "In my day job I organise processes, automations and reporting in large companies, currently as Manager SEO & AI Search Operations at Philip Morris International. I bring the same approach to Home Assistant: plan first, then a clean set-up and clear data.",
+    "faq": [
+      {
+        "q": "Do you help remotely?",
+        "a": "Yes. I handle consultations, configuration, dashboards and automations remotely anywhere in Poland. On site I work in Kraków and the surrounding area."
+      },
+      {
+        "q": "What hardware do I need?",
+        "a": "A Home Assistant Green, a Raspberry Pi or a small computer is enough. I will help you choose before you buy anything."
+      },
+      {
+        "q": "Do I have to buy new devices?",
+        "a": "Not always. Home Assistant supports devices from a great many brands, so I first check what you already have can be connected."
+      },
+      {
+        "q": "Will I manage on my own afterwards?",
+        "a": "Yes. I show you how the system works and how to change automations and dashboards. You can always come back for help with upgrades."
+      },
+      {
+        "q": "How much does it cost?",
+        "a": "It depends on the scope: a single consultation is priced differently from a full set-up with installation. You get a quote after a short, free call."
+      }
+    ],
+    "contact": {
+      "title": "Let’s talk about your home.",
+      "lead": "In a free 30-minute call you tell me what you have and what you need. I tell you where to start and whether remote help is enough. No strings attached.",
+      "next": [
+        {
+          "t": "Short call",
+          "d": "Free, about 30 minutes. You tell me about your home, devices and ideas."
+        },
+        {
+          "t": "Proposal",
+          "d": "You get the scope, timing and a quote: remote or with a visit."
+        },
+        {
+          "t": "Start",
+          "d": "We set up access to the system or book a visit in Kraków."
+        }
+      ]
+    }
+  }
+}

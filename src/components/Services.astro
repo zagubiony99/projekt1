@@ -21,6 +21,16 @@ const v = {
     ? ['Na maraton', 'Dla początkujących', 'Rozmiary', 'Trail', 'Amortyzacja', 'Ranking 2026']
     : ['For a marathon', 'For beginners', 'Sizing', 'Trail', 'Cushioning', 'Best of 2026'],
   noindex: 'noindex',
+  // ChatGPT app (MCP): a question, the tool call, live results from the company's system
+  mcpQ: pl ? 'Pokaż mieszkania w Krakowie do 600 tys.' : 'Show me flats in Kraków under 600k PLN',
+  mcpArgs: pl ? 'miasto: "Kraków", max: 600000' : 'city: "Kraków", max: 600000',
+  mcpRows: pl
+    ? [['2 pokoje · 48 m² · Podgórze', '589 000 zł'], ['3 pokoje · 61 m² · Krowodrza', '598 000 zł']]
+    : [['2 rooms · 48 m² · Podgórze', '589,000 zł'], ['3 rooms · 61 m² · Krowodrza', '598,000 zł']],
+  // Home Assistant: a small dashboard
+  haTiles: pl
+    ? [['Salon', '21,5°'], ['Światło', 'wł.'], ['Słońce dziś', '18,4 kWh'], ['Drzwi', 'zamknięte']]
+    : [['Living room', '21.5°'], ['Lights', 'on'], ['Solar today', '18.4 kWh'], ['Front door', 'locked']],
 };
 const nodes = [[50, 22], [24, 46], [76, 46], [12, 74], [38, 74], [62, 74], [88, 74]];
 const edges = [[0, 1], [0, 2], [1, 3], [1, 4], [2, 5], [2, 6]];
@@ -63,6 +73,15 @@ const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-
                 <div class="chat">
                   <p class="bubble q">{v.q}</p>
                   <p class="bubble a">{v.a} <span class="cite">maciejzieciak.com</span></p>
+                </div>
+              )}
+              {it.key === 'mcp' && (
+                <div class="mcpv">
+                  <p class="bubble q">{v.mcpQ}</p>
+                  <p class="call"><span class="fn">search_offers</span>(<span class="val">{v.mcpArgs}</span>)</p>
+                  <ul class="app">
+                    {v.mcpRows.map(([n, pz], k) => <li style={`--k:${k}`}><i></i><span>{n}</span><b>{pz}</b></li>)}
+                  </ul>
                 </div>
               )}
               {it.key === 'large' && (
@@ -110,6 +129,11 @@ const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-
                   <span class="hub">{v.hub}</span>
                   {v.topics.map((tp, k) => <span class="tp" style={`--k:${k};left:${topicPos[k][0]}%;top:${topicPos[k][1]}%`}>{tp}</span>)}
                 </div>
+              )}
+              {it.key === 'ha' && (
+                <ul class="hav">
+                  {v.haTiles.map(([n, val], k) => <li class:list={{ on: k === 1 }} style={`--k:${k}`}><span>{n}</span><b>{val}</b></li>)}
+                </ul>
               )}
               {it.key === 'ecom' && (
                 <div class="shop">
@@ -202,7 +226,7 @@ const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-
   .card:hover::before { opacity: 1; }
   .card:hover { box-shadow: 0 30px 60px -28px rgb(0 0 0 / 0.25); }
   .dark { background: var(--black); color: #f5f5f7; }
-  .dark::before { background: radial-gradient(460px circle at var(--mx) var(--my), rgb(201 89 221 / 0.28), rgb(8 148 255 / 0.1) 40%, transparent 65%); }
+  .dark::before { background: radial-gradient(460px circle at var(--mx) var(--my), color-mix(in srgb, var(--a2) 28%, transparent), color-mix(in srgb, var(--a1) 10%, transparent) 40%, transparent 65%); }
   .txt {
     display: grid;
     gap: 10px;
@@ -267,10 +291,31 @@ const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-
   .bubble { padding: 12px 16px; border-radius: 18px; font-size: 0.875rem; line-height: 1.4; opacity: 0; transform: translateY(14px); }
   .q { justify-self: end; background: #0071e3; color: #fff; border-bottom-right-radius: 6px; }
   .a { background: #1d1d1f; color: #e8e8ed; border-bottom-left-radius: 6px; }
-  .cite { display: inline-block; margin-top: 6px; padding: 3px 10px; border-radius: 999px; background: var(--ai); color: #fff; font-weight: 600; font-size: 0.8125rem; box-shadow: 0 0 24px rgb(201 89 221 / 0.6); }
+  .cite { display: inline-block; margin-top: 6px; padding: 3px 10px; border-radius: 999px; background: var(--ai); color: #fff; font-weight: 600; font-size: 0.8125rem; box-shadow: 0 0 24px color-mix(in srgb, var(--a2) 60%, transparent); }
   .card.is-on .bubble { animation: pop 0.6s var(--ease-out) forwards; }
   .card.is-on .a { animation-delay: 0.7s; }
   @keyframes pop { to { opacity: 1; transform: none; } }
+
+  /* ChatGPT app: question, MCP tool call, live results */
+  .mcpv { display: grid; gap: 7px; width: 100%; max-width: 340px; }
+  .mcpv .bubble { padding: 9px 14px; font-size: 0.8125rem; }
+  .call { justify-self: start; padding: 6px 12px; border-radius: 10px; background: #1d1d1f; color: #e8e8ed; font: 0.6875rem/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; opacity: 0; transform: translateY(10px); }
+  .call .fn { color: color-mix(in srgb, var(--a3) 70%, white); }
+  .call .val { color: color-mix(in srgb, var(--a2) 60%, white); }
+  .app { display: grid; gap: 5px; padding: 6px; border-radius: 14px; background: var(--white); box-shadow: 0 10px 30px -14px rgb(0 0 0 / 0.25), inset 0 0 0 1px var(--gray-2); }
+  .app li { display: grid; grid-template-columns: 22px 1fr auto; align-items: center; gap: 9px; padding: 5px 8px; border-radius: 10px; background: var(--gray); font-size: 0.75rem; opacity: 0; transform: translateY(10px); }
+  .app i { width: 22px; height: 18px; border-radius: 6px; background: linear-gradient(135deg, var(--a1), var(--a3)); opacity: 0.7; }
+  .app b { font-weight: 650; white-space: nowrap; }
+  .card.is-on .mcpv .call { animation: pop 0.5s var(--ease-out) 0.6s forwards; }
+  .card.is-on .app li { animation: pop 0.45s var(--ease-out) forwards; animation-delay: calc(1.1s + var(--k) * 0.25s); }
+
+  /* Home Assistant: dashboard tiles */
+  .hav { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; max-width: 320px; }
+  .hav li { display: grid; gap: 4px; padding: 12px 14px; border-radius: 16px; background: var(--white); box-shadow: inset 0 0 0 1px var(--gray-2); font-size: 0.75rem; color: var(--muted); opacity: 0; transform: translateY(10px); }
+  .hav b { color: var(--ink); font-size: 1.0625rem; font-weight: 650; letter-spacing: -0.02em; }
+  .hav li.on { background: linear-gradient(135deg, var(--a1), var(--a3)); color: rgb(255 255 255 / 0.8); box-shadow: 0 10px 26px -12px color-mix(in srgb, var(--a1) 70%, transparent); }
+  .hav li.on b { color: #fff; }
+  .card.is-on .hav li { animation: pop 0.45s var(--ease-out) forwards; animation-delay: calc(0.2s + var(--k) * 0.18s); }
 
   /* 2: pages getting indexed */
   .pages { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; width: 100%; max-width: 330px; }
@@ -338,7 +383,7 @@ const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-
   .cluster line { stroke: var(--gray-2); stroke-width: 0.6; vector-effect: non-scaling-stroke; }
   .card.is-on .cluster line { stroke: #0071e3; stroke-dasharray: 80; stroke-dashoffset: 80; animation: draw 0.6s var(--ease-out) forwards; animation-delay: calc(0.3s + var(--k) * 0.15s); }
   .hub, .tp { position: absolute; translate: -50% -50%; white-space: nowrap; border-radius: 999px; }
-  .hub { left: 50%; top: 50%; padding: 9px 16px; background: var(--ai); color: #fff; font-size: 0.875rem; font-weight: 650; box-shadow: 0 10px 30px -10px rgb(201 89 221 / 0.6); }
+  .hub { left: 50%; top: 50%; padding: 9px 16px; background: var(--ai); color: #fff; font-size: 0.875rem; font-weight: 650; box-shadow: 0 10px 30px -10px color-mix(in srgb, var(--a2) 60%, transparent); }
   .tp { padding: 6px 11px; background: var(--white); box-shadow: inset 0 0 0 1px var(--line); font-size: 0.75rem; opacity: 0; scale: 0.8; }
   .card.is-on .tp { animation: tp 0.5s var(--ease-out) forwards; animation-delay: calc(0.5s + var(--k) * 0.15s); }
   @keyframes tp { to { opacity: 1; scale: 1; } }
@@ -359,7 +404,7 @@ const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-
     .bar { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .bubble, .code li, .redir li, .grid i, .r-meta, .r-ld li, .pipe li { opacity: 1; transform: none; }
+    .bubble, .code li, .redir li, .grid i, .r-meta, .r-ld li, .pipe li, .call, .app li { opacity: 1; transform: none; }
     .tp { opacity: 1; scale: 1; }
   }
 </style>

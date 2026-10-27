@@ -1,6 +1,6 @@
 ---
 // Round portrait from the CMS photo, optimised at build time (square crop, AVIF/WebP, 1x–3x).
-// ring: slowly turning Apple-Intelligence gradient around it. Renders nothing without a photo.
+// ring: slowly turning accent gradient around it. Renders nothing without a photo.
 import { Picture } from 'astro:assets';
 import { photo } from '../lib/photo';
 import { site } from '../config';
@@ -57,7 +57,7 @@ const { size, ring = false, reveal = false } = Astro.props;
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    background: conic-gradient(from 0deg, #0894ff, #c959dd, #ff2e54, #ff9004, #0894ff);
+    background: conic-gradient(from 0deg, var(--a1), var(--a2), var(--a3), var(--a4), var(--a1));
     animation: turn 8s linear infinite;
     will-change: transform;
   }

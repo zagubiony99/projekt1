@@ -2,6 +2,8 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import { getDict } from '../i18n';
+import { pageRoutes } from '../data/routes';
+import { robotsTool } from '../data/pages';
 const t = getDict('pl');
 const en = getDict('en');
 ---
@@ -14,6 +16,12 @@ const en = getDict('en');
     <h1>Nie ma takiej strony.</h1>
     <p class="lead">Możliwe, że adres się zmienił. Zacznij od strony głównej albo napisz do mnie.</p>
     <p class="links"><a class="btn" href="/">Strona główna</a> <a class="more" href={`/#${t.ids.contact}`}>Kontakt</a></p>
+    <nav class="pop" aria-label="Popularne strony">
+      <a href={`/#${t.ids.services}`}>{t.nav.services}</a>
+      <a href={pageRoutes.about.pl}>{t.nav.about}</a>
+      <a href={pageRoutes.guides.pl}>{t.nav.guides}</a>
+      <a href={pageRoutes.robotsTool.pl}>{robotsTool.pl.title}</a>
+    </nav>
     <p class="en" lang="en-GB">Page not found. <a href="/en/">Go to the English homepage</a> or <a href={`/en/#${en.ids.contact}`}>get in touch</a>.</p>
   </main>
 </Base>
@@ -48,6 +56,23 @@ const en = getDict('en');
     gap: 24px;
     align-items: center;
     margin-top: 8px;
+  }
+  .pop {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .pop a {
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--gray);
+    font-size: 0.9375rem;
+    transition: background-color 0.2s;
+  }
+  .pop a:hover {
+    background: var(--gray-2);
   }
   .en {
     margin-top: 24px;

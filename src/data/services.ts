@@ -26,6 +26,8 @@ export type ServiceCopy = {
   forNo: string[];
   proof: string;           // one experience line specific to this service
   faq: { q: string; a: string }[];
+  // optional: own contact heading for services outside SEO (e.g. Home Assistant)
+  contact?: { title: string; lead: string; next: { t: string; d: string }[] };
 };
 
 type Pair = { key: string; topic: { pl: string; en: string }; pl: ServiceCopy; en: ServiceCopy };

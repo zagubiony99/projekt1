@@ -1,0 +1,102 @@
+---
+// Cards linking to guides (and optionally the robots.txt tool). Used on the guides index,
+// the About page and under each guide ("More guides").
+import { getDict, type Lang } from '../i18n';
+import { guides } from '../data/pages';
+import { robotsTool } from '../data/pages';
+import { pageRoutes } from '../data/routes';
+interface Props { lang: Lang; limit?: number; exclude?: string; tool?: boolean }
+const { lang, limit, exclude, tool = false } = Astro.props;
+const t = getDict(lang);
+const u = t.guidesUi;
+const list = guides.filter((g) => g.key !== exclude).slice(0, limit);
+const r = robotsTool[lang];
+---
+
+<ul class="gcards">
+  {tool && (
+    <li class="tool" data-reveal>
+      <a href={pageRoutes.robotsTool[lang]}>
+        <span class="kind">{u.toolEyebrow}</span>
+        <b>{r.title}</b>
+        <span class="d">{r.lead}</span>
+        <span class="more">{r.check}</span>
+      </a>
+    </li>
+  )}
+  {list.map((g, i) => (
+    <li data-reveal style={`--d:${(i + (tool ? 1 : 0)) % 3}`}>
+      <a href={g[lang].path}>
+        <span class="kind">{g[lang].minutes} {u.readTime}</span>
+        <b>{g[lang].title}</b>
+        <span class="d">{g[lang].metaDescription}</span>
+        <span class="more">{u.read}</span>
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .gcards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .gcards a {
+    display: grid;
+    align-content: start;
+    gap: 12px;
+    height: 100%;
+    padding: 28px;
+    border-radius: var(--r-lg);
+    background: var(--white);
+    transition: transform 0.5s var(--ease-out), box-shadow 0.4s var(--ease-out);
+  }
+  :global(.section:not(.section--gray)) .gcards a {
+    background: var(--gray);
+  }
+  .gcards a:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px -24px rgb(0 0 0 / 0.25);
+  }
+  .kind {
+    color: var(--muted);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+  .gcards b {
+    font-size: 1.25rem;
+    font-weight: 650;
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+  }
+  .d {
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+  .gcards .more {
+    margin-top: 4px;
+    font-size: 0.9375rem;
+  }
+  /* the tool card stands out: dark with the accent glow */
+  .tool a {
+    background: var(--dark) !important;
+    color: #fff;
+    background-image: radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--a2) 30%, transparent), transparent 60%) !important;
+  }
+  .tool .kind {
+    color: color-mix(in srgb, var(--a3) 70%, white);
+  }
+  .tool .d {
+    color: var(--dark-muted);
+  }
+  .tool .more {
+    color: var(--link-dark);
+  }
+  @media (max-width: 1080px) {
+    .gcards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 680px) {
+    .gcards { grid-template-columns: 1fr; }
+  }
+</style>

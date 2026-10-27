@@ -1,0 +1,112 @@
+{
+  "pl": {
+    "metaTitle": "Tester robots.txt dla botów AI: GPTBot, ClaudeBot",
+    "metaDescription": "Darmowy tester robots.txt: wklej plik i sprawdź, czy GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended i Googlebot mają dostęp.",
+    "eyebrow": "Darmowe narzędzie",
+    "title": "Sprawdź, które boty AI wpuszcza Twój robots.txt",
+    "lead": "Wklej zawartość pliku robots.txt, a zobaczysz, czy wyszukiwarki, wyszukiwanie w AI i boty treningowe mają dostęp do wybranej ścieżki. Wszystko dzieje się w Twojej przeglądarce, nic nie jest nigdzie wysyłane.",
+    "inputLabel": "Zawartość robots.txt",
+    "inputHint": "Otwórz twojadomena.pl/robots.txt, skopiuj całość i wklej tutaj.",
+    "pathLabel": "Ścieżka do sprawdzenia",
+    "pathHint": "Np. / dla całej strony albo /produkty/buty/",
+    "check": "Sprawdź",
+    "example": "Wstaw przykład",
+    "colBot": "Bot",
+    "colPurpose": "Do czego służy",
+    "colStatus": "Dostęp",
+    "colRule": "Reguła",
+    "allowed": "Ma dostęp",
+    "blocked": "Zablokowany",
+    "noRule": "brak reguły",
+    "fromGroup": "grupa",
+    "summary": "Zablokowane boty: {blocked} z {total}.",
+    "empty": "Wklej robots.txt, żeby zobaczyć wynik.",
+    "groups": {
+      "search": "Wyszukiwarki",
+      "aiSearch": "Wyszukiwanie w AI",
+      "training": "Trening modeli AI",
+      "user": "Pobieranie na prośbę użytkownika"
+    },
+    "userNote": "Część dostawców zaznacza, że przy pobieraniu strony na prośbę użytkownika robots.txt może nie być stosowany.",
+    "howTitle": "Jak czytać wynik",
+    "how": [
+      "Bot stosuje się tylko do jednej grupy reguł: tej z jego nazwą. Jeśli takiej nie ma, korzysta z grupy User-agent: *.",
+      "W ramach grupy wygrywa najdłuższa pasująca reguła. Przy remisie wygrywa Allow.",
+      "Brak pasującej reguły oznacza, że bot ma dostęp.",
+      "Tester sprawdza tylko robots.txt. Bot może być nadal blokowany przez firewall, CDN albo wymagać JavaScriptu, żeby zobaczyć treść."
+    ],
+    "faq": [
+      {
+        "q": "Czy tester pobiera robots.txt z mojej strony?",
+        "a": "Nie. Przeglądarka nie może pobrać pliku z innej domeny bez jej zgody, dlatego wklejasz zawartość ręcznie. Dzięki temu nic nie jest nigdzie wysyłane."
+      },
+      {
+        "q": "Według jakich zasad działa sprawdzanie?",
+        "a": "Według standardu robots.txt (RFC 9309), tak jak robią to Google i większość dużych crawlerów: wybór grupy po nazwie bota, najdłuższa pasująca reguła, obsługa symboli * i $."
+      },
+      {
+        "q": "Bot ma dostęp, a mimo to nie widzę go w logach. Dlaczego?",
+        "a": "Najczęściej blokuje go firewall albo CDN, strona odpowiada błędem, albo bot jeszcze jej nie odwiedził. Szczegóły opisałem w poradniku o botach AI w robots.txt."
+      }
+    ],
+    "guideCta": "Przeczytaj poradnik: boty AI w robots.txt",
+    "serviceTitle": "Chcesz sprawdzić więcej niż robots.txt?",
+    "serviceText": "Sprawdzę, czy boty AI naprawdę docierają do Twojej strony, czy rozumieją jej treść i czy Twoja marka pojawia się w odpowiedziach.",
+    "serviceCta": "Zobacz usługę"
+  },
+  "en": {
+    "metaTitle": "Robots.txt Checker for AI Bots: GPTBot, ClaudeBot",
+    "metaDescription": "Free robots.txt checker: paste your file and see whether GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended and Googlebot get in.",
+    "eyebrow": "Free tool",
+    "title": "See which AI bots your robots.txt lets in",
+    "lead": "Paste your robots.txt and see whether search engines, AI search and training crawlers can access a given path. Everything runs in your browser; nothing is sent anywhere.",
+    "inputLabel": "robots.txt contents",
+    "inputHint": "Open yourdomain.com/robots.txt, copy everything and paste it here.",
+    "pathLabel": "Path to check",
+    "pathHint": "E.g. / for the whole site, or /products/shoes/",
+    "check": "Check",
+    "example": "Insert example",
+    "colBot": "Bot",
+    "colPurpose": "Purpose",
+    "colStatus": "Access",
+    "colRule": "Rule",
+    "allowed": "Allowed",
+    "blocked": "Blocked",
+    "noRule": "no rule",
+    "fromGroup": "group",
+    "summary": "Blocked bots: {blocked} of {total}.",
+    "empty": "Paste a robots.txt to see the result.",
+    "groups": {
+      "search": "Search engines",
+      "aiSearch": "AI search",
+      "training": "AI model training",
+      "user": "User-initiated fetching"
+    },
+    "userNote": "Some providers note that robots.txt may not apply when a page is fetched at a user’s request.",
+    "howTitle": "How to read the result",
+    "how": [
+      "A bot follows only one group of rules: the one with its name. If there is none, it uses the User-agent: * group.",
+      "Within a group, the longest matching rule wins. On a tie, Allow wins.",
+      "No matching rule means the bot is allowed.",
+      "The checker only looks at robots.txt. A bot can still be blocked by a firewall or CDN, or need JavaScript to see the content."
+    ],
+    "faq": [
+      {
+        "q": "Does the checker fetch robots.txt from my site?",
+        "a": "No. A browser can’t fetch a file from another domain without that domain’s permission, so you paste the contents yourself. That way nothing is sent anywhere."
+      },
+      {
+        "q": "Which rules does the check follow?",
+        "a": "The robots.txt standard (RFC 9309), the way Google and most major crawlers apply it: group selection by bot name, longest matching rule, support for * and $."
+      },
+      {
+        "q": "The bot is allowed, but I don’t see it in my logs. Why?",
+        "a": "Most often a firewall or CDN blocks it, the site returns an error, or the bot simply hasn’t visited yet. I cover the details in the guide on AI bots in robots.txt."
+      }
+    ],
+    "guideCta": "Read the guide: AI bots in robots.txt",
+    "serviceTitle": "Want to check more than robots.txt?",
+    "serviceText": "I will check whether AI bots actually reach your site, whether they understand its content, and whether your brand appears in the answers.",
+    "serviceCta": "See the service"
+  }
+}

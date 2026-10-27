@@ -1,0 +1,249 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import PageHero from './PageHero.astro';
+import Portrait from './Portrait.astro';
+import Experience from './Experience.astro';
+import Contact from './Contact.astro';
+import StickyCta from './StickyCta.astro';
+import GuideCards from './GuideCards.astro';
+import Engage from './Engage.astro';
+import { site } from '../config';
+import { getDict, otherLang, type Lang } from '../i18n';
+import { about } from '../data/pages';
+import { pageRoutes } from '../data/routes';
+import { ogPath } from '../data/og';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getDict(lang);
+const a = about[lang];
+const path = pageRoutes.about[lang];
+const altPath = pageRoutes.about[otherLang(lang)];
+const url = new URL(path, site.url).href;
+const home = new URL(t.path, site.url).href;
+
+const extraLd = [
+  {
+    '@type': 'ProfilePage',
+    '@id': `${url}#webpage`,
+    url,
+    name: a.metaTitle,
+    description: a.metaDescription,
+    inLanguage: lang === 'pl' ? 'pl-PL' : 'en-GB',
+    isPartOf: { '@id': `${site.url}/#website` },
+    mainEntity: { '@id': `${site.url}/#person` },
+    breadcrumb: { '@id': `${url}#breadcrumb` },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: t.serviceUi.home, item: home },
+      { '@type': 'ListItem', position: 2, name: t.nav.about, item: url },
+    ],
+  },
+];
+---
+
+<Base lang={lang} title={a.metaTitle} description={a.metaDescription} path={path} altPath={altPath} extraLd={extraLd} ogImage={ogPath(lang, 'about')}>
+  <Nav lang={lang} altHref={altPath} />
+  <main id="main">
+    <PageHero crumbs={[{ href: t.path, label: t.serviceUi.home }, { label: t.nav.about }]} eyebrow={a.eyebrow} title={a.title} lead={a.lead}>
+      <div class="ctas intro">
+        <a class="btn" href={`#${t.ids.contact}`} data-magnet>{a.ctaPrimary}</a>
+        <a class="more" href={`${t.path}#${t.ids.services}`}>{a.ctaSecondary}</a>
+      </div>
+    </PageHero>
+
+    <!-- Numbers -->
+    <section class="section section--gray stats" aria-label={t.stats.label}>
+      <div class="wrap wrap--wide">
+        <dl class="mini">
+          {t.stats.items.map((st, i) => (
+            <div data-reveal style={`--d:${i}`}>
+              <dt>{st.k}</dt>
+              <dd data-count>{st.v}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+
+    <!-- Story -->
+    <section class="section story" aria-labelledby="story-h">
+      <div class="wrap">
+        <Portrait size={120} ring reveal class="me" />
+        <h2 class="h2" id="story-h" data-reveal>{a.storyTitle}</h2>
+        <div class="prose">
+          {a.story.map((p) => <p data-reveal>{p}</p>)}
+        </div>
+      </div>
+    </section>
+
+    <Experience lang={lang} />
+
+    <!-- How I work -->
+    <section class="section section--gray" aria-labelledby="appr-h">
+      <div class="wrap wrap--wide">
+        <header class="head">
+          <h2 class="h2" id="appr-h" data-reveal>{a.approachTitle}</h2>
+        </header>
+        <ul class="cards">
+          {a.approach.map((x, i) => (
+            <li data-reveal style={`--d:${i % 4}`}>
+              <span class="n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{x.t}</h3>
+              <p>{x.d}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- Platforms, tools, languages -->
+    <section class="section kit" aria-labelledby="kit-h">
+      <div class="wrap">
+        <header class="head">
+          <h2 class="h2" id="kit-h" data-reveal>{a.kitTitle}</h2>
+        </header>
+        <div class="groups">
+          {[
+            [a.platformsLabel, a.platforms],
+            [t.tools.label, t.tools.items],
+            [a.languagesLabel, a.languages],
+          ].map(([label, list], i) => (
+            <div data-reveal style={`--d:${i}`}>
+              <h3>{label}</h3>
+              <ul>{(list as readonly string[]).map((x) => <li>{x}</li>)}</ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <Engage lang={lang} />
+
+    <!-- Guides -->
+    <section class="section" aria-labelledby="g-h">
+      <div class="wrap wrap--wide">
+        <header class="head">
+          <h2 class="h2" id="g-h" data-reveal>{a.guidesTitle}</h2>
+          <p class="lead" data-reveal style="--d:1">{a.guidesLead}</p>
+        </header>
+        <GuideCards lang={lang} limit={3} />
+      </div>
+    </section>
+
+    <Contact lang={lang} />
+  </main>
+  <Footer lang={lang} altHref={altPath} />
+  <StickyCta lang={lang} />
+</Base>
+
+<script>
+  import '../scripts/main.ts';
+</script>
+
+<style>
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 16px 32px;
+  }
+  .mini {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .mini div {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 6px;
+  }
+  .mini dd {
+    font-size: clamp(2.25rem, 1.6rem + 2vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .mini dt {
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+  .story .wrap {
+    display: grid;
+    justify-items: center;
+    gap: 24px;
+  }
+  .story .h2 {
+    text-align: center;
+  }
+  .prose {
+    max-width: 680px;
+    display: grid;
+    gap: 18px;
+    color: var(--ink-2);
+    font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+    line-height: 1.6;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .cards li {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    padding: 28px;
+    border-radius: var(--r-lg);
+    background: var(--white);
+  }
+  .n {
+    font-size: 0.875rem;
+    font-weight: 650;
+    color: var(--a1);
+  }
+  .cards h3 {
+    font-size: 1.25rem;
+    font-weight: 650;
+    letter-spacing: -0.025em;
+  }
+  .cards p {
+    color: var(--muted);
+  }
+  .groups {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+  }
+  .groups h3 {
+    margin-bottom: 14px;
+    font-size: 1.0625rem;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+  }
+  .groups ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .groups li {
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: var(--gray);
+    font-size: 0.9375rem;
+    font-weight: 550;
+  }
+  @media (max-width: 1080px) {
+    .mini, .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 680px) {
+    .cards, .groups { grid-template-columns: 1fr; }
+    .ctas .btn { width: 100%; }
+  }
+</style>

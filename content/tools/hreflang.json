@@ -1,0 +1,136 @@
+{
+  "pl": {
+    "metaTitle": "Tester hreflang: sprawdź tagi i mapę witryny",
+    "metaDescription": "Darmowy tester hreflang: wklej tagi link albo mapę witryny i sprawdź kody języków, linki zwrotne, self-reference, duplikaty i x-default.",
+    "eyebrow": "Darmowe narzędzie",
+    "title": "Tester hreflang",
+    "lead": "Wklej tagi hreflang z jednej strony albo fragment mapy witryny XML. Sprawdzę kody języków i krajów, pełne adresy, linki zwrotne, odwołanie do samej siebie i x-default. Wszystko dzieje się w Twojej przeglądarce.",
+    "inputLabel": "Tagi hreflang albo mapa witryny XML",
+    "inputHint": "Tagi <link rel=\"alternate\" hreflang=…> ze źródła strony albo bloki <url> z mapy witryny.",
+    "urlLabel": "Adres sprawdzanej strony (dla tagów z jednej strony)",
+    "urlHint": "Opcjonalnie. Pozwala sprawdzić, czy strona wskazuje samą siebie.",
+    "check": "Sprawdź",
+    "exampleHtml": "Przykład: tagi",
+    "exampleSitemap": "Przykład: mapa witryny",
+    "empty": "Wklej tagi albo mapę witryny, żeby zobaczyć wynik.",
+    "modeHtml": "Tryb: tagi z jednej strony",
+    "modeSitemap": "Tryb: mapa witryny",
+    "pagesLabel": "Strony",
+    "summary": "Błędy: {e} · Ostrzeżenia: {w} · Uwagi: {i}",
+    "allGood": "Nie znalazłem problemów.",
+    "levels": {
+      "error": "Błąd",
+      "warning": "Ostrzeżenie",
+      "info": "Uwaga"
+    },
+    "messages": {
+      "none": "Nie znaleziono żadnych tagów hreflang.",
+      "codeUnderscore": "{x}: podkreślnik zamiast myślnika. Poprawnie np. en-GB.",
+      "codeFormat": "{x}: nieprawidłowy format kodu.",
+      "codeRegionOnly": "{x}: sam kod kraju bez języka. Dodaj język, np. en-GB.",
+      "codeLanguage": "{x}: nieznany kod języka. Użyj kodu ISO 639-1, np. pl, en, de.",
+      "codeThreeLetter": "{x}: trzyliterowy kod języka. Google oczekuje dwuliterowego kodu ISO 639-1.",
+      "codeUk": "{x}: kod UK nie istnieje w ISO 3166-1. Poprawnie: en-GB.",
+      "codeRegionFormat": "{x}: region nie jest dwuliterowym kodem kraju i Google może go nie obsłużyć.",
+      "codeRegion": "{x}: nieznany kod kraju.",
+      "relative": "{x}: adres względny. Hreflang wymaga pełnych adresów z https://.",
+      "duplicate": "{x}: ten sam kod wskazuje różne adresy.",
+      "noXDefault": "Brak x-default. Nie jest obowiązkowy, ale zalecany.",
+      "noSelf": "Strona nie wskazuje samej siebie.",
+      "noReturn": "Brak linku zwrotnego z {x}."
+    },
+    "guideCta": "Przeczytaj poradnik: hreflang, najczęstsze błędy",
+    "howTitle": "Co sprawdza tester",
+    "how": [
+      "Kody języków (ISO 639-1) i krajów (ISO 3166-1 Alpha 2), także typowe pomyłki, jak en-UK czy en_GB.",
+      "Czy adresy są pełne, z https://.",
+      "Czy ten sam kod nie wskazuje dwóch różnych adresów.",
+      "Czy strona wskazuje samą siebie i czy ma x-default.",
+      "W trybie mapy witryny: czy strony, które się wskazują, mają linki zwrotne."
+    ],
+    "faq": [
+      {
+        "q": "Czy tester pobiera moją stronę?",
+        "a": "Nie. Przeglądarka nie może pobrać strony z innej domeny bez jej zgody, dlatego wklejasz tagi albo mapę witryny ręcznie. Nic nie jest nigdzie wysyłane."
+      },
+      {
+        "q": "Dlaczego nie widzę błędu linków zwrotnych przy tagach z jednej strony?",
+        "a": "Do sprawdzenia linków zwrotnych potrzebne są tagi wszystkich wersji językowych. Wklej fragment mapy witryny z kilkoma adresami albo sprawdź każdą wersję po kolei."
+      },
+      {
+        "q": "Czy es-419 jest błędem?",
+        "a": "To kod regionu Ameryki Łacińskiej, a nie kod kraju. Google oczekuje kodów krajów ISO 3166-1, więc taki kod może zostać zignorowany."
+      }
+    ],
+    "serviceTitle": "Wiele rynków i bałagan w hreflang?",
+    "serviceText": "Uporządkuję hreflang na wszystkich rynkach i szablonach, także na Sitecore i Adobe Experience Manager, i ustawię jego automatyczne generowanie.",
+    "serviceCta": "Zobacz usługę"
+  },
+  "en": {
+    "metaTitle": "Hreflang Checker: Validate Tags and Sitemaps",
+    "metaDescription": "Free hreflang checker: paste link tags or your sitemap and check language codes, return links, self-reference, duplicates and x-default.",
+    "eyebrow": "Free tool",
+    "title": "Hreflang checker",
+    "lead": "Paste the hreflang tags from one page or part of your XML sitemap. I check language and region codes, absolute URLs, return links, self-reference and x-default. Everything runs in your browser.",
+    "inputLabel": "Hreflang tags or XML sitemap",
+    "inputHint": "<link rel=\"alternate\" hreflang=…> tags from the page source, or <url> blocks from your sitemap.",
+    "urlLabel": "URL of the page you are checking (for tags from one page)",
+    "urlHint": "Optional. Lets me check whether the page references itself.",
+    "check": "Check",
+    "exampleHtml": "Example: tags",
+    "exampleSitemap": "Example: sitemap",
+    "empty": "Paste tags or a sitemap to see the result.",
+    "modeHtml": "Mode: tags from one page",
+    "modeSitemap": "Mode: sitemap",
+    "pagesLabel": "Pages",
+    "summary": "Errors: {e} · Warnings: {w} · Notes: {i}",
+    "allGood": "No problems found.",
+    "levels": {
+      "error": "Error",
+      "warning": "Warning",
+      "info": "Note"
+    },
+    "messages": {
+      "none": "No hreflang tags found.",
+      "codeUnderscore": "{x}: underscore instead of a hyphen. Correct form e.g. en-GB.",
+      "codeFormat": "{x}: invalid code format.",
+      "codeRegionOnly": "{x}: a country code without a language. Add the language, e.g. en-GB.",
+      "codeLanguage": "{x}: unknown language code. Use an ISO 639-1 code, e.g. pl, en, de.",
+      "codeThreeLetter": "{x}: three-letter language code. Google expects a two-letter ISO 639-1 code.",
+      "codeUk": "{x}: UK is not an ISO 3166-1 code. Use en-GB.",
+      "codeRegionFormat": "{x}: the region is not a two-letter country code, and Google may not support it.",
+      "codeRegion": "{x}: unknown country code.",
+      "relative": "{x}: relative URL. Hreflang needs absolute URLs with https://.",
+      "duplicate": "{x}: the same code points to different URLs.",
+      "noXDefault": "No x-default. Not required, but recommended.",
+      "noSelf": "The page doesn’t reference itself.",
+      "noReturn": "No return link from {x}."
+    },
+    "guideCta": "Read the guide: common hreflang mistakes",
+    "howTitle": "What the checker covers",
+    "how": [
+      "Language codes (ISO 639-1) and country codes (ISO 3166-1 Alpha 2), including typical slips such as en-UK or en_GB.",
+      "Whether URLs are absolute, with https://.",
+      "Whether the same code points to two different URLs.",
+      "Whether the page references itself and has an x-default.",
+      "In sitemap mode: whether pages that reference each other have return links."
+    ],
+    "faq": [
+      {
+        "q": "Does the checker fetch my page?",
+        "a": "No. A browser can’t fetch a page from another domain without that domain’s permission, so you paste the tags or sitemap yourself. Nothing is sent anywhere."
+      },
+      {
+        "q": "Why don’t I see return-link errors for tags from one page?",
+        "a": "Checking return links needs the tags of every language version. Paste part of your sitemap with several URLs, or check each version in turn."
+      },
+      {
+        "q": "Is es-419 an error?",
+        "a": "It is the region code for Latin America, not a country code. Google expects ISO 3166-1 country codes, so such a code may be ignored."
+      }
+    ],
+    "serviceTitle": "Many markets and messy hreflang?",
+    "serviceText": "I will sort out hreflang across every market and template, including on Sitecore and Adobe Experience Manager, and set it up to be generated automatically.",
+    "serviceCta": "See the service"
+  }
+}

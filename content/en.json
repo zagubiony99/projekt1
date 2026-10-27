@@ -11,7 +11,7 @@
     "ctaPrimary": "Book a free consultation",
     "ctaSecondary": "See my experience",
     "ctaNote": "30 minutes · online · no strings attached",
-    "trustLabel": "Experience includes",
+    "trustLabel": "Worked with",
     "demo": {
       "app": "AI answer",
       "note": "Illustrative example",
@@ -131,11 +131,6 @@
       "title": "Not sure where to start?",
       "text": "On a free consultation I’ll review your site and point out the 3 things worth fixing first.",
       "btn": "Book a free consultation"
-    },
-    "afterProcess": {
-      "title": "The first step takes 30 minutes.",
-      "text": "A short call, concrete takeaways, no commitment.",
-      "btn": "Pick a time for a call"
     }
   },
   "compare": {
@@ -185,6 +180,7 @@
     "label": "Experience",
     "title": "9 years in SEO",
     "intro": "From an agency and my own project, through consulting, to enterprise teams at Accenture Song and Philip Morris International.",
+    "more": "More about me",
     "industriesLabel": "Industries I have worked in",
     "industries": [
       "Hospitality",
@@ -263,6 +259,52 @@
       }
     ]
   },
+  "engage": {
+    "label": "Working together",
+    "title": "How we can work together",
+    "lead": "Every engagement starts with a free 30-minute call. Then you choose the format that fits your team and budget.",
+    "priceFallback": "Quoted after a call",
+    "models": [
+      {
+        "name": "Expert consultation",
+        "kind": "One-off",
+        "desc": "An online session with you or your team. We take one specific problem apart: a traffic drop, a planned migration, AI visibility. You leave with a clear plan of what to do and in which order.",
+        "points": [
+          "I review your site before we meet",
+          "Answers for your team and developers",
+          "Priorities written up after the call"
+        ],
+        "cta": "Ask about a consultation",
+        "topic": "Consultation",
+        "featured": false
+      },
+      {
+        "name": "Project",
+        "kind": "Scope and timeline agreed upfront",
+        "desc": "An audit, a migration, a structured data rollout or getting your site ready for AI search. I run the project from diagnosis to signing off the release.",
+        "points": [
+          "Tickets ready for your developers",
+          "I check changes before they go live",
+          "One person accountable for the result"
+        ],
+        "cta": "Tell me about your project",
+        "featured": true
+      },
+      {
+        "name": "Ongoing support",
+        "kind": "Monthly",
+        "desc": "An external technical SEO lead for your team. I keep SEO in every release, monitor indexation and AI visibility, and answer questions as they come up.",
+        "points": [
+          "SEO built into your release process",
+          "Monitoring and fast response to drops",
+          "Direct contact with me, no middlemen"
+        ],
+        "cta": "Ask about ongoing support",
+        "topic": "Ongoing work",
+        "featured": false
+      }
+    ]
+  },
   "faq": {
     "label": "FAQ",
     "title": "Common questions",
@@ -311,8 +353,10 @@
     "lead": "On a free 30-minute call I’ll review your site and point out the 3 things worth fixing first. No strings attached.",
     "topicsLabel": "What is it about?",
     "topics": [
+      "Consultation",
       "Technical audit",
       "AI search",
+      "ChatGPT app",
       "Large website",
       "E-commerce",
       "Enterprise / CMS",
@@ -320,6 +364,7 @@
       "Structured data",
       "WebOps",
       "Content planning",
+      "Home Assistant",
       "Ongoing work"
     ],
     "urlLabel": "Website",
@@ -369,8 +414,28 @@
       }
     ]
   },
+  "guidesUi": {
+    "metaTitle": "Technical SEO & AI Search Guides | Maciej Zięciak",
+    "metaDescription": "Practical SEO and AI search guides: AI Overviews, AI bots, audits, migrations, releases, hreflang and faceted navigation. Checklists from my practice.",
+    "eyebrow": "SEO & AI search guides",
+    "title": "What I check for clients. Written up step by step.",
+    "lead": "Checklists and explanations from technical SEO and AI search. No fluff, with examples you can check on your own site right away.",
+    "toolEyebrow": "Free tool",
+    "toc": "Contents",
+    "updated": "Updated",
+    "readTime": "min read",
+    "by": "By",
+    "read": "Read the guide",
+    "all": "All guides",
+    "others": "More guides",
+    "faqTitle": "Frequently asked questions",
+    "serviceTitle": "Would you rather I did it for you?",
+    "serviceCta": "See the service"
+  },
   "nav": {
     "services": "Services",
+    "about": "About",
+    "guides": "Guides",
     "experience": "Experience",
     "process": "Process",
     "faq": "FAQ",

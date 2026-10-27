@@ -1,0 +1,88 @@
+{
+  "published": "2026-10-20",
+  "updated": "2026-10-20",
+  "pl": {
+    "metaTitle": "SEO przed wdrożeniem: checklista dla zespołów IT",
+    "metaDescription": "Checklista SEO przed każdym wdrożeniem: robots, canonicale, przekierowania, renderowanie, dane strukturalne. Do tego testy i alerty po publikacji.",
+    "title": "SEO przed wdrożeniem: checklista dla zespołów IT",
+    "lead": "Większość nagłych spadków ruchu, które diagnozuję, nie wynika z aktualizacji Google, tylko z wdrożenia: przypadkowy noindex, zmienione adresy bez przekierowań, treść, która nagle ładuje się tylko po JavaScripcie. Da się to wyłapać przed publikacją. Oto lista, którą wpinam w proces wydań.",
+    "sections": [
+      {
+        "h": "Dlaczego SEO psuje się przy wdrożeniach",
+        "body": "<p>Programiści testują, czy strona działa i wygląda dobrze. Rzadko sprawdzają, co widzi Googlebot: tagi w nagłówku, kody odpowiedzi, linki, renderowanie. Do tego środowisko testowe zwykle jest zablokowane dla robotów, więc ustawienia ze stagingu potrafią trafić na produkcję. Rozwiązaniem nie jest „więcej uwagi”, tylko kilka stałych punktów kontroli w procesie.</p>"
+      },
+      {
+        "h": "Checklista przed publikacją",
+        "body": "<ol><li><strong>Indeksowanie:</strong> brak <code>noindex</code> i <code>Disallow: /</code> przeniesionych ze stagingu, poprawny robots.txt.</li><li><strong>Kody odpowiedzi:</strong> ważne strony zwracają 200, usunięte 404 albo 410, nie ma nowych błędów 5xx.</li><li><strong>Adresy i przekierowania:</strong> jeśli zmieniły się adresy, każdy stary ma przekierowanie 301 na odpowiednik, bez łańcuchów.</li><li><strong>Canonicale:</strong> wskazują właściwe adresy, a nie stagingowe, i nie wskazują wszystkich stron na jedną.</li><li><strong>Tytuły, opisy i H1:</strong> szablony generują je poprawnie, bez pustych pól i duplikatów.</li><li><strong>Linkowanie wewnętrzne:</strong> menu, okruszki i paginacja to prawdziwe linki, nie przyciski.</li><li><strong>Renderowanie:</strong> kluczowa treść jest w HTML, a nie dopiero po JavaScripcie.</li><li><strong>Dane strukturalne:</strong> poprawne i zgodne z treścią na zmienionych szablonach.</li><li><strong>Hreflang:</strong> przy wielu rynkach linki zwrotne i kody języków się zgadzają.</li><li><strong>Wydajność:</strong> zmiana nie pogarsza Core Web Vitals na kluczowych szablonach.</li><li><strong>Mapa witryny:</strong> zawiera nowe adresy i nie zawiera usuniętych.</li></ol>"
+      },
+      {
+        "h": "Jak to zautomatyzować",
+        "body": "<ul><li><strong>Testy w pipeline:</strong> skrypt, który przed publikacją sprawdza na stagingu kilka wzorcowych adresów każdego szablonu: kod odpowiedzi, meta robots, canonical, tytuł i H1.</li><li><strong>Crawl stagingu i porównanie z produkcją:</strong> różnice w liczbie indeksowalnych stron, przekierowaniach i tagach pokazują problemy, zanim zobaczy je Google.</li><li><strong>Testy wydajności:</strong> pomiar Core Web Vitals na kluczowych szablonach przy każdej większej zmianie.</li><li><strong>Wymagania SEO w zadaniach:</strong> zamiast poprawiać po fakcie, dopisz do zadania kryteria SEO, które muszą być spełnione, żeby uznać je za zrobione.</li></ul>"
+      },
+      {
+        "h": "Po publikacji: monitoring i alerty",
+        "body": "<ul><li>alert przy każdej zmianie robots.txt na produkcji,</li><li>codzienny crawl kluczowych sekcji i alert przy skoku liczby stron z noindex, błędami albo przekierowaniami,</li><li>monitoring błędów 5xx i czasu odpowiedzi serwera,</li><li>przegląd raportu indeksowania w Search Console w tygodniu po większym wdrożeniu,</li><li>w logach serwera: czy Googlebot dostaje te same kody odpowiedzi co przed zmianą.</li></ul><p>Taki zestaw zwykle wyłapuje problem w ciągu jednego dnia, a nie po miesiącu spadku ruchu.</p>"
+      },
+      {
+        "h": "Kto za to odpowiada",
+        "body": "<p>Najlepiej działa podział: zespół IT uruchamia testy i alerty, a ktoś od SEO ustala kryteria, przegląda wyniki i odbiera większe zmiany. Jeśli w Twoim zespole nie ma takiej osoby, mogę wejść w tę rolę. Zobacz usługę <a href='/uslugi/webops-seo-operations/'>WebOps i SEO Operations</a>.</p>"
+      }
+    ],
+    "faq": [
+      {
+        "q": "Czy każde wdrożenie wymaga przeglądu SEO?",
+        "a": "Nie. Drobne zmiany treści nie. Przegląd przydaje się przy zmianach szablonów, adresów, nawigacji, renderowania i przy migracjach. Resztę łapią testy automatyczne i alerty."
+      },
+      {
+        "q": "Jak zablokować staging, żeby nie trafił do Google?",
+        "a": "Najpewniej hasłem albo ograniczeniem dostępu po IP. Blokada w robots.txt czy noindex łatwo przenosi się na produkcję razem z resztą konfiguracji."
+      },
+      {
+        "q": "Ile czasu zajmuje wdrożenie takiego procesu?",
+        "a": "Podstawowe testy i alerty da się uruchomić szybko. Najwięcej czasu zajmuje dopisanie kryteriów SEO do sposobu, w jaki zespół pisze i odbiera zadania."
+      }
+    ]
+  },
+  "en": {
+    "metaTitle": "Pre-Release SEO Checklist for Development Teams",
+    "metaDescription": "An SEO checklist for every release: robots, canonicals, redirects, rendering, structured data. Plus automated tests and alerts after go-live.",
+    "title": "Pre-release SEO checklist for development teams",
+    "lead": "Most sudden traffic drops I diagnose aren’t caused by a Google update but by a release: an accidental noindex, changed URLs without redirects, content that suddenly loads only with JavaScript. You can catch these before they go live. Here is the list I build into release processes.",
+    "sections": [
+      {
+        "h": "Why SEO breaks during releases",
+        "body": "<p>Developers test whether the site works and looks right. They rarely check what Googlebot sees: head tags, status codes, links, rendering. On top of that, staging is usually blocked for crawlers, so staging settings can end up in production. The fix isn’t “paying more attention” but a few fixed checkpoints in the process.</p>"
+      },
+      {
+        "h": "The pre-release checklist",
+        "body": "<ol><li><strong>Indexing:</strong> no <code>noindex</code> or <code>Disallow: /</code> carried over from staging, a correct robots.txt.</li><li><strong>Status codes:</strong> key pages return 200, removed ones 404 or 410, no new 5xx errors.</li><li><strong>URLs and redirects:</strong> if URLs changed, every old one 301-redirects to its equivalent, without chains.</li><li><strong>Canonicals:</strong> they point to the right URLs, not staging ones, and don’t point every page to one.</li><li><strong>Titles, descriptions and H1s:</strong> templates generate them correctly, with no empty fields or duplicates.</li><li><strong>Internal linking:</strong> menus, breadcrumbs and pagination are real links, not buttons.</li><li><strong>Rendering:</strong> key content is in the HTML, not only after JavaScript.</li><li><strong>Structured data:</strong> valid and consistent with the content on changed templates.</li><li><strong>Hreflang:</strong> with multiple markets, return links and language codes match.</li><li><strong>Performance:</strong> the change doesn’t worsen Core Web Vitals on key templates.</li><li><strong>Sitemap:</strong> it includes new URLs and drops removed ones.</li></ol>"
+      },
+      {
+        "h": "How to automate it",
+        "body": "<ul><li><strong>Tests in the pipeline:</strong> a script that checks a few sample URLs per template on staging before release: status code, meta robots, canonical, title and H1.</li><li><strong>Crawl staging and compare it with production:</strong> differences in indexable pages, redirects and tags reveal problems before Google sees them.</li><li><strong>Performance tests:</strong> measure Core Web Vitals on key templates with every bigger change.</li><li><strong>SEO requirements in tickets:</strong> instead of fixing things afterwards, add the SEO criteria that must be met for a ticket to count as done.</li></ul>"
+      },
+      {
+        "h": "After go-live: monitoring and alerts",
+        "body": "<ul><li>an alert on every robots.txt change in production,</li><li>a daily crawl of key sections with an alert when the number of noindexed, erroring or redirecting pages jumps,</li><li>monitoring of 5xx errors and server response times,</li><li>a review of the Search Console indexing report in the week after a bigger release,</li><li>in the server logs: does Googlebot get the same status codes as before the change?</li></ul><p>This set usually catches a problem within a day, not after a month of falling traffic.</p>"
+      },
+      {
+        "h": "Who owns it",
+        "body": "<p>What works best is a split: the development team runs the tests and alerts, and someone from SEO sets the criteria, reviews the results and signs off bigger changes. If nobody on your team plays that role, I can step in. See the <a href='/en/services/webops-seo-operations/'>WebOps and SEO operations</a> service.</p>"
+      }
+    ],
+    "faq": [
+      {
+        "q": "Does every release need an SEO review?",
+        "a": "No. Small content changes don’t. A review is worth it for changes to templates, URLs, navigation and rendering, and for migrations. Automated tests and alerts catch the rest."
+      },
+      {
+        "q": "How do I keep staging out of Google?",
+        "a": "Most reliably with a password or IP restriction. A robots.txt block or noindex easily travels to production along with the rest of the configuration."
+      },
+      {
+        "q": "How long does it take to set up such a process?",
+        "a": "Basic tests and alerts can be up and running quickly. Most of the time goes into adding SEO criteria to the way the team writes and accepts tickets."
+      }
+    ]
+  }
+}

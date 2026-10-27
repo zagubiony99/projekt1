@@ -3,7 +3,7 @@ import { site } from '../config';
 import Portrait from './Portrait.astro';
 import { photo } from '../lib/photo';
 import { getDict, type Lang } from '../i18n';
-interface Props { lang: Lang; topic?: string; next?: { title: string; items: readonly { t: string; d: string }[] } }
+interface Props { lang: Lang; topic?: string; title?: string; lead?: string; next?: { title: string; items: readonly { t: string; d: string }[] } }
 const { topic, next } = Astro.props;
 const t = getDict(Astro.props.lang);
 const c = t.contact;
@@ -13,8 +13,8 @@ const c = t.contact;
   <div class="aura" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="wrap">
     <header class="head">
-      <h2 class="h2 ai" id="kontakt-h" data-reveal>{c.title}</h2>
-      <p class="lead" data-reveal style="--d:1">{c.lead}</p>
+      <h2 class="h2 ai" id="kontakt-h" data-reveal>{Astro.props.title ?? c.title}</h2>
+      <p class="lead" data-reveal style="--d:1">{Astro.props.lead ?? c.lead}</p>
       {photo && (
         <p class="who" data-reveal style="--d:2">
           <Portrait size={48} />
@@ -133,9 +133,9 @@ const c = t.contact;
     animation: drift 18s ease-in-out infinite alternate;
     will-change: transform;
   }
-  .aura i:nth-child(1) { left: 5%; top: 40%; --c: rgb(8 148 255 / 0.45); }
-  .aura i:nth-child(2) { right: 8%; top: 25%; --c: rgb(201 89 221 / 0.4); animation-duration: 22s; animation-delay: -6s; }
-  .aura i:nth-child(3) { left: 35%; bottom: -20%; --c: rgb(255 46 84 / 0.3); animation-duration: 26s; animation-delay: -12s; }
+  .aura i:nth-child(1) { left: 5%; top: 40%; --c: color-mix(in srgb, var(--a1) 45%, transparent); }
+  .aura i:nth-child(2) { right: 8%; top: 25%; --c: color-mix(in srgb, var(--a2) 40%, transparent); animation-duration: 22s; animation-delay: -6s; }
+  .aura i:nth-child(3) { left: 35%; bottom: -20%; --c: color-mix(in srgb, var(--a3) 30%, transparent); animation-duration: 26s; animation-delay: -12s; }
   @keyframes drift {
     0% { transform: translate(0, 0) scale(1); }
     50% { transform: translate(8vw, -6vh) scale(1.15); }
