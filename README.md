@@ -130,7 +130,10 @@ curl -X POST http://localhost:8788/mcp -H 'Content-Type: application/json' \
 ## Do uzupełnienia przed startem
 
 - [ ] Klucz Web3Forms (bez niego formularz nie wysyła powiadomień)
-- [ ] Docelowo adres `kontakt@maciejzieciak.com` przekierowany na Gmaila (Cloudflare Email Routing, za darmo); teraz na stronie jest `maciejzieciak.com@gmail.com`
+- [ ] Uruchomić adres `hello@maciejzieciak.com` (jest na stronie; bez tego maile na ten adres nie dojdą):
+  1. Cloudflare → domena → **Email → Email Routing** → włącz (Cloudflare sam doda rekordy MX).
+  2. **Routing rules**: `hello@maciejzieciak.com` → `maciejzieciak.com@gmail.com`, potwierdź link z maila.
+  3. Odpisywanie jako hello@: Gmail → Ustawienia → Konta → „Wyślij pocztę jako” → `hello@maciejzieciak.com`, serwer `smtp.gmail.com`, port 587, login: Twój Gmail, hasło: hasło aplikacji z konta Google (wymaga weryfikacji dwuetapowej).
 - [ ] Link do LinkedIn (pusty = ukryty)
 - [ ] Nazwa agencji z lat 2018–2019 (teraz: „Agencja SEO, Kraków”)
 - [ ] Potwierdzić, że wymienianie pracodawców (PMI, Accenture Song) na stronie jest OK
