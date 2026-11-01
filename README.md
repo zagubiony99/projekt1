@@ -70,6 +70,7 @@ python3 scripts/cms/check.py          # sprawdza, że zapis w CMS niczego nie sk
 | Interakcje (tekst zapalający się przy scrollu, scena z kartą botów, liczby odliczające w górę, formularz) | `src/scripts/main.ts` |
 | Grafika do udostępniania strony głównej (OG) | `public/og-pl.png`, `public/og-en.png` |
 | Grafiki do udostępniania pozostałych stron (generowane przy buildzie z tytułów) | `src/lib/og.ts`, lista: `src/data/og.ts` |
+| Logo narzędzi w pasku „Narzędzia, z których korzystam” (plik nazwany jak narzędzie, np. `screamingfrog.svg`, `adobeanalytics.png`; bez pliku pokazuje się nazwa) | `src/assets/tools/` |
 | Nagłówki cache i bezpieczeństwa (Cloudflare Pages / Netlify) | `public/_headers` |
 | Kanały RSS poradników | `/poradniki/rss.xml`, `/en/guides/rss.xml` (`src/lib/rss.ts`) |
 
