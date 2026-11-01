@@ -24,7 +24,11 @@ const t = getDict(Astro.props.lang);
             {[...t.tools.items, ...t.tools.items].map((n) => {
               const logo = toolLogo(n);
               return logo ? (
-                <li class="logo"><Image src={logo} alt={n} height={40} width={Math.round(40 * logo.width / logo.height)} loading="lazy" /></li>
+                logo.width / logo.height < 1.6 ? (
+                  <li class="logo icon"><Image src={logo} alt="" height={40} width={Math.round(40 * logo.width / logo.height)} loading="lazy" />{n}</li>
+                ) : (
+                  <li class="logo"><Image src={logo} alt={n} height={40} width={Math.round(40 * logo.width / logo.height)} loading="lazy" /></li>
+                )
               ) : (
                 <li>{n}</li>
               );
@@ -117,6 +121,16 @@ const t = getDict(Astro.props.lang);
     transition: filter 0.3s;
   }
   .tools li.logo:hover img {
+    filter: none;
+  }
+  .tools li.icon {
+    gap: 0.4em;
+  }
+  .tools li.icon img {
+    height: 0.9em;
+    filter: grayscale(1) brightness(0.75) opacity(0.8);
+  }
+  .tools li.icon:hover img {
     filter: none;
   }
   @media (max-width: 860px) {
