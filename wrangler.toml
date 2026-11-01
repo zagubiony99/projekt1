@@ -1,0 +1,5 @@
+# Cloudflare Pages settings (read by Cloudflare at deploy time and by `npx wrangler pages dev`).
+# Build command in the Cloudflare dashboard: npm run build
+name = "maciejzieciak"
+pages_build_output_dir = "dist"
+compatibility_date = "2025-09-01"

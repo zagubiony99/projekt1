@@ -115,8 +115,14 @@ Pliki dla wyszukiwarek i AI generują się same przy buildzie: `sitemap-index.xm
 
 ## Wdrożenie
 
-Folder `dist/` to zwykłe pliki statyczne, więc działa na każdym hostingu: Cloudflare Pages, Netlify, Vercel albo GitHub Pages.
-Build command: `npm run build`, output: `dist`.
+**Cloudflare Pages (zalecane, za darmo).** Ustawienia są w repozytorium (`wrangler.toml`, `.nvmrc`), więc wystarczy:
+1. Zmerguj PR do `main`.
+2. dash.cloudflare.com → **Workers & Pages → Create → Pages → Connect to Git** → repozytorium `zagubiony99/projekt1`.
+3. Production branch: `main`. Framework preset: **Astro**. Build command: `npm run build`. Output: `dist`. Zapisz i poczekaj na pierwszy build (ok. 2 min): strona działa pod adresem `*.pages.dev`.
+4. **Custom domains → Set up a domain** → `maciejzieciak.com` (i `www.maciejzieciak.com`). Jeśli domena jest u innego rejestratora, Cloudflare pokaże, jakie serwery DNS ustawić.
+5. Każdy kolejny push do `main` (także zapis w CMS) publikuje stronę sama.
+
+Folder `dist/` to zwykłe pliki statyczne, więc strona działa też na Netlify, Vercel albo GitHub Pages (bez `/mcp`).
 
 **Serwer MCP (`/mcp`) wymaga Cloudflare Pages.** Plik `functions/mcp.ts` to funkcja Cloudflare Pages: wdraża się sama razem ze stroną, bez dodatkowej konfiguracji. Na innym hostingu strona zadziała, ale adres `/mcp` nie. Test lokalny:
 

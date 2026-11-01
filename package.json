@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "maciejzieciak.com — SEO consulting (PL/EN)",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
