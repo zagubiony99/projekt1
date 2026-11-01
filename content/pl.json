@@ -367,6 +367,8 @@
       "Home Assistant",
       "Stała współpraca"
     ],
+    "emailLabel": "Twój e-mail",
+    "emailPlaceholder": "imie@firma.pl",
     "urlLabel": "Adres strony",
     "urlPlaceholder": "https://twojafirma.pl",
     "msgLabel": "Wiadomość",
@@ -378,7 +380,7 @@
     "sending": "Wysyłam…",
     "success": "Dzięki! Wiadomość dotarła. Odezwę się z propozycją terminu rozmowy.",
     "error": "Coś poszło nie tak. Napisz bezpośrednio na",
-    "subject": "Zapytanie SEO — maciejzieciak.com",
+    "subject": "Nowe zapytanie z maciejzieciak.com",
     "bodyTopics": "Temat",
     "bodyUrl": "Strona",
     "orEmail": "Albo napisz bezpośrednio"

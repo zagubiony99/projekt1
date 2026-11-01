@@ -39,7 +39,7 @@ content:
   - name: formAccessKey
     label: Klucz Web3Forms
     type: string
-    description: Tylko dla Web3Forms. Dla Formspree zostaw puste.
+    description: 'Klucz z web3forms.com (przychodzi mailem na adres, na który mają trafiać zgłoszenia). Wystarczy go wkleić: adres formularza uzupełni się sam. Dla Formspree zostaw puste.'
   - name: bookingUrl
     label: Link do kalendarza
     type: string
@@ -457,6 +457,12 @@ content:
         type: string
         list: true
         description: 'Nie zmieniaj nazw tematów usług: podstrona usługi sama zaznacza swój temat.'
+      - name: emailLabel
+        label: Etykieta pola „e-mail”
+        type: string
+      - name: emailPlaceholder
+        label: Przykład w polu „e-mail”
+        type: string
       - name: urlLabel
         label: Etykieta pola „adres strony”
         type: string
@@ -1104,6 +1110,12 @@ content:
         type: string
         list: true
         description: 'Nie zmieniaj nazw tematów usług: podstrona usługi sama zaznacza swój temat.'
+      - name: emailLabel
+        label: Etykieta pola „e-mail”
+        type: string
+      - name: emailPlaceholder
+        label: Przykład w polu „e-mail”
+        type: string
       - name: urlLabel
         label: Etykieta pola „adres strony”
         type: string

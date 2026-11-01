@@ -54,7 +54,7 @@ SITE = [
      'description': 'Portret: pokazuje się w sekcji Doświadczenie, przy formularzu kontaktowym i w „Dlaczego ja” na podstronach usług, trafia też do schema. Najlepiej min. 1000×1000 px, twarz w górnej części kadru. Strona sama przytnie i odchudzi plik.'},
     s('formEndpoint', 'Adres formularza (Formspree / Web3Forms)',
       'Np. https://formspree.io/f/xxxx albo https://api.web3forms.com/submit. Puste = formularz otwiera program pocztowy.'),
-    s('formAccessKey', 'Klucz Web3Forms', 'Tylko dla Web3Forms. Dla Formspree zostaw puste.'),
+    s('formAccessKey', 'Klucz Web3Forms', 'Klucz z web3forms.com (przychodzi mailem na adres, na który mają trafiać zgłoszenia). Wystarczy go wkleić: adres formularza uzupełni się sam. Dla Formspree zostaw puste.'),
     s('bookingUrl', 'Link do kalendarza', 'Cal.com albo Calendly. Gdy jest ustawiony, przy formularzu pojawia się „Wolisz od razu wybrać termin?”.'),
     s('gtmId', 'Google Tag Manager ID', 'Np. GTM-XXXXXXX. Puste = brak analityki, brak banera cookies.'),
 ]
@@ -185,6 +185,8 @@ COPY = [
         t('lead', 'Tekst pod nagłówkiem'),
         s('topicsLabel', 'Pytanie o temat'),
         strings('topics', 'Tematy do wyboru', 'Nie zmieniaj nazw tematów usług: podstrona usługi sama zaznacza swój temat.'),
+        s('emailLabel', 'Etykieta pola „e-mail”'),
+        s('emailPlaceholder', 'Przykład w polu „e-mail”'),
         s('urlLabel', 'Etykieta pola „adres strony”'),
         s('urlPlaceholder', 'Podpowiedź w polu „adres strony”'),
         s('msgLabel', 'Etykieta pola „wiadomość”'),

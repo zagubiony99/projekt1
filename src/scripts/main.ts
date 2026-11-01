@@ -363,12 +363,14 @@ form?.addEventListener('submit', async (e) => {
   ok && (ok.hidden = true); err && (err.hidden = true);
   try {
     const payload = new FormData();
-    fd.forEach((v, k) => k !== 'botcheck' && payload.append(k, v));
+    fd.forEach((v, k) => k !== 'botcheck' && k !== 'body' && payload.append(k, v));
     payload.set('topic', topics);
     payload.set('message', body);
+    if (topics) payload.set('subject', `${d.subject ?? ''}: ${topics}`);
     if (source()) payload.set('source', source());
     const res = await fetch(d.endpoint, { method: 'POST', body: payload, headers: { Accept: 'application/json' } });
-    if (!res.ok) throw new Error(String(res.status));
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok || json.success === false) throw new Error(String(res.status));
     form.reset();
     ok && (ok.hidden = false);
     dl({ event: 'generate_lead', form: 'contact', lead_topic: topics || '(none)', language: document.documentElement.lang, page_path: location.pathname });

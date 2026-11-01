@@ -75,8 +75,15 @@ python3 scripts/cms/check.py          # sprawdza, że zapis w CMS niczego nie sk
 
 ## Formularz kontaktowy i kalendarz (ważne dla sprzedaży)
 
+**Powiadomienia na maila (Web3Forms, za darmo do 250 zgłoszeń miesięcznie):**
+1. Wejdź na https://web3forms.com, wpisz `maciejzieciak.com@gmail.com` i kliknij „Create Access Key”.
+2. Klucz przyjdzie mailem na ten adres.
+3. Wklej go w CMS: **Ustawienia i kontakt → Klucz Web3Forms** (albo `formAccessKey` w `content/site.json`). Adres formularza uzupełni się sam.
+
+Od tej chwili każde zgłoszenie przychodzi na Gmaila z tematem „Nowe zapytanie z maciejzieciak.com: <usługa>”. Wiadomość zawiera e-mail nadawcy (wystarczy kliknąć „Odpowiedz”), adres jego strony, treść i źródło wejścia (UTM). Bez klucza formularz otwiera program pocztowy odwiedzającego, co gubi część zapytań.
+
 W CMS (**Ustawienia i kontakt**) albo w `content/site.json`:
-- `formEndpoint` (+ opcjonalnie `formAccessKey`): adres darmowego backendu formularzy, np. Formspree (`https://formspree.io/f/xxxx`) albo Web3Forms (`https://api.web3forms.com/submit` + klucz). Wtedy formularz wysyła się bez opuszczania strony i pokazuje potwierdzenie. Bez tego otwiera program pocztowy, co gubi część zapytań.
+- `formEndpoint`: tylko jeśli wolisz Formspree (`https://formspree.io/f/xxxx`). Przy Web3Forms zostaw puste.
 - `bookingUrl`: link do Cal.com lub Calendly. Pod formularzem pojawi się „Wolisz od razu wybrać termin?”.
 - Po udanej wysyłce strona wysyła zdarzenie `generate_lead` do `dataLayer`, jeśli podłączysz Google Tag Managera.
 
@@ -122,7 +129,8 @@ curl -X POST http://localhost:8788/mcp -H 'Content-Type: application/json' \
 
 ## Do uzupełnienia przed startem
 
-- [ ] Prawdziwy adres e-mail (teraz: `kontakt@maciejzieciak.com`)
+- [ ] Klucz Web3Forms (bez niego formularz nie wysyła powiadomień)
+- [ ] Docelowo adres `kontakt@maciejzieciak.com` przekierowany na Gmaila (Cloudflare Email Routing, za darmo); teraz na stronie jest `maciejzieciak.com@gmail.com`
 - [ ] Link do LinkedIn (pusty = ukryty)
 - [ ] Nazwa agencji z lat 2018–2019 (teraz: „Agencja SEO, Kraków”)
 - [ ] Potwierdzić, że wymienianie pracodawców (PMI, Accenture Song) na stronie jest OK

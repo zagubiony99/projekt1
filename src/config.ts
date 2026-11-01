@@ -14,7 +14,7 @@ type Settings = {
   gtmId?: string;
 };
 
-export const site = {
+const merged = {
   linkedin: '',
   photo: '',
   formEndpoint: '',
@@ -24,4 +24,10 @@ export const site = {
   ...(settings as Settings),
   domain: 'maciejzieciak.com',
   url: 'https://maciejzieciak.com',
+};
+
+// With only a Web3Forms key set, the form posts to Web3Forms.
+export const site = {
+  ...merged,
+  formEndpoint: merged.formEndpoint || (merged.formAccessKey ? 'https://api.web3forms.com/submit' : ''),
 };

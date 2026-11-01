@@ -50,6 +50,7 @@ const c = t.contact;
     >
       <input type="hidden" name="subject" value={c.subject} />
       {site.formAccessKey && <input type="hidden" name="access_key" value={site.formAccessKey} />}
+      <input type="hidden" name="from_name" value={site.domain} />
       <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
       <fieldset>
         <legend>{c.topicsLabel}</legend>
@@ -62,6 +63,10 @@ const c = t.contact;
           ))}
         </div>
       </fieldset>
+      <label class="field">
+        <span>{c.emailLabel}</span>
+        <input type="email" name="email" placeholder={c.emailPlaceholder} autocomplete="email" required />
+      </label>
       <label class="field">
         <span>{c.urlLabel}</span>
         <input type="url" name="url" placeholder={c.urlPlaceholder} autocomplete="url" inputmode="url" />

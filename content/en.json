@@ -367,6 +367,8 @@
       "Home Assistant",
       "Ongoing work"
     ],
+    "emailLabel": "Your email",
+    "emailPlaceholder": "name@company.com",
     "urlLabel": "Website",
     "urlPlaceholder": "https://yourcompany.com",
     "msgLabel": "Message",
@@ -378,7 +380,7 @@
     "sending": "Sending…",
     "success": "Thanks! Your message is in. I’ll get back to you with a time for the call.",
     "error": "Something went wrong. Please email me directly at",
-    "subject": "SEO inquiry — maciejzieciak.com",
+    "subject": "New enquiry from maciejzieciak.com",
     "bodyTopics": "Topic",
     "bodyUrl": "Website",
     "orEmail": "Or email me directly"
