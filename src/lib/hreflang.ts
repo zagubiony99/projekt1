@@ -7,7 +7,8 @@ export type Issue = { level: 'error' | 'warning' | 'info'; code: string; page?: 
 
 const attrs = (tag: string) => {
   const out: Record<string, string> = {};
-  for (const m of tag.matchAll(/([\w:-]+)\s*=\s*(?:"([^"]*)"|'([^']*)')/g)) out[m[1].toLowerCase()] = m[2] ?? m[3] ?? '';
+  // values may be double-quoted, single-quoted or unquoted (valid HTML, common in minified pages)
+  for (const m of tag.matchAll(/([\w:-]+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+))/g)) out[m[1].toLowerCase()] = m[2] ?? m[3] ?? m[4] ?? '';
   return out;
 };
 

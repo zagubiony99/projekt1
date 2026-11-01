@@ -143,12 +143,14 @@ async function callTool(name: string, args: any, data: () => Promise<Data>) {
       return text(`Path ${path}: ${blocked.length} of ${results.length} bots blocked.\n${lines.join('\n')}\n\nNote: user-initiated fetchers (ChatGPT-User, Claude-User, Perplexity-User) may not follow robots.txt. A firewall or CDN can still block bots that robots.txt allows.`, { path, blocked: blocked.length, total: results.length, results });
     }
     case 'generate_robots_txt': {
-      const rule = PRESETS[args.preset] ?? PRESETS.search_only;
+      const rule = typeof args.preset === 'string' && Object.hasOwn(PRESETS, args.preset) ? PRESETS[args.preset] : PRESETS.search_only;
+      // bot names are case-insensitive in robots.txt: map them to the known spelling
+      const known = (t: string) => bots.find((b) => b.token.toLowerCase() === t.toLowerCase())?.token ?? t;
+      const extra = (v: unknown): string[] => (Array.isArray(v) ? v.filter((x) => typeof x === 'string' && /^[\w.-]{1,60}$/.test(x)).map(known) : []);
       const allow = new Set(bots.filter((b) => rule(b.group)).map((b) => b.token));
-      const extra = (v: unknown) => (Array.isArray(v) ? v.filter((x) => typeof x === 'string' && /^[\w.-]{1,60}$/.test(x)) : []);
-      extra(args.allow).forEach((t: string) => allow.add(t));
+      extra(args.allow).forEach((t) => allow.add(t));
       const block = new Set(bots.map((b) => b.token).filter((t) => !allow.has(t)));
-      extra(args.block).forEach((t: string) => (allow.delete(t), block.add(t)));
+      extra(args.block).forEach((t) => (allow.delete(t), block.add(t)));
       const out = generateRobots({
         allow: [...allow],
         block: [...block],
@@ -247,11 +249,13 @@ export const onRequest = async (context: { request: Request; env: any }) => {
     return json({ jsonrpc: '2.0', id: null, error: { code: -32700, message: 'Parse error' } }, 400);
   }
   const batch = Array.isArray(body);
+  const invalid = (id: unknown = null) => ({ jsonrpc: '2.0', id, error: { code: -32600, message: 'Invalid request' } });
+  if (batch && !(body as unknown[]).length) return json(invalid(), 400);
   const msgs = (batch ? body : [body]) as Rpc[];
   const replies = [];
   for (const m of msgs) {
-    if (!m || typeof m !== 'object' || typeof m.method !== 'string') {
-      if (m && (m as any).id !== undefined) replies.push({ jsonrpc: '2.0', id: (m as any).id ?? null, error: { code: -32600, message: 'Invalid request' } });
+    if (!m || typeof m !== 'object' || Array.isArray(m) || typeof m.method !== 'string') {
+      replies.push(invalid(m && typeof m === 'object' && 'id' in m ? (m as any).id ?? null : null));
       continue;
     }
     if (m.id === undefined || m.id === null) continue; // notification: no reply

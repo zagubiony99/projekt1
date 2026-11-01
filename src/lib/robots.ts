@@ -37,7 +37,20 @@ export function parseRobots(txt: string): Group[] {
 }
 
 const escape = (s: string) => s.replace(/[.+?^{}()|[\]\\]/g, '\\$&');
+// RFC 9309 2.2.2: compare paths percent-encoded. Non-ASCII characters are encoded,
+// %XX of unreserved characters is decoded and hex digits are uppercased, so
+// "/ścieżka/" matches "/%C5%9Bcie%C5%BCka/" and "/%7Euser/" matches "/~user/".
+export function normPath(s: string): string {
+  return s
+    .replace(/[^\x00-\x7F]+/g, (c) => encodeURIComponent(c))
+    .replace(/%([0-9a-f]{2})/gi, (m, h) => {
+      const ch = String.fromCharCode(parseInt(h, 16));
+      return /[A-Za-z0-9\-._~]/.test(ch) ? ch : '%' + h.toUpperCase();
+    });
+}
 function matches(pattern: string, path: string): boolean {
+  pattern = normPath(pattern);
+  path = normPath(path);
   const anchored = pattern.endsWith('$');
   const body = anchored ? pattern.slice(0, -1) : pattern;
   const re = new RegExp('^' + body.split('*').map(escape).join('.*') + (anchored ? '$' : ''));
@@ -56,8 +69,8 @@ export function check(groups: Group[], token: string, path: string): Verdict {
   let best: Rule | null = null;
   for (const r of picked.flatMap((g) => g.rules)) {
     if (!matches(r.path, path)) continue;
-    const len = r.path.length;
-    if (!best || len > best.path.length || (len === best.path.length && r.allow && !best.allow)) best = r;
+    const len = normPath(r.path).length;
+    if (!best || len > normPath(best.path).length || (len === normPath(best.path).length && r.allow && !best.allow)) best = r;
   }
   return { allowed: best ? best.allow : true, rule: best, group: name };
 }

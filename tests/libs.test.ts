@@ -43,5 +43,13 @@ eq('sitemap pages', sm.pages.length, 2);
 eq('sitemap noReturn', checkHreflang(sm.pages).filter((i) => i.code === 'noReturn').map((i) => i.page), ['https://x.pl/']);
 eq('dup code', checkHreflang([{ url: '', alts: [{ code: 'pl', href: 'https://a/' }, { code: 'PL', href: 'https://b/' }] }]).some((i) => i.code === 'duplicate'), true);
 eq('none', checkHreflang(parseInput('<p>x</p>').pages)[0].code, 'none');
+// percent-encoding (RFC 9309 2.2.2)
+const pe = parseRobots('User-agent: *\nDisallow: /%7Euser/\nDisallow: /ścieżka/\nAllow: /%c5%9bcie%c5%bcka/publiczne');
+eq('tilde encoded vs plain', check(pe, 'X', '/~user/a').allowed, false);
+eq('polish plain vs encoded', check(pe, 'X', '/%C5%9Bcie%C5%BCka/x').allowed, false);
+eq('encoded allow longer wins', check(pe, 'X', '/ścieżka/publiczne').allowed, true);
+// unquoted attributes (minified HTML)
+const uq = parseInput('<link rel=alternate hreflang=en href=https://a.com/en/><link rel="alternate" hreflang=pl href=https://a.com/>', 'https://a.com/');
+eq('unquoted parsed', uq.pages[0].alts, [{ code: 'en', href: 'https://a.com/en/' }, { code: 'pl', href: 'https://a.com/' }]);
 console.log(`unit: ${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

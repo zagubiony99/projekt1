@@ -57,7 +57,7 @@ const c = t.contact;
         <div class="chips">
           {c.topics.map((tp) => (
             <label class="chip">
-              <input type="checkbox" name="topic" value={tp} checked={tp === topic} />
+              <input type="checkbox" name="topic" value={tp} checked={!!topic && tp.replace(/\u00a0/g, ' ') === topic.replace(/\u00a0/g, ' ')} />
               <span>{tp}</span>
             </label>
           ))}
