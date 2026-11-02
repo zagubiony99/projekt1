@@ -56,7 +56,7 @@ const t = getDict(Astro.props.lang);
   dd {
     font-size: clamp(3rem, 2rem + 3vw, 5rem);
     font-weight: 700;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.025em;
     line-height: 1;
     font-variant-numeric: tabular-nums;
   }
@@ -102,8 +102,8 @@ const t = getDict(Astro.props.lang);
     white-space: nowrap;
     font-size: clamp(1.375rem, 1.1rem + 1vw, 2rem);
     font-weight: 650;
-    letter-spacing: -0.035em;
-    color: #86868b;
+    letter-spacing: -0.018em;
+    color: var(--dark-muted);
     transition: color 0.3s;
   }
   .tools li:hover {

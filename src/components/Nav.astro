@@ -63,7 +63,7 @@ const here = Astro.url.pathname;
   .nav.is-dark {
     background: rgb(22 22 23 / 0.8);
     border-bottom-color: rgb(255 255 255 / 0.08);
-    color: #f5f5f7;
+    color: var(--on-dark);
   }
   .bar {
     display: flex;
@@ -75,7 +75,7 @@ const here = Astro.url.pathname;
   .logo {
     font-size: 1.3125rem;
     font-weight: 600;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
     white-space: nowrap;
   }
   .end {
@@ -87,7 +87,7 @@ const here = Astro.url.pathname;
     display: flex;
     gap: 24px;
     font-size: 0.75rem;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.005em;
   }
   .links a {
     opacity: 0.8;
@@ -109,11 +109,19 @@ const here = Astro.url.pathname;
     background: var(--blue);
     color: #fff;
     font-size: 0.75rem;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.005em;
     white-space: nowrap;
   }
   .cta:hover {
     background: var(--blue-hover);
+  }
+  /* over dark sections the black pill would vanish: invert it */
+  .nav.is-dark .cta {
+    background: var(--on-dark);
+    color: var(--ink);
+  }
+  .nav.is-dark .cta:hover {
+    background: #fff;
   }
   .burger {
     display: none;
@@ -153,7 +161,7 @@ const here = Astro.url.pathname;
     padding: 8px 0;
     font-size: 1.75rem;
     font-weight: 600;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.015em;
   }
   .sheet__in .sw {
     margin-top: 16px;

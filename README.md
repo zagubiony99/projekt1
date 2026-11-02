@@ -65,7 +65,8 @@ python3 scripts/cms/check.py          # sprawdza, że zapis w CMS niczego nie sk
 | Serwer MCP (narzędzia dla ChatGPT i Claude) | `functions/mcp.ts`, dane: `src/pages/mcp-data.json.ts` |
 | Szablony: „O mnie”, poradnik, lista poradników, narzędzia | `src/components/AboutPage.astro`, `GuidePage.astro`, `GuidesIndex.astro`, `RobotsTool.astro`, `RobotsGen.astro`, `HreflangTool.astro`, `McpServerPage.astro` |
 | Szablon podstrony usługi | `src/components/ServicePage.astro` |
-| Kolory (biel, #f5f5f7, czerń, niebieski + własny gradient: zmienne `--a1`–`--a4`), font (SF Pro na Apple, Inter Tight gdzie indziej), przyciski | `src/styles/global.css` (zmienne w `:root`) |
+| Kolory (biel, kremowe tło `--gray`, prawie czarny tekst, czarne przyciski, kobaltowe linki + własny gradient: zmienne `--a1`–`--a4`), font Inter Tight, zaokrąglenia, strzałki sliderów | `src/styles/global.css` (zmienne w `:root`) |
+| Slidery (usługi, poradniki na stronie głównej): strzałki, przeciąganie myszką, pasek postępu | `[data-slider]` w `src/scripts/main.ts`, `Services.astro`, `GuideSlider.astro` |
 | Sekcje strony | `src/components/*.astro` |
 | Interakcje (tekst zapalający się przy scrollu, scena z kartą botów, liczby odliczające w górę, formularz) | `src/scripts/main.ts` |
 | Grafika do udostępniania strony głównej (OG) | `public/og-pl.png`, `public/og-en.png` |

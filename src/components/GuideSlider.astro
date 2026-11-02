@@ -1,0 +1,171 @@
+---
+// Homepage slider: the free tools first, then every guide, on soft tinted cards.
+// Arrows, drag and the progress bar come from the [data-slider] script in main.ts.
+import { getDict, type Lang } from '../i18n';
+import { guides, robotsTool, robotsGen, hreflangTool, mcpServer } from '../data/pages';
+import { pageRoutes } from '../data/routes';
+interface Props { lang: Lang; title: string; lead: string; eyebrow: string }
+const { lang, title, lead, eyebrow } = Astro.props;
+const t = getDict(lang);
+const u = t.guidesUi;
+const tools = [
+  { href: pageRoutes.mcpServer[lang], title: mcpServer[lang].title, d: mcpServer[lang].metaDescription },
+  { href: pageRoutes.robotsTool[lang], title: robotsTool[lang].title, d: robotsTool[lang].metaDescription },
+  { href: pageRoutes.robotsGen[lang], title: robotsGen[lang].title, d: robotsGen[lang].metaDescription },
+  { href: pageRoutes.hreflangTool[lang], title: hreflangTool[lang].title, d: hreflangTool[lang].metaDescription },
+];
+const tints = ['t1', 't2', 't3', 't4'];
+---
+
+<div class="gs" data-slider>
+  <div class="wrap wrap--wide">
+    <header class="shead">
+      <div>
+        <p class="eyebrow" data-reveal>{eyebrow}</p>
+        <h2 class="h2" id="hg-h" data-reveal>{title}</h2>
+        <p class="lead" data-reveal style="--d:1">{lead}</p>
+      </div>
+      <div class="arrows" data-reveal>
+        <button type="button" class="arw" data-prev aria-controls="gs-track" aria-label={u.prev}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+        </button>
+        <button type="button" class="arw" data-next aria-controls="gs-track" aria-label={u.next}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+        </button>
+      </div>
+    </header>
+  </div>
+  <ul class="track" id="gs-track" data-slides>
+    {tools.map((x, i) => (
+      <li class:list={[i === 0 ? 'tool' : tints[i % tints.length], 'is-tool']}>
+        <a href={x.href}>
+          <span class="kind">{u.toolEyebrow}</span>
+          <b>{x.title}</b>
+          <span class="d">{x.d}</span>
+          <span class="more">{u.toolOpen}</span>
+        </a>
+      </li>
+    ))}
+    {guides.map((g, i) => (
+      <li class={tints[(i + tools.length) % tints.length]}>
+        <a href={g[lang].path}>
+          <span class="kind">{g[lang].minutes} {u.readTime}</span>
+          <b>{g[lang].title}</b>
+          <span class="d">{g[lang].metaDescription}</span>
+          <span class="more">{u.read}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+  <div class="wrap wrap--wide"><div class="bar" aria-hidden="true"><i data-sprog></i></div></div>
+</div>
+
+<style>
+  .shead {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px 40px;
+    margin-bottom: clamp(28px, 4vw, 48px);
+  }
+  .shead > div:first-child {
+    display: grid;
+    gap: 10px;
+    max-width: 760px;
+  }
+  .track {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: max(var(--gutter), calc((100vw - var(--max-wide)) / 2));
+    padding: 4px max(var(--gutter), calc((100vw - var(--max-wide)) / 2)) 24px;
+    scrollbar-width: none;
+  }
+  .track::-webkit-scrollbar { display: none; }
+  .track > li {
+    flex: none;
+    width: min(320px, 78vw);
+    scroll-snap-align: start;
+  }
+  .track a {
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 12px;
+    height: 100%;
+    min-height: 340px;
+    padding: 28px;
+    border-radius: var(--r-lg);
+    transition: transform 0.5s var(--ease-out);
+  }
+  .track a:hover {
+    transform: translateY(-4px);
+  }
+  /* soft tints of the site's own accent colours */
+  .t1 a { background: color-mix(in srgb, var(--a1) 10%, white); }
+  .t2 a { background: color-mix(in srgb, var(--a2) 11%, white); }
+  .t3 a { background: color-mix(in srgb, var(--a3) 11%, white); }
+  .t4 a { background: color-mix(in srgb, var(--a4) 11%, white); }
+  .tool a {
+    background: var(--dark);
+    background-image: radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--a2) 30%, transparent), transparent 60%);
+    color: #fff;
+  }
+  .kind {
+    color: var(--muted);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+  .tool .kind {
+    color: color-mix(in srgb, var(--a3) 70%, white);
+  }
+  /* tool cards on a tint get a small label chip so they read as tools, not articles */
+  .is-tool:not(.tool) .kind {
+    width: fit-content;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: #fff;
+  }
+  b {
+    font-size: 1.375rem;
+    font-weight: 650;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+  }
+  .d {
+    color: var(--ink-2);
+    font-size: 0.9375rem;
+  }
+  .tool .d {
+    color: var(--dark-muted);
+  }
+  .more {
+    font-size: 0.9375rem;
+  }
+  .tool .more {
+    color: var(--link-dark);
+  }
+  .bar {
+    width: min(220px, 40vw);
+    height: 4px;
+    margin: 8px auto 0;
+    border-radius: 4px;
+    background: var(--gray-2);
+    overflow: hidden;
+  }
+  .bar i {
+    display: block;
+    height: 100%;
+    border-radius: 4px;
+    background: var(--ink);
+    transform-origin: 0 50%;
+    transform: scaleX(var(--hp, 0.1));
+    transition: transform 0.2s;
+  }
+  @media (max-width: 720px) {
+    .shead { display: grid; }
+    .arrows { display: none; }
+  }
+</style>

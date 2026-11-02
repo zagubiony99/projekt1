@@ -34,7 +34,7 @@ export async function renderOg({ eyebrow, title, name, site }: { eyebrow: string
       backgroundColor: '#ffffff',
       backgroundImage: `radial-gradient(60% 70% at 100% 0%, ${A[1]}22, transparent 70%), radial-gradient(55% 60% at 0% 100%, ${A[3]}1f, transparent 70%)`,
       fontFamily: 'Inter Tight, Inter Tight Ext',
-      color: '#1d1d1f',
+      color: '#121212',
     },
     // content sits in an absolutely placed box: satori miscounts root padding with space-between
     h('div', { position: 'absolute', top: 64, left: 72, right: 72, bottom: 60, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }, [
@@ -43,11 +43,11 @@ export async function renderOg({ eyebrow, title, name, site }: { eyebrow: string
         h('div', { fontSize: 28, fontWeight: 700, letterSpacing: -0.6 }, name),
       ]),
       h('div', { display: 'flex', flexDirection: 'column', gap: 22 }, [
-        h('div', { fontSize: 28, fontWeight: 500, color: '#6e6e73' }, eyebrow),
+        h('div', { fontSize: 28, fontWeight: 500, color: '#6b665f' }, eyebrow),
         h('div', { fontSize: size, fontWeight: 700, lineHeight: 1.05, letterSpacing: size * -0.035, maxWidth: 1000 }, title),
       ]),
       h('div', { display: 'flex', alignItems: 'center', justifyContent: 'space-between' }, [
-        h('div', { fontSize: 24, fontWeight: 500, color: '#6e6e73' }, site),
+        h('div', { fontSize: 24, fontWeight: 500, color: '#6b665f' }, site),
         h('div', { display: 'flex', width: 280, height: 8, borderRadius: 8, backgroundImage: `linear-gradient(90deg, ${A.join(', ')})` }),
       ]),
     ]),

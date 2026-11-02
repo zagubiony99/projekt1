@@ -294,7 +294,7 @@ const extraLd = [
     max-width: 16ch;
     font-size: clamp(2.75rem, 1.4rem + 5vw, 5.75rem);
     line-height: 1.02;
-    letter-spacing: -0.045em;
+    letter-spacing: -0.022em;
     text-wrap: balance;
   }
   .top .lead {
@@ -375,7 +375,7 @@ const extraLd = [
     width: 24px;
     height: 24px;
     fill: none;
-    stroke: #ff9f0a;
+    stroke: var(--warn);
     stroke-width: 2;
     stroke-linecap: round;
   }
@@ -387,7 +387,7 @@ const extraLd = [
     margin-top: clamp(40px, 6vw, 64px);
     font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.75rem);
     font-weight: 600;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.013em;
     text-align: center;
   }
   .bridge .more {
@@ -422,7 +422,7 @@ const extraLd = [
     position: absolute;
     inset: 0;
     z-index: -1;
-    background: radial-gradient(380px circle at var(--mx) var(--my), rgb(0 113 227 / 0.08), transparent 60%);
+    background: radial-gradient(380px circle at var(--mx) var(--my), color-mix(in srgb, var(--a1) 8%, transparent), transparent 60%);
     opacity: 0;
     transition: opacity 0.4s;
   }
@@ -449,7 +449,7 @@ const extraLd = [
   .gets h3 {
     font-size: 1.375rem;
     font-weight: 650;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.015em;
     line-height: 1.15;
   }
   .gets p {
@@ -483,7 +483,7 @@ const extraLd = [
   .num {
     font-size: 3.25rem;
     font-weight: 700;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.025em;
     line-height: 1;
     background: var(--ai);
     -webkit-background-clip: text;
@@ -502,7 +502,7 @@ const extraLd = [
   .steps h3 {
     font-size: 1.375rem;
     font-weight: 650;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.015em;
   }
   .steps p {
     color: var(--muted);
@@ -522,7 +522,7 @@ const extraLd = [
   .fit-h {
     font-size: 1.5rem;
     font-weight: 650;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.015em;
     margin-bottom: 18px;
   }
   .fit li {
@@ -544,7 +544,7 @@ const extraLd = [
     font-weight: 800;
     line-height: 1;
   }
-  .yes li::before { content: '✓'; background: #30d158; color: #fff; }
+  .yes li::before { content: '✓'; background: var(--ok); color: #fff; }
   .no li::before { content: '–'; background: var(--gray-2); color: var(--ink-2); }
   .no { color: var(--ink-2); }
 
@@ -562,7 +562,7 @@ const extraLd = [
     max-width: 30ch;
     font-size: clamp(1.75rem, 1.2rem + 2.2vw, 3rem);
     font-weight: 650;
-    letter-spacing: -0.035em;
+    letter-spacing: -0.018em;
     line-height: 1.15;
     text-wrap: balance;
   }
@@ -581,7 +581,7 @@ const extraLd = [
   .mini dd {
     font-size: clamp(2.25rem, 1.6rem + 2vw, 3.5rem);
     font-weight: 700;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.025em;
     line-height: 1;
     white-space: nowrap;
   }
@@ -623,7 +623,7 @@ const extraLd = [
     width: fit-content;
     font-size: 1.125rem;
     font-weight: 650;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.013em;
   }
   .ocards span:not(.more) {
     color: var(--muted);

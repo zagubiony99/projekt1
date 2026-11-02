@@ -426,6 +426,7 @@
     "title": "To, co sprawdzam u klientów. Rozpisane krok po kroku.",
     "lead": "Checklisty i wyjaśnienia z technical SEO i AI search. Bez lania wody, z przykładami, które możesz od razu sprawdzić na swojej stronie.",
     "toolEyebrow": "Darmowe narzędzie",
+    "toolOpen": "Otwórz narzędzie",
     "toc": "Spis treści",
     "updated": "Aktualizacja",
     "readTime": "min czytania",
@@ -435,7 +436,9 @@
     "others": "Inne poradniki",
     "faqTitle": "Najczęstsze pytania",
     "serviceTitle": "Wolisz, żebym zrobił to za Ciebie?",
-    "serviceCta": "Zobacz usługę"
+    "serviceCta": "Zobacz usługę",
+    "prev": "Poprzednie",
+    "next": "Następne"
   },
   "nav": {
     "services": "Usługi",

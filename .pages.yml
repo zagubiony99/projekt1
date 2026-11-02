@@ -590,6 +590,9 @@ content:
       - name: toolEyebrow
         label: Etykieta karty narzędzia
         type: string
+      - name: toolOpen
+        label: Link „otwórz narzędzie” na karcie
+        type: string
       - name: toc
         label: Spis treści
         type: string
@@ -619,6 +622,12 @@ content:
         type: string
       - name: serviceCta
         label: 'Ramka usługi: przycisk'
+        type: string
+      - name: prev
+        label: 'Strzałka slidera: poprzednie (dla czytników ekranu)'
+        type: string
+      - name: next
+        label: 'Strzałka slidera: następne (dla czytników ekranu)'
         type: string
     - name: nav
       label: Menu
@@ -1243,6 +1252,9 @@ content:
       - name: toolEyebrow
         label: Etykieta karty narzędzia
         type: string
+      - name: toolOpen
+        label: Link „otwórz narzędzie” na karcie
+        type: string
       - name: toc
         label: Spis treści
         type: string
@@ -1272,6 +1284,12 @@ content:
         type: string
       - name: serviceCta
         label: 'Ramka usługi: przycisk'
+        type: string
+      - name: prev
+        label: 'Strzałka slidera: poprzednie (dla czytników ekranu)'
+        type: string
+      - name: next
+        label: 'Strzałka slidera: następne (dla czytników ekranu)'
         type: string
     - name: nav
       label: Menu

@@ -426,6 +426,7 @@
     "title": "What I check for clients. Written up step by step.",
     "lead": "Checklists and explanations from technical SEO and AI search. No fluff, with examples you can check on your own site right away.",
     "toolEyebrow": "Free tool",
+    "toolOpen": "Open the tool",
     "toc": "Contents",
     "updated": "Updated",
     "readTime": "min read",
@@ -435,7 +436,9 @@
     "others": "More guides",
     "faqTitle": "Frequently asked questions",
     "serviceTitle": "Would you rather I did it for you?",
-    "serviceCta": "See the service"
+    "serviceCta": "See the service",
+    "prev": "Previous",
+    "next": "Next"
   },
   "nav": {
     "services": "Services",

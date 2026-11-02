@@ -225,6 +225,7 @@ COPY = [
         s('title', 'Nagłówek listy poradników'),
         t('lead', 'Tekst pod nagłówkiem'),
         s('toolEyebrow', 'Etykieta karty narzędzia'),
+        s('toolOpen', 'Link „otwórz narzędzie” na karcie'),
         s('toc', 'Spis treści'),
         s('updated', 'Aktualizacja'),
         s('readTime', 'Min czytania'),
@@ -235,6 +236,8 @@ COPY = [
         s('faqTitle', 'Nagłówek FAQ'),
         s('serviceTitle', 'Ramka usługi: nagłówek'),
         s('serviceCta', 'Ramka usługi: przycisk'),
+        s('prev', 'Strzałka slidera: poprzednie (dla czytników ekranu)'),
+        s('next', 'Strzałka slidera: następne (dla czytników ekranu)'),
     ]),
     obj('nav', 'Menu', [
         s('services', 'Usługi'), s('about', 'O mnie'), s('guides', 'Poradniki'), s('experience', 'Doświadczenie'), s('process', 'Proces'), s('faq', 'FAQ'),
