@@ -341,6 +341,10 @@
         "a": "Yes. I usually work alongside the client’s dev teams and agencies: writing tickets, reviewing changes and answering technical questions."
       },
       {
+        "q": "Can you bring in additional specialists?",
+        "a": "Yes. I work with, among others, developers and people who have been running successful Google Ads campaigns for years. If the project needs it, I recommend people I trust or bring them into the team, while I stay responsible for the whole project."
+      },
+      {
         "q": "Will you sign an NDA?",
         "a": "Yes. For projects that need access to data, logs and code, signing an NDA before we start is standard."
       },
