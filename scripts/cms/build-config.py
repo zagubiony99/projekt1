@@ -470,6 +470,7 @@ SERVICE_LOCAL = SERVICE + [
     obj('showcase', 'Mój system (dowód)', [
         s('eyebrow', 'Nadtytuł'), s('title', 'Nagłówek'), t('lead', 'Tekst pod nagłówkiem'),
         items('stats', 'Liczby', [s('v', 'Wartość'), s('k', 'Opis')]),
+        obj('feature', 'Główny temat (duży panel)', [s('t', 'Nagłówek'), t('lead', 'Wstęp'), {'name': 'items', 'label': 'Punkty', 'type': 'text', 'list': True}]),
         items('groups', 'Rozwiązania', [s('t', 'Nazwa'), t('d', 'Opis')]),
         s('note', 'Dopisek (np. stan na dzień)'),
     ]),

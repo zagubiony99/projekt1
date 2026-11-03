@@ -29,7 +29,7 @@ export type ServiceCopy = {
   // optional: own contact heading for services outside SEO (e.g. Home Assistant)
   contact?: { title: string; lead: string; next: { t: string; d: string }[] };
   // optional: the author's own system as proof (Home Assistant)
-  showcase?: { eyebrow: string; title: string; lead: string; stats: { v: string; k: string }[]; groups: { t: string; d: string }[]; note: string };
+  showcase?: { eyebrow: string; title: string; lead: string; stats: { v: string; k: string }[]; feature?: { t: string; lead: string; items: string[] }; groups: { t: string; d: string }[]; note: string };
   // optional: launch offer with prices
   offer?: { eyebrow: string; title: string; lead: string; wasLabel: string; items: { name: string; price: string; was: string; unit: string; d: string }[]; note: string; cta: string };
 };

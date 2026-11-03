@@ -21,7 +21,7 @@
       "Home Assistant działa, ale dashboard to długa lista przełączników, z której korzystasz tylko Ty.",
       "Automatyzacje raz działają, a raz nie, i nie wiesz dlaczego.",
       "Po aktualizacji coś przestało działać, a kopii zapasowej nie ma.",
-      "Chcesz widzieć zużycie prądu i produkcję z fotowoltaiki w jednym miejscu.",
+      "Płacisz za ogrzewanie, gdy nikogo nie ma w domu albo okno jest otwarte.",
       "Nie wiesz, które urządzenia kupić, żeby działały lokalnie, bez chmury producenta."
     ],
     "getTitle": "W czym pomagam",
@@ -32,7 +32,7 @@
       },
       {
         "t": "Instalacja i porządki",
-        "d": "Home Assistant na Home Assistant Green, Raspberry Pi albo małym serwerze, z kopiami zapasowymi i bezpiecznym dostępem spoza domu. Albo porządek w systemie, który już masz."
+        "d": "Instalacja na Home Assistant Green, Raspberry Pi albo małym serwerze, z kopiami zapasowymi i bezpiecznym dostępem spoza domu. Albo porządek w systemie, który już masz."
       },
       {
         "t": "Dashboardy",
@@ -43,8 +43,8 @@
         "d": "Światło, ogrzewanie, rolety, powiadomienia i scenariusze „wychodzę z domu”, które działają przewidywalnie i łatwo je zmienić."
       },
       {
-        "t": "Integracje i energia",
-        "d": "Zigbee, Matter i urządzenia Wi-Fi w jednym systemie. Panel energii z fotowoltaiką, magazynem energii i taryfą."
+        "t": "Ogrzewanie i energia",
+        "d": "Tryby i harmonogramy ogrzewania dla każdego pokoju oraz panel energii: gaz, prąd, fotowoltaika i taryfa. Widzisz koszty i wiesz, co je obniża."
       },
       {
         "t": "Montaż w Krakowie",
@@ -105,7 +105,7 @@
       },
       {
         "q": "Ile to kosztuje?",
-        "a": "Na start pierwsze 5 wdrożeń robię za pół ceny: konsultacja online za 100 zł za godzinę, wizyta w Krakowie za 200 zł za godzinę, a pakiet startowy od 600 zł. Dokładną wycenę dostaniesz po krótkiej, bezpłatnej rozmowie."
+        "a": "Na start pierwsze 5 wdrożeń robię za pół ceny: konsultacja online to 100 zł za godzinę, wizyta w Krakowie 200 zł za godzinę, a pakiet startowy od 600 zł. Dokładną wycenę dostaniesz po krótkiej, bezpłatnej rozmowie."
       }
     ],
     "showcase": {
@@ -130,14 +130,29 @@
           "k": "lamp Hue i WiZ"
         }
       ],
+      "feature": {
+        "t": "Ogrzewanie i koszty",
+        "lead": "Tym zajmuję się najwięcej. Ciepło ma być wtedy, kiedy trzeba, a rachunek ma być niższy.",
+        "items": [
+          "Kilka trybów: Harmonogram, Komfort, Eco i Wyjazd, z osobną temperaturą dla każdego pokoju, np. chłodniej w sypialni w nocy.",
+          "Piec sterowany lokalnie, bez chmury producenta, i głowice termostatyczne w każdym pokoju.",
+          "Wykrywanie otwartego okna po nagłym spadku temperatury: grzanie na chwilę się wyłącza.",
+          "Grzanie według prognozy: startuje wcześniej przy mrozie i przechodzi w Eco, gdy jest ciepło albo nikogo nie ma w domu.",
+          "Licznik gazu w m³ i zł, skalibrowany na prawdziwych fakturach: koszt ogrzewania widać na bieżąco, tak samo jak to, ile dała zmiana ustawień."
+        ]
+      },
       "groups": [
         {
-          "t": "Ogrzewanie",
-          "d": "Głowice w każdym pokoju, tryby Komfort, Eco i Wyjazd, wykrywanie otwartego okna i start grzania zależny od prognozy. Licznik gazu w m³ i zł, skalibrowany na fakturach."
+          "t": "Kamery z AI",
+          "d": "Frigate rozpoznaje osoby i auta na akceleracji GPU, a powiadomienie ze zdjęciem przychodzi na Telegram. Model językowy opisuje zdarzenie i ocenia, czy jest podejrzane."
         },
         {
-          "t": "Kamery z AI",
-          "d": "Frigate rozpoznaje osoby i auta, a powiadomienie ze zdjęciem przychodzi na Telegram. Model językowy opisuje zdarzenie i ocenia, czy jest podejrzane."
+          "t": "Rozpoznawanie twarzy",
+          "d": "Model uczę na własnych zdjęciach, żeby odróżniał domowników od obcych. Rozpoznawanie działa lokalnie, na domowym serwerze."
+        },
+        {
+          "t": "Przypomnienia",
+          "d": "Home Assistant sam przypomina o sprawach domowych na telefonie i Telegramie, np. o wyjęciu prania pół godziny po końcu cyklu."
         },
         {
           "t": "Światło i nastroje",
@@ -153,7 +168,7 @@
         },
         {
           "t": "AGD i powietrze",
-          "d": "Pralka daje znać, że skończyła, robot Roborock alarmuje, gdy utknie, a oczyszczacz sam rusza, gdy PM2.5 przekroczy normę."
+          "d": "Robot Roborock zgłasza, gdy utknie, a oczyszczacz powietrza sam się włącza, gdy PM2.5 w domu przekroczy normę."
         },
         {
           "t": "Informacje na co dzień",
@@ -164,12 +179,12 @@
           "d": "Docker na małym serwerze, dostęp spoza domu przez VPN (Tailscale) bez otwierania portów, kopie zapasowe co noc, UPS i blokowanie reklam w całej sieci."
         }
       ],
-      "note": "Stan na listopad 2026."
+      "note": "Stan na listopad 2026 r."
     },
     "offer": {
       "eyebrow": "Oferta na start",
       "title": "Pierwsze 5 wdrożeń za pół ceny.",
-      "lead": "Zaczynam pomagać innym z Home Assistant, więc pierwszym pięciu klientom daję 50% rabatu. W zamian proszę tylko o krótką opinię.",
+      "lead": "Zaczynam pomagać innym przy Home Assistant, więc pierwszym pięciu klientom daję 50% rabatu. W zamian proszę tylko o krótką opinię.",
       "wasLabel": "po promocji",
       "items": [
         {
@@ -238,7 +253,7 @@
       "Home Assistant runs, but the dashboard is a long list of switches only you use.",
       "Automations work sometimes and fail other times, and you don’t know why.",
       "An update broke something, and there is no backup.",
-      "You want to see power use and solar production in one place.",
+      "You pay for heating when nobody is home or a window is open.",
       "You don’t know which devices to buy so they work locally, without the maker’s cloud."
     ],
     "getTitle": "How I help",
@@ -260,8 +275,8 @@
         "d": "Lighting, heating, blinds, notifications and “leaving home” scenes that behave predictably and are easy to change."
       },
       {
-        "t": "Integrations and energy",
-        "d": "Zigbee, Matter and Wi-Fi devices in one system. An energy dashboard with solar, battery storage and your tariff."
+        "t": "Heating and energy",
+        "d": "Heating modes and schedules for every room, plus an energy dashboard: gas, electricity, solar and your tariff. You see the costs and know what brings them down."
       },
       {
         "t": "Installation in Kraków",
@@ -347,14 +362,29 @@
           "k": "Hue and WiZ lights"
         }
       ],
+      "feature": {
+        "t": "Heating and costs",
+        "lead": "This is where I spend most of my time. Warmth when you need it, and a lower bill.",
+        "items": [
+          "Several modes: Schedule, Comfort, Eco and Away, with a separate target for each room, e.g. cooler in the bedroom at night.",
+          "A boiler controlled locally, without the maker’s cloud, and smart radiator valves in every room.",
+          "Open-window detection from a sudden temperature drop: heating pauses for a while.",
+          "Forecast-based heating: it starts earlier when it is freezing and switches to Eco when it is warm or nobody is home.",
+          "A gas meter in m³ and PLN, calibrated against real bills: you see heating costs as they happen, and what each change of settings saved."
+        ]
+      },
       "groups": [
         {
-          "t": "Heating",
-          "d": "Smart valves in every room, Comfort, Eco and Away modes, open-window detection and heating that starts earlier based on the forecast. A gas meter in m³ and PLN, calibrated against real bills."
+          "t": "AI cameras",
+          "d": "Frigate recognises people and cars with GPU acceleration, and a notification with a snapshot arrives on Telegram. A language model describes the event and judges whether it looks suspicious."
         },
         {
-          "t": "AI cameras",
-          "d": "Frigate recognises people and cars, and a notification with a snapshot arrives on Telegram. A language model describes the event and judges whether it looks suspicious."
+          "t": "Face recognition",
+          "d": "I train the model on my own photos so it can tell household members from strangers. Recognition runs locally, on the home server."
+        },
+        {
+          "t": "Reminders",
+          "d": "Home Assistant reminds you about household tasks on your phone and Telegram, e.g. to take the washing out half an hour after the cycle ends."
         },
         {
           "t": "Lighting and moods",
@@ -370,7 +400,7 @@
         },
         {
           "t": "Appliances and air",
-          "d": "The washing machine says when it is done, the Roborock vacuum alerts when it gets stuck, and the air purifier starts by itself when PM2.5 goes over the limit."
+          "d": "The Roborock vacuum reports when it gets stuck, and the air purifier switches itself on when indoor PM2.5 goes over the limit."
         },
         {
           "t": "Everyday information",

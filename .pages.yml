@@ -3560,6 +3560,20 @@ content:
             label: Opis
             type: string
           list: true
+        - name: feature
+          label: Główny temat (duży panel)
+          type: object
+          fields:
+          - name: t
+            label: Nagłówek
+            type: string
+          - name: lead
+            label: Wstęp
+            type: text
+          - name: items
+            label: Punkty
+            type: text
+            list: true
         - name: groups
           label: Rozwiązania
           type: object
@@ -3761,6 +3775,20 @@ content:
             label: Opis
             type: string
           list: true
+        - name: feature
+          label: Główny temat (duży panel)
+          type: object
+          fields:
+          - name: t
+            label: Nagłówek
+            type: string
+          - name: lead
+            label: Wstęp
+            type: text
+          - name: items
+            label: Punkty
+            type: text
+            list: true
         - name: groups
           label: Rozwiązania
           type: object
