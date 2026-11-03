@@ -177,7 +177,26 @@
   "services": {
     "label": "Usługi",
     "title": "W czym pomagam",
-    "intro": "Technical SEO to fundament. Jeśli Google i boty AI nie potrafią poprawnie odczytać Twojej strony, nawet najlepsze treści i linki nie przyniosą efektów."
+    "intro": "Technical SEO to fundament. Jeśli Google i boty AI nie potrafią poprawnie odczytać Twojej strony, nawet najlepsze treści i linki nie przyniosą efektów.",
+    "commonLabel": "Najczęściej piszą do mnie klienci, którzy mają problem z:",
+    "common": [
+      {
+        "t": "widocznością w Google i technicznym SEO",
+        "key": "audit"
+      },
+      {
+        "t": "treściami, które nie przyciągają ruchu",
+        "key": "content"
+      },
+      {
+        "t": "spadkami po aktualizacjach Google",
+        "key": "audit"
+      },
+      {
+        "t": "ruchem po migracji strony",
+        "key": "migration"
+      }
+    ]
   },
   "experience": {
     "label": "Doświadczenie",

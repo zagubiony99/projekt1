@@ -59,6 +59,17 @@ const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-
           <p class="eyebrow" data-reveal>{s.label}</p>
           <h2 class="h2" id="uslugi-h" data-reveal>{s.title}</h2>
           <p class="lead" data-reveal style="--d:1">{s.intro}</p>
+          {s.common?.length > 0 && (
+            <div class="common" data-reveal style="--d:2">
+              <p>{s.commonLabel}</p>
+              <ul>
+                {s.common.map((c) => {
+                  const svc = pages.find((x) => x.key === c.key);
+                  return <li>{svc ? <a href={`${ui[lang].base}${svc[lang].slug}/`}>{c.t}</a> : <span>{c.t}</span>}</li>;
+                })}
+              </ul>
+            </div>
+          )}
         </div>
         <div class="arrows" data-reveal>
           <button type="button" class="arw" data-prev aria-controls="svc-track" aria-label={pl ? 'Poprzednie usługi' : 'Previous services'}>
@@ -178,6 +189,37 @@ const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-
     display: grid;
     gap: 10px;
     max-width: 760px;
+  }
+  /* what clients usually come with: pills linking to the matching service */
+  .common {
+    display: grid;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .common p {
+    color: var(--ink-2);
+    font-weight: 600;
+  }
+  .common ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .common a,
+  .common span {
+    display: inline-block;
+    padding: 8px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--white);
+    color: var(--ink);
+    font-size: 0.9375rem;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .common a:hover {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: #fff;
   }
   .svc .h2 {
     font-size: clamp(2.25rem, 1.5rem + 2.6vw, 3.75rem);

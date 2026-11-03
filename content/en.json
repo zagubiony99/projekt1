@@ -177,7 +177,26 @@
   "services": {
     "label": "Services",
     "title": "How I can help",
-    "intro": "Technical SEO is the foundation. If search engines and AI crawlers can’t fetch, render and understand a page, content and links won’t perform the way they should."
+    "intro": "Technical SEO is the foundation. If search engines and AI crawlers can’t fetch, render and understand a page, content and links won’t perform the way they should.",
+    "commonLabel": "Clients most often come to me with:",
+    "common": [
+      {
+        "t": "visibility and technical SEO problems",
+        "key": "audit"
+      },
+      {
+        "t": "content that doesn’t bring traffic",
+        "key": "content"
+      },
+      {
+        "t": "drops after Google updates",
+        "key": "audit"
+      },
+      {
+        "t": "traffic problems after a site migration",
+        "key": "migration"
+      }
+    ]
   },
   "experience": {
     "label": "Experience",

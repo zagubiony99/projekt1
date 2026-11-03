@@ -137,6 +137,12 @@ COPY = [
         s('label', 'Nadtytuł'),
         s('title', 'Nagłówek'),
         t('intro', 'Wstęp'),
+        s('commonLabel', 'Z czym przychodzą klienci: zdanie wstępu'),
+        items('common', 'Z czym przychodzą klienci', [
+            s('t', 'Problem'),
+            {'name': 'key', 'label': 'Usługa, do której prowadzi link', 'type': 'select',
+             'options': {'values': ['audit', 'ai', 'mcp', 'schema', 'webops', 'content', 'large', 'intl', 'migration', 'ecom', 'ha']}},
+        ]),
     ], 'Treść kart usług edytujesz w sekcji „Usługi”.'),
     obj('experience', 'Doświadczenie', [
         s('label', 'Nadtytuł'),

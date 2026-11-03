@@ -299,6 +299,33 @@ content:
       - name: intro
         label: Wstęp
         type: text
+      - name: commonLabel
+        label: 'Z czym przychodzą klienci: zdanie wstępu'
+        type: string
+      - name: common
+        label: Z czym przychodzą klienci
+        type: object
+        fields:
+        - name: t
+          label: Problem
+          type: string
+        - name: key
+          label: Usługa, do której prowadzi link
+          type: select
+          options:
+            values:
+            - audit
+            - ai
+            - mcp
+            - schema
+            - webops
+            - content
+            - large
+            - intl
+            - migration
+            - ecom
+            - ha
+        list: true
       description: Treść kart usług edytujesz w sekcji „Usługi”.
     - name: experience
       label: Doświadczenie
@@ -961,6 +988,33 @@ content:
       - name: intro
         label: Wstęp
         type: text
+      - name: commonLabel
+        label: 'Z czym przychodzą klienci: zdanie wstępu'
+        type: string
+      - name: common
+        label: Z czym przychodzą klienci
+        type: object
+        fields:
+        - name: t
+          label: Problem
+          type: string
+        - name: key
+          label: Usługa, do której prowadzi link
+          type: select
+          options:
+            values:
+            - audit
+            - ai
+            - mcp
+            - schema
+            - webops
+            - content
+            - large
+            - intl
+            - migration
+            - ecom
+            - ha
+        list: true
       description: Treść kart usług edytujesz w sekcji „Usługi”.
     - name: experience
       label: Doświadczenie
