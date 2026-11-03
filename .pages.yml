@@ -3536,6 +3536,87 @@ content:
           label: Odpowiedź
           type: text
         list: true
+      - name: showcase
+        label: Mój system (dowód)
+        type: object
+        fields:
+        - name: eyebrow
+          label: Nadtytuł
+          type: string
+        - name: title
+          label: Nagłówek
+          type: string
+        - name: lead
+          label: Tekst pod nagłówkiem
+          type: text
+        - name: stats
+          label: Liczby
+          type: object
+          fields:
+          - name: v
+            label: Wartość
+            type: string
+          - name: k
+            label: Opis
+            type: string
+          list: true
+        - name: groups
+          label: Rozwiązania
+          type: object
+          fields:
+          - name: t
+            label: Nazwa
+            type: string
+          - name: d
+            label: Opis
+            type: text
+          list: true
+        - name: note
+          label: Dopisek (np. stan na dzień)
+          type: string
+      - name: offer
+        label: Oferta i ceny
+        type: object
+        fields:
+        - name: eyebrow
+          label: Etykieta (np. Oferta na start)
+          type: string
+        - name: title
+          label: Nagłówek
+          type: string
+        - name: lead
+          label: Tekst pod nagłówkiem
+          type: text
+        - name: wasLabel
+          label: Napis przed ceną po promocji (np. po promocji)
+          type: string
+        - name: items
+          label: Pozycje
+          type: object
+          fields:
+          - name: name
+            label: Nazwa
+            type: string
+          - name: price
+            label: Cena
+            type: string
+          - name: was
+            label: Cena po promocji
+            type: string
+          - name: unit
+            label: Jednostka
+            type: string
+          - name: d
+            label: Opis
+            type: text
+          list: true
+        - name: note
+          label: Dopisek pod cenami
+          type: text
+        - name: cta
+          label: Przycisk
+          type: string
+        description: Ceny trafiają też do danych dla Google. Zmieniaj je w obu językach.
       - name: contact
         label: Sekcja kontaktu
         type: object
@@ -3656,6 +3737,87 @@ content:
           label: Odpowiedź
           type: text
         list: true
+      - name: showcase
+        label: Mój system (dowód)
+        type: object
+        fields:
+        - name: eyebrow
+          label: Nadtytuł
+          type: string
+        - name: title
+          label: Nagłówek
+          type: string
+        - name: lead
+          label: Tekst pod nagłówkiem
+          type: text
+        - name: stats
+          label: Liczby
+          type: object
+          fields:
+          - name: v
+            label: Wartość
+            type: string
+          - name: k
+            label: Opis
+            type: string
+          list: true
+        - name: groups
+          label: Rozwiązania
+          type: object
+          fields:
+          - name: t
+            label: Nazwa
+            type: string
+          - name: d
+            label: Opis
+            type: text
+          list: true
+        - name: note
+          label: Dopisek (np. stan na dzień)
+          type: string
+      - name: offer
+        label: Oferta i ceny
+        type: object
+        fields:
+        - name: eyebrow
+          label: Etykieta (np. Oferta na start)
+          type: string
+        - name: title
+          label: Nagłówek
+          type: string
+        - name: lead
+          label: Tekst pod nagłówkiem
+          type: text
+        - name: wasLabel
+          label: Napis przed ceną po promocji (np. po promocji)
+          type: string
+        - name: items
+          label: Pozycje
+          type: object
+          fields:
+          - name: name
+            label: Nazwa
+            type: string
+          - name: price
+            label: Cena
+            type: string
+          - name: was
+            label: Cena po promocji
+            type: string
+          - name: unit
+            label: Jednostka
+            type: string
+          - name: d
+            label: Opis
+            type: text
+          list: true
+        - name: note
+          label: Dopisek pod cenami
+          type: text
+        - name: cta
+          label: Przycisk
+          type: string
+        description: Ceny trafiają też do danych dla Google. Zmieniaj je w obu językach.
       - name: contact
         label: Sekcja kontaktu
         type: object

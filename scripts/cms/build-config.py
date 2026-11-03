@@ -467,6 +467,18 @@ MCPS = [
 
 # services outside SEO get their own contact heading (shown instead of the SEO one)
 SERVICE_LOCAL = SERVICE + [
+    obj('showcase', 'Mój system (dowód)', [
+        s('eyebrow', 'Nadtytuł'), s('title', 'Nagłówek'), t('lead', 'Tekst pod nagłówkiem'),
+        items('stats', 'Liczby', [s('v', 'Wartość'), s('k', 'Opis')]),
+        items('groups', 'Rozwiązania', [s('t', 'Nazwa'), t('d', 'Opis')]),
+        s('note', 'Dopisek (np. stan na dzień)'),
+    ]),
+    obj('offer', 'Oferta i ceny', [
+        s('eyebrow', 'Etykieta (np. Oferta na start)'), s('title', 'Nagłówek'), t('lead', 'Tekst pod nagłówkiem'),
+        s('wasLabel', 'Napis przed ceną po promocji (np. po promocji)'),
+        items('items', 'Pozycje', [s('name', 'Nazwa'), s('price', 'Cena'), s('was', 'Cena po promocji'), s('unit', 'Jednostka'), t('d', 'Opis')]),
+        t('note', 'Dopisek pod cenami'), s('cta', 'Przycisk'),
+    ], 'Ceny trafiają też do danych dla Google. Zmieniaj je w obu językach.'),
     obj('contact', 'Sekcja kontaktu', [
         s('title', 'Nagłówek'), t('lead', 'Tekst pod nagłówkiem'),
         items('next', 'Co się stanie, gdy napiszesz', [s('t', 'Krok'), t('d', 'Opis')]),

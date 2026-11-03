@@ -85,7 +85,7 @@
       "Osoby, które szukają gotowego systemu jednego producenta, bez żadnej konfiguracji",
       "Projekty całej instalacji elektrycznej w budowanym domu"
     ],
-    "proof": "Na co dzień porządkuję procesy, automatyzacje i raporty w dużych firmach, obecnie jako Manager SEO & AI Search Operations w Philip Morris International. W Home Assistant stosuję to samo podejście: najpierw plan, potem porządna konfiguracja i czytelne dane.",
+    "proof": "Home Assistant to moja pasja. Od podstaw zbudowałem własny system: 727 encji, 32 integracje i 33 automatyzacje na małym serwerze w Dockerze. Na co dzień porządkuję procesy i automatyzacje w dużych firmach, obecnie w Philip Morris International.",
     "faq": [
       {
         "q": "Czy pomagasz zdalnie?",
@@ -105,9 +105,98 @@
       },
       {
         "q": "Ile to kosztuje?",
-        "a": "Zależy od zakresu: inaczej wycenia się jedną konsultację, a inaczej pełne wdrożenie z montażem. Wycenę dostaniesz po krótkiej, bezpłatnej rozmowie."
+        "a": "Na start pierwsze 5 wdrożeń robię za pół ceny: konsultacja online za 100 zł za godzinę, wizyta w Krakowie za 200 zł za godzinę, a pakiet startowy od 600 zł. Dokładną wycenę dostaniesz po krótkiej, bezpłatnej rozmowie."
       }
     ],
+    "showcase": {
+      "eyebrow": "Mój system",
+      "title": "Tak działa mój dom.",
+      "lead": "Od podstaw zbudowałem własny system na Home Assistant. Działa na małym serwerze w domu, bez abonamentów i bez oddawania danych do chmury, jeśli nie trzeba. Te same rozwiązania mogę ustawić u Ciebie.",
+      "stats": [
+        {
+          "v": "727",
+          "k": "encji w Home Assistant"
+        },
+        {
+          "v": "32",
+          "k": "integracje"
+        },
+        {
+          "v": "33",
+          "k": "automatyzacje"
+        },
+        {
+          "v": "16+",
+          "k": "lamp Hue i WiZ"
+        }
+      ],
+      "groups": [
+        {
+          "t": "Ogrzewanie",
+          "d": "Głowice w każdym pokoju, tryby Komfort, Eco i Wyjazd, wykrywanie otwartego okna i start grzania zależny od prognozy. Licznik gazu w m³ i zł, skalibrowany na fakturach."
+        },
+        {
+          "t": "Kamery z AI",
+          "d": "Frigate rozpoznaje osoby i auta, a powiadomienie ze zdjęciem przychodzi na Telegram. Model językowy opisuje zdarzenie i ocenia, czy jest podejrzane."
+        },
+        {
+          "t": "Światło i nastroje",
+          "d": "Ponad 16 lamp Hue i WiZ, sceny do kina i na imprezę, światło na podwórku włączane nocą przez kamerę i ambilight razem z Apple TV."
+        },
+        {
+          "t": "Plan mieszkania 3D",
+          "d": "Interaktywny model z Blendera w przeglądarce (three.js): widać, co świeci i co grzeje, a lampę włącza się dotknięciem."
+        },
+        {
+          "t": "Asystent głosowy po polsku",
+          "d": "Własne komendy, np. „jaka temperatura w sypialni?”, i bot na Telegramie oparty na AI, który zna cały dom."
+        },
+        {
+          "t": "AGD i powietrze",
+          "d": "Pralka daje znać, że skończyła, robot Roborock alarmuje, gdy utknie, a oczyszczacz sam rusza, gdy PM2.5 przekroczy normę."
+        },
+        {
+          "t": "Informacje na co dzień",
+          "d": "Pogoda, radar opadów, jakość powietrza z GIOŚ i odjazdy tramwaju MPK Kraków na żywo, pokazywane tylko wtedy, gdy są potrzebne."
+        },
+        {
+          "t": "Bezpieczna infrastruktura",
+          "d": "Docker na małym serwerze, dostęp spoza domu przez VPN (Tailscale) bez otwierania portów, kopie zapasowe co noc, UPS i blokowanie reklam w całej sieci."
+        }
+      ],
+      "note": "Stan na listopad 2026."
+    },
+    "offer": {
+      "eyebrow": "Oferta na start",
+      "title": "Pierwsze 5 wdrożeń za pół ceny.",
+      "lead": "Zaczynam pomagać innym z Home Assistant, więc pierwszym pięciu klientom daję 50% rabatu. W zamian proszę tylko o krótką opinię.",
+      "wasLabel": "po promocji",
+      "items": [
+        {
+          "name": "Konsultacja online",
+          "price": "100 zł",
+          "was": "200 zł",
+          "unit": "za godzinę",
+          "d": "Plan, lista zakupów albo pomoc przy konkretnym problemie."
+        },
+        {
+          "name": "Wizyta w Krakowie",
+          "price": "200 zł",
+          "was": "400 zł",
+          "unit": "za godzinę, min. 2 h",
+          "d": "Instalacja, montaż i konfiguracja na miejscu."
+        },
+        {
+          "name": "Pakiet startowy",
+          "price": "od 600 zł",
+          "was": "od 1200 zł",
+          "unit": "jednorazowo",
+          "d": "Instalacja Home Assistant, kopie zapasowe, dostęp spoza domu i pierwszy dashboard."
+        }
+      ],
+      "note": "Ceny nie obejmują sprzętu. Dokładny zakres i koszt ustalamy przed startem.",
+      "cta": "Zarezerwuj miejsce"
+    },
     "contact": {
       "title": "Porozmawiajmy o Twoim domu.",
       "lead": "Na bezpłatnej, 30-minutowej rozmowie opowiesz, co już masz i czego potrzebujesz. Powiem, od czego zacząć i czy wystarczy pomoc zdalna. Bez zobowiązań.",
@@ -213,7 +302,7 @@
       "People looking for a ready-made single-brand system with no configuration",
       "Complete electrical installations in a house under construction"
     ],
-    "proof": "In my day job I organise processes, automations and reporting in large companies, currently as Manager SEO & AI Search Operations at Philip Morris International. I bring the same approach to Home Assistant: plan first, then a clean set-up and clear data.",
+    "proof": "Home Assistant is my passion. I built my own system from scratch: 727 entities, 32 integrations and 33 automations on a small home server running Docker. In my day job I organise processes and automations in large companies, currently at Philip Morris International.",
     "faq": [
       {
         "q": "Do you help remotely?",
@@ -233,9 +322,98 @@
       },
       {
         "q": "How much does it cost?",
-        "a": "It depends on the scope: a single consultation is priced differently from a full set-up with installation. You get a quote after a short, free call."
+        "a": "For a start, the first 5 set-ups are half price: an online consultation is 100 PLN per hour, a visit in Kraków 200 PLN per hour and the starter package from 600 PLN. You get an exact quote after a short, free call."
       }
     ],
+    "showcase": {
+      "eyebrow": "My system",
+      "title": "This is how my home works.",
+      "lead": "I built my own Home Assistant system from scratch. It runs on a small home server, with no subscriptions and no data sent to the cloud unless it has to be. I can set up the same things for you.",
+      "stats": [
+        {
+          "v": "727",
+          "k": "entities in Home Assistant"
+        },
+        {
+          "v": "32",
+          "k": "integrations"
+        },
+        {
+          "v": "33",
+          "k": "automations"
+        },
+        {
+          "v": "16+",
+          "k": "Hue and WiZ lights"
+        }
+      ],
+      "groups": [
+        {
+          "t": "Heating",
+          "d": "Smart valves in every room, Comfort, Eco and Away modes, open-window detection and heating that starts earlier based on the forecast. A gas meter in m³ and PLN, calibrated against real bills."
+        },
+        {
+          "t": "AI cameras",
+          "d": "Frigate recognises people and cars, and a notification with a snapshot arrives on Telegram. A language model describes the event and judges whether it looks suspicious."
+        },
+        {
+          "t": "Lighting and moods",
+          "d": "More than 16 Hue and WiZ lights, cinema and party scenes, yard lights switched on at night by the camera, and ambilight in sync with Apple TV."
+        },
+        {
+          "t": "3D floor plan",
+          "d": "An interactive Blender model in the browser (three.js): you see what is on and what is heating, and tap a lamp to switch it on."
+        },
+        {
+          "t": "Polish voice assistant",
+          "d": "Custom commands such as “what’s the temperature in the bedroom?”, plus an AI-powered Telegram bot that knows the whole house."
+        },
+        {
+          "t": "Appliances and air",
+          "d": "The washing machine says when it is done, the Roborock vacuum alerts when it gets stuck, and the air purifier starts by itself when PM2.5 goes over the limit."
+        },
+        {
+          "t": "Everyday information",
+          "d": "Weather, rain radar, air quality from GIOŚ and live MPK Kraków tram departures, shown only when they are needed."
+        },
+        {
+          "t": "Secure infrastructure",
+          "d": "Docker on a small server, remote access over a VPN (Tailscale) with no open ports, nightly backups, a UPS and network-wide ad blocking."
+        }
+      ],
+      "note": "As of November 2026."
+    },
+    "offer": {
+      "eyebrow": "Launch offer",
+      "title": "The first 5 set-ups at half price.",
+      "lead": "I am starting to help others with Home Assistant, so the first five clients get 50% off. All I ask in return is a short review.",
+      "wasLabel": "after the offer",
+      "items": [
+        {
+          "name": "Online consultation",
+          "price": "100 PLN",
+          "was": "200 PLN",
+          "unit": "per hour",
+          "d": "A plan, a shopping list or help with a specific problem."
+        },
+        {
+          "name": "Visit in Kraków",
+          "price": "200 PLN",
+          "was": "400 PLN",
+          "unit": "per hour, min. 2 h",
+          "d": "Installation, mounting and configuration on site."
+        },
+        {
+          "name": "Starter package",
+          "price": "from 600 PLN",
+          "was": "from 1,200 PLN",
+          "unit": "one-off",
+          "d": "Home Assistant install, backups, remote access and a first dashboard."
+        }
+      ],
+      "note": "Prices do not include hardware. We agree the exact scope and cost before we start.",
+      "cta": "Book your spot"
+    },
     "contact": {
       "title": "Let’s talk about your home.",
       "lead": "In a free 30-minute call you tell me what you have and what you need. I tell you where to start and whether remote help is enough. No strings attached.",

@@ -44,6 +44,15 @@ const extraLd = [
     areaServed: pair.key === 'ha'
       ? [{ '@type': 'City', name: 'Kraków' }, { '@type': 'Country', name: 'Poland' }]
       : [{ '@type': 'Country', name: 'Poland' }, 'Worldwide'],
+    ...(s.offer && {
+      offers: s.offer.items.map((o) => ({
+        '@type': 'Offer',
+        name: o.name,
+        description: o.d,
+        price: Number(o.price.replace(/[^\d]/g, '')),
+        priceCurrency: 'PLN',
+      })),
+    }),
   },
   {
     '@type': 'WebPage',
@@ -139,6 +148,35 @@ const extraLd = [
       </div>
     </section>
 
+    {s.showcase && (
+      <section class="section section--black show" data-dark aria-labelledby="show-h">
+        <div class="wrap wrap--wide">
+          <header class="head">
+            <p class="eyebrow" data-reveal>{s.showcase.eyebrow}</p>
+            <h2 class="h2" id="show-h" data-reveal>{s.showcase.title}</h2>
+            <p class="lead" data-reveal style="--d:1">{s.showcase.lead}</p>
+          </header>
+          <dl class="show-stats">
+            {s.showcase.stats.map((st, i) => (
+              <div data-reveal style={`--d:${i}`}>
+                <dt>{st.k}</dt>
+                <dd data-count>{st.v}</dd>
+              </div>
+            ))}
+          </dl>
+          <ul class="show-grid">
+            {s.showcase.groups.map((g, i) => (
+              <li data-reveal style={`--d:${i % 4}`}>
+                <h3>{g.t}</h3>
+                <p>{g.d}</p>
+              </li>
+            ))}
+          </ul>
+          <p class="show-note" data-reveal>{s.showcase.note}</p>
+        </div>
+      </section>
+    )}
+
     <!-- Steps -->
     <section class="section" aria-labelledby="steps-h">
       <div class="wrap wrap--wide">
@@ -157,6 +195,34 @@ const extraLd = [
         </ol>
       </div>
     </section>
+
+    {s.offer && (
+      <section class="section offer" aria-labelledby="offer-h">
+        <div class="wrap wrap--wide">
+          <div class="offer-box" data-reveal>
+            <header class="offer-head">
+              <p class="offer-badge">{s.offer.eyebrow}</p>
+              <h2 class="h2" id="offer-h">{s.offer.title}</h2>
+              <p class="lead">{s.offer.lead}</p>
+            </header>
+            <ul class="prices">
+              {s.offer.items.map((o) => (
+                <li>
+                  <h3>{o.name}</h3>
+                  <p class="price"><b>{o.price}</b> <span class="unit">{o.unit}</span></p>
+                  <p class="was">{s.offer!.wasLabel}: {o.was}</p>
+                  <p class="pd">{o.d}</p>
+                </li>
+              ))}
+            </ul>
+            <div class="offer-foot">
+              <a class="btn" href={`#${t.ids.contact}`} data-topic={pair.topic[lang]}>{s.offer.cta}</a>
+              <p class="offer-note">{s.offer.note}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
 
     <!-- Fit -->
     <section class="section section--gray" aria-labelledby="fit-h">
@@ -590,6 +656,130 @@ const extraLd = [
     font-size: 0.9375rem;
   }
 
+  /* ---------- Own system (showcase) ---------- */
+  .show-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    margin-bottom: clamp(40px, 6vw, 72px);
+    text-align: center;
+  }
+  .show-stats div {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+  .show-stats dd {
+    font-size: clamp(2.75rem, 1.8rem + 3vw, 4.5rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1;
+    background: var(--ai);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .show-stats dt {
+    color: var(--dark-muted);
+  }
+  .show-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .show-grid li {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    padding: 26px;
+    border: 1px solid var(--dark-line);
+    border-radius: var(--r-lg);
+    background: rgb(255 255 255 / 0.04);
+  }
+  .show-grid h3 {
+    font-size: 1.1875rem;
+    font-weight: 650;
+    letter-spacing: -0.012em;
+  }
+  .show-grid p {
+    color: var(--dark-muted);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+  .show-note {
+    margin-top: 24px;
+    color: var(--dark-muted);
+    font-size: 0.8125rem;
+    text-align: center;
+  }
+  /* ---------- Launch offer ---------- */
+  .offer-box {
+    padding: clamp(28px, 5vw, 64px);
+    border-radius: calc(var(--r-lg) + 8px);
+    background: color-mix(in srgb, var(--a3) 12%, white);
+  }
+  .offer-head {
+    display: grid;
+    justify-items: center;
+    gap: 14px;
+    max-width: 760px;
+    margin: 0 auto clamp(28px, 4vw, 44px);
+    text-align: center;
+  }
+  .offer-badge {
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 0.8125rem;
+    font-weight: 650;
+  }
+  .offer-head .lead {
+    color: var(--ink-2);
+  }
+  .prices {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .prices li {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    padding: 28px;
+    border-radius: var(--r-lg);
+    background: var(--white);
+  }
+  .prices h3 {
+    font-size: 1.125rem;
+    font-weight: 650;
+  }
+  .price b {
+    font-size: clamp(2rem, 1.6rem + 1.2vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .unit,
+  .was {
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+  .pd {
+    margin-top: 6px;
+    color: var(--ink-2);
+    font-size: 0.9375rem;
+  }
+  .offer-foot {
+    display: grid;
+    justify-items: center;
+    gap: 14px;
+    margin-top: clamp(24px, 4vw, 40px);
+    text-align: center;
+  }
+  .offer-note {
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
   .reads {
     display: grid;
     justify-items: center;
@@ -639,9 +829,11 @@ const extraLd = [
     .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 40px; }
     .pains, .gets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .mini { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .show-stats, .show-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .prices { grid-template-columns: 1fr; }
   }
   @media (max-width: 680px) {
-    .pains, .gets, .fit, .steps, .ocards { grid-template-columns: 1fr; }
+    .pains, .gets, .fit, .steps, .ocards, .show-grid { grid-template-columns: 1fr; }
     .ctas .btn { width: 100%; }
   }
 </style>
