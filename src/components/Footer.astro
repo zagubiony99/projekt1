@@ -46,7 +46,7 @@ const year = new Date().getFullYear();
     <p class="note">{t.footer.built}</p>
     <div class="row">
       <span>Copyright © {year} {site.name}. {t.footer.rights}</span>
-      <nav aria-label="Footer">
+      <nav aria-label={lang === 'pl' ? 'Stopka' : 'Footer'}>
         <a href={`mailto:${site.email}`}>{site.email}</a>
         {site.linkedin && <a href={site.linkedin} rel="me noopener" target="_blank">LinkedIn</a>}
         <a href={t.privacy.path}>{t.privacy.label}</a>

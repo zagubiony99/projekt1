@@ -23,9 +23,9 @@ const here = Astro.url.pathname;
 
 <header class="nav" data-nav>
   <div class="wrap wrap--wide bar">
-    <a class="logo" href={t.path} aria-label="Maciej Zięciak — home">Maciej Zięciak</a>
+    <a class="logo" href={t.path} aria-label={lang === 'pl' ? 'Maciej Zięciak — strona główna' : 'Maciej Zięciak — home'}>Maciej Zięciak</a>
     <div class="end">
-      <nav class="links" aria-label="Main">
+      <nav class="links" aria-label={lang === 'pl' ? 'Menu główne' : 'Main'}>
         {links.map(([href, label]) => <a href={href} aria-current={here.startsWith(href) && !href.includes('#') ? 'page' : undefined}>{label}</a>)}
         <a href={altHref} hreflang={alt.lang} aria-label={`${alt.lang.toUpperCase()}: ${t.nav.switchLabel}`}>{alt.lang.toUpperCase()}</a>
       </nav>
@@ -38,7 +38,7 @@ const here = Astro.url.pathname;
   </div>
 
   <div class="sheet" id="mobile-menu" data-sheet hidden>
-    <nav class="wrap sheet__in" aria-label="Mobile">
+    <nav class="wrap sheet__in" aria-label={lang === 'pl' ? 'Menu mobilne' : 'Mobile menu'}>
       {[...links, [contactHref, t.nav.contact]].map(([href, label]) => <a href={href}>{label}</a>)}
       <a class="sw" href={altHref} hreflang={alt.lang}>{t.nav.switchLabel}</a>
     </nav>

@@ -9,7 +9,7 @@
     "sections": [
       {
         "h": "Czym jest MCP",
-        "body": "<p>MCP (Model Context Protocol) to otwarty standard, który pozwala asystentom AI łączyć się z zewnętrznymi systemami: bazą produktów, systemem rezerwacji, API firmy. Opublikowało go Anthropic pod koniec 2024 roku, a dziś korzystają z niego także OpenAI i inni.</p><p>W uproszczeniu: firma uruchamia <strong>serwer MCP</strong>, który udostępnia kilka <strong>narzędzi</strong>, na przykład „wyszukaj oferty” albo „sprawdź dostępność”. Asystent czyta opisy tych narzędzi i sam decyduje, kiedy ich użyć, żeby odpowiedzieć użytkownikowi na podstawie aktualnych danych.</p>"
+        "body": "<p>MCP (Model Context Protocol) to otwarty standard, który pozwala asystentom AI łączyć się z zewnętrznymi systemami: bazą produktów, systemem rezerwacji, API firmy. Opublikował go Anthropic pod koniec 2024 roku, a dziś korzystają z niego także OpenAI i inni.</p><p>W uproszczeniu: firma uruchamia <strong>serwer MCP</strong>, który udostępnia kilka <strong>narzędzi</strong>, na przykład „wyszukaj oferty” albo „sprawdź dostępność”. Asystent czyta opisy tych narzędzi i sam decyduje, kiedy ich użyć, żeby odpowiedzieć użytkownikowi na podstawie aktualnych danych.</p>"
       },
       {
         "h": "Aplikacje w ChatGPT",
@@ -47,7 +47,7 @@
       },
       {
         "q": "Czy serwer MCP zadziała też w innych asystentach?",
-        "a": "MCP to otwarty standard, więc z serwera MCP mogą korzystać też inne asystenty, które go obsługują, na przykład Claude. Szczegóły integracji i interfejsu różnią się między platformami."
+        "a": "MCP to otwarty standard, więc z serwera MCP mogą korzystać też inni asystenci AI, które go obsługują, na przykład Claude. Szczegóły integracji i interfejsu różnią się między platformami."
       },
       {
         "q": "Czy muszę mieć aplikację, żeby być widocznym w ChatGPT?",

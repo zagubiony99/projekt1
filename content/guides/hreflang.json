@@ -13,7 +13,7 @@
       },
       {
         "h": "Błąd 1: brak linków zwrotnych",
-        "body": "<p>Jeśli strona polska wskazuje angielską, angielska musi wskazywać polską. Bez potwierdzenia z drugiej strony Google może zignorować całą parę. To najczęstszy błąd, zwykle wynik tego, że jeden rynek zmienił adresy albo usunął stronę, a pozostałe tego nie wiedzą.</p>"
+        "body": "<p>Jeśli strona polska wskazuje angielską, angielska musi wskazywać polską. Bez potwierdzenia z drugiej strony Google może zignorować całą parę. To najczęstszy błąd, zwykle wynik tego, że jeden rynek zmienił adresy albo usunął stronę, a pozostałe o tym nie wiedzą.</p>"
       },
       {
         "h": "Błąd 2: złe kody języków i regionów",

@@ -5,7 +5,7 @@
     "metaTitle": "Audyt techniczny SEO: checklista krok po kroku",
     "metaDescription": "Co sprawdzić w audycie technicznym SEO: crawl, indeksacja, JavaScript, linkowanie, logi serwera, Core Web Vitals i dane strukturalne. Checklista.",
     "title": "Audyt techniczny SEO: co sprawdzić, krok po kroku",
-    "lead": "Dobry audyt techniczny nie kończy się listą 300 ostrzeżeń z narzędzia. Kończy się kilkunastoma problemami ułożonymi według tego, ile kosztują Cię ruchu. Oto obszary, które sprawdzam w każdym audycie, i pytania, na które szukam odpowiedzi.",
+    "lead": "Dobry audyt techniczny nie kończy się listą 300 ostrzeżeń z narzędzia. Kończy się kilkunastoma problemami ułożonymi według tego, ile ruchu Cię kosztują. Oto obszary, które sprawdzam w każdym audycie, i pytania, na które szukam odpowiedzi.",
     "sections": [
       {
         "h": "1. Crawl i dostępność",
@@ -25,7 +25,7 @@
       },
       {
         "h": "5. Logi serwera",
-        "body": "<p>Crawl pokazuje, co jest na stronie. Logi pokazują, co Googlebot naprawdę odwiedza. W dużych serwisach to często największe źródło wniosków:</p><ul><li>jaki odsetek wizyt Googlebota trafia w strony, które w ogóle nie powinny być indeksowane,</li><li>czy ważne sekcje są odwiedzane rzadko albo wcale,</li><li>jakie kody odpowiedzi dostaje Googlebot i czy serwer nie zwalnia pod jego ruchem,</li><li>czy boty AI odwiedzają stronę i co dostają w odpowiedzi.</li></ul>"
+        "body": "<p>Crawl pokazuje, co jest na stronie. Logi pokazują, co Googlebot naprawdę odwiedza. W dużych serwisach to często największe źródło wniosków:</p><ul><li>jaki odsetek wizyt Googlebota trafia na strony, które w ogóle nie powinny być indeksowane,</li><li>czy ważne sekcje są odwiedzane rzadko albo wcale,</li><li>jakie kody odpowiedzi dostaje Googlebot i czy serwer nie zwalnia pod jego ruchem,</li><li>czy boty AI odwiedzają stronę i co dostają w odpowiedzi.</li></ul>"
       },
       {
         "h": "6. Wydajność i Core Web Vitals",

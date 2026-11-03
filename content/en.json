@@ -132,7 +132,7 @@
   "bands": {
     "afterServices": {
       "title": "Not sure where to start?",
-      "text": "On a free consultation I’ll review your site and point out the 3 things worth fixing first.",
+      "text": "In a free consultation I’ll review your site and point out the 3 things worth fixing first.",
       "btn": "Book a free consultation"
     }
   },
@@ -246,7 +246,7 @@
     "steps": [
       {
         "name": "Diagnosis",
-        "desc": "Data access, crawl, logs, rendering and bot-access analysis. I find out where the site is really losing."
+        "desc": "Data access, crawl, logs, rendering and bot-access analysis. I find out where the site is really losing traffic and revenue."
       },
       {
         "name": "Priorities",
@@ -313,7 +313,7 @@
     "title": "Common questions",
     "items": [
       {
-        "q": "What happens on the free consultation?",
+        "q": "What happens in the free consultation?",
         "a": "30 minutes online. You tell me about the site and your goals; I review it live and point out the 3 things worth fixing first. No commitment: after the call you decide whether we go further."
       },
       {
@@ -425,7 +425,7 @@
   },
   "guidesUi": {
     "metaTitle": "Technical SEO & AI Search Guides | Maciej Zięciak",
-    "metaDescription": "Practical SEO and AI search guides: AI Overviews, AI bots, audits, migrations, releases, hreflang and faceted navigation. Checklists from my practice.",
+    "metaDescription": "Practical SEO and AI search guides: AI Overviews, AI bots, ChatGPT apps, audits and their cost, migrations, releases, hreflang and faceted navigation.",
     "eyebrow": "SEO & AI search guides",
     "title": "What I check for clients. Written up step by step.",
     "lead": "Checklists and explanations from technical SEO and AI search. No fluff, with examples you can check on your own site right away.",

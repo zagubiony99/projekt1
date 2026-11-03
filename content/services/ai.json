@@ -21,7 +21,7 @@
       "Nie wiesz, czy boty OpenAI, Perplexity i Anthropic w ogóle mają dostęp do Twojej strony.",
       "Firewall albo CDN blokuje nieznane boty i nikt tego nie sprawdzał.",
       "Treść ładuje się JavaScriptem, którego większość crawlerów AI nie wykonuje.",
-      "AI Overviews odpowiadają na pytania, na które kiedyś klikano w Twoją stronę.",
+      "AI Overviews odpowiadają na pytania, z którymi klienci kiedyś trafiali na Twoją stronę.",
       "Zarząd pyta o „strategię na AI”, a w SEO nikt nie ma na to planu."
     ],
     "getTitle": "Co dostajesz",
@@ -166,12 +166,12 @@
       },
       {
         "t": "Access and rendering",
-        "when": "Week 1–2",
+        "when": "Weeks 1–2",
         "d": "Bot access, server responses, WAF/CDN and content visible without JavaScript."
       },
       {
         "t": "Entities and content",
-        "when": "Week 2–4",
+        "when": "Weeks 2–4",
         "d": "Structured data, brand information and a plan for citable content."
       },
       {

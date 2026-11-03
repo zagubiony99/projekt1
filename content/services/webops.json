@@ -17,7 +17,7 @@
     "lead": "W dużych serwisach ruch najczęściej nie spada przez konkurencję, tylko przez własne wydania: przypadkowy noindex, zmieniony szablon, zgubione przekierowania. Wpinam SEO w procesy tak, żeby takie rzeczy wychodziły przed publikacją, a nie po miesiącu w Search Console.",
     "painTitle": "Brzmi znajomo?",
     "pains": [
-      "Nowe wydanie przypadkiem dało noindex albo zmieniło canonicale i nikt tego nie zauważył.",
+      "Nowe wydanie przypadkiem dodało noindex albo zmieniło canonicale i nikt tego nie zauważył.",
       "O problemie dowiadujecie się z wykresu ruchu, a nie z alertu.",
       "Wymagania SEO giną między marketingiem, produktem i programistami.",
       "Każdy rynek i każda agencja robią SEO po swojemu.",
@@ -83,7 +83,7 @@
     "forNo": [
       "Małe strony bez regularnych wdrożeń i bez zespołu programistów"
     ],
-    "proof": "SEO Operations to moja codzienna praca: dziś jako Manager SEO & AI Search Operations w Philip Morris International, wcześniej jako Tech SEO Operations Senior Specialist. Wcześniej w Accenture Song i IG pracowałem przy serwisach międzynarodowych marek.",
+    "proof": "SEO Operations to moja codzienna praca: dziś jako Manager SEO & AI Search Operations w Philip Morris International, wcześniej jako Tech SEO Operations Senior Specialist. Przedtem w Accenture Song i IG pracowałem przy serwisach międzynarodowych marek.",
     "faq": [
       {
         "q": "Czym WebOps różni się od audytu?",
@@ -159,12 +159,12 @@
       },
       {
         "t": "Design",
-        "when": "Week 2–3",
+        "when": "Weeks 2–3",
         "d": "Checkpoints, tests, alerts and standards that fit your tools."
       },
       {
         "t": "Roll-out",
-        "when": "Week 3–6",
+        "when": "Weeks 3–6",
         "d": "Setting up tests and monitoring, and training the teams."
       },
       {

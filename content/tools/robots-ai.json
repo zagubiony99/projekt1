@@ -33,7 +33,7 @@
       "Bot stosuje się tylko do jednej grupy reguł: tej z jego nazwą. Jeśli takiej nie ma, korzysta z grupy User-agent: *.",
       "W ramach grupy wygrywa najdłuższa pasująca reguła. Przy remisie wygrywa Allow.",
       "Brak pasującej reguły oznacza, że bot ma dostęp.",
-      "Tester sprawdza tylko robots.txt. Bot może być nadal blokowany przez firewall, CDN albo wymagać JavaScriptu, żeby zobaczyć treść."
+      "Tester sprawdza tylko robots.txt. Bot może nadal być blokowany przez firewall lub CDN albo potrzebować JavaScriptu, żeby zobaczyć treść."
     ],
     "faq": [
       {

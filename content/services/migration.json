@@ -13,7 +13,7 @@
     "metaDescription": "Migracja strony bez utraty ruchu: zmiana CMS, domeny albo adresów URL. Mapa przekierowań, testy przed startem i opieka po wdrożeniu.",
     "eyebrow": "Migracje i przebudowy stron",
     "title": "Nowa strona. Ten sam ruch. Albo większy.",
-    "lead": "Migracja to najszybszy sposób, żeby w tydzień stracić połowę ruchu. Pilnuję, żeby tak się nie stało: przygotowuję mapę przekierowań, testuję nową wersję przed startem i obserwuję ruch przez kilka tygodni po nim.",
+    "lead": "Źle przeprowadzona migracja to najszybszy sposób, żeby w tydzień stracić połowę ruchu. Pilnuję, żeby tak się nie stało: przygotowuję mapę przekierowań, testuję nową wersję przed startem i obserwuję ruch przez kilka tygodni po nim.",
     "painTitle": "Brzmi znajomo?",
     "pains": [
       "Zmieniacie CMS, domenę albo strukturę URL i nikt nie odpowiada za SEO.",
@@ -42,7 +42,7 @@
       },
       {
         "t": "Opiekę po wdrożeniu",
-        "d": "Przez kilka tygodni po starcie pilnuję indeksacji, błędów 404, ruchu i pozycji i szybko reaguję na problemy."
+        "d": "Przez kilka tygodni po starcie pilnuję indeksacji, błędów 404, ruchu i pozycji oraz szybko reaguję na problemy."
       },
       {
         "t": "Raport porównawczy",
@@ -64,7 +64,7 @@
       {
         "t": "Testy",
         "when": "Przed startem",
-        "d": "Crawl i testy wersji testowej oraz lista poprawek przed publikacją."
+        "d": "Crawl i testy wersji stagingowej oraz lista poprawek przed publikacją."
       },
       {
         "t": "Start i obserwacja",
@@ -112,7 +112,7 @@
     "metaDescription": "Website migration without losing organic traffic: a new CMS, domain or URL structure. Redirect mapping, pre-launch testing and post-launch monitoring.",
     "eyebrow": "Migrations & relaunches",
     "title": "New website. Same traffic. Or more.",
-    "lead": "A migration is the fastest way to lose half your traffic in a week. I make sure that doesn’t happen: from the redirect map, through staging tests, to weeks of monitoring after launch.",
+    "lead": "A badly handled migration is the fastest way to lose half your traffic in a week. I make sure that doesn’t happen: from the redirect map, through staging tests, to weeks of monitoring after launch.",
     "painTitle": "Sound familiar?",
     "pains": [
       "You’re changing CMS, domain or URL structure and nobody owns SEO.",

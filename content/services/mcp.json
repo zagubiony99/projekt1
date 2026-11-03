@@ -101,7 +101,7 @@
       },
       {
         "q": "Czy MCP działa tylko w ChatGPT?",
-        "a": "Nie. MCP to otwarty standard i z serwera MCP mogą korzystać też inne asystenty, które go obsługują, na przykład Claude."
+        "a": "Nie. MCP to otwarty standard i z serwera MCP mogą korzystać też inni asystenci AI, które go obsługują, na przykład Claude."
       }
     ]
   },

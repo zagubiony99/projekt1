@@ -44,7 +44,7 @@
       },
       {
         "t": "Energia i koszty",
-        "d": "Pomiar zużycia gazu i prądu w złotówkach, ogrzewanie w trybach i harmonogramach dla każdego pokoju oraz automatyzacje, które pomagają obniżyć rachunki."
+        "d": "Pomiar zużycia gazu i prądu w złotówkach, ogrzewanie w trybach i harmonogramach dla każdego pokoju oraz automatyzacje, które mają pomóc obniżyć rachunki."
       },
       {
         "t": "Montaż w Krakowie",
@@ -85,7 +85,7 @@
       "Osoby, które szukają gotowego systemu jednego producenta, bez żadnej konfiguracji",
       "Projekty całej instalacji elektrycznej w budowanym domu"
     ],
-    "proof": "Home Assistant to moja pasja. Od podstaw zbudowałem własny system: 727 encji, 32 integracje i 33 automatyzacje na małym serwerze w Dockerze. Na co dzień porządkuję procesy i automatyzacje w dużych firmach, obecnie w Philip Morris International.",
+    "proof": "Home Assistant to moja pasja. Od podstaw zbudowałem własny system: 727 encji, 32 integracje i 33 automatyzacje na małym serwerze w Dockerze. Zawodowo zajmuję się operacjami SEO i AI search, obecnie w Philip Morris International.",
     "faq": [
       {
         "q": "Czy pomagasz zdalnie?",
@@ -145,7 +145,7 @@
       "groups": [
         {
           "t": "Kamery z AI",
-          "d": "Frigate rozpoznaje osoby i auta na akceleracji GPU, a powiadomienie ze zdjęciem przychodzi na Telegram. Model językowy opisuje zdarzenie i ocenia, czy jest podejrzane."
+          "d": "Frigate rozpoznaje osoby i auta z akceleracją GPU, a powiadomienie ze zdjęciem przychodzi na Telegram. Model językowy opisuje zdarzenie i ocenia, czy jest podejrzane."
         },
         {
           "t": "Rozpoznawanie twarzy",
@@ -183,7 +183,7 @@
       "next": {
         "eyebrow": "Następny projekt",
         "t": "Sauna z Home Assistant",
-        "d": "Jestem wielkim fanem sauny i marzy mi się ustawienie dla niej Home Assistant: nagrzewanie zaplanowane na konkretną godzinę, temperatura i wilgotność na telefonie, powiadomienie, gdy sauna jest gotowa, i koszt każdego seansu. Zdalne sterowanie piecem do sauny wymaga zabezpieczeń, więc zaczynam od sprawdzenia, na co pozwala producent.",
+        "d": "Jestem wielkim fanem sauny i marzy mi się podłączenie jej do Home Assistant: nagrzewanie zaplanowane na konkretną godzinę, temperatura i wilgotność na telefonie, powiadomienie, gdy sauna jest gotowa, i koszt każdego seansu. Zdalne sterowanie piecem do sauny wymaga zabezpieczeń, więc zaczynam od sprawdzenia, na co pozwala producent.",
         "cta": "Masz saunę? Napisz do mnie"
       },
       "note": "Stan na listopad 2026 r."
@@ -283,7 +283,7 @@
       },
       {
         "t": "Energy and costs",
-        "d": "Gas and electricity use measured in PLN, heating modes and schedules for every room, and automations that help bring the bills down."
+        "d": "Gas and electricity use measured in PLN, heating modes and schedules for every room, and automations designed to help bring the bills down."
       },
       {
         "t": "Installation in Kraków",
@@ -324,7 +324,7 @@
       "People looking for a ready-made single-brand system with no configuration",
       "Complete electrical installations in a house under construction"
     ],
-    "proof": "Home Assistant is my passion. I built my own system from scratch: 727 entities, 32 integrations and 33 automations on a small home server running Docker. In my day job I organise processes and automations in large companies, currently at Philip Morris International.",
+    "proof": "Home Assistant is my passion. I built my own system from scratch: 727 entities, 32 integrations and 33 automations on a small home server running Docker. In my day job I run SEO and AI search operations, currently at Philip Morris International.",
     "faq": [
       {
         "q": "Do you help remotely?",
@@ -336,7 +336,7 @@
       },
       {
         "q": "Do I have to buy new devices?",
-        "a": "Not always. Home Assistant supports devices from a great many brands, so I first check what you already have can be connected."
+        "a": "Not always. Home Assistant supports devices from a great many brands, so I first check which of your existing devices can be connected."
       },
       {
         "q": "Will I manage on my own afterwards?",
@@ -375,7 +375,7 @@
         "items": [
           "A gas meter in m³ and PLN, calibrated against real bills: heating costs are visible as they happen, day by day.",
           "Electricity use per device (Powercalc): you see what uses the most energy and what it costs.",
-          "Before and after: after every change of settings you see what it actually saved.",
+          "Before and after: after every change of settings you see what difference it actually made.",
           "Heating in several modes: Schedule, Comfort, Eco and Away, with a separate target for each room, e.g. cooler in the bedroom at night.",
           "Open-window detection and forecast-based heating: the boiler does not heat for nothing when a window is open, it is warm outside or nobody is home.",
           "A boiler controlled locally, without the maker’s cloud, and smart radiator valves in every room."

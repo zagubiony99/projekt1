@@ -93,7 +93,7 @@
   "stage": {
     "eyebrow": "Audyt dostępu botów",
     "title": "Zobacz swoją stronę oczami botów.",
-    "text": "Googlebot radzi sobie z JavaScriptem. Większość botów AI już nie. Sprawdzam, co naprawdę widzi każdy z nich i co po drodze odcinają firewall, CDN albo robots.txt."
+    "text": "Googlebot radzi sobie z JavaScriptem. Większość botów AI – nie. Sprawdzam, co naprawdę widzi każdy z nich i co po drodze odcinają firewall, CDN albo robots.txt."
   },
   "stats": {
     "label": "W liczbach",
@@ -235,7 +235,7 @@
         "when": "2017 — 2023",
         "org": "Własny projekt",
         "role": "Współzałożyciel, SEO lead",
-        "desc": "Polski katalog firm, w którym byłem jedynym specjalistą SEO: ponad 1,1 mln podstron, 670 tys. adresów w indeksie i 115 tys. wizyt z wyszukiwarki miesięcznie w szczytowym momencie. Po zmianie właściciela zostałem jego doradcą.",
+        "desc": "Polski katalog firm, w którym byłem jedynym specjalistą SEO: ponad 1,1 mln podstron, 670 tys. adresów w indeksie i 115 tys. wizyt z wyszukiwarki miesięcznie w szczytowym momencie. Po zmianie właściciela zostałem doradcą nowego właściciela.",
         "highlight": true
       }
     ]
@@ -425,7 +425,7 @@
   },
   "guidesUi": {
     "metaTitle": "Poradniki Technical SEO i AI search | Maciej Zięciak",
-    "metaDescription": "Praktyczne poradniki SEO i AI search: AI Overviews, boty AI, audyt, migracja, wdrożenia, hreflang i filtry w sklepie. Checklisty z mojej praktyki.",
+    "metaDescription": "Praktyczne poradniki SEO i AI search: AI Overviews, boty AI, aplikacje w ChatGPT, audyt i jego koszt, migracja, wdrożenia, hreflang i filtry w sklepie.",
     "eyebrow": "Poradniki SEO i AI search",
     "title": "To, co sprawdzam u klientów. Rozpisane krok po kroku.",
     "lead": "Checklisty i wyjaśnienia z technical SEO i AI search. Bez lania wody, z przykładami, które możesz od razu sprawdzić na swojej stronie.",

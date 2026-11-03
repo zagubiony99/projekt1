@@ -21,7 +21,7 @@
       },
       {
         "h": "4. Dzień startu",
-        "body": "<ol><li>Wdróż przekierowania razem z nową stroną, a nie „za kilka dni”.</li><li>Zdejmij blokady ze stagingu: hasło, <code>noindex</code>, regułę <code>Disallow: /</code>.</li><li>Sprawdź robots.txt i mapy witryn XML na produkcji. Mapa ma zawierać nowe adresy kanoniczne zwracające 200.</li><li>Puść crawl listy starych adresów i potwierdź, że każdy kończy się jednym przekierowaniem na stronę z kodem 200.</li><li>Przy zmianie domeny użyj w Search Console narzędzia do zmiany adresu i dodaj nową domenę jako usługę.</li><li>Zgłoś nowe mapy witryn w Search Console.</li></ol>"
+        "body": "<ol><li>Wdróż przekierowania razem z nową stroną, a nie „za kilka dni”.</li><li>Zdejmij blokady ze stagingu: hasło, <code>noindex</code>, regułę <code>Disallow: /</code>.</li><li>Sprawdź robots.txt i mapy witryn XML na produkcji. Mapa ma zawierać nowe adresy kanoniczne zwracające 200.</li><li>Puść crawl listy starych adresów i potwierdź, że każdy kończy się jednym przekierowaniem na stronę z kodem 200.</li><li>Przy zmianie domeny dodaj nową domenę jako usługę w Search Console, a potem użyj narzędzia do zmiany adresu.</li><li>Zgłoś nowe mapy witryn w Search Console.</li></ol>"
       },
       {
         "h": "5. Po starcie: monitoring",
@@ -42,7 +42,7 @@
         "a": "Przy trwałej zmianie adresu użyj 301 (albo 308). To najczytelniejszy sygnał, że stary adres na stałe przeszedł pod nowy."
       },
       {
-        "q": "Czy zmieniać przy okazji migracji treści i strukturę?",
+        "q": "Czy przy okazji migracji zmieniać treści i strukturę?",
         "a": "Im mniej zmian naraz, tym łatwiej znaleźć przyczynę ewentualnego spadku. Jeśli to możliwe, najpierw przenieś stronę, a dopiero potem przebudowuj treści."
       }
     ]
@@ -67,7 +67,7 @@
       },
       {
         "h": "4. Launch day",
-        "body": "<ol><li>Ship the redirects together with the new site, not “in a few days”.</li><li>Remove the staging blocks: password, <code>noindex</code>, <code>Disallow: /</code>.</li><li>Check robots.txt and XML sitemaps in production. The sitemap should list new canonical URLs that return 200.</li><li>Crawl the list of old URLs and confirm each ends in a single redirect to a page returning 200.</li><li>For a domain change, use the Change of Address tool in Search Console and add the new domain as a property.</li><li>Submit the new sitemaps in Search Console.</li></ol>"
+        "body": "<ol><li>Ship the redirects together with the new site, not “in a few days”.</li><li>Remove the staging blocks: password, <code>noindex</code>, <code>Disallow: /</code>.</li><li>Check robots.txt and XML sitemaps in production. The sitemap should list new canonical URLs that return 200.</li><li>Crawl the list of old URLs and confirm each ends in a single redirect to a page returning 200.</li><li>For a domain change, add the new domain as a property in Search Console, then use the Change of Address tool.</li><li>Submit the new sitemaps in Search Console.</li></ol>"
       },
       {
         "h": "5. After launch: monitoring",

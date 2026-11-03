@@ -9,7 +9,7 @@
     "sections": [
       {
         "h": "1. Najpierw podstawy: indeksacja i dostęp",
-        "body": "<p>Według Google strona może pojawić się jako link w AI Overviews i AI Mode, jeśli jest zaindeksowana i może być pokazana w wynikach z fragmentem tekstu. Nie ma osobnych wymagań technicznych ani specjalnych znaczników. To oznacza, że wszystkie problemy z indeksacją, które szkodzą w zwykłych wynikach, szkodzą też w AI.</p><p>Inne asystenty mają własne boty. Jeśli zależy Ci na ChatGPT, Claude czy Perplexity, sprawdź, czy ich boty wyszukiwania mają dostęp do strony, i to nie tylko w robots.txt, ale też w firewallu i CDN. Pomoże Ci w tym mój <a href='/narzedzia/robots-txt-boty-ai/'>tester robots.txt dla botów AI</a> i poradnik <a href='/poradniki/boty-ai-robots-txt/'>boty AI w robots.txt</a>.</p>"
+        "body": "<p>Według Google strona może pojawić się jako link w AI Overviews i AI Mode, jeśli jest zaindeksowana i może być pokazana w wynikach z fragmentem tekstu. Nie ma osobnych wymagań technicznych ani specjalnych znaczników. To oznacza, że wszystkie problemy z indeksacją, które szkodzą w zwykłych wynikach, szkodzą też w AI.</p><p>Inni asystenci AI mają własne boty. Jeśli zależy Ci na ChatGPT, Claude czy Perplexity, sprawdź, czy ich boty wyszukiwania mają dostęp do strony, i to nie tylko w robots.txt, ale też w firewallu i CDN. Pomoże Ci w tym mój <a href='/narzedzia/robots-txt-boty-ai/'>tester robots.txt dla botów AI</a> i poradnik <a href='/poradniki/boty-ai-robots-txt/'>boty AI w robots.txt</a>.</p>"
       },
       {
         "h": "2. Treść widoczna bez JavaScriptu",
@@ -17,7 +17,7 @@
       },
       {
         "h": "3. Treść, którą łatwo zacytować",
-        "body": "<ul><li><strong>Konkretna odpowiedź na początku.</strong> Jeśli strona odpowiada na pytanie, niech odpowiedź będzie w pierwszym akapicie, a szczegóły niżej.</li><li><strong>Jasna struktura.</strong> Nagłówki, które mówią, o czym jest sekcja, listy i tabele tam, gdzie porządkują informacje.</li><li><strong>Własne informacje.</strong> Dane, doświadczenie, przykłady i ceny, których nie ma na dziesięciu innych stronach.</li><li><strong>Aktualność.</strong> Data aktualizacji i treść, która się jej zgadza.</li><li><strong>Autor i firma.</strong> Kto to pisze, czym się zajmuje i jak się skontaktować.</li></ul>"
+        "body": "<ul><li><strong>Konkretna odpowiedź na początku.</strong> Jeśli strona odpowiada na pytanie, niech odpowiedź będzie w pierwszym akapicie, a szczegóły niżej.</li><li><strong>Jasna struktura.</strong> Nagłówki, które mówią, o czym jest sekcja, listy i tabele tam, gdzie porządkują informacje.</li><li><strong>Własne informacje.</strong> Dane, doświadczenie, przykłady i ceny, których nie ma na dziesięciu innych stronach.</li><li><strong>Aktualność.</strong> Data aktualizacji i treść, która się z nią zgadza.</li><li><strong>Autor i firma.</strong> Kto to pisze, czym się zajmuje i jak się skontaktować.</li></ul>"
       },
       {
         "h": "4. Dane strukturalne i spójna informacja o marce",

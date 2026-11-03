@@ -1,7 +1,7 @@
 {
   "pl": {
     "metaTitle": "Tester hreflang: sprawdź tagi i mapę witryny",
-    "metaDescription": "Darmowy tester hreflang: wklej tagi link albo mapę witryny i sprawdź kody języków, linki zwrotne, self-reference, duplikaty i x-default.",
+    "metaDescription": "Darmowy tester hreflang: wklej tagi link albo mapę witryny i sprawdź kody języków, linki zwrotne, odwołanie do samej siebie, duplikaty i x-default.",
     "eyebrow": "Darmowe narzędzie",
     "title": "Tester hreflang",
     "lead": "Wklej tagi hreflang z jednej strony albo fragment mapy witryny XML. Sprawdzę kody języków i krajów, pełne adresy, linki zwrotne, odwołanie do samej siebie i x-default. Wszystko dzieje się w Twojej przeglądarce.",

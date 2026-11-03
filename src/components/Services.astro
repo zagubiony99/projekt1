@@ -15,6 +15,8 @@ const v = {
   richTitle: pl ? 'Buty do biegania Pegasus 41 – damskie' : 'Pegasus 41 running shoes – women’s',
   richReviews: pl ? '127 opinii' : '127 reviews',
   richStock: pl ? 'Dostępny' : 'In stock',
+  richRating: pl ? '4,8' : '4.8',
+  richPrice: pl ? '349 zł' : 'PLN 349',
   blocked: pl ? 'zatrzymane' : 'blocked',
   hub: pl ? 'Buty do biegania' : 'Running shoes',
   topics: pl
@@ -26,7 +28,7 @@ const v = {
   mcpArgs: pl ? 'miasto: "Kraków", max: 600000' : 'city: "Kraków", max: 600000',
   mcpRows: pl
     ? [['2 pokoje · 48 m² · Podgórze', '589 000 zł'], ['3 pokoje · 61 m² · Krowodrza', '598 000 zł']]
-    : [['2 rooms · 48 m² · Podgórze', '589,000 zł'], ['3 rooms · 61 m² · Krowodrza', '598,000 zł']],
+    : [['2 rooms · 48 m² · Podgórze', 'PLN 589,000'], ['3 rooms · 61 m² · Krowodrza', 'PLN 598,000']],
   // Home Assistant: a small dashboard
   haTiles: pl
     ? [['Salon', '21,5°'], ['Światło', 'wł.'], ['Słońce dziś', '18,4 kWh'], ['Drzwi', 'zamknięte']]
@@ -117,7 +119,7 @@ const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-
                 <div class="rich">
                   <p class="r-url">{v.richUrl}</p>
                   <p class="r-title">{v.richTitle}</p>
-                  <p class="r-meta"><span class="stars">★★★★★</span> 4,8 · {v.richReviews} · <b>349 zł</b> · <span class="instock">{v.richStock}</span></p>
+                  <p class="r-meta"><span class="stars">★★★★★</span> {v.richRating} · {v.richReviews} · <b>{v.richPrice}</b> · <span class="instock">{v.richStock}</span></p>
                   <ul class="r-ld">
                     {schemaTypes.map((ty, k) => <li style={`--k:${k}`}><span class="attr">"@type"</span>: <span class="val">"{ty}"</span> <span class="ok">✓</span></li>)}
                   </ul>

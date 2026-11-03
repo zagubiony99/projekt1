@@ -11,12 +11,13 @@ interface Props {
   eyebrowInH1?: boolean;
 }
 const { crumbs, eyebrow, title, lead, compact = false, eyebrowInH1 = true } = Astro.props;
+const pl = !Astro.url.pathname.startsWith('/en/');
 ---
 
 <section class:list={['ph', { compact }]} id="top">
   <div class="glow" aria-hidden="true"></div>
   <div class="wrap top">
-    <nav class="crumbs intro" aria-label="Breadcrumb">
+    <nav class="crumbs intro" aria-label={pl ? 'Ścieżka nawigacji' : 'Breadcrumb'}>
       {crumbs.map((c, i) => (
         <>
           {i > 0 && <span aria-hidden="true">›</span>}

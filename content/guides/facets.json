@@ -9,7 +9,7 @@
     "sections": [
       {
         "h": "Na czym polega problem",
-        "body": "<p>Każdy filtr dopisuje parametr albo fragment ścieżki do adresu. Przy kilku filtrach liczba możliwych kombinacji rośnie wykładniczo, a większość z nich to prawie identyczne listy produktów. Skutki:</p><ul><li>Googlebot zużywa crawl budget na nieistotne adresy, a nowe produkty i zmiany w kategoriach trafiają do indeksu później,</li><li>w indeksie lądują setki niemal identycznych stron,</li><li>siła linków wewnętrznych rozprasza się na tysiące adresów.</li></ul><p>Skalę problemu najlepiej widać w logach serwera: jaki odsetek wizyt Googlebota trafia w adresy z filtrami.</p>"
+        "body": "<p>Każdy filtr dopisuje parametr albo fragment ścieżki do adresu. Przy kilku filtrach liczba możliwych kombinacji rośnie wykładniczo, a większość z nich to prawie identyczne listy produktów. Skutki:</p><ul><li>Googlebot zużywa crawl budget na nieistotne adresy, a nowe produkty i zmiany w kategoriach trafiają do indeksu później,</li><li>w indeksie lądują setki niemal identycznych stron,</li><li>siła linków wewnętrznych rozprasza się na tysiące adresów.</li></ul><p>Skalę problemu najlepiej widać w logach serwera: jaki odsetek wizyt Googlebota trafia na adresy z filtrami.</p>"
       },
       {
         "h": "Które kombinacje indeksować",
@@ -25,7 +25,7 @@
       },
       {
         "h": "Jak sprawdzić, czy masz problem",
-        "body": "<ol><li>Wpisz w Google <code>site:twojsklep.pl inurl:?</code> i zobacz, ile adresów z parametrami jest w indeksie.</li><li>W raporcie indeksowania w Search Console sprawdź strony „zaindeksowane, ale niezgłoszone w mapie witryny” i duplikaty.</li><li>W logach serwera policz, jaki odsetek wizyt Googlebota trafia w adresy z filtrami.</li><li>Crawlem sprawdź, ile unikalnych adresów generują filtry w jednej kategorii.</li></ol><p>Filtry na PrestaShopie, Magento, WordPressie, Shoperze czy w sklepie autorskim konfiguruje się inaczej, ale zasady są te same. Jeśli chcesz to ułożyć u siebie, zobacz usługę <a href='/uslugi/seo-ecommerce/'>SEO dla e-commerce</a>.</p>"
+        "body": "<ol><li>Wpisz w Google <code>site:twojsklep.pl inurl:?</code> i zobacz, ile adresów z parametrami jest w indeksie.</li><li>W raporcie indeksowania w Search Console sprawdź filtr „Tylko strony niezgłoszone” (strony spoza mapy witryny) i duplikaty.</li><li>W logach serwera policz, jaki odsetek wizyt Googlebota trafia na adresy z filtrami.</li><li>Crawlem sprawdź, ile unikalnych adresów generują filtry w jednej kategorii.</li></ol><p>Filtry na PrestaShopie, Magento, WordPressie, Shoperze czy w sklepie autorskim konfiguruje się inaczej, ale zasady są te same. Jeśli chcesz to ułożyć u siebie, zobacz usługę <a href='/uslugi/seo-ecommerce/'>SEO dla e-commerce</a>.</p>"
       }
     ],
     "faq": [
@@ -59,7 +59,7 @@
       },
       {
         "h": "How to control the rest",
-        "body": "<table><thead><tr><th>Method</th><th>When</th><th>Watch out for</th></tr></thead><tbody><tr><td>robots.txt (<code>Disallow</code> for parameters)</td><td>When there are huge numbers of combinations and you don’t want Googlebot to visit them at all</td><td>A blocked URL can still be indexed without content, and Google won’t see its canonical or noindex</td></tr><tr><td><code>noindex</code></td><td>When there is a moderate number of URLs that should leave the index</td><td>Google has to visit the page to see noindex, so you don’t save crawl budget straight away</td></tr><tr><td>canonical to the category</td><td>When a combination differs only slightly, e.g. by sort order</td><td>It is only a hint. With a clearly different product list, Google may ignore it</td></tr><tr><td>No links to combinations</td><td>For filters that shouldn’t be indexed</td><td>A filter can work without an <code>&lt;a href&gt;</code> link, e.g. as a form or a URL fragment after <code>#</code>, which Google generally doesn’t treat as a separate page</td></tr></tbody></table><p>In practice a combination works best: indexable combinations with demand as normal links, and the remaining filters without links or blocked in robots.txt.</p>"
+        "body": "<table><thead><tr><th>Method</th><th>When</th><th>Watch out for</th></tr></thead><tbody><tr><td>robots.txt (<code>Disallow</code> for parameters)</td><td>When there are huge numbers of combinations and you don’t want Googlebot to visit them at all</td><td>A blocked URL can still be indexed without content, and Google won’t see its canonical or noindex</td></tr><tr><td><code>noindex</code></td><td>When there is a moderate number of URLs that should leave the index</td><td>Google has to visit the page to see noindex, so you don’t save crawl budget straight away</td></tr><tr><td>canonical to the category</td><td>When a combination differs only slightly, e.g. by sort order</td><td>It is only a hint. With a clearly different product list, Google may ignore it</td></tr><tr><td>No links to combinations</td><td>For filters that shouldn’t be indexed</td><td>A filter can work without an <code>&lt;a href&gt;</code> link, e.g. as a form or a URL fragment after <code>#</code>, which Google generally doesn’t treat as a separate page</td></tr></tbody></table><p>In practice a mix works best: indexable combinations with demand as normal links, and the remaining filters without links or blocked in robots.txt.</p>"
       },
       {
         "h": "Good practices people forget",
@@ -67,7 +67,7 @@
       },
       {
         "h": "How to tell if you have a problem",
-        "body": "<ol><li>Search Google for <code>site:yourstore.com inurl:?</code> and see how many parameter URLs are indexed.</li><li>In the Search Console indexing report, check pages “indexed, not submitted in sitemap” and duplicates.</li><li>In your server logs, count what share of Googlebot’s visits goes to filtered URLs.</li><li>Crawl one category and see how many unique URLs its filters generate.</li></ol><p>Filters on PrestaShop, Magento, WordPress, Shoper or a custom store are configured differently, but the principles are the same. If you want this set up properly, see the <a href='/en/services/ecommerce-seo/'>e-commerce SEO</a> service.</p>"
+        "body": "<ol><li>Search Google for <code>site:yourstore.com inurl:?</code> and see how many parameter URLs are indexed.</li><li>In the Search Console indexing report, use the “Unsubmitted pages only” filter (pages outside the sitemap) and check duplicates.</li><li>In your server logs, count what share of Googlebot’s visits goes to filtered URLs.</li><li>Crawl one category and see how many unique URLs its filters generate.</li></ol><p>Filters on PrestaShop, Magento, WordPress, Shoper or a custom store are configured differently, but the principles are the same. If you want this set up properly, see the <a href='/en/services/ecommerce-seo/'>e-commerce SEO</a> service.</p>"
       }
     ],
     "faq": [

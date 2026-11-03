@@ -51,7 +51,7 @@
       "Angielski"
     ],
     "guidesTitle": "Wiedza za darmo. Wdrożenie ze mną.",
-    "guidesLead": "Checklisty i narzędzie pokażą Ci, gdzie jest problem. Kiedy chcesz go rozwiązać, umów konsultację albo powierz mi cały projekt."
+    "guidesLead": "Checklisty i darmowe narzędzia pokażą Ci, gdzie jest problem. Kiedy chcesz go rozwiązać, umów konsultację albo powierz mi cały projekt."
   },
   "en": {
     "metaTitle": "About Maciej Zięciak, Technical SEO Consultant",
@@ -63,7 +63,7 @@
     "ctaSecondary": "See services",
     "storyTitle": "How I got here",
     "story": [
-      "I started in 2017 with my own project: a Polish business directory that I co-founded and where I was the only SEO specialist. It grew to more than 1.1 million pages, 670,000 URLs in Google's index and 115,000 organic visits a month. That is where I saw how scale changes SEO: crawl budget, templates and indexation stop being theory, and every mistake is multiplied by hundreds of thousands of URLs.",
+      "I started in 2017 with my own project: a Polish business directory that I co-founded and where I was the only SEO specialist. It grew to more than 1.1 million pages, 670,000 URLs in Google’s index and 115,000 organic visits a month. That is where I saw how scale changes SEO: crawl budget, templates and indexation stop being theory, and every mistake is multiplied by hundreds of thousands of URLs.",
       "In 2018–2019 I worked at an SEO agency in Kraków on online stores for the Polish and Czech markets. I ran audits, strategies and implementations on many e-commerce platforms, led client workshops and coordinated work in a 20-person team.",
       "Then came large organisations. At IG, as a Technical SEO Specialist, I optimised sites built on Adobe Experience Manager. At Accenture Song, first as a Senior Technical SEO Expert and then as a Digital Marketing Senior Strategy Analyst, I built SEO strategies for international brands. Alongside that, in 2020–2022, I ran my own consultancy: audits and advice.",
       "Since 2026 I have been working at Philip Morris International as Manager SEO & AI Search Operations. I run consultations myself, in English and Polish."
@@ -72,7 +72,7 @@
     "approach": [
       {
         "t": "Tasks, not reports",
-        "d": "You don't get an 80-page PDF. You get a list of issues ranked by their impact on traffic and revenue, with tickets ready for your developers."
+        "d": "You don’t get an 80-page PDF. You get a list of issues ranked by their impact on traffic and revenue, with tickets ready for your developers."
       },
       {
         "t": "Directly with me",

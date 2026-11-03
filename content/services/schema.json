@@ -14,7 +14,7 @@
     "metaDescription": "Projekt i wdrożenie danych strukturalnych Schema.org (JSON-LD): produkty, usługi, organizacja, FAQ. Rich results w Google i marka, którą AI rozumie.",
     "eyebrow": "Dane strukturalne (Schema.org)",
     "title": "Powiedz Google i AI wprost, kim jesteś.",
-    "lead": "Dane strukturalne to język, w którym strona opisuje się wyszukiwarkom i modelom AI. Dobrze zaprojektowane dają rich results w Google i pomagają AI poprawnie przedstawić Twoją markę. Źle wdrożone nie dają nic albo zbierają błędy w Search Console.",
+    "lead": "Dane strukturalne to język, w którym strona opisuje się wyszukiwarkom i modelom AI. Dobrze zaprojektowane mogą dać rich results w Google i pomagają AI poprawnie przedstawić Twoją markę. Źle wdrożone nie dają nic albo zbierają błędy w Search Console.",
     "painTitle": "Brzmi znajomo?",
     "pains": [
       "Search Console pokazuje błędy i ostrzeżenia w danych strukturalnych, a nikt ich nie naprawia.",
@@ -42,7 +42,7 @@
         "d": "Spójne informacje o firmie i powiązania z profilami zewnętrznymi, żeby Google i AI jednoznacznie Cię rozpoznawały."
       },
       {
-        "t": "Walidację na skalę",
+        "t": "Walidację w dużej skali",
         "d": "Sprawdzenie tysięcy stron crawlem, a nie pojedynczych adresów w testerze."
       },
       {
@@ -70,7 +70,7 @@
       {
         "t": "Walidacja",
         "when": "Po wdrożeniu",
-        "d": "Crawl testowy, raporty w Search Console i poprawki, aż wszystko jest czyste."
+        "d": "Crawl testowy, raporty w Search Console i poprawki, aż wszystko będzie bez błędów."
       }
     ],
     "forTitle": "Dla kogo to jest",
@@ -118,7 +118,7 @@
     "metaDescription": "Schema.org structured data (JSON-LD) designed and implemented: products, services, organisation, FAQ. Rich results in Google and a brand AI understands.",
     "eyebrow": "Structured data (Schema.org)",
     "title": "Tell Google and AI exactly who you are.",
-    "lead": "Structured data is how a website describes itself to search engines and AI models. Designed well, it earns rich results in Google and helps AI describe your brand correctly. Done badly, it does nothing or piles up errors in Search Console.",
+    "lead": "Structured data is how a website describes itself to search engines and AI models. Designed well, it can earn rich results in Google and helps AI describe your brand correctly. Done badly, it does nothing or piles up errors in Search Console.",
     "painTitle": "Sound familiar?",
     "pains": [
       "Search Console shows structured data errors and warnings that nobody fixes.",
@@ -163,12 +163,12 @@
       },
       {
         "t": "Data model",
-        "when": "Week 1–2",
+        "when": "Weeks 1–2",
         "d": "Types and relationships designed around your business and the results you care about."
       },
       {
         "t": "Templates and tickets",
-        "when": "Week 2–3",
+        "when": "Weeks 2–3",
         "d": "JSON-LD templates and dev tickets, or configuration in your CMS."
       },
       {

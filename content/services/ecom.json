@@ -2,7 +2,7 @@
   "pl": {
     "name": "SEO dla e-commerce",
     "card": {
-      "desc": "Kategorie, filtry i karty produktów ułożone tak, żeby Google trafiał tam, gdzie sprzedajesz. Znam PrestaShop, Magento, WordPressa, Shopera, RedCart i systemy autorskie.",
+      "desc": "Kategorie, filtry i karty produktów ułożone tak, żeby Google trafiał tam, gdzie sprzedajesz. Znam platformy PrestaShop, Magento, WordPress, Shoper, RedCart i systemy autorskie.",
       "tags": [
         "Kategorie i filtry",
         "Karty produktów",
@@ -42,7 +42,7 @@
       },
       {
         "t": "Wytyczne dla Twojej platformy",
-        "d": "Konkretne ustawienia dla PrestaShop, Magento, WordPressa, Shopera, RedCart albo systemu autorskiego."
+        "d": "Konkretne ustawienia dla platform PrestaShop, Magento, WordPress, Shoper, RedCart albo systemu autorskiego."
       },
       {
         "t": "Priorytety według przychodu",
@@ -82,7 +82,7 @@
     "forNo": [
       "Sklepy z kilkunastoma produktami, gdzie lepiej sprawdzi się kampania płatna"
     ],
-    "proof": "W agencji SEO w Krakowie odpowiadałem za SEO sklepów na rynkach polskim i czeskim: audyty, strategie i wdrożenia na PrestaShop, Magento, WordPress, Shoper, RedCart i systemach autorskich.",
+    "proof": "W agencji SEO w Krakowie odpowiadałem za SEO sklepów na rynkach polskim i czeskim: audyty, strategie i wdrożenia na platformach PrestaShop, Magento, WordPress, Shoper, RedCart i systemach autorskich.",
     "faq": [
       {
         "q": "Z jakimi platformami pracujesz?",
@@ -157,12 +157,12 @@
       },
       {
         "t": "Store audit",
-        "when": "Week 1–3",
+        "when": "Weeks 1–3",
         "d": "Structure, filters, indexation, templates and platform configuration."
       },
       {
         "t": "Plan",
-        "when": "Week 3–4",
+        "when": "Weeks 3–4",
         "d": "Tickets for the team and priority content, ordered by revenue."
       },
       {
