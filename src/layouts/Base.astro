@@ -1,5 +1,8 @@
 ---
 import '@fontsource-variable/inter-tight/index.css';
+// Preloaded so the text does not reflow when the web font arrives (latin-ext carries Polish letters)
+import fontLatin from '@fontsource-variable/inter-tight/files/inter-tight-latin-wght-normal.woff2?url';
+import fontLatinExt from '@fontsource-variable/inter-tight/files/inter-tight-latin-ext-wght-normal.woff2?url';
 import '../styles/global.css';
 import { site } from '../config';
 import { getDict, otherLang, type Lang } from '../i18n';
@@ -117,6 +120,8 @@ const jsonLd = {
 <html lang={lang === 'pl' ? 'pl' : 'en-GB'}>
   <head>
     <meta charset="utf-8" />
+    <link rel="preload" href={fontLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={fontLatinExt} as="font" type="font/woff2" crossorigin />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />

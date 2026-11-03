@@ -44,7 +44,7 @@
       },
       {
         "t": "Energia i koszty",
-        "d": "Pomiar zużycia gazu i prądu w złotówkach, ogrzewanie w trybach i harmonogramach dla każdego pokoju oraz automatyzacje, które obniżają rachunki."
+        "d": "Pomiar zużycia gazu i prądu w złotówkach, ogrzewanie w trybach i harmonogramach dla każdego pokoju oraz automatyzacje, które pomagają obniżyć rachunki."
       },
       {
         "t": "Montaż w Krakowie",
@@ -132,7 +132,7 @@
       ],
       "feature": {
         "t": "Energia i koszty pod kontrolą",
-        "lead": "Tym zajmuję się najwięcej. Sprawdzam, ile energii zużywa dom i ile to kosztuje, a potem ustawiam automatyzacje, które obniżają rachunki.",
+        "lead": "Tym zajmuję się najwięcej. Sprawdzam, ile energii zużywa dom i ile to kosztuje, a potem testuję automatyzacje, które mają obniżyć rachunki.",
         "items": [
           "Licznik gazu w m³ i zł, skalibrowany na prawdziwych fakturach: koszt ogrzewania widać na bieżąco, dzień po dniu.",
           "Zużycie prądu przez poszczególne urządzenia (Powercalc): widać, co zużywa najwięcej energii i ile to kosztuje.",
@@ -283,7 +283,7 @@
       },
       {
         "t": "Energy and costs",
-        "d": "Gas and electricity use measured in PLN, heating modes and schedules for every room, and automations that bring the bills down."
+        "d": "Gas and electricity use measured in PLN, heating modes and schedules for every room, and automations that help bring the bills down."
       },
       {
         "t": "Installation in Kraków",
@@ -371,7 +371,7 @@
       ],
       "feature": {
         "t": "Energy and costs under control",
-        "lead": "This is where I spend most of my time. I check how much energy the home uses and what it costs, then set up automations that bring the bills down.",
+        "lead": "This is where I spend most of my time. I check how much energy the home uses and what it costs, then test automations meant to bring the bills down.",
         "items": [
           "A gas meter in m³ and PLN, calibrated against real bills: heating costs are visible as they happen, day by day.",
           "Electricity use per device (Powercalc): you see what uses the most energy and what it costs.",
