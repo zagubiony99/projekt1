@@ -472,6 +472,7 @@ SERVICE_LOCAL = SERVICE + [
         items('stats', 'Liczby', [s('v', 'Wartość'), s('k', 'Opis')]),
         obj('feature', 'Główny temat (duży panel)', [s('t', 'Nagłówek'), t('lead', 'Wstęp'), {'name': 'items', 'label': 'Punkty', 'type': 'text', 'list': True}]),
         items('groups', 'Rozwiązania', [s('t', 'Nazwa'), t('d', 'Opis')]),
+        obj('next', 'Następny projekt', [s('eyebrow', 'Etykieta'), s('t', 'Nagłówek'), t('d', 'Opis'), s('cta', 'Przycisk')]),
         s('note', 'Dopisek (np. stan na dzień)'),
     ]),
     obj('offer', 'Oferta i ceny', [

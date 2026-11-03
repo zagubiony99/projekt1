@@ -43,8 +43,8 @@
         "d": "Światło, ogrzewanie, rolety, powiadomienia i scenariusze „wychodzę z domu”, które działają przewidywalnie i łatwo je zmienić."
       },
       {
-        "t": "Ogrzewanie i energia",
-        "d": "Tryby i harmonogramy ogrzewania dla każdego pokoju oraz panel energii: gaz, prąd, fotowoltaika i taryfa. Widzisz koszty i wiesz, co je obniża."
+        "t": "Energia i koszty",
+        "d": "Pomiar zużycia gazu i prądu w złotówkach, ogrzewanie w trybach i harmonogramach dla każdego pokoju oraz automatyzacje, które obniżają rachunki."
       },
       {
         "t": "Montaż w Krakowie",
@@ -131,14 +131,15 @@
         }
       ],
       "feature": {
-        "t": "Ogrzewanie i koszty",
-        "lead": "Tym zajmuję się najwięcej. Ciepło ma być wtedy, kiedy trzeba, a rachunek ma być niższy.",
+        "t": "Energia i koszty pod kontrolą",
+        "lead": "Tym zajmuję się najwięcej. Sprawdzam, ile energii zużywa dom i ile to kosztuje, a potem ustawiam automatyzacje, które obniżają rachunki.",
         "items": [
-          "Kilka trybów: Harmonogram, Komfort, Eco i Wyjazd, z osobną temperaturą dla każdego pokoju, np. chłodniej w sypialni w nocy.",
-          "Piec sterowany lokalnie, bez chmury producenta, i głowice termostatyczne w każdym pokoju.",
-          "Wykrywanie otwartego okna po nagłym spadku temperatury: grzanie na chwilę się wyłącza.",
-          "Grzanie według prognozy: startuje wcześniej przy mrozie i przechodzi w Eco, gdy jest ciepło albo nikogo nie ma w domu.",
-          "Licznik gazu w m³ i zł, skalibrowany na prawdziwych fakturach: koszt ogrzewania widać na bieżąco, tak samo jak to, ile dała zmiana ustawień."
+          "Licznik gazu w m³ i zł, skalibrowany na prawdziwych fakturach: koszt ogrzewania widać na bieżąco, dzień po dniu.",
+          "Zużycie prądu przez poszczególne urządzenia (Powercalc): widać, co zużywa najwięcej energii i ile to kosztuje.",
+          "Przed i po: po każdej zmianie ustawień widać, ile naprawdę dała.",
+          "Ogrzewanie w kilku trybach: Harmonogram, Komfort, Eco i Wyjazd, z osobną temperaturą dla każdego pokoju, np. chłodniej w sypialni w nocy.",
+          "Wykrywanie otwartego okna i grzanie według prognozy: piec nie grzeje na darmo, gdy okno jest otwarte, na dworze jest ciepło albo nikogo nie ma w domu.",
+          "Piec sterowany lokalnie, bez chmury producenta, i głowice termostatyczne w każdym pokoju."
         ]
       },
       "groups": [
@@ -179,6 +180,12 @@
           "d": "Docker na małym serwerze, dostęp spoza domu przez VPN (Tailscale) bez otwierania portów, kopie zapasowe co noc, UPS i blokowanie reklam w całej sieci."
         }
       ],
+      "next": {
+        "eyebrow": "Następny projekt",
+        "t": "Sauna z Home Assistant",
+        "d": "Jestem wielkim fanem sauny i marzy mi się ustawienie dla niej Home Assistant: nagrzewanie zaplanowane na konkretną godzinę, temperatura i wilgotność na telefonie, powiadomienie, gdy sauna jest gotowa, i koszt każdego seansu. Zdalne sterowanie piecem do sauny wymaga zabezpieczeń, więc zaczynam od sprawdzenia, na co pozwala producent.",
+        "cta": "Masz saunę? Napisz do mnie"
+      },
       "note": "Stan na listopad 2026 r."
     },
     "offer": {
@@ -275,8 +282,8 @@
         "d": "Lighting, heating, blinds, notifications and “leaving home” scenes that behave predictably and are easy to change."
       },
       {
-        "t": "Heating and energy",
-        "d": "Heating modes and schedules for every room, plus an energy dashboard: gas, electricity, solar and your tariff. You see the costs and know what brings them down."
+        "t": "Energy and costs",
+        "d": "Gas and electricity use measured in PLN, heating modes and schedules for every room, and automations that bring the bills down."
       },
       {
         "t": "Installation in Kraków",
@@ -363,14 +370,15 @@
         }
       ],
       "feature": {
-        "t": "Heating and costs",
-        "lead": "This is where I spend most of my time. Warmth when you need it, and a lower bill.",
+        "t": "Energy and costs under control",
+        "lead": "This is where I spend most of my time. I check how much energy the home uses and what it costs, then set up automations that bring the bills down.",
         "items": [
-          "Several modes: Schedule, Comfort, Eco and Away, with a separate target for each room, e.g. cooler in the bedroom at night.",
-          "A boiler controlled locally, without the maker’s cloud, and smart radiator valves in every room.",
-          "Open-window detection from a sudden temperature drop: heating pauses for a while.",
-          "Forecast-based heating: it starts earlier when it is freezing and switches to Eco when it is warm or nobody is home.",
-          "A gas meter in m³ and PLN, calibrated against real bills: you see heating costs as they happen, and what each change of settings saved."
+          "A gas meter in m³ and PLN, calibrated against real bills: heating costs are visible as they happen, day by day.",
+          "Electricity use per device (Powercalc): you see what uses the most energy and what it costs.",
+          "Before and after: after every change of settings you see what it actually saved.",
+          "Heating in several modes: Schedule, Comfort, Eco and Away, with a separate target for each room, e.g. cooler in the bedroom at night.",
+          "Open-window detection and forecast-based heating: the boiler does not heat for nothing when a window is open, it is warm outside or nobody is home.",
+          "A boiler controlled locally, without the maker’s cloud, and smart radiator valves in every room."
         ]
       },
       "groups": [
@@ -411,6 +419,12 @@
           "d": "Docker on a small server, remote access over a VPN (Tailscale) with no open ports, nightly backups, a UPS and network-wide ad blocking."
         }
       ],
+      "next": {
+        "eyebrow": "Next project",
+        "t": "A sauna run by Home Assistant",
+        "d": "I am a big sauna fan, and my dream is to set up Home Assistant for one: heating scheduled for a set time, temperature and humidity on your phone, a notification when the sauna is ready and the cost of every session. Remote control of a sauna heater needs proper safety measures, so I start by checking what the manufacturer allows.",
+        "cta": "Have a sauna? Get in touch"
+      },
       "note": "As of November 2026."
     },
     "offer": {

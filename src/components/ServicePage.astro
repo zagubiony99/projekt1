@@ -181,6 +181,14 @@ const extraLd = [
               </li>
             ))}
           </ul>
+          {s.showcase.next && (
+            <div class="show-next" data-reveal>
+              <p class="show-next-e">{s.showcase.next.eyebrow}</p>
+              <h3>{s.showcase.next.t}</h3>
+              <p>{s.showcase.next.d}</p>
+              <a class="btn" href={`#${t.ids.contact}`} data-topic={pair.topic[lang]}>{s.showcase.next.cta}</a>
+            </div>
+          )}
           <p class="show-note" data-reveal>{s.showcase.note}</p>
         </div>
       </section>
@@ -760,6 +768,42 @@ const extraLd = [
     color: var(--dark-muted);
     font-size: 0.9375rem;
     line-height: 1.5;
+  }
+  /* the next project: a warm card, like heat from a sauna stove */
+  .show-next {
+    display: grid;
+    justify-items: start;
+    gap: 12px;
+    margin-top: 16px;
+    padding: clamp(28px, 4vw, 48px);
+    border-radius: var(--r-lg);
+    background:
+      radial-gradient(90% 140% at 100% 0%, rgb(255 140 60 / 0.35), transparent 60%),
+      radial-gradient(70% 120% at 0% 100%, rgb(255 90 60 / 0.18), transparent 60%),
+      rgb(255 255 255 / 0.05);
+    border: 1px solid rgb(255 160 90 / 0.35);
+  }
+  .show-next-e {
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgb(255 160 90 / 0.18);
+    color: #ffc79a;
+    font-size: 0.8125rem;
+    font-weight: 650;
+  }
+  .show-next h3 {
+    font-size: clamp(1.75rem, 1.3rem + 1.5vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .show-next p:not(.show-next-e) {
+    max-width: 70ch;
+    color: var(--on-dark-2);
+    line-height: 1.55;
+  }
+  .show-next .btn {
+    margin-top: 6px;
   }
   .show-note {
     margin-top: 24px;

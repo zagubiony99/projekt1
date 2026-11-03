@@ -3585,6 +3585,22 @@ content:
             label: Opis
             type: text
           list: true
+        - name: next
+          label: Następny projekt
+          type: object
+          fields:
+          - name: eyebrow
+            label: Etykieta
+            type: string
+          - name: t
+            label: Nagłówek
+            type: string
+          - name: d
+            label: Opis
+            type: text
+          - name: cta
+            label: Przycisk
+            type: string
         - name: note
           label: Dopisek (np. stan na dzień)
           type: string
@@ -3800,6 +3816,22 @@ content:
             label: Opis
             type: text
           list: true
+        - name: next
+          label: Następny projekt
+          type: object
+          fields:
+          - name: eyebrow
+            label: Etykieta
+            type: string
+          - name: t
+            label: Nagłówek
+            type: string
+          - name: d
+            label: Opis
+            type: text
+          - name: cta
+            label: Przycisk
+            type: string
         - name: note
           label: Dopisek (np. stan na dzień)
           type: string
