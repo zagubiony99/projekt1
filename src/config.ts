@@ -6,6 +6,7 @@ import settings from '../content/site.json';
 type Settings = {
   name: string;
   email: string;
+  company?: string;
   linkedin?: string;
   photo?: string;
   formEndpoint?: string;
@@ -16,6 +17,7 @@ type Settings = {
 
 const merged = {
   linkedin: '',
+  company: '',
   photo: '',
   formEndpoint: '',
   formAccessKey: '',

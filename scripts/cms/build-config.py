@@ -49,6 +49,7 @@ def items(name, label, fields, desc=None):  # list of objects
 SITE = [
     s('name', 'Imię i nazwisko', 'Pojawia się w menu, stopce, tytułach stron i danych strukturalnych.', required=True),
     s('email', 'E-mail kontaktowy', 'Adres w stopce, formularzu i polityce prywatności.', required=True),
+    s('company', 'Dane firmy do polityki prywatności', 'Np. Maciej Zięciak Consulting, ul. Przykładowa 1, 30-000 Kraków, NIP 0000000000. Puste = tylko imię i nazwisko.'),
     s('linkedin', 'Profil LinkedIn', 'Pełny adres, np. https://www.linkedin.com/in/… Puste = ukryty. Trafia też do schema (sameAs).'),
     {'name': 'photo', 'label': 'Zdjęcie', 'type': 'image',
      'description': 'Portret: pokazuje się w sekcji Doświadczenie, przy formularzu kontaktowym i w „Dlaczego ja” na podstronach usług, trafia też do schema. Najlepiej min. 1000×1000 px, twarz w górnej części kadru. Strona sama przytnie i odchudzi plik.'},

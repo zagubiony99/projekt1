@@ -23,6 +23,10 @@ content:
     type: string
     required: true
     description: Adres w stopce, formularzu i polityce prywatności.
+  - name: company
+    label: Dane firmy do polityki prywatności
+    type: string
+    description: Np. Maciej Zięciak Consulting, ul. Przykładowa 1, 30-000 Kraków, NIP 0000000000. Puste = tylko imię i nazwisko.
   - name: linkedin
     label: Profil LinkedIn
     type: string
