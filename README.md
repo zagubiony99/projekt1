@@ -113,6 +113,8 @@ Po `npm run build` uruchom `python3 scripts/seo-audit.py dist`. Skrypt sprawdza 
 
 Logikę narzędzi (robots.txt, generator, hreflang) sprawdza `npm test`: 35 przypadków, bez dodatkowych zależności.
 
+Linkowanie między wersjami PL i EN sprawdza `python3 scripts/lang-check.py dist`: język strony, canonical, pary hreflang i linki zwrotne, x-default, przełącznik języka (czy prowadzi do odpowiednika strony), linki w złym języku i zgodność mapy witryny.
+
 Pliki dla wyszukiwarek i AI generują się same przy buildzie: `sitemap-index.xml` (z hreflang dla wszystkich par PL/EN), `robots.txt`, `llms.txt` (mapa serwisu dla asystentów AI) i `404.html`.
 
 ## Wdrożenie
