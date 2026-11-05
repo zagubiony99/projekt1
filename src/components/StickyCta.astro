@@ -22,7 +22,7 @@ const t = getDict(Astro.props.lang);
     gap: 12px;
     padding: 10px 10px 10px 18px;
     border-radius: 999px;
-    background: rgb(29 29 31 / 0.82);
+    background: rgb(30 29 27 / 0.86);
     backdrop-filter: blur(20px) saturate(1.6);
     -webkit-backdrop-filter: blur(20px) saturate(1.6);
     color: var(--on-dark);
@@ -30,6 +30,7 @@ const t = getDict(Astro.props.lang);
     font-weight: 600;
     box-shadow: 0 16px 40px -12px rgb(0 0 0 / 0.5);
     transform: translateY(140%);
+    pointer-events: none;
     transition: transform 0.5s var(--ease-out);
   }
   .sticky-cta .btn {
@@ -39,6 +40,7 @@ const t = getDict(Astro.props.lang);
   }
   .sticky-cta.on {
     transform: none;
+    pointer-events: auto;
   }
   :global(.consent-open) .sticky-cta {
     transform: translateY(140%);

@@ -2,6 +2,23 @@ const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 
+/* ---------- A new page starts at the top ---------- */
+// Some embeds (e.g. preview frames) carry the old scroll position over to the next page, so a
+// footer link would open the new page near its bottom. Back/forward keeps the browser's own
+// restore, and links to a section (#hash) keep landing on that section.
+try {
+  const nav0 = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
+  if (!location.hash && nav0?.type !== 'back_forward') {
+    const top = () => { if (window.scrollY > 0) window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior }); };
+    top();
+    window.addEventListener('load', top, { once: true });
+    // a late restore by the embedding page lands after load: undo it once, unless the visitor already scrolled
+    let touched = false;
+    ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((ev) => window.addEventListener(ev, () => (touched = true), { once: true, passive: true }));
+    setTimeout(() => { if (!touched) top(); }, 400);
+  }
+} catch {}
+
 /* ---------- Nav: mobile sheet ---------- */
 const nav = document.querySelector<HTMLElement>('[data-nav]');
 const burger = document.querySelector<HTMLButtonElement>('[data-burger]');
@@ -314,16 +331,20 @@ if (finePointer && !reduce) {
   });
 }
 
-/* ---------- Sticky mobile CTA: visible after the hero, hidden over the contact form ---------- */
+/* ---------- Sticky mobile CTA: visible after the hero, hidden over the contact form and the footer ---------- */
+// (over the footer it would cover the bottom links, e.g. "Back to top", and swallow their taps)
 const sticky = document.querySelector<HTMLElement>('[data-sticky]');
 if (sticky) {
-  const contactEl = document.querySelector('.contact');
   let pastHero = false;
-  let atContact = false;
-  const sync = () => sticky.classList.toggle('on', pastHero && !atContact);
+  const covered = new Set<Element>();
+  const sync = () => sticky.classList.toggle('on', pastHero && covered.size === 0);
   const heroEl = document.querySelector('[data-hero], .sv-hero');
   if (heroEl) new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting; sync(); }).observe(heroEl);
-  if (contactEl) new IntersectionObserver(([e]) => { atContact = e.isIntersecting; sync(); }, { threshold: 0.05 }).observe(contactEl);
+  const hideOver = new IntersectionObserver((entries) => {
+    entries.forEach((e) => (e.isIntersecting ? covered.add(e.target) : covered.delete(e.target)));
+    sync();
+  }, { threshold: 0.01 });
+  document.querySelectorAll('.contact, footer').forEach((el) => hideOver.observe(el));
 }
 
 /* ---------- Measurement: first-touch campaign source + click events for GTM ---------- */
