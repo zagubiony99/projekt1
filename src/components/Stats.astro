@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import { getDict, type Lang } from '../i18n';
+import { toolLogo } from '../data/tools';
 interface Props { lang: Lang }
 const t = getDict(Astro.props.lang);
 ---
@@ -19,7 +21,18 @@ const t = getDict(Astro.props.lang);
       <div class="marquee">
         {[0, 1].map((k) => (
           <ul aria-hidden={k === 1 ? 'true' : undefined}>
-            {[...t.tools.items, ...t.tools.items].map((n) => <li>{n}</li>)}
+            {[...t.tools.items, ...t.tools.items].map((n) => {
+              const logo = toolLogo(n);
+              return logo ? (
+                logo.width / logo.height < 1.6 ? (
+                  <li class="logo icon"><Image src={logo} alt="" height={40} width={Math.round(40 * logo.width / logo.height)} loading="lazy" />{n}</li>
+                ) : (
+                  <li class="logo"><Image src={logo} alt={n} height={40} width={Math.round(40 * logo.width / logo.height)} loading="lazy" /></li>
+                )
+              ) : (
+                <li>{n}</li>
+              );
+            })}
           </ul>
         ))}
       </div>
@@ -43,7 +56,7 @@ const t = getDict(Astro.props.lang);
   dd {
     font-size: clamp(3rem, 2rem + 3vw, 5rem);
     font-weight: 700;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.025em;
     line-height: 1;
     font-variant-numeric: tabular-nums;
   }
@@ -89,12 +102,36 @@ const t = getDict(Astro.props.lang);
     white-space: nowrap;
     font-size: clamp(1.375rem, 1.1rem + 1vw, 2rem);
     font-weight: 650;
-    letter-spacing: -0.035em;
-    color: #86868b;
+    letter-spacing: -0.018em;
+    color: var(--dark-muted);
     transition: color 0.3s;
   }
   .tools li:hover {
     color: var(--ink);
+  }
+  /* logos: grey like the text, brand colours on hover */
+  .tools li.logo {
+    display: flex;
+    align-items: center;
+  }
+  .tools li.logo img {
+    height: clamp(28px, 2.2vw, 36px);
+    width: auto;
+    filter: grayscale(1) opacity(0.55);
+    transition: filter 0.3s;
+  }
+  .tools li.logo:hover img {
+    filter: none;
+  }
+  .tools li.icon {
+    gap: 0.4em;
+  }
+  .tools li.icon img {
+    height: 0.9em;
+    filter: grayscale(1) brightness(0.75) opacity(0.8);
+  }
+  .tools li.icon:hover img {
+    filter: none;
   }
   @media (max-width: 860px) {
     .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }

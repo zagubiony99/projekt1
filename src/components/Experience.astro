@@ -1,10 +1,20 @@
 ---
 import { getDict, type Lang } from '../i18n';
 import Portrait from './Portrait.astro';
-interface Props { lang: Lang }
+import { pageRoutes } from '../data/routes';
+import { Image } from 'astro:assets';
+import { logos } from '../data/logos';
+interface Props { lang: Lang; more?: boolean }
 const t = getDict(Astro.props.lang);
 const e = t.experience;
 // Big sticky years: an open-ended range reads better (and fits) as "Since 2026"
+// Company mark: the brand logo when we have one (Accenture, IG), the initials for a long name (PMI),
+// otherwise a small neutral glyph. PMI has no logo on purpose (current employer).
+const logoFor = (org: string) => logos.find((l) => org.toLowerCase().startsWith(l.name.toLowerCase()));
+const initials = (org: string) => {
+  const caps = org.split(/\s+/).filter((w) => /^[A-ZĄĆĘŁŃÓŚŹŻ]/.test(w));
+  return caps.length >= 3 ? caps.map((w) => w[0]).join('') : '';
+};
 const big = (when: string) => when.replace(/^(\d{4})\s*—\s*(obecnie|present)$/i, Astro.props.lang === 'pl' ? 'Od $1' : 'Since $1');
 ---
 
@@ -19,6 +29,7 @@ const big = (when: string) => when.replace(/^(\d{4})\s*—\s*(obecnie|present)$/
         <p class="ind-l">{e.industriesLabel}</p>
         <ul aria-label={e.industriesLabel}>{e.industries.map((x) => <li>{x}</li>)}</ul>
       </div>
+      {Astro.props.more && <a class="more about" href={pageRoutes.about[Astro.props.lang]} data-reveal style="--d:3">{e.more}</a>}
     </header>
 
     <div class="layout" data-exp>
@@ -27,8 +38,18 @@ const big = (when: string) => when.replace(/^(\d{4})\s*—\s*(obecnie|present)$/
         <div class="now">
           {e.items.map((it, i) => (
             <div class:list={['slide', { on: i === 0 }]} data-slide>
+              <span class:list={['mark', 'mk-lg', { logo: !!logoFor(it.org) }]} aria-hidden="true">
+                {logoFor(it.org) ? (
+                  <Image src={logoFor(it.org)!.color} alt="" height={112} width={Math.round(112 * logoFor(it.org)!.color.width / logoFor(it.org)!.color.height)} />
+                ) : initials(it.org) ? (
+                  <b>{initials(it.org)}</b>
+                ) : (
+                  <svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z" /></svg>
+                )}
+              </span>
               <p class="yr">{big(it.when)}</p>
               <p class="org">{it.org}</p>
+              <p class="orole">{it.role}</p>
             </div>
           ))}
         </div>
@@ -38,8 +59,21 @@ const big = (when: string) => when.replace(/^(\d{4})\s*—\s*(obecnie|present)$/
       <ol class="list">
         {e.items.map((it) => (
           <li class:list={['job', { hl: 'highlight' in it && it.highlight }]} data-job data-reveal>
-            <p class="when">{it.when}</p>
-            <h3 class="jorg">{it.org}</h3>
+            <div class="jhead">
+              <span class:list={['mark', 'mk-sm', { logo: !!logoFor(it.org) }]} aria-hidden="true">
+                {logoFor(it.org) ? (
+                  <Image src={logoFor(it.org)!.color} alt="" height={60} width={Math.round(60 * logoFor(it.org)!.color.width / logoFor(it.org)!.color.height)} />
+                ) : initials(it.org) ? (
+                  <b>{initials(it.org)}</b>
+                ) : (
+                  <svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z" /></svg>
+                )}
+              </span>
+              <div>
+                <p class="when">{it.when}</p>
+                <h3 class="jorg">{it.org}</h3>
+              </div>
+            </div>
             <p class="role">{it.role}</p>
             <p class="desc">{it.desc}</p>
           </li>
@@ -50,6 +84,9 @@ const big = (when: string) => when.replace(/^(\d{4})\s*—\s*(obecnie|present)$/
 </section>
 
 <style>
+  .about {
+    margin-top: 20px;
+  }
   /* industries: quiet pill row under the intro */
   .ind {
     display: grid;
@@ -75,7 +112,7 @@ const big = (when: string) => when.replace(/^(\d{4})\s*—\s*(obecnie|present)$/
     background: var(--gray);
     font-size: 0.875rem;
     font-weight: 500;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.005em;
   }
   .head :global(.me) {
     margin-bottom: 14px;
@@ -94,7 +131,62 @@ const big = (when: string) => when.replace(/^(\d{4})\s*—\s*(obecnie|present)$/
   }
   .now {
     position: relative;
-    height: clamp(150px, 16vw, 210px);
+    height: clamp(250px, 26vw, 320px);
+  }
+  /* company mark: logo tile, initials or a neutral glyph */
+  .mark {
+    display: grid;
+    place-items: center;
+    flex: none;
+    border-radius: 18px;
+    background: var(--white);
+    box-shadow: inset 0 0 0 1px var(--gray-2), 0 10px 24px -16px rgb(0 0 0 / 0.25);
+    overflow: hidden;
+  }
+  .mark img {
+    width: auto;
+    max-width: 78%;
+    max-height: 62%;
+    object-fit: contain;
+  }
+  /* wide wordmarks (Accenture) need more of the tile to stay legible */
+  .mark.logo img[width] {
+    max-width: 88%;
+  }
+  .mark b {
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    background: var(--ai);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .mark svg {
+    width: 44%;
+    fill: var(--a2);
+  }
+  .mk-lg {
+    width: 88px;
+    height: 88px;
+    margin-bottom: 22px;
+    border-radius: 24px;
+  }
+  .mk-lg b { font-size: 1.5rem; }
+  .mk-sm {
+    width: 52px;
+    height: 52px;
+    border-radius: 15px;
+  }
+  .mk-sm b { font-size: 0.9375rem; }
+  .orole {
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 1.0625rem;
+  }
+  .jhead {
+    display: flex;
+    align-items: center;
+    gap: 16px;
   }
   .slide {
     position: absolute;
@@ -116,7 +208,7 @@ const big = (when: string) => when.replace(/^(\d{4})\s*—\s*(obecnie|present)$/
     font-size: clamp(2.5rem, 1.2rem + 3.6vw, 4.5rem);
     white-space: nowrap;
     font-weight: 700;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.025em;
     line-height: 1;
     background: var(--ai);
     -webkit-background-clip: text;
@@ -129,7 +221,7 @@ const big = (when: string) => when.replace(/^(\d{4})\s*—\s*(obecnie|present)$/
     margin-top: 10px;
     font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.75rem);
     font-weight: 600;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.015em;
   }
   .dots {
     display: flex;
@@ -156,9 +248,30 @@ const big = (when: string) => when.replace(/^(\d{4})\s*—\s*(obecnie|present)$/
     background: var(--gray);
     transition: background-color 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out), opacity 0.5s;
   }
+  .job {
+    position: relative;
+  }
   .job.is-active {
     background: var(--white);
-    box-shadow: 0 20px 50px -24px rgb(0 0 0 / 0.22), inset 0 0 0 1px var(--gray-2);
+    box-shadow: 0 24px 60px -28px color-mix(in srgb, var(--a1) 45%, transparent);
+  }
+  /* the active card gets a thin ring in the site's gradient */
+  .job::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1.5px;
+    border-radius: inherit;
+    background: var(--ai);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    opacity: 0;
+    transition: opacity 0.5s var(--ease-out);
+    pointer-events: none;
+  }
+  .job.is-active::after {
+    opacity: 1;
   }
   .when {
     color: var(--muted);
@@ -166,14 +279,14 @@ const big = (when: string) => when.replace(/^(\d{4})\s*—\s*(obecnie|present)$/
     font-variant-numeric: tabular-nums;
   }
   .jorg {
-    margin-top: 6px;
+    margin-top: 2px;
     font-size: clamp(1.375rem, 1.2rem + 0.6vw, 1.75rem);
     font-weight: 650;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.015em;
     line-height: 1.15;
   }
   .role {
-    margin-top: 4px;
+    margin-top: 14px;
     font-weight: 500;
   }
   .desc {

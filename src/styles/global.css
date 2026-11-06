@@ -1,4 +1,5 @@
-/* Apple-inspired system: white / #f5f5f7 / black, #1d1d1f ink, blue actions, AI gradient. */
+/* Design system: warm off-white and cream, near-black ink, black pill buttons,
+   rounded soft cards and the site's own cobalt-to-green accent. */
 /* Scroll-driven values used only on the element they are set on. Registered as
    non-inherited so updating them every frame does not restyle the whole subtree. */
 @property --h { syntax: '<number>'; inherits: false; initial-value: 0; }
@@ -42,34 +43,44 @@
 
 :root {
   --white: #ffffff;
-  --gray: #f5f5f7;
-  --gray-2: #e8e8ed;
-  --ink: #1d1d1f;
-  --ink-2: #424245;
-  --muted: #6e6e73;
-  --line: #d2d2d7;
+  --gray: #f5f2ec;
+  --gray-2: #e9e4db;
+  --ink: #121212;
+  --ink-2: #3e3b37;
+  --muted: #6b665f;
+  --line: #e0dad0;
   --black: #000000;
-  --dark: #161617;
-  --dark-2: #1d1d1f;
-  --dark-muted: #86868b;
-  --dark-line: #424245;
-  --blue: #0071e3;
-  --blue-hover: #0077ed;
-  --link: #0066cc;
-  --link-dark: #2997ff;
-  --ok: #30d158;
-  --warn: #ff9f0a;
-  --err: #ff453a;
-  --ai: linear-gradient(90deg, #0894ff 0%, #c959dd 34%, #ff2e54 68%, #ff9004 100%);
+  --dark: #141414;
+  --dark-2: #1e1d1b;
+  --dark-muted: #9c968d;
+  --dark-line: #3a3834;
+  --blue: #121212;
+  --blue-hover: #34322f;
+  --link: #2447e0;
+  --link-dark: #8ea6ff;
+  /* text on dark sections */
+  --on-dark: #f7f4ef;
+  --on-dark-2: #e6e1d9;
+  --ok: #1fa463;
+  --warn: #e58a00;
+  --err: #e5484d;
+  /* Accent gradient stops: the single place the site's signature colours live.
+     Components mix them with color-mix() for glows, so changing these four recolours everything
+     (public/favicon.svg is static and carries its own copy). */
+  --a1: #2f5bff;
+  --a2: #0096d6;
+  --a3: #00a87e;
+  --a4: #3a9e00;
+  --ai: linear-gradient(90deg, var(--a1) 0%, var(--a2) 34%, var(--a3) 68%, var(--a4) 100%);
 
-  /* Real SF Pro on Apple devices, Inter Tight everywhere else. */
-  --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter Tight Variable', 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* Inter Tight on every device, so the site looks the same everywhere. */
+  --font: 'Inter Tight Variable', 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
   --gutter: clamp(22px, 4vw, 48px);
   --max: 1024px;
   --max-wide: 1260px;
-  --r: 18px;
-  --r-lg: 28px;
+  --r: 22px;
+  --r-lg: 32px;
   --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -96,7 +107,7 @@ body {
   font-family: var(--font);
   font-size: 1.0625rem;
   line-height: 1.47;
-  letter-spacing: -0.022em;
+  letter-spacing: 0;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -131,11 +142,11 @@ button {
 }
 
 ::selection {
-  background: rgb(0 113 227 / 0.25);
+  background: color-mix(in srgb, var(--a1) 22%, transparent);
 }
 
 :focus-visible {
-  outline: 2px solid var(--blue);
+  outline: 2px solid var(--a1);
   outline-offset: 3px;
   border-radius: 8px;
 }
@@ -187,7 +198,7 @@ button {
 }
 .section--black {
   background: var(--black);
-  color: #f5f5f7;
+  color: var(--on-dark);
 }
 
 .head {
@@ -203,7 +214,7 @@ button {
 .eyebrow {
   font-size: clamp(1.1875rem, 1.05rem + 0.5vw, 1.5rem);
   font-weight: 600;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.007em;
   color: var(--muted);
 }
 .section--black .eyebrow {
@@ -213,7 +224,7 @@ button {
 .h2 {
   font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
   line-height: 1.05;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.018em;
   font-weight: 650;
   text-wrap: balance;
 }
@@ -221,7 +232,7 @@ button {
 .lead {
   font-size: clamp(1.1875rem, 1.05rem + 0.45vw, 1.5rem);
   line-height: 1.38;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   color: var(--muted);
   font-weight: 450;
   text-wrap: balance;
@@ -255,15 +266,78 @@ button {
   color: #fff;
   font-size: 1.0625rem;
   font-weight: 450;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   white-space: nowrap;
   transition: background-color 0.2s var(--ease), transform 0.2s var(--ease);
 }
 .btn:hover {
   background: var(--blue-hover);
 }
+/* black buttons would vanish on dark backgrounds: invert them there */
+.section--black .btn,
+[data-dark] .btn,
+aside.svc .btn,
+.featured .btn,
+.sticky-cta .btn {
+  background: var(--on-dark);
+  color: var(--ink);
+}
+.section--black .btn:hover,
+[data-dark] .btn:hover,
+aside.svc .btn:hover,
+.featured .btn:hover,
+.sticky-cta .btn:hover {
+  background: #fff;
+}
 .btn:active {
   transform: scale(0.97);
+}
+
+.arrows {
+  display: flex;
+  flex: none;
+  gap: 10px;
+}
+/* round slider arrows: outlined, filled black on hover */
+.arw {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, opacity 0.2s;
+}
+.arw svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.arw:hover:not(:disabled) {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+.arw:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+/* while dragging a slider with the mouse, links inside must not fire */
+[data-slides].is-drag {
+  cursor: grabbing;
+  scroll-snap-type: none !important;
+  user-select: none;
+}
+[data-slides].is-drag a {
+  pointer-events: none;
 }
 
 .more {
@@ -272,7 +346,7 @@ button {
   gap: 2px;
   color: var(--link);
   font-size: 1.0625rem;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 .section--black .more {
   color: var(--link-dark);

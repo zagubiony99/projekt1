@@ -3,7 +3,7 @@ import { site } from '../config';
 import Portrait from './Portrait.astro';
 import { photo } from '../lib/photo';
 import { getDict, type Lang } from '../i18n';
-interface Props { lang: Lang; topic?: string; next?: { title: string; items: readonly { t: string; d: string }[] } }
+interface Props { lang: Lang; topic?: string; title?: string; lead?: string; next?: { title: string; items: readonly { t: string; d: string }[] } }
 const { topic, next } = Astro.props;
 const t = getDict(Astro.props.lang);
 const c = t.contact;
@@ -13,8 +13,8 @@ const c = t.contact;
   <div class="aura" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="wrap">
     <header class="head">
-      <h2 class="h2 ai" id="kontakt-h" data-reveal>{c.title}</h2>
-      <p class="lead" data-reveal style="--d:1">{c.lead}</p>
+      <h2 class="h2 ai" id="kontakt-h" data-reveal>{Astro.props.title ?? c.title}</h2>
+      <p class="lead" data-reveal style="--d:1">{Astro.props.lead ?? c.lead}</p>
       {photo && (
         <p class="who" data-reveal style="--d:2">
           <Portrait size={48} />
@@ -50,18 +50,23 @@ const c = t.contact;
     >
       <input type="hidden" name="subject" value={c.subject} />
       {site.formAccessKey && <input type="hidden" name="access_key" value={site.formAccessKey} />}
+      <input type="hidden" name="from_name" value={site.domain} />
       <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
       <fieldset>
         <legend>{c.topicsLabel}</legend>
         <div class="chips">
           {c.topics.map((tp) => (
             <label class="chip">
-              <input type="checkbox" name="topic" value={tp} checked={tp === topic} />
+              <input type="checkbox" name="topic" value={tp} checked={!!topic && tp.replace(/\u00a0/g, ' ') === topic.replace(/\u00a0/g, ' ')} />
               <span>{tp}</span>
             </label>
           ))}
         </div>
       </fieldset>
+      <label class="field">
+        <span>{c.emailLabel}</span>
+        <input type="email" name="email" placeholder={c.emailPlaceholder} autocomplete="email" required />
+      </label>
       <label class="field">
         <span>{c.urlLabel}</span>
         <input type="url" name="url" placeholder={c.urlPlaceholder} autocomplete="url" inputmode="url" />
@@ -100,7 +105,7 @@ const c = t.contact;
     display: grid;
   }
   .who b {
-    color: #f5f5f7;
+    color: var(--on-dark);
     font-weight: 600;
   }
   .who > span > span {
@@ -133,9 +138,9 @@ const c = t.contact;
     animation: drift 18s ease-in-out infinite alternate;
     will-change: transform;
   }
-  .aura i:nth-child(1) { left: 5%; top: 40%; --c: rgb(8 148 255 / 0.45); }
-  .aura i:nth-child(2) { right: 8%; top: 25%; --c: rgb(201 89 221 / 0.4); animation-duration: 22s; animation-delay: -6s; }
-  .aura i:nth-child(3) { left: 35%; bottom: -20%; --c: rgb(255 46 84 / 0.3); animation-duration: 26s; animation-delay: -12s; }
+  .aura i:nth-child(1) { left: 5%; top: 40%; --c: color-mix(in srgb, var(--a1) 45%, transparent); }
+  .aura i:nth-child(2) { right: 8%; top: 25%; --c: color-mix(in srgb, var(--a2) 40%, transparent); animation-duration: 22s; animation-delay: -6s; }
+  .aura i:nth-child(3) { left: 35%; bottom: -20%; --c: color-mix(in srgb, var(--a3) 30%, transparent); animation-duration: 26s; animation-delay: -12s; }
   @keyframes drift {
     0% { transform: translate(0, 0) scale(1); }
     50% { transform: translate(8vw, -6vh) scale(1.15); }
@@ -179,7 +184,7 @@ const c = t.contact;
     height: 28px;
     margin-bottom: 6px;
     border-radius: 50%;
-    background: #f5f5f7;
+    background: var(--on-dark);
     color: #000;
     font-size: 0.875rem;
     font-weight: 700;
@@ -216,7 +221,7 @@ const c = t.contact;
     margin-bottom: 10px;
     font-size: 0.9375rem;
     font-weight: 600;
-    color: #f5f5f7;
+    color: var(--on-dark);
   }
   .chips {
     display: flex;
@@ -233,7 +238,7 @@ const c = t.contact;
     padding: 8px 15px;
     border-radius: 999px;
     box-shadow: inset 0 0 0 1px var(--dark-line);
-    color: #d2d2d7;
+    color: var(--line);
     font-size: 0.9375rem;
     cursor: pointer;
     user-select: none;
@@ -243,7 +248,7 @@ const c = t.contact;
     box-shadow: inset 0 0 0 1px var(--dark-muted);
   }
   .chip input:checked + span {
-    background: #f5f5f7;
+    background: var(--on-dark);
     color: var(--ink);
     box-shadow: none;
   }
@@ -258,7 +263,7 @@ const c = t.contact;
     border-radius: 12px;
     border: 1px solid var(--dark-line);
     background: var(--black);
-    color: #f5f5f7;
+    color: var(--on-dark);
     font-size: 1.0625rem;
     resize: vertical;
     transition: border-color 0.2s;
@@ -311,7 +316,7 @@ const c = t.contact;
   .book {
     padding-top: 18px;
     border-top: 1px solid var(--dark-line);
-    color: #d2d2d7;
+    color: var(--line);
   }
   .direct {
     color: var(--dark-muted);

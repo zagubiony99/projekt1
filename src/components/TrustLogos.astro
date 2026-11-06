@@ -1,0 +1,57 @@
+---
+// "Worked with" logo strip, shared by the home hero and the service pages.
+import { Image } from 'astro:assets';
+import { logos } from '../data/logos';
+interface Props { label: string; eager?: boolean }
+const { label, eager = false } = Astro.props;
+---
+
+<div class="trust">
+  <span class="label">{label}</span>
+  <ul>
+    {logos.map((l) => (
+      <li class="logo" style={`--w:${l.w}px`}>
+        <Image class="mono" src={l.mono} alt={l.name} width={l.w} densities={[1, 2]} format="webp" quality={90} loading={eager ? 'eager' : 'lazy'} />
+        <Image class="color" src={l.color} alt="" aria-hidden="true" width={l.w} densities={[1, 2]} format="webp" quality={90} />
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .trust {
+    color: var(--muted);
+    font-size: 0.8125rem;
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 14px 34px;
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  /* Grey logo by default, the brand colours fade in on hover (opacity only) */
+  .logo {
+    position: relative;
+    width: var(--w);
+  }
+  .logo :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: opacity 0.35s var(--ease);
+  }
+  .logo :global(.mono) { opacity: 0.8; }
+  .logo :global(.color) { position: absolute; inset: 0; opacity: 0; }
+  @media (hover: hover) {
+    .logo:hover :global(.color) { opacity: 1; }
+    .logo:hover :global(.mono) { opacity: 0; }
+  }
+  @media (max-width: 600px) {
+    ul { gap: 12px 22px; }
+    .logo { width: calc(var(--w) * 0.74); }
+  }
+</style>

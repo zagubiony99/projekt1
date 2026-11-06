@@ -161,12 +161,12 @@
       },
       {
         "t": "Diagnosis per section",
-        "when": "Week 1–3",
+        "when": "Weeks 1–3",
         "d": "Templates, indexation and crawl budget analysed section by section."
       },
       {
         "t": "Rules and architecture",
-        "when": "Week 3–4",
+        "when": "Weeks 3–4",
         "d": "Indexation, linking and page-generation rules written up as tickets."
       },
       {

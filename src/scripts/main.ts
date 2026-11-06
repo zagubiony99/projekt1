@@ -2,6 +2,23 @@ const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 
+/* ---------- A new page starts at the top ---------- */
+// Some embeds (e.g. preview frames) carry the old scroll position over to the next page, so a
+// footer link would open the new page near its bottom. Back/forward keeps the browser's own
+// restore, and links to a section (#hash) keep landing on that section.
+try {
+  const nav0 = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
+  if (!location.hash && nav0?.type !== 'back_forward') {
+    const top = () => { if (window.scrollY > 0) window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior }); };
+    top();
+    window.addEventListener('load', top, { once: true });
+    // a late restore by the embedding page lands after load: undo it once, unless the visitor already scrolled
+    let touched = false;
+    ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((ev) => window.addEventListener(ev, () => (touched = true), { once: true, passive: true }));
+    setTimeout(() => { if (!touched) top(); }, 400);
+  }
+} catch {}
+
 /* ---------- Nav: mobile sheet ---------- */
 const nav = document.querySelector<HTMLElement>('[data-nav]');
 const burger = document.querySelector<HTMLButtonElement>('[data-burger]');
@@ -29,9 +46,6 @@ const pin = document.querySelector<HTMLElement>('[data-pin]');
 const rows = pin ? [...pin.querySelectorAll<HTMLElement>('.row')] : [];
 const sum = pin?.querySelector<HTMLElement>('[data-sum]');
 const pinParts = pin ? [...pin.querySelectorAll<HTMLElement>('.head, [data-stage]')] : [];
-const hs = document.querySelector<HTMLElement>('[data-hscroll]');
-const track = hs?.querySelector<HTMLElement>('[data-track]');
-const hbar = hs?.querySelector<HTMLElement>('[data-hbar]');
 const exp = document.querySelector<HTMLElement>('[data-exp]');
 const jobs = exp ? [...exp.querySelectorAll<HTMLElement>('[data-job]')] : [];
 const slides = exp ? [...exp.querySelectorAll<HTMLElement>('[data-slide]')] : [];
@@ -40,22 +54,55 @@ const steps = document.querySelector<HTMLElement>('[data-steps]');
 const stepPanels = steps ? [...steps.querySelectorAll<HTMLElement>('[data-step]')] : [];
 const stepNums = steps ? [...steps.querySelectorAll<HTMLElement>('[data-snum]')] : [];
 const sbar = steps?.querySelector<HTMLElement>('[data-sbar]');
-const wide = window.matchMedia('(min-width: 900px)');
 
-// Horizontal gallery: the section is as tall as the sideways distance the track must travel
-let hsTravel = 0;
-const sizeGallery = () => {
-  if (!hs || !track) return;
-  if (!wide.matches || reduce) {
-    hs.style.height = '';
-    track.style.removeProperty('--x');
-    hsTravel = 0;
-    return;
-  }
-  hsTravel = Math.max(0, track.scrollWidth - window.innerWidth);
-  hs.style.height = `${window.innerHeight + hsTravel}px`;
-};
-sizeGallery();
+// Sliders: native horizontal scroll with snap, round arrows, a progress bar and mouse drag
+document.querySelectorAll<HTMLElement>('[data-slider]').forEach((root) => {
+  const list = root.querySelector<HTMLElement>('[data-slides]');
+  if (!list) return;
+  const prev = root.querySelector<HTMLButtonElement>('[data-prev]');
+  const next = root.querySelector<HTMLButtonElement>('[data-next]');
+  const prog = root.querySelector<HTMLElement>('[data-sprog]');
+  const update = () => {
+    const max = list.scrollWidth - list.clientWidth;
+    if (prev) prev.disabled = list.scrollLeft <= 2;
+    if (next) next.disabled = list.scrollLeft >= max - 2;
+    prog?.style.setProperty('--hp', String(max > 0 ? (list.scrollLeft + list.clientWidth) / list.scrollWidth : 1));
+  };
+  const step = () => {
+    const first = list.children[0] as HTMLElement | undefined;
+    const gap = parseFloat(getComputedStyle(list).columnGap) || 0;
+    return first ? first.offsetWidth + gap : list.clientWidth * 0.8;
+  };
+  prev?.addEventListener('click', () => list.scrollBy({ left: -step(), behavior: reduce ? 'auto' : 'smooth' }));
+  next?.addEventListener('click', () => list.scrollBy({ left: step(), behavior: reduce ? 'auto' : 'smooth' }));
+  list.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+  // drag with the mouse (touch and trackpads scroll natively)
+  let startX = 0, startLeft = 0, moved = false, down = false;
+  list.addEventListener('pointerdown', (e) => {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    down = true; moved = false; startX = e.clientX; startLeft = list.scrollLeft;
+  });
+  window.addEventListener('pointermove', (e) => {
+    if (!down) return;
+    const dx = e.clientX - startX;
+    if (!moved && Math.abs(dx) > 6) { moved = true; list.classList.add('is-drag'); }
+    if (moved) list.scrollLeft = startLeft - dx;
+  });
+  window.addEventListener('pointerup', () => {
+    if (!down) return;
+    down = false;
+    if (!moved) return;
+    // let the browser snap to the nearest card after the drag
+    const left = list.scrollLeft;
+    list.classList.remove('is-drag');
+    list.scrollLeft = left;
+    list.scrollBy({ left: 0 });
+  });
+  // a drag must not count as a click on the card it ended on
+  list.addEventListener('click', (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+});
 
 // Switch the active item in a "one at a time" scene
 const setActive = (items: HTMLElement[], idx: number) =>
@@ -92,7 +139,6 @@ const onScroll = () => {
   const motion = !reduce;
   const scrubR = motion ? scrub?.getBoundingClientRect() : undefined;
   const pinR = motion ? pin?.getBoundingClientRect() : undefined;
-  const hsR = motion && hsTravel > 0 ? hs?.getBoundingClientRect() : undefined;
   const jobTops = motion ? jobs.map((j) => j.getBoundingClientRect().top) : [];
   const stepsR = motion ? steps?.getBoundingClientRect() : undefined;
 
@@ -109,11 +155,6 @@ const onScroll = () => {
     // bots resolve one by one as the scene scrolls, then the verdict appears
     rows.forEach((row, i) => row.classList.toggle('is-done', p > 0.28 + i * 0.08));
     sum?.classList.toggle('is-done', p > 0.28 + rows.length * 0.08 + 0.04);
-  }
-  if (hsR && track) {
-    const p = progress(hsR, vh);
-    setVar(track, '--x', `${(-p * hsTravel).toFixed(1)}px`);
-    setVar(hbar, '--hp', (0.15 + p * 0.85).toFixed(3));
   }
   if (jobTops.length) {
     // the job crossing the middle of the screen drives the big sticky years
@@ -138,10 +179,7 @@ const requestTick = () => {
   }
 };
 window.addEventListener('scroll', requestTick, { passive: true });
-window.addEventListener('resize', () => {
-  sizeGallery();
-  requestTick();
-});
+window.addEventListener('resize', requestTick);
 if (reduce) {
   scrub?.style.setProperty('--p', '1.3');
   pinParts.forEach((el) => el.style.setProperty('--q', '1'));
@@ -293,16 +331,20 @@ if (finePointer && !reduce) {
   });
 }
 
-/* ---------- Sticky mobile CTA: visible after the hero, hidden over the contact form ---------- */
+/* ---------- Sticky mobile CTA: visible after the hero, hidden over the contact form and the footer ---------- */
+// (over the footer it would cover the bottom links, e.g. "Back to top", and swallow their taps)
 const sticky = document.querySelector<HTMLElement>('[data-sticky]');
 if (sticky) {
-  const contactEl = document.querySelector('.contact');
   let pastHero = false;
-  let atContact = false;
-  const sync = () => sticky.classList.toggle('on', pastHero && !atContact);
+  const covered = new Set<Element>();
+  const sync = () => sticky.classList.toggle('on', pastHero && covered.size === 0);
   const heroEl = document.querySelector('[data-hero], .sv-hero');
   if (heroEl) new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting; sync(); }).observe(heroEl);
-  if (contactEl) new IntersectionObserver(([e]) => { atContact = e.isIntersecting; sync(); }, { threshold: 0.05 }).observe(contactEl);
+  const hideOver = new IntersectionObserver((entries) => {
+    entries.forEach((e) => (e.isIntersecting ? covered.add(e.target) : covered.delete(e.target)));
+    sync();
+  }, { threshold: 0.01 });
+  document.querySelectorAll('.contact, footer').forEach((el) => hideOver.observe(el));
 }
 
 /* ---------- Measurement: first-touch campaign source + click events for GTM ---------- */
@@ -363,12 +405,14 @@ form?.addEventListener('submit', async (e) => {
   ok && (ok.hidden = true); err && (err.hidden = true);
   try {
     const payload = new FormData();
-    fd.forEach((v, k) => k !== 'botcheck' && payload.append(k, v));
+    fd.forEach((v, k) => k !== 'botcheck' && k !== 'body' && payload.append(k, v));
     payload.set('topic', topics);
     payload.set('message', body);
+    if (topics) payload.set('subject', `${d.subject ?? ''}: ${topics}`);
     if (source()) payload.set('source', source());
     const res = await fetch(d.endpoint, { method: 'POST', body: payload, headers: { Accept: 'application/json' } });
-    if (!res.ok) throw new Error(String(res.status));
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok || json.success === false) throw new Error(String(res.status));
     form.reset();
     ok && (ok.hidden = false);
     dl({ event: 'generate_lead', form: 'contact', lead_topic: topics || '(none)', language: document.documentElement.lang, page_path: location.pathname });
@@ -377,4 +421,12 @@ form?.addEventListener('submit', async (e) => {
   } finally {
     if (btn) { btn.disabled = false; btn.textContent = label; }
   }
+});
+
+/* ---------- "How we can work together": tick the matching topic in the contact form ---------- */
+document.addEventListener('click', (e) => {
+  const a = (e.target as Element).closest?.<HTMLAnchorElement>('a[data-topic]');
+  if (!a) return;
+  const box = [...document.querySelectorAll<HTMLInputElement>('[data-form] input[name="topic"]')].find((i) => i.value === a.dataset.topic);
+  if (box) box.checked = true;
 });

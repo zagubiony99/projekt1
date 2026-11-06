@@ -79,10 +79,10 @@ const icons = [
     place-items: center end;
     font-size: clamp(9rem, 4rem + 14vw, 17rem);
     font-weight: 700;
-    letter-spacing: -0.07em;
+    letter-spacing: -0.035em;
     line-height: 0.8;
     color: transparent;
-    -webkit-text-stroke: 2px #d2d2d7;
+    -webkit-text-stroke: 2px var(--line);
     opacity: 0;
     transform: translateY(40px) scale(0.92);
     transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
@@ -121,7 +121,7 @@ const icons = [
   .ic {
     width: 48px;
     height: 48px;
-    color: var(--blue);
+    color: var(--link);
   }
   .ic :global(path),
   .ic :global(circle) {
@@ -136,7 +136,7 @@ const icons = [
   h3 {
     font-size: clamp(2.25rem, 1.6rem + 2.6vw, 4rem);
     font-weight: 700;
-    letter-spacing: -0.045em;
+    letter-spacing: -0.022em;
     line-height: 1;
   }
   .panel p {

@@ -2,6 +2,8 @@ import type { APIRoute } from 'astro';
 import { site } from '../config';
 import { getDict } from '../i18n';
 import { services } from '../data/services';
+import { guides, about, robotsTool, robotsGen, hreflangTool, mcpServer } from '../data/pages';
+import { pageRoutes } from '../data/routes';
 
 // /llms.txt: a plain-text map of the site for AI assistants (llmstxt.org format),
 // generated from the same data as the pages so it never goes stale.
@@ -26,9 +28,29 @@ export const GET: APIRoute = () => {
     '## Usługi (polski)',
     ...services.map((s) => `- [${plain(s.pl.name)}](${url(`/uslugi/${s.pl.slug}/`)}): ${plain(s.pl.metaDescription)}`),
     '',
+    '## Guides (English)',
+    ...guides.map((g) => `- [${g.en.title}](${url(g.en.path)}): ${g.en.metaDescription}`),
+    '',
+    '## Poradniki (polski)',
+    ...guides.map((g) => `- [${plain(g.pl.title)}](${url(g.pl.path)}): ${plain(g.pl.metaDescription)}`),
+    '',
+    '## Tools',
+    ...([
+      [robotsTool, pageRoutes.robotsTool],
+      [robotsGen, pageRoutes.robotsGen],
+      [hreflangTool, pageRoutes.hreflangTool],
+      [mcpServer, pageRoutes.mcpServer],
+    ] as const).flatMap(([c, r]) => [
+      `- [${c.en.title}](${url(r.en)}): ${c.en.metaDescription}`,
+      `- [${plain(c.pl.title)}](${url(r.pl)}): ${plain(c.pl.metaDescription)}`,
+    ]),
+    `- MCP server (Streamable HTTP, no auth): ${url('/mcp')}`,
+    '',
     '## Pages',
     `- [Home (English)](${url('/en/')}): ${en.meta.description}`,
     `- [Strona główna (polski)](${url('/')}): ${plain(pl.meta.description)}`,
+    `- [About (English)](${url(pageRoutes.about.en)}): ${about.en.metaDescription}`,
+    `- [O mnie (polski)](${url(pageRoutes.about.pl)}): ${plain(about.pl.metaDescription)}`,
     `- [Contact](${url(`/en/#${en.ids.contact}`)}): free 30-minute consultation`,
     '',
     '## Optional',

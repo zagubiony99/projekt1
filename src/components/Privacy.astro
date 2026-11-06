@@ -10,8 +10,11 @@ const t = getDict(lang);
 const pl = lang === 'pl';
 const other = getDict(lang === 'pl' ? 'en' : 'pl');
 const tracking = Boolean(site.gtmId);
+// the form provider follows the settings: Web3Forms (key) or Formspree (endpoint)
+const formProvider = /formspree/i.test(site.formEndpoint) ? 'Formspree' : site.formEndpoint ? 'Web3Forms' : '';
+const controller = site.company ? `${site.name}, ${site.company}` : site.name;
+const mail = site.email;
 ---
-
 <Base lang={lang} title={`${t.privacy.label} | ${site.name}`} description={t.privacy.description} path={t.privacy.path} altPath={other.privacy.path}>
   <Nav lang={lang} altHref={other.privacy.path} contactHref={`${t.path}#${t.ids.contact}`} />
   <main id="main" class="wrap doc">
@@ -19,28 +22,54 @@ const tracking = Boolean(site.gtmId);
     {pl ? (
       <>
         <h2>Administrator danych</h2>
-        <p>Administratorem danych osobowych przekazanych przez tę stronę jest {site.name}. Kontakt: <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+        <p>Administratorem danych osobowych przekazanych przez tę stronę jest {controller}. Kontakt: <a href={`mailto:${mail}`}>{mail}</a>.</p>
         <h2>Jakie dane i po co</h2>
         <p>Jeśli wyślesz formularz albo e-mail, przetwarzam podane dane (np. adres e-mail, adres strony, treść wiadomości), a także informację, z jakiej kampanii lub strony trafiłeś na witrynę (parametry UTM), wyłącznie po to, żeby odpowiedzieć na zapytanie i ewentualnie przygotować ofertę (art. 6 ust. 1 lit. b i f RODO). Dane przechowuję tak długo, jak to potrzebne do prowadzenia korespondencji i ewentualnej współpracy.</p>
+        <h2>Dane techniczne</h2>
+        <p>Przy każdej wizycie serwer hostingu automatycznie przetwarza dane techniczne, m.in. adres IP, typ przeglądarki i adres odwiedzanej strony, żeby dostarczyć stronę i chronić ją przed atakami (art. 6 ust. 1 lit. f RODO). Nie używam ich do rozpoznawania odwiedzających.</p>
         <h2>Cookies i analityka</h2>
-        <p>{tracking ? 'Strona korzysta z Google Tag Manager. Pliki cookies analityczne i reklamowe (np. Google Analytics, Google Ads, LinkedIn) są włączane wyłącznie po Twojej zgodzie wyrażonej w banerze. Zgodę możesz w każdej chwili zmienić w „Ustawieniach cookies” w stopce.' : 'Strona nie używa analityki ani plików cookies śledzących.'}</p>
+        <p>{tracking ? 'Strona korzysta z Google Tag Manager. Pliki cookies analityczne i reklamowe (np. Google Analytics, Google Ads, LinkedIn) są włączane wyłącznie po Twojej zgodzie wyrażonej w banerze. Zgodę możesz w każdej chwili zmienić w „Ustawieniach cookies” w stopce.' : 'Strona nie używa analityki ani plików cookies śledzących.'} Fonty są wczytywane z tego samego serwera co strona, a nie z zewnętrznych usług.</p>
+        <h2>Darmowe narzędzia i serwer MCP</h2>
+        <p>Treści wklejane do darmowych narzędzi (np. robots.txt albo tagi hreflang) są sprawdzane w Twojej przeglądarce i nigdzie nie są wysyłane. Serwer MCP przetwarza przesłane dane tylko po to, żeby zwrócić wynik, i ich nie zapisuje.</p>
         <h2>Odbiorcy danych</h2>
-        <p>Dane mogą być przetwarzane przez dostawców usług technicznych (hosting, obsługa formularza, poczta e-mail{tracking ? ', narzędzia analityczne i reklamowe' : ''}) wyłącznie w zakresie niezbędnym do działania strony.</p>
+        <p>Dane przetwarzają w moim imieniu dostawcy usług, wyłącznie w zakresie potrzebnym do działania strony:</p>
+        <ul>
+          <li><b>Cloudflare, Inc.</b> – hosting strony i serwera MCP, ochrona przed atakami.</li>
+          {formProvider && <li><b>{formProvider}</b> – przekazanie wiadomości z formularza na mój adres e-mail.</li>}
+          <li><b>Google</b> (Google Ireland Ltd. i Google LLC) – poczta e-mail{tracking ? ', Google Tag Manager, Google Analytics i Google Ads (te trzy tylko po Twojej zgodzie)' : ''}.</li>
+          {tracking && <li><b>LinkedIn Ireland Unlimited Company</b> – reklamy i pomiar ich skuteczności, tylko po Twojej zgodzie.</li>}
+        </ul>
+        <h2>Przekazywanie danych poza Europę</h2>
+        <p>Część dostawców ma siedzibę w USA albo przetwarza tam dane. Przekazanie odbywa się na podstawie decyzji Komisji Europejskiej o odpowiednim stopniu ochrony (EU-US Data Privacy Framework) albo standardowych klauzul umownych zatwierdzonych przez Komisję.</p>
         <h2>Twoje prawa</h2>
-        <p>Masz prawo dostępu do danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia oraz sprzeciwu, a także prawo skargi do Prezesa UODO. W sprawach danych napisz na <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+        <p>Masz prawo dostępu do danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia oraz sprzeciwu, a także prawo skargi do Prezesa UODO. W sprawach danych napisz na <a href={`mailto:${mail}`}>{mail}</a>.</p>
+        <p class="upd">Ostatnia aktualizacja: listopad 2026 r.</p>
       </>
     ) : (
       <>
         <h2>Data controller</h2>
-        <p>The controller of personal data submitted through this website is {site.name}. Contact: <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+        <p>The controller of personal data submitted through this website is {controller}. Contact: <a href={`mailto:${mail}`}>{mail}</a>.</p>
         <h2>What data and why</h2>
         <p>If you send the form or an email, I process the details you provide (e.g. email address, website, message), plus which campaign or page brought you to the site (UTM parameters), only to answer your enquiry and, where relevant, prepare a proposal (Art. 6(1)(b) and (f) GDPR). I keep them for as long as needed for our correspondence and any collaboration.</p>
+        <h2>Technical data</h2>
+        <p>On every visit the hosting server automatically processes technical data such as your IP address, browser type and the address of the page you open, to deliver the site and protect it from attacks (Art. 6(1)(f) GDPR). I do not use it to identify visitors.</p>
         <h2>Cookies and analytics</h2>
-        <p>{tracking ? 'This website uses Google Tag Manager. Analytics and advertising cookies (e.g. Google Analytics, Google Ads, LinkedIn) are only switched on after you consent in the banner. You can change your choice at any time via “Cookie settings” in the footer.' : 'This website uses no analytics and no tracking cookies.'}</p>
+        <p>{tracking ? 'This website uses Google Tag Manager. Analytics and advertising cookies (e.g. Google Analytics, Google Ads, LinkedIn) are only switched on after you consent in the banner. You can change your choice at any time via “Cookie settings” in the footer.' : 'This website uses no analytics and no tracking cookies.'} Fonts are served from the same server as the site, not from third-party services.</p>
+        <h2>Free tools and the MCP server</h2>
+        <p>Content you paste into the free tools (e.g. robots.txt or hreflang tags) is checked in your browser and is not sent anywhere. The MCP server processes the data it receives only to return a result, and does not store it.</p>
         <h2>Recipients</h2>
-        <p>Data may be processed by technical service providers (hosting, form handling, email{tracking ? ', analytics and advertising tools' : ''}) only as far as needed to run the website.</p>
+        <p>Service providers process data on my behalf, only as far as needed to run the website:</p>
+        <ul>
+          <li><b>Cloudflare, Inc.</b> – hosting of the website and the MCP server, protection against attacks.</li>
+          {formProvider && <li><b>{formProvider}</b> – delivering form messages to my email address.</li>}
+          <li><b>Google</b> (Google Ireland Ltd. and Google LLC) – email{tracking ? ', Google Tag Manager, Google Analytics and Google Ads (the last three only with your consent)' : ''}.</li>
+          {tracking && <li><b>LinkedIn Ireland Unlimited Company</b> – advertising and measuring its results, only with your consent.</li>}
+        </ul>
+        <h2>Transfers outside Europe</h2>
+        <p>Some providers are based in the USA or process data there. Such transfers rely on the European Commission’s adequacy decision (EU-US Data Privacy Framework) or on standard contractual clauses approved by the Commission.</p>
         <h2>Your rights</h2>
-        <p>You have the right to access, rectify, erase, restrict and port your data, to object, and to lodge a complaint with a supervisory authority. For anything data-related, email <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+        <p>You have the right to access, rectify, erase, restrict and port your data, to object, and to lodge a complaint with a supervisory authority. For anything data-related, email <a href={`mailto:${mail}`}>{mail}</a>.</p>
+        <p class="upd">Last updated: November 2026.</p>
       </>
     )}
   </main>
@@ -56,7 +85,7 @@ const tracking = Boolean(site.gtmId);
   h1 {
     font-size: clamp(2.5rem, 1.6rem + 3vw, 4rem);
     font-weight: 700;
-    letter-spacing: -0.045em;
+    letter-spacing: -0.022em;
     margin-bottom: 32px;
   }
   h2 {
@@ -64,8 +93,21 @@ const tracking = Boolean(site.gtmId);
     margin-bottom: 10px;
     font-size: 1.375rem;
     font-weight: 650;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.013em;
   }
-  p { color: var(--ink-2); }
+  p, li { color: var(--ink-2); }
+  ul {
+    display: grid;
+    gap: 8px;
+    margin: 12px 0 0;
+    padding-left: 1.2em;
+    list-style: disc;
+  }
+  b { color: var(--ink); font-weight: 600; }
+  .upd {
+    margin-top: 40px;
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
   a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
 </style>

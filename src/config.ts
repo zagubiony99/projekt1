@@ -6,6 +6,7 @@ import settings from '../content/site.json';
 type Settings = {
   name: string;
   email: string;
+  company?: string;
   linkedin?: string;
   photo?: string;
   formEndpoint?: string;
@@ -14,8 +15,9 @@ type Settings = {
   gtmId?: string;
 };
 
-export const site = {
+const merged = {
   linkedin: '',
+  company: '',
   photo: '',
   formEndpoint: '',
   formAccessKey: '',
@@ -24,4 +26,10 @@ export const site = {
   ...(settings as Settings),
   domain: 'maciejzieciak.com',
   url: 'https://maciejzieciak.com',
+};
+
+// With only a Web3Forms key set, the form posts to Web3Forms.
+export const site = {
+  ...merged,
+  formEndpoint: merged.formEndpoint || (merged.formAccessKey ? 'https://api.web3forms.com/submit' : ''),
 };

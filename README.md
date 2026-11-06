@@ -24,8 +24,10 @@ Wszystkie teksty (PL i EN), usługi i ustawienia kontaktowe edytujesz w przeglą
 3. Wybierz repozytorium i gałąź, z której publikuje się strona (np. `main`).
 4. Po lewej masz menu:
    - **Ustawienia i kontakt**: e-mail, LinkedIn, zdjęcie, formularz, kalendarz, Google Tag Manager,
-   - **Strona główna**: wszystkie teksty po polsku i po angielsku,
-   - **Usługi**: 6 podstron usług, każda z wersją polską i angielską.
+   - **Strona główna**: wszystkie teksty po polsku i po angielsku, w tym „Formy współpracy” (konsultacja, projekt, stała współpraca; pole „Cena” puste = „Wycena po rozmowie”),
+   - **Usługi**: 12 podstron usług, każda z wersją polską i angielską,
+   - **Inne strony**: „O mnie” i strony narzędzi (tester robots.txt, generator robots.txt, tester hreflang, serwer MCP),
+   - **Poradniki**: 9 poradników. Treść rozdziału jest w HTML (akapity `<p>`, listy, tabele), daty publikacji i aktualizacji ustawiasz w kalendarzu.
 5. Zmieniasz tekst i klikasz **Save**. CMS zapisuje zmianę w repozytorium, a hosting (Cloudflare Pages / Netlify / Vercel) w ok. minutę publikuje nową wersję strony.
 
 Polskich „sierotek” (w, i, z, o, a na końcu linii) nie musisz pilnować: strona poprawia je sama.
@@ -39,6 +41,9 @@ Polskich „sierotek” (w, i, z, o, a na końcu linii) nie musisz pilnować: st
 | Ustawienia, kontakt | `content/site.json` |
 | Teksty PL / EN | `content/pl.json`, `content/en.json` |
 | Usługi (PL + EN w jednym pliku) | `content/services/<klucz>.json` |
+| O mnie | `content/about.json` |
+| Poradniki | `content/guides/<klucz>.json` |
+| Narzędzia (teksty): tester i generator robots.txt, tester hreflang, serwer MCP | `content/tools/robots-ai.json`, `robots-gen.json`, `hreflang.json`, `mcp-server.json` |
 | Zdjęcia wgrane w CMS (przy buildzie strona sama je przycina i kompresuje) | `src/assets/media/` |
 | Konfiguracja CMS (generowana) | `.pages.yml` ← `scripts/cms/build-config.py` |
 
@@ -53,17 +58,34 @@ python3 scripts/cms/check.py          # sprawdza, że zapis w CMS niczego nie sk
 
 | Co | Plik |
 | --- | --- |
-| Adresy podstron usług i tematy formularza | `src/data/routes.ts` |
+| Adresy podstron usług, poradników, „O mnie” i narzędzia, tematy formularza | `src/data/routes.ts` |
+| Lista botów w narzędziu robots.txt | `src/data/ai-bots.ts` |
+| Logika sprawdzania robots.txt (RFC 9309) i generatora | `src/lib/robots.ts`, `src/lib/robots-gen.ts` |
+| Logika testera hreflang | `src/lib/hreflang.ts` |
+| Serwer MCP (narzędzia dla ChatGPT i Claude) | `functions/mcp.ts`, dane: `src/pages/mcp-data.json.ts` |
+| Szablony: „O mnie”, poradnik, lista poradników, narzędzia | `src/components/AboutPage.astro`, `GuidePage.astro`, `GuidesIndex.astro`, `RobotsTool.astro`, `RobotsGen.astro`, `HreflangTool.astro`, `McpServerPage.astro` |
 | Szablon podstrony usługi | `src/components/ServicePage.astro` |
-| Kolory (paleta Apple: biel, #f5f5f7, czerń, niebieski + gradient AI), font (SF Pro na Apple, Inter Tight gdzie indziej), przyciski | `src/styles/global.css` (zmienne w `:root`) |
+| Kolory (biel, kremowe tło `--gray`, prawie czarny tekst, czarne przyciski, kobaltowe linki + własny gradient: zmienne `--a1`–`--a4`), font Inter Tight, zaokrąglenia, strzałki sliderów | `src/styles/global.css` (zmienne w `:root`) |
+| Slidery (usługi, poradniki na stronie głównej): strzałki, przeciąganie myszką, pasek postępu | `[data-slider]` w `src/scripts/main.ts`, `Services.astro`, `GuideSlider.astro` |
 | Sekcje strony | `src/components/*.astro` |
 | Interakcje (tekst zapalający się przy scrollu, scena z kartą botów, liczby odliczające w górę, formularz) | `src/scripts/main.ts` |
-| Grafiki do udostępniania (OG) | `public/og-pl.png`, `public/og-en.png` |
+| Grafika do udostępniania strony głównej (OG) | `public/og-pl.png`, `public/og-en.png` |
+| Grafiki do udostępniania pozostałych stron (generowane przy buildzie z tytułów) | `src/lib/og.ts`, lista: `src/data/og.ts` |
+| Logo narzędzi w pasku „Narzędzia, z których korzystam” (plik nazwany jak narzędzie, np. `screamingfrog.svg`, `adobeanalytics.png`; bez pliku pokazuje się nazwa) | `src/assets/tools/` |
+| Nagłówki cache i bezpieczeństwa (Cloudflare Pages / Netlify) | `public/_headers` |
+| Kanały RSS poradników | `/poradniki/rss.xml`, `/en/guides/rss.xml` (`src/lib/rss.ts`) |
 
 ## Formularz kontaktowy i kalendarz (ważne dla sprzedaży)
 
+**Powiadomienia na maila (Web3Forms, za darmo do 250 zgłoszeń miesięcznie):**
+1. Wejdź na https://web3forms.com, wpisz `maciejzieciak.com@gmail.com` i kliknij „Create Access Key”.
+2. Klucz przyjdzie mailem na ten adres.
+3. Wklej go w CMS: **Ustawienia i kontakt → Klucz Web3Forms** (albo `formAccessKey` w `content/site.json`). Adres formularza uzupełni się sam.
+
+Od tej chwili każde zgłoszenie przychodzi na Gmaila z tematem „Nowe zapytanie z maciejzieciak.com: <usługa>”. Wiadomość zawiera e-mail nadawcy (wystarczy kliknąć „Odpowiedz”), adres jego strony, treść i źródło wejścia (UTM). Bez klucza formularz otwiera program pocztowy odwiedzającego, co gubi część zapytań.
+
 W CMS (**Ustawienia i kontakt**) albo w `content/site.json`:
-- `formEndpoint` (+ opcjonalnie `formAccessKey`): adres darmowego backendu formularzy, np. Formspree (`https://formspree.io/f/xxxx`) albo Web3Forms (`https://api.web3forms.com/submit` + klucz). Wtedy formularz wysyła się bez opuszczania strony i pokazuje potwierdzenie. Bez tego otwiera program pocztowy, co gubi część zapytań.
+- `formEndpoint`: tylko jeśli wolisz Formspree (`https://formspree.io/f/xxxx`). Przy Web3Forms zostaw puste.
 - `bookingUrl`: link do Cal.com lub Calendly. Pod formularzem pojawi się „Wolisz od razu wybrać termin?”.
 - Po udanej wysyłce strona wysyła zdarzenie `generate_lead` do `dataLayer`, jeśli podłączysz Google Tag Managera.
 
@@ -77,7 +99,11 @@ W CMS (**Ustawienia i kontakt**) albo w `content/site.json`:
 
 - `/` to wersja polska (domyślna)
 - `/en/` to wersja angielska
-- `/uslugi/<slug>/` i `/en/services/<slug>/` to podstrony usług (6 × 2 języki), każda z danymi Service, BreadcrumbList i FAQPage
+- `/uslugi/<slug>/` i `/en/services/<slug>/` to podstrony usług (12 × 2 języki), każda z danymi Service, BreadcrumbList i FAQPage
+- `/o-mnie/` i `/en/about/` to strona „O mnie” (ProfilePage)
+- `/poradniki/` i `/en/guides/` to lista poradników, a `/poradniki/<slug>/` i `/en/guides/<slug>/` same poradniki (Article, BreadcrumbList, FAQPage)
+- `/narzedzia/…` i `/en/tools/…` to darmowe narzędzia (WebApplication): tester robots.txt, generator robots.txt, tester hreflang i strona serwera MCP
+- `/mcp` to serwer MCP (JSON-RPC przez POST, bez logowania), `/mcp-data.json` to treści, z których korzysta (generowane przy buildzie)
 
 Strona ma `hreflang` (pl, en, x-default), canonical, sitemapę z alternatywnymi wersjami językowymi, `robots.txt` i dane strukturalne JSON-LD (Person, ProfessionalService, WebSite, WebPage, FAQPage).
 
@@ -85,16 +111,39 @@ Strona ma `hreflang` (pl, en, x-default), canonical, sitemapę z alternatywnymi 
 
 Po `npm run build` uruchom `python3 scripts/seo-audit.py dist`. Skrypt sprawdza na każdej stronie: canonical, hreflang (wzajemność i x-default), długość title i description, jeden H1, kolejność nagłówków, poprawność JSON-LD, linki wewnętrzne i kotwice, alt obrazów i og:image. Jedyne oczekiwane uwagi dotyczą strony 404 (ma `noindex`, więc celowo nie ma canonical ani hreflang).
 
+Logikę narzędzi (robots.txt, generator, hreflang) sprawdza `npm test`: 35 przypadków, bez dodatkowych zależności.
+
+Linkowanie między wersjami PL i EN sprawdza `python3 scripts/lang-check.py dist`: język strony, canonical, pary hreflang i linki zwrotne, x-default, przełącznik języka (czy prowadzi do odpowiednika strony), linki w złym języku i zgodność mapy witryny.
+
 Pliki dla wyszukiwarek i AI generują się same przy buildzie: `sitemap-index.xml` (z hreflang dla wszystkich par PL/EN), `robots.txt`, `llms.txt` (mapa serwisu dla asystentów AI) i `404.html`.
 
 ## Wdrożenie
 
-Folder `dist/` to zwykłe pliki statyczne, więc działa na każdym hostingu: Cloudflare Pages, Netlify, Vercel albo GitHub Pages.
-Build command: `npm run build`, output: `dist`.
+**Cloudflare Pages (zalecane, za darmo).** Ustawienia są w repozytorium (`wrangler.toml`, `.nvmrc`), więc wystarczy:
+1. Zmerguj PR do `main`.
+2. dash.cloudflare.com → **Workers & Pages → Create → Pages → Connect to Git** → repozytorium `zagubiony99/projekt1`.
+3. Production branch: `main`. Framework preset: **Astro**. Build command: `npm run build`. Output: `dist`. Zapisz i poczekaj na pierwszy build (ok. 2 min): strona działa pod adresem `*.pages.dev`.
+4. **Custom domains → Set up a domain** → `maciejzieciak.com` (i `www.maciejzieciak.com`). Jeśli domena jest u innego rejestratora, Cloudflare pokaże, jakie serwery DNS ustawić.
+5. Każdy kolejny push do `main` (także zapis w CMS) publikuje stronę sama.
+
+Folder `dist/` to zwykłe pliki statyczne, więc strona działa też na Netlify, Vercel albo GitHub Pages (bez `/mcp`).
+
+**Serwer MCP (`/mcp`) wymaga Cloudflare Pages.** Plik `functions/mcp.ts` to funkcja Cloudflare Pages: wdraża się sama razem ze stroną, bez dodatkowej konfiguracji. Na innym hostingu strona zadziała, ale adres `/mcp` nie. Test lokalny:
+
+```bash
+npm run build
+npx wrangler pages dev dist     # serwer na http://localhost:8788/mcp
+curl -X POST http://localhost:8788/mcp -H 'Content-Type: application/json' \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+```
 
 ## Do uzupełnienia przed startem
 
-- [ ] Prawdziwy adres e-mail (teraz: `kontakt@maciejzieciak.com`)
+- [ ] Klucz Web3Forms (bez niego formularz nie wysyła powiadomień)
+- [ ] Uruchomić adres `hello@maciejzieciak.com` (jest na stronie; bez tego maile na ten adres nie dojdą):
+  1. Cloudflare → domena → **Email → Email Routing** → włącz (Cloudflare sam doda rekordy MX).
+  2. **Routing rules**: `hello@maciejzieciak.com` → `maciejzieciak.com@gmail.com`, potwierdź link z maila.
+  3. Odpisywanie jako hello@: Gmail → Ustawienia → Konta → „Wyślij pocztę jako” → `hello@maciejzieciak.com`, serwer `smtp.gmail.com`, port 587, login: Twój Gmail, hasło: hasło aplikacji z konta Google (wymaga weryfikacji dwuetapowej).
 - [ ] Link do LinkedIn (pusty = ukryty)
 - [ ] Nazwa agencji z lat 2018–2019 (teraz: „Agencja SEO, Kraków”)
 - [ ] Potwierdzić, że wymienianie pracodawców (PMI, Accenture Song) na stronie jest OK

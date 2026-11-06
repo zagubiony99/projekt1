@@ -1,0 +1,104 @@
+{
+  "published": "2026-10-19",
+  "updated": "2026-10-19",
+  "pl": {
+    "metaTitle": "Boty AI w robots.txt: GPTBot, ClaudeBot i inne",
+    "metaDescription": "Które boty AI blokować, a które wpuszczać? GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot i Google-Extended: do czego służą i jak je ustawić w robots.txt.",
+    "title": "Boty AI w robots.txt: co blokować, a co wpuszczać",
+    "lead": "Zablokowanie „botów AI” jednym ruchem to częsty błąd. Część z nich trenuje modele, część buduje wyszukiwarki w ChatGPT czy Perplexity, a część pobiera stronę, gdy prosi o to użytkownik. Wyjaśniam, który bot do czego służy i jak ustawić robots.txt świadomie.",
+    "sections": [
+      {
+        "h": "Trzy rodzaje botów AI",
+        "body": "<p>Pod hasłem „boty AI” kryją się trzy różne rzeczy i każdą warto traktować osobno:</p><ul><li><strong>Boty treningowe</strong> zbierają treści do trenowania modeli, np. GPTBot (OpenAI) czy ClaudeBot (Anthropic). Zablokowanie ich nie usuwa Cię z odpowiedzi, które AI daje dziś.</li><li><strong>Boty wyszukiwania</strong> budują indeks, z którego asystent korzysta przy odpowiedziach z linkami do źródeł, np. OAI-SearchBot (wyszukiwanie w ChatGPT), Claude-SearchBot czy PerplexityBot. Jeśli je zablokujesz, trudno będzie o cytowanie Twojej strony.</li><li><strong>Pobieranie na prośbę użytkownika</strong>, np. ChatGPT-User, Claude-User czy Perplexity-User. To nie jest klasyczne crawlowanie, tylko otwarcie strony, bo ktoś o nią poprosił w rozmowie. Część dostawców zaznacza, że robots.txt może takich wejść nie obejmować.</li></ul><p>Wniosek: decyzję „czy chcę, żeby AI uczyło się na moich treściach” podejmujesz osobno od decyzji „czy chcę być cytowany w odpowiedziach AI”.</p>"
+      },
+      {
+        "h": "Najważniejsze boty i do czego służą",
+        "body": "<table><thead><tr><th>Firma</th><th>User-agent</th><th>Do czego służy</th></tr></thead><tbody><tr><td>OpenAI</td><td><code>GPTBot</code></td><td>Trening modeli</td></tr><tr><td>OpenAI</td><td><code>OAI-SearchBot</code></td><td>Wyszukiwanie w ChatGPT</td></tr><tr><td>OpenAI</td><td><code>ChatGPT-User</code></td><td>Pobieranie strony na prośbę użytkownika</td></tr><tr><td>Anthropic</td><td><code>ClaudeBot</code></td><td>Trening modeli</td></tr><tr><td>Anthropic</td><td><code>Claude-SearchBot</code></td><td>Wyszukiwanie w Claude</td></tr><tr><td>Anthropic</td><td><code>Claude-User</code></td><td>Pobieranie strony na prośbę użytkownika</td></tr><tr><td>Perplexity</td><td><code>PerplexityBot</code></td><td>Indeks wyszukiwarki Perplexity</td></tr><tr><td>Perplexity</td><td><code>Perplexity-User</code></td><td>Pobieranie strony na prośbę użytkownika</td></tr><tr><td>Google</td><td><code>Googlebot</code></td><td>Wyszukiwarka Google, w tym AI Overviews i AI Mode</td></tr><tr><td>Google</td><td><code>Google-Extended</code></td><td>Zgoda na użycie treści przez modele Gemini (trening i grounding). Nie wpływa na wyniki wyszukiwania.</td></tr><tr><td>Microsoft</td><td><code>Bingbot</code></td><td>Wyszukiwarka Bing, z której korzysta też Copilot</td></tr><tr><td>Apple</td><td><code>Applebot-Extended</code></td><td>Zgoda na użycie treści do trenowania modeli Apple</td></tr><tr><td>Common Crawl</td><td><code>CCBot</code></td><td>Otwarty zbiór danych, często używany do trenowania modeli</td></tr><tr><td>Meta</td><td><code>meta-externalagent</code></td><td>Trening modeli i produkty AI Mety</td></tr></tbody></table><p>Google-Extended i Applebot-Extended to nie osobne roboty, tylko tokeny w robots.txt: treść pobiera zwykły Googlebot albo Applebot, a token mówi, czy wolno jej użyć do AI. Listy botów się zmieniają, dlatego przed wdrożeniem sprawdź aktualną dokumentację dostawców.</p>"
+      },
+      {
+        "h": "Co blokować, a co wpuszczać",
+        "body": "<p>Jeśli zależy Ci na widoczności w odpowiedziach AI, rozsądny punkt wyjścia wygląda tak:</p><ol><li><strong>Wpuść boty wyszukiwania:</strong> Googlebot, Bingbot, OAI-SearchBot, Claude-SearchBot i PerplexityBot. To one decydują, czy asystent w ogóle zna Twoją stronę.</li><li><strong>O botach treningowych zdecyduj świadomie.</strong> Blokada GPTBota, ClaudeBota, Google-Extended, Applebot-Extended, CCBota czy meta-externalagent nie usuwa Cię z dzisiejszych odpowiedzi, ale ogranicza to, czego przyszłe modele dowiedzą się z Twojej strony. Wydawcy, którzy sprzedają treści, często blokują. Marki, którym zależy na rozpoznawalności, często wpuszczają.</li><li><strong>Nie licz na robots.txt przy wejściach na prośbę użytkownika.</strong> Jeśli coś ma być niedostępne, chroń to logowaniem, a nie regułą w robots.txt.</li></ol>"
+      },
+      {
+        "h": "Przykładowy robots.txt",
+        "body": "<p>Wersja, która wpuszcza wyszukiwarki i wyszukiwanie w AI, a blokuje trening modeli:</p><pre><code># Wyszukiwarki i wyszukiwanie w AI\nUser-agent: Googlebot\nUser-agent: Bingbot\nUser-agent: OAI-SearchBot\nUser-agent: Claude-SearchBot\nUser-agent: PerplexityBot\nDisallow: /koszyk/\n\n# Trening modeli\nUser-agent: GPTBot\nUser-agent: ClaudeBot\nUser-agent: Google-Extended\nUser-agent: Applebot-Extended\nUser-agent: CCBot\nUser-agent: meta-externalagent\nDisallow: /\n\n# Pozostałe boty\nUser-agent: *\nDisallow: /koszyk/\n\nSitemap: https://twojadomena.pl/sitemap.xml</code></pre><p>Ważna pułapka: bot stosuje się tylko do <strong>jednej</strong> grupy, tej z jego nazwą. Jeśli Googlebot ma własną grupę, reguły spod <code>User-agent: *</code> już go nie dotyczą. Dlatego <code>Disallow: /koszyk/</code> jest powtórzone w grupie wyszukiwarek. To jeden z błędów, które najczęściej widzę w audytach.</p>"
+      },
+      {
+        "h": "Najczęstsze błędy",
+        "body": "<ul><li><strong>Blokada na poziomie CDN albo WAF.</strong> robots.txt pozwala, ale firewall zwraca botom 403. Coraz więcej dostawców CDN, np. Cloudflare, ma osobne ustawienia dla botów AI. Sprawdź je, zanim zaczniesz poprawiać robots.txt.</li><li><strong>Treść dostępna tylko po JavaScripcie.</strong> Z dostępnych analiz wynika, że większość botów AI nie renderuje JavaScriptu. Jeśli opis produktu czy cena pojawiają się dopiero po wykonaniu skryptów, bot ich nie zobaczy.</li><li><strong>Blokada Google-Extended „żeby zniknąć z AI Overviews”.</strong> To nie działa: AI Overviews korzysta z Googlebota. Jeśli chcesz ograniczyć fragmenty, użyj <code>nosnippet</code> albo <code>max-snippet</code>, licząc się z wpływem na zwykłe wyniki.</li><li><strong>Literówki w nazwach botów</strong> i reguły wpisane między grupami, przez co trafiają nie tam, gdzie trzeba.</li><li><strong>robots.txt zwracający błąd 5xx.</strong> Przy błędzie serwera roboty zwykle traktują całą stronę jako zablokowaną, dopóki plik nie zacznie znowu działać.</li></ul>"
+      },
+      {
+        "h": "Jak to sprawdzić na swojej stronie",
+        "body": "<ol><li>Otwórz <code>twojadomena.pl/robots.txt</code> i wklej zawartość do mojego <a href='/narzedzia/robots-txt-boty-ai/'>darmowego testera robots.txt dla botów AI</a>. Od razu zobaczysz, które boty mają dostęp.</li><li>Zajrzyj do logów serwera: czy OAI-SearchBot, Claude-SearchBot i PerplexityBot w ogóle odwiedzają stronę i jakie dostają kody odpowiedzi.</li><li>Sprawdź, czy ruch podpisany jako bot AI naprawdę od niego pochodzi. Większość dostawców publikuje zakresy adresów IP swoich botów.</li><li>Porównaj kod HTML strony bez JavaScriptu z tym, co widzi przeglądarka. Kluczowe treści powinny być w samym HTML.</li></ol><p>Jeśli chcesz, żebym sprawdził to za Ciebie razem z danymi strukturalnymi i treścią, zobacz usługę <a href='/uslugi/widocznosc-w-ai-search/'>widoczność w odpowiedziach AI</a>.</p>"
+      }
+    ],
+    "faq": [
+      {
+        "q": "Czy zablokowanie GPTBota usunie moją stronę z ChatGPT?",
+        "a": "Nie. GPTBot zbiera treści do trenowania modeli. Za wyszukiwanie w ChatGPT odpowiada OAI-SearchBot. Możesz blokować GPTBota i nadal być cytowanym, jeśli OAI-SearchBot ma dostęp."
+      },
+      {
+        "q": "Czy Google-Extended wyłącza AI Overviews?",
+        "a": "Nie. Google-Extended dotyczy użycia treści przez modele Gemini. AI Overviews i AI Mode są częścią wyszukiwarki i korzystają z Googlebota, więc obowiązują je te same zasady co zwykłe wyniki."
+      },
+      {
+        "q": "Czy llms.txt zastępuje robots.txt?",
+        "a": "Nie. llms.txt to propozycja pliku z mapą treści dla modeli językowych, a nie standard kontroli dostępu. O tym, które boty mogą pobierać stronę, nadal decydują robots.txt i ustawienia serwera."
+      },
+      {
+        "q": "Jak często aktualizować reguły dla botów AI?",
+        "a": "Przynajmniej raz na kwartał i przy każdej zmianie u dostawców. Nowe boty pojawiają się regularnie, a istniejące zmieniają nazwy i przeznaczenie."
+      }
+    ]
+  },
+  "en": {
+    "metaTitle": "AI Bots in robots.txt: GPTBot, ClaudeBot and More",
+    "metaDescription": "Which AI bots should you block, and which should you allow? GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot and Google-Extended explained.",
+    "title": "AI bots in robots.txt: what to block and what to allow",
+    "lead": "Blocking “AI bots” in one go is a common mistake. Some of them train models, some build the search behind ChatGPT or Perplexity, and some fetch a page because a user asked for it. Here is what each bot does and how to set up robots.txt deliberately.",
+    "sections": [
+      {
+        "h": "Three kinds of AI bots",
+        "body": "<p>“AI bots” covers three different things, and each deserves its own decision:</p><ul><li><strong>Training crawlers</strong> collect content to train models, e.g. GPTBot (OpenAI) or ClaudeBot (Anthropic). Blocking them does not remove you from the answers AI gives today.</li><li><strong>Search crawlers</strong> build the index an assistant uses for answers with source links, e.g. OAI-SearchBot (ChatGPT search), Claude-SearchBot or PerplexityBot. Block them and getting cited becomes hard.</li><li><strong>User-initiated fetchers</strong>, e.g. ChatGPT-User, Claude-User or Perplexity-User. This is not crawling, it is opening a page because someone asked for it in a chat. Some providers note that robots.txt may not apply to these visits.</li></ul><p>The takeaway: “do I want AI to learn from my content” is a separate decision from “do I want to be cited in AI answers”.</p>"
+      },
+      {
+        "h": "The main bots and what they do",
+        "body": "<table><thead><tr><th>Company</th><th>User agent</th><th>Purpose</th></tr></thead><tbody><tr><td>OpenAI</td><td><code>GPTBot</code></td><td>Model training</td></tr><tr><td>OpenAI</td><td><code>OAI-SearchBot</code></td><td>ChatGPT search</td></tr><tr><td>OpenAI</td><td><code>ChatGPT-User</code></td><td>Fetching a page when a user asks</td></tr><tr><td>Anthropic</td><td><code>ClaudeBot</code></td><td>Model training</td></tr><tr><td>Anthropic</td><td><code>Claude-SearchBot</code></td><td>Search in Claude</td></tr><tr><td>Anthropic</td><td><code>Claude-User</code></td><td>Fetching a page when a user asks</td></tr><tr><td>Perplexity</td><td><code>PerplexityBot</code></td><td>Perplexity search index</td></tr><tr><td>Perplexity</td><td><code>Perplexity-User</code></td><td>Fetching a page when a user asks</td></tr><tr><td>Google</td><td><code>Googlebot</code></td><td>Google Search, including AI Overviews and AI Mode</td></tr><tr><td>Google</td><td><code>Google-Extended</code></td><td>Permission for Gemini models to use your content (training and grounding). Does not affect Search.</td></tr><tr><td>Microsoft</td><td><code>Bingbot</code></td><td>Bing search, which Copilot also uses</td></tr><tr><td>Apple</td><td><code>Applebot-Extended</code></td><td>Permission to use content for training Apple’s models</td></tr><tr><td>Common Crawl</td><td><code>CCBot</code></td><td>Open dataset, widely used for model training</td></tr><tr><td>Meta</td><td><code>meta-externalagent</code></td><td>Model training and Meta AI products</td></tr></tbody></table><p>Google-Extended and Applebot-Extended are not separate crawlers but robots.txt tokens: the regular Googlebot or Applebot fetches the page, and the token says whether it may be used for AI. Bot lists change, so check the providers’ current documentation before you ship.</p>"
+      },
+      {
+        "h": "What to block and what to allow",
+        "body": "<p>If visibility in AI answers matters to you, a sensible starting point is:</p><ol><li><strong>Allow search crawlers:</strong> Googlebot, Bingbot, OAI-SearchBot, Claude-SearchBot and PerplexityBot. They decide whether an assistant knows your site at all.</li><li><strong>Decide on training crawlers deliberately.</strong> Blocking GPTBot, ClaudeBot, Google-Extended, Applebot-Extended, CCBot or meta-externalagent does not remove you from today’s answers, but it limits what future models learn from your site. Publishers who sell content often block them. Brands that want to be known often allow them.</li><li><strong>Don’t rely on robots.txt for user-initiated fetches.</strong> If something must stay private, put it behind a login, not a robots.txt rule.</li></ol>"
+      },
+      {
+        "h": "Example robots.txt",
+        "body": "<p>A version that allows search engines and AI search but blocks model training:</p><pre><code># Search engines and AI search\nUser-agent: Googlebot\nUser-agent: Bingbot\nUser-agent: OAI-SearchBot\nUser-agent: Claude-SearchBot\nUser-agent: PerplexityBot\nDisallow: /cart/\n\n# Model training\nUser-agent: GPTBot\nUser-agent: ClaudeBot\nUser-agent: Google-Extended\nUser-agent: Applebot-Extended\nUser-agent: CCBot\nUser-agent: meta-externalagent\nDisallow: /\n\n# Everyone else\nUser-agent: *\nDisallow: /cart/\n\nSitemap: https://yourdomain.com/sitemap.xml</code></pre><p>An important trap: a bot follows only <strong>one</strong> group, the one with its name. Once Googlebot has its own group, the rules under <code>User-agent: *</code> no longer apply to it. That is why <code>Disallow: /cart/</code> is repeated in the search group. It is one of the mistakes I see most often in audits.</p>"
+      },
+      {
+        "h": "The most common mistakes",
+        "body": "<ul><li><strong>A block at the CDN or WAF level.</strong> robots.txt allows the bot, but the firewall returns 403. More and more CDN providers, Cloudflare among them, have dedicated settings for AI bots. Check them before you touch robots.txt.</li><li><strong>Content that only appears with JavaScript.</strong> Available analyses show that most AI bots do not render JavaScript. If a product description or price only appears after scripts run, the bot won’t see it.</li><li><strong>Blocking Google-Extended “to get out of AI Overviews”.</strong> It doesn’t work: AI Overviews uses Googlebot. To limit snippets, use <code>nosnippet</code> or <code>max-snippet</code>, keeping in mind the effect on regular results.</li><li><strong>Typos in bot names</strong> and rules placed between groups, so they land in the wrong place.</li><li><strong>robots.txt returning a 5xx error.</strong> On a server error, crawlers usually treat the whole site as blocked until the file works again.</li></ul>"
+      },
+      {
+        "h": "How to check your own site",
+        "body": "<ol><li>Open <code>yourdomain.com/robots.txt</code> and paste it into my <a href='/en/tools/robots-txt-ai-bot-checker/'>free robots.txt checker for AI bots</a>. You will see straight away which bots have access.</li><li>Look at your server logs: do OAI-SearchBot, Claude-SearchBot and PerplexityBot visit at all, and which status codes do they get?</li><li>Check that traffic claiming to be an AI bot really comes from it. Most providers publish the IP ranges of their bots.</li><li>Compare the page’s HTML without JavaScript with what the browser shows. Key content should be in the HTML itself.</li></ol><p>If you would like me to check this for you, together with structured data and content, see the <a href='/en/services/ai-search-visibility/'>AI search visibility</a> service.</p>"
+      }
+    ],
+    "faq": [
+      {
+        "q": "Will blocking GPTBot remove my site from ChatGPT?",
+        "a": "No. GPTBot collects content for model training. ChatGPT search relies on OAI-SearchBot. You can block GPTBot and still be cited, as long as OAI-SearchBot has access."
+      },
+      {
+        "q": "Does Google-Extended turn off AI Overviews?",
+        "a": "No. Google-Extended covers the use of content by Gemini models. AI Overviews and AI Mode are part of Search and use Googlebot, so the same rules apply as for regular results."
+      },
+      {
+        "q": "Does llms.txt replace robots.txt?",
+        "a": "No. llms.txt is a proposed file with a content map for language models, not an access-control standard. Which bots may fetch your site is still decided by robots.txt and your server settings."
+      },
+      {
+        "q": "How often should I update rules for AI bots?",
+        "a": "At least once a quarter and whenever a provider announces a change. New bots appear regularly, and existing ones change names and purposes."
+      }
+    ]
+  }
+}

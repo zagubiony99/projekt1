@@ -19,7 +19,7 @@
     "pains": [
       "Ruch organiczny spada, a nikt nie potrafi wskazać dlaczego.",
       "Google indeksuje tysiące stron, których nie chcesz w wynikach, a pomija te, które sprzedają.",
-      "W Search Console przybywa stron ze statusem „Strona zeskanowana, ale nie zindeksowana”.",
+      "W Search Console przybywa stron ze statusem „Strona zeskanowana, ale obecnie nie zindeksowana”.",
       "Strona stoi na JavaScripcie i nie wiesz, co Googlebot faktycznie widzi.",
       "Poprzedni audyt skończył się listą 300 punktów bez priorytetów.",
       "Programiści pytają „co właściwie mamy zrobić?” i nie dostają jasnej odpowiedzi."
@@ -162,17 +162,17 @@
     "steps": [
       {
         "t": "Kick-off and access",
-        "when": "Day 1–3",
+        "when": "Days 1–3",
         "d": "A short call about goals, access to Search Console, analytics and, ideally, server logs."
       },
       {
         "t": "Crawl and analysis",
-        "when": "Week 1–2",
+        "when": "Weeks 1–2",
         "d": "Full crawl (Screaming Frog, Botify, Lumar or OnCrawl), rendering, indexation and log analysis."
       },
       {
         "t": "Priorities and tickets",
-        "when": "Week 2–3",
+        "when": "Weeks 2–3",
         "d": "Issues ranked by impact and turned into ready-to-ship tickets."
       },
       {

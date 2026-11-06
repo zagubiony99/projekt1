@@ -1,5 +1,6 @@
 ---
 import { getDict, otherLang, type Lang } from '../i18n';
+import { pageRoutes } from '../data/routes';
 interface Props { lang: Lang; altHref?: string; contactHref?: string }
 const { lang } = Astro.props;
 const t = getDict(lang);
@@ -11,18 +12,21 @@ const contactHref = Astro.props.contactHref ?? `#${t.ids.contact}`;
 const h = (a: string) => `${t.path}${a}`;
 const links = [
   [h(`#${t.ids.services}`), t.nav.services],
-  [h(`#${t.ids.experience}`), t.nav.experience],
+  [pageRoutes.about[lang], t.nav.about],
+  [pageRoutes.guides[lang], t.nav.guides],
   [h(`#${t.ids.process}`), t.nav.process],
   [h(`#${t.ids.faq}`), t.nav.faq],
 ] as const;
+// the current page's own link is marked for screen readers and styling
+const here = Astro.url.pathname;
 ---
 
 <header class="nav" data-nav>
   <div class="wrap wrap--wide bar">
-    <a class="logo" href={t.path} aria-label="Maciej Zięciak — home">Maciej Zięciak</a>
+    <a class="logo" href={t.path} aria-label={lang === 'pl' ? 'Maciej Zięciak — strona główna' : 'Maciej Zięciak — home'}>Maciej Zięciak</a>
     <div class="end">
-      <nav class="links" aria-label="Main">
-        {links.map(([href, label]) => <a href={href}>{label}</a>)}
+      <nav class="links" aria-label={lang === 'pl' ? 'Menu główne' : 'Main'}>
+        {links.map(([href, label]) => <a href={href} aria-current={here.startsWith(href) && !href.includes('#') ? 'page' : undefined}>{label}</a>)}
         <a href={altHref} hreflang={alt.lang} aria-label={`${alt.lang.toUpperCase()}: ${t.nav.switchLabel}`}>{alt.lang.toUpperCase()}</a>
       </nav>
       <a class="cta" href={contactHref}>{t.nav.cta}</a>
@@ -34,7 +38,7 @@ const links = [
   </div>
 
   <div class="sheet" id="mobile-menu" data-sheet hidden>
-    <nav class="wrap sheet__in" aria-label="Mobile">
+    <nav class="wrap sheet__in" aria-label={lang === 'pl' ? 'Menu mobilne' : 'Mobile menu'}>
       {[...links, [contactHref, t.nav.contact]].map(([href, label]) => <a href={href}>{label}</a>)}
       <a class="sw" href={altHref} hreflang={alt.lang}>{t.nav.switchLabel}</a>
     </nav>
@@ -59,7 +63,7 @@ const links = [
   .nav.is-dark {
     background: rgb(22 22 23 / 0.8);
     border-bottom-color: rgb(255 255 255 / 0.08);
-    color: #f5f5f7;
+    color: var(--on-dark);
   }
   .bar {
     display: flex;
@@ -71,7 +75,7 @@ const links = [
   .logo {
     font-size: 1.3125rem;
     font-weight: 600;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
     white-space: nowrap;
   }
   .end {
@@ -83,14 +87,18 @@ const links = [
     display: flex;
     gap: 24px;
     font-size: 0.75rem;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.005em;
   }
   .links a {
     opacity: 0.8;
     transition: opacity 0.2s;
   }
-  .links a:hover {
+  .links a:hover,
+  .links a[aria-current='page'] {
     opacity: 1;
+  }
+  .links a[aria-current='page'] {
+    font-weight: 600;
   }
   .cta {
     display: inline-flex;
@@ -101,11 +109,19 @@ const links = [
     background: var(--blue);
     color: #fff;
     font-size: 0.75rem;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.005em;
     white-space: nowrap;
   }
   .cta:hover {
     background: var(--blue-hover);
+  }
+  /* over dark sections the black pill would vanish: invert it */
+  .nav.is-dark .cta {
+    background: var(--on-dark);
+    color: var(--ink);
+  }
+  .nav.is-dark .cta:hover {
+    background: #fff;
   }
   .burger {
     display: none;
@@ -145,7 +161,7 @@ const links = [
     padding: 8px 0;
     font-size: 1.75rem;
     font-weight: 600;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.015em;
   }
   .sheet__in .sw {
     margin-top: 16px;

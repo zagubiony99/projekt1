@@ -43,7 +43,7 @@
       },
       {
         "t": "Briefy dla autorów",
-        "d": "Cel, intencja, struktura nagłówków, pytania do odpowiedzenia i linki wewnętrzne dla każdego tekstu."
+        "d": "Cel, intencja, struktura nagłówków, pytania, na które tekst ma odpowiedzieć i linki wewnętrzne dla każdego tekstu."
       },
       {
         "t": "Treści pod odpowiedzi AI",
@@ -78,7 +78,7 @@
       "Firmy z blogiem albo bazą wiedzy, która nie przynosi ruchu",
       "Sklepy, które chcą treści wspierających kategorie i produkty",
       "Marki B2B z długim procesem decyzyjnym",
-      "Zespoły content, które potrzebują planu opartego na danych"
+      "Zespoły odpowiedzialne za treści, które potrzebują planu opartego na danych"
     ],
     "forNo": [
       "Firmy szukające samego pisania tekstów bez strategii"
@@ -119,7 +119,7 @@
     "pains": [
       "The blog keeps growing, but its traffic does not.",
       "Several articles compete with each other for the same query.",
-      "Copywriters write \"for keywords\" without a plan or structure.",
+      "Copywriters write “for keywords” without a plan or structure.",
       "You do not know which topics have a chance of making it into AI answers.",
       "Category and service pages do not answer customers’ real questions."
     ],
@@ -159,12 +159,12 @@
       },
       {
         "t": "Research",
-        "when": "Week 1–2",
+        "when": "Weeks 1–2",
         "d": "Topics, intent, demand, competitors and content gaps."
       },
       {
         "t": "Plan and architecture",
-        "when": "Week 2–3",
+        "when": "Weeks 2–3",
         "d": "Clusters, priorities and a publishing plan."
       },
       {

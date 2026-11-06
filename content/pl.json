@@ -11,7 +11,7 @@
     "ctaPrimary": "Umów bezpłatną konsultację",
     "ctaSecondary": "Zobacz doświadczenie",
     "ctaNote": "30 minut · online · bez zobowiązań",
-    "trustLabel": "Pracowałem m.in. w",
+    "trustLabel": "Współpracowałem m.in. z",
     "demo": {
       "app": "Odpowiedź AI",
       "note": "Przykład poglądowy",
@@ -93,7 +93,7 @@
   "stage": {
     "eyebrow": "Audyt dostępu botów",
     "title": "Zobacz swoją stronę oczami botów.",
-    "text": "Googlebot radzi sobie z JavaScriptem. Większość botów AI już nie. Sprawdzam, co naprawdę widzi każdy z nich i co po drodze odcinają firewall, CDN albo robots.txt."
+    "text": "Googlebot radzi sobie z JavaScriptem. Większość botów AI – nie. Sprawdzam, co naprawdę widzi każdy z nich i co po drodze odcinają firewall, CDN albo robots.txt."
   },
   "stats": {
     "label": "W liczbach",
@@ -123,6 +123,9 @@
       "Lumar",
       "OnCrawl",
       "Screaming Frog",
+      "Adobe Analytics",
+      "Google Search Console",
+      "Bing Webmaster Tools",
       "GetBeast"
     ]
   },
@@ -131,11 +134,6 @@
       "title": "Nie wiesz, od czego zacząć?",
       "text": "Na bezpłatnej konsultacji przejrzę Twoją stronę i wskażę 3 rzeczy, które warto poprawić w pierwszej kolejności.",
       "btn": "Umów bezpłatną konsultację"
-    },
-    "afterProcess": {
-      "title": "Pierwszy krok zajmuje 30 minut.",
-      "text": "Krótka rozmowa, konkretne wnioski, zero zobowiązań.",
-      "btn": "Umów rozmowę"
     }
   },
   "compare": {
@@ -179,12 +177,32 @@
   "services": {
     "label": "Usługi",
     "title": "W czym pomagam",
-    "intro": "Technical SEO to fundament. Jeśli Google i boty AI nie potrafią poprawnie odczytać Twojej strony, nawet najlepsze treści i linki nie przyniosą efektów."
+    "intro": "Technical SEO to fundament. Jeśli Google i boty AI nie potrafią poprawnie odczytać Twojej strony, nawet najlepsze treści i linki nie przyniosą efektów.",
+    "commonLabel": "Najczęściej piszą do mnie klienci, którzy mają problem z:",
+    "common": [
+      {
+        "t": "widocznością w Google i technicznym SEO",
+        "key": "audit"
+      },
+      {
+        "t": "treściami, które nie przyciągają ruchu",
+        "key": "content"
+      },
+      {
+        "t": "spadkami po aktualizacjach Google",
+        "key": "audit"
+      },
+      {
+        "t": "ruchem po migracji strony",
+        "key": "migration"
+      }
+    ]
   },
   "experience": {
     "label": "Doświadczenie",
     "title": "9 lat w SEO",
     "intro": "Od agencji i własnego serwisu, przez własną działalność, po zespoły w Accenture Song i Philip Morris International.",
+    "more": "Więcej o mnie",
     "industriesLabel": "Branże, z którymi pracowałem",
     "industries": [
       "Hospitality",
@@ -236,7 +254,7 @@
         "when": "2017 — 2023",
         "org": "Własny projekt",
         "role": "Współzałożyciel, SEO lead",
-        "desc": "Polski katalog firm, w którym byłem jedynym specjalistą SEO: ponad 1,1 mln podstron, 670 tys. adresów w indeksie i 115 tys. wizyt z wyszukiwarki miesięcznie w szczytowym momencie. Po zmianie właściciela zostałem jego doradcą.",
+        "desc": "Polski katalog firm, w którym byłem jedynym specjalistą SEO: ponad 1,1 mln podstron, 670 tys. adresów w indeksie i 115 tys. wizyt z wyszukiwarki miesięcznie w szczytowym momencie. Po zmianie właściciela zostałem doradcą nowego właściciela.",
         "highlight": true
       }
     ]
@@ -260,6 +278,52 @@
       {
         "name": "Pomiar",
         "desc": "Śledzę indeksację, ruch i obecność w odpowiedziach AI. Przesuwam siły tam, gdzie dane pokazują największy zwrot."
+      }
+    ]
+  },
+  "engage": {
+    "label": "Współpraca",
+    "title": "Jak możemy współpracować",
+    "lead": "Każda współpraca zaczyna się od bezpłatnej, 30-minutowej rozmowy. Potem wybierasz formę, która pasuje do Twojego zespołu i budżetu.",
+    "priceFallback": "Wycena po rozmowie",
+    "models": [
+      {
+        "name": "Konsultacja ekspercka",
+        "kind": "Jednorazowo",
+        "desc": "Sesja online z Tobą albo Twoim zespołem. Bierzemy na warsztat konkretny problem: spadek ruchu, planowaną migrację, widoczność w AI. Wychodzisz z jasnym planem, co zrobić i w jakiej kolejności.",
+        "points": [
+          "Przegląd Twojej strony przed spotkaniem",
+          "Odpowiedzi na pytania zespołu i programistów",
+          "Priorytety spisane po spotkaniu"
+        ],
+        "cta": "Zapytaj o konsultację",
+        "topic": "Konsultacja",
+        "featured": false
+      },
+      {
+        "name": "Projekt",
+        "kind": "Zakres i termin z góry",
+        "desc": "Audyt, migracja, wdrożenie danych strukturalnych albo przygotowanie serwisu pod AI search. Prowadzę projekt od diagnozy po odbiór wdrożenia.",
+        "points": [
+          "Zadania gotowe dla programistów",
+          "Sprawdzam zmiany przed publikacją",
+          "Jedna osoba odpowiedzialna za wynik"
+        ],
+        "cta": "Opowiedz o projekcie",
+        "featured": true
+      },
+      {
+        "name": "Stała współpraca",
+        "kind": "Rozliczenie miesięczne",
+        "desc": "Zewnętrzny technical SEO lead dla Twojego zespołu. Pilnuję SEO w każdym wydaniu, monitoruję indeksację i widoczność w AI, odpowiadam na pytania na bieżąco.",
+        "points": [
+          "SEO wpisane w proces wydań",
+          "Monitoring i szybka reakcja na spadki",
+          "Stały kontakt ze mną, bez pośredników"
+        ],
+        "cta": "Zapytaj o stałą współpracę",
+        "topic": "Stała współpraca",
+        "featured": false
       }
     ]
   },
@@ -296,6 +360,10 @@
         "a": "Tak, to częsty układ. Przygotowuję dla nich zadania, sprawdzam zmiany i odpowiadam na pytania techniczne."
       },
       {
+        "q": "Czy jesteś w stanie zorganizować dodatkowych specjalistów?",
+        "a": "Tak. Jestem w kontakcie m.in. z programistami oraz osobami, które od lat skutecznie prowadzą kampanie Google Ads. Jeśli projekt tego wymaga, polecę sprawdzone osoby albo włączę je do zespołu, a sam dalej odpowiadam za całość."
+      },
+      {
         "q": "Czy podpisujesz NDA?",
         "a": "Tak. Jeśli projekt wymaga dostępu do danych, logów albo kodu, NDA podpisujemy przed startem."
       },
@@ -311,17 +379,23 @@
     "lead": "Na bezpłatnej, 30-minutowej rozmowie przejrzę Twoją stronę i wskażę 3 rzeczy, które warto poprawić w pierwszej kolejności. Bez zobowiązań.",
     "topicsLabel": "Czego dotyczy projekt?",
     "topics": [
+      "Konsultacja",
       "Audyt techniczny",
       "AI search",
+      "Aplikacja w ChatGPT",
       "Duży serwis",
       "E-commerce",
       "Enterprise / CMS",
       "Migracja",
       "Dane strukturalne",
       "WebOps",
+      "Scraping i automatyzacje",
       "Planowanie treści",
+      "Home Assistant",
       "Stała współpraca"
     ],
+    "emailLabel": "Twój e-mail",
+    "emailPlaceholder": "imie@firma.pl",
     "urlLabel": "Adres strony",
     "urlPlaceholder": "https://twojafirma.pl",
     "msgLabel": "Wiadomość",
@@ -333,7 +407,7 @@
     "sending": "Wysyłam…",
     "success": "Dzięki! Wiadomość dotarła. Odezwę się z propozycją terminu rozmowy.",
     "error": "Coś poszło nie tak. Napisz bezpośrednio na",
-    "subject": "Zapytanie SEO — maciejzieciak.com",
+    "subject": "Nowe zapytanie z maciejzieciak.com",
     "bodyTopics": "Temat",
     "bodyUrl": "Strona",
     "orEmail": "Albo napisz bezpośrednio"
@@ -369,8 +443,31 @@
       }
     ]
   },
+  "guidesUi": {
+    "metaTitle": "Poradniki Technical SEO i AI search | Maciej Zięciak",
+    "metaDescription": "Praktyczne poradniki SEO i AI search: AI Overviews, boty AI, aplikacje w ChatGPT, audyt i jego koszt, migracja, wdrożenia, hreflang i filtry w sklepie.",
+    "eyebrow": "Poradniki SEO i AI search",
+    "title": "To, co sprawdzam u klientów. Rozpisane krok po kroku.",
+    "lead": "Checklisty i wyjaśnienia z technical SEO i AI search. Bez lania wody, z przykładami, które możesz od razu sprawdzić na swojej stronie.",
+    "toolEyebrow": "Darmowe narzędzie",
+    "toolOpen": "Otwórz narzędzie",
+    "toc": "Spis treści",
+    "updated": "Aktualizacja",
+    "readTime": "min czytania",
+    "by": "Autor",
+    "read": "Czytaj poradnik",
+    "all": "Wszystkie poradniki",
+    "others": "Inne poradniki",
+    "faqTitle": "Najczęstsze pytania",
+    "serviceTitle": "Wolisz, żebym zrobił to za Ciebie?",
+    "serviceCta": "Zobacz usługę",
+    "prev": "Poprzednie",
+    "next": "Następne"
+  },
   "nav": {
     "services": "Usługi",
+    "about": "O mnie",
+    "guides": "Poradniki",
     "experience": "Doświadczenie",
     "process": "Proces",
     "faq": "FAQ",

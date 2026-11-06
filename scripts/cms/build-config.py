@@ -49,12 +49,13 @@ def items(name, label, fields, desc=None):  # list of objects
 SITE = [
     s('name', 'Imię i nazwisko', 'Pojawia się w menu, stopce, tytułach stron i danych strukturalnych.', required=True),
     s('email', 'E-mail kontaktowy', 'Adres w stopce, formularzu i polityce prywatności.', required=True),
+    s('company', 'Dane firmy do polityki prywatności', 'Np. Maciej Zięciak Consulting, ul. Przykładowa 1, 30-000 Kraków, NIP 0000000000. Puste = tylko imię i nazwisko.'),
     s('linkedin', 'Profil LinkedIn', 'Pełny adres, np. https://www.linkedin.com/in/… Puste = ukryty. Trafia też do schema (sameAs).'),
     {'name': 'photo', 'label': 'Zdjęcie', 'type': 'image',
      'description': 'Portret: pokazuje się w sekcji Doświadczenie, przy formularzu kontaktowym i w „Dlaczego ja” na podstronach usług, trafia też do schema. Najlepiej min. 1000×1000 px, twarz w górnej części kadru. Strona sama przytnie i odchudzi plik.'},
     s('formEndpoint', 'Adres formularza (Formspree / Web3Forms)',
       'Np. https://formspree.io/f/xxxx albo https://api.web3forms.com/submit. Puste = formularz otwiera program pocztowy.'),
-    s('formAccessKey', 'Klucz Web3Forms', 'Tylko dla Web3Forms. Dla Formspree zostaw puste.'),
+    s('formAccessKey', 'Klucz Web3Forms', 'Klucz z web3forms.com (przychodzi mailem na adres, na który mają trafiać zgłoszenia). Wystarczy go wkleić: adres formularza uzupełni się sam. Dla Formspree zostaw puste.'),
     s('bookingUrl', 'Link do kalendarza', 'Cal.com albo Calendly. Gdy jest ustawiony, przy formularzu pojawia się „Wolisz od razu wybrać termin?”.'),
     s('gtmId', 'Google Tag Manager ID', 'Np. GTM-XXXXXXX. Puste = brak analityki, brak banera cookies.'),
 ]
@@ -125,7 +126,6 @@ COPY = [
     ]),
     obj('bands', 'Paski z wezwaniem do kontaktu', [
         obj('afterServices', 'Po usługach', [s('title', 'Nagłówek'), t('text', 'Tekst'), s('btn', 'Przycisk')]),
-        obj('afterProcess', 'Po procesie', [s('title', 'Nagłówek'), t('text', 'Tekst'), s('btn', 'Przycisk')]),
     ]),
     obj('compare', 'Porównanie z agencją', [
         s('label', 'Nadtytuł'),
@@ -138,11 +138,18 @@ COPY = [
         s('label', 'Nadtytuł'),
         s('title', 'Nagłówek'),
         t('intro', 'Wstęp'),
+        s('commonLabel', 'Z czym przychodzą klienci: zdanie wstępu'),
+        items('common', 'Z czym przychodzą klienci', [
+            s('t', 'Problem'),
+            {'name': 'key', 'label': 'Usługa, do której prowadzi link', 'type': 'select',
+             'options': {'values': ['audit', 'ai', 'mcp', 'schema', 'webops', 'data', 'content', 'large', 'intl', 'migration', 'ecom', 'ha']}},
+        ]),
     ], 'Treść kart usług edytujesz w sekcji „Usługi”.'),
     obj('experience', 'Doświadczenie', [
         s('label', 'Nadtytuł'),
         s('title', 'Nagłówek'),
         t('intro', 'Wstęp'),
+        s('more', 'Link „więcej o mnie” (strona główna)'),
         s('industriesLabel', 'Nagłówek listy branż'),
         strings('industries', 'Branże'),
         items('items', 'Etapy kariery', [
@@ -158,6 +165,22 @@ COPY = [
         s('title', 'Nagłówek'),
         items('steps', 'Kroki', [s('name', 'Nazwa'), t('desc', 'Opis')]),
     ]),
+    obj('engage', 'Formy współpracy', [
+        s('label', 'Nadtytuł'),
+        s('title', 'Nagłówek'),
+        t('lead', 'Tekst pod nagłówkiem'),
+        s('priceFallback', 'Tekst, gdy nie podasz ceny', 'Np. „Wycena po rozmowie”.'),
+        items('models', 'Formy współpracy', [
+            s('name', 'Nazwa'),
+            s('kind', 'Etykieta nad nazwą', 'Np. „Jednorazowo”.'),
+            s('price', 'Cena', 'Np. „od 600 zł netto”. Puste = tekst zastępczy powyżej.'),
+            t('desc', 'Opis'),
+            strings('points', 'Punkty'),
+            s('cta', 'Przycisk'),
+            s('topic', 'Temat w formularzu', 'Musi być identyczny z jednym z tematów formularza kontaktowego. Puste = żaden.'),
+            b('featured', 'Wyróżnij (ciemna karta)'),
+        ]),
+    ]),
     obj('faq', 'FAQ', [
         s('label', 'Nadtytuł'),
         s('title', 'Nagłówek'),
@@ -169,6 +192,8 @@ COPY = [
         t('lead', 'Tekst pod nagłówkiem'),
         s('topicsLabel', 'Pytanie o temat'),
         strings('topics', 'Tematy do wyboru', 'Nie zmieniaj nazw tematów usług: podstrona usługi sama zaznacza swój temat.'),
+        s('emailLabel', 'Etykieta pola „e-mail”'),
+        s('emailPlaceholder', 'Przykład w polu „e-mail”'),
         s('urlLabel', 'Etykieta pola „adres strony”'),
         s('urlPlaceholder', 'Podpowiedź w polu „adres strony”'),
         s('msgLabel', 'Etykieta pola „wiadomość”'),
@@ -200,8 +225,29 @@ COPY = [
         s('nextTitle', 'Nagłówek „co dalej”'),
         items('next', 'Co dalej (kroki)', [s('t', 'Krok'), t('d', 'Opis')]),
     ]),
+    obj('guidesUi', 'Poradniki: lista i stałe napisy', [
+        s('metaTitle', 'SEO: tytuł listy poradników', 'Do 60 znaków.'),
+        t('metaDescription', 'SEO: opis listy poradników', 'Do 155 znaków.'),
+        s('eyebrow', 'Nadtytuł'),
+        s('title', 'Nagłówek listy poradników'),
+        t('lead', 'Tekst pod nagłówkiem'),
+        s('toolEyebrow', 'Etykieta karty narzędzia'),
+        s('toolOpen', 'Link „otwórz narzędzie” na karcie'),
+        s('toc', 'Spis treści'),
+        s('updated', 'Aktualizacja'),
+        s('readTime', 'Min czytania'),
+        s('by', 'Autor'),
+        s('read', 'Link „czytaj poradnik”'),
+        s('all', 'Link „wszystkie poradniki”'),
+        s('others', 'Nagłówek „inne poradniki”'),
+        s('faqTitle', 'Nagłówek FAQ'),
+        s('serviceTitle', 'Ramka usługi: nagłówek'),
+        s('serviceCta', 'Ramka usługi: przycisk'),
+        s('prev', 'Strzałka slidera: poprzednie (dla czytników ekranu)'),
+        s('next', 'Strzałka slidera: następne (dla czytników ekranu)'),
+    ]),
     obj('nav', 'Menu', [
-        s('services', 'Usługi'), s('experience', 'Doświadczenie'), s('process', 'Proces'), s('faq', 'FAQ'),
+        s('services', 'Usługi'), s('about', 'O mnie'), s('guides', 'Poradniki'), s('experience', 'Doświadczenie'), s('process', 'Proces'), s('faq', 'FAQ'),
         s('contact', 'Kontakt'), s('cta', 'Przycisk w menu'), s('switchLabel', 'Link do drugiej wersji językowej'),
         s('menu', 'Przycisk menu (telefon)'), s('close', 'Zamknij menu (telefon)'),
     ]),
@@ -238,16 +284,230 @@ SERVICE = [
     items('faq', 'FAQ usługi', [s('q', 'Pytanie'), t('a', 'Odpowiedź')]),
 ]
 
+# ---- About page (content/about.json) --------------------------------------------
+ABOUT = [
+    s('metaTitle', 'SEO: tytuł', 'Do 60 znaków.'),
+    t('metaDescription', 'SEO: opis', 'Do 155 znaków.'),
+    s('eyebrow', 'Nadtytuł (część H1)'),
+    s('title', 'Nagłówek (H1)'),
+    t('lead', 'Tekst pod nagłówkiem'),
+    s('ctaPrimary', 'Przycisk główny'),
+    s('ctaSecondary', 'Link do usług'),
+    s('storyTitle', 'Nagłówek historii'),
+    {'name': 'story', 'label': 'Historia (akapity)', 'type': 'text', 'list': True},
+    s('approachTitle', 'Nagłówek „jak pracuję”'),
+    items('approach', 'Jak pracuję', [s('t', 'Nazwa'), t('d', 'Opis')]),
+    s('kitTitle', 'Nagłówek „platformy i narzędzia”'),
+    s('platformsLabel', 'Nagłówek listy platform'),
+    strings('platforms', 'Platformy'),
+    s('languagesLabel', 'Nagłówek listy języków'),
+    strings('languages', 'Języki'),
+    s('guidesTitle', 'Nagłówek sekcji poradników'),
+    t('guidesLead', 'Tekst sekcji poradników'),
+]
+
+# ---- one language of a guide (content/guides/<key>.json) ----------------------------
+GUIDE = [
+    s('metaTitle', 'SEO: tytuł', 'Do 60 znaków.'),
+    t('metaDescription', 'SEO: opis', 'Do 155 znaków.'),
+    s('title', 'Tytuł (H1)'),
+    t('lead', 'Wstęp'),
+    items('sections', 'Rozdziały', [
+        s('h', 'Nagłówek rozdziału (H2)', 'Trafia też do spisu treści.'),
+        # HTML in a code editor rather than rich text: tables and code blocks survive every save
+        {'name': 'body', 'label': 'Treść (HTML)', 'type': 'code', 'options': {'format': 'html'},
+         'description': 'Akapity <p>, listy <ul>/<ol>, pogrubienie <strong>, linki <a href=\'/…\'>, tabele <table>.'},
+    ]),
+    items('faq', 'FAQ', [s('q', 'Pytanie'), t('a', 'Odpowiedź')]),
+]
+
+GUIDES = [  # key, label in the CMS menu
+    ('chatgpt-apps', 'Aplikacja w ChatGPT (MCP)'),
+    ('ai-overviews', 'AI Overviews i ChatGPT: jak przygotować stronę'),
+    ('ai-bots', 'Boty AI w robots.txt'),
+    ('audit-cost', 'Audyt SEO: od czego zależy cena'),
+    ('audit', 'Audyt techniczny: checklista'),
+    ('migration', 'Migracja strony: checklista'),
+    ('release', 'SEO przed wdrożeniem: checklista'),
+    ('hreflang', 'Hreflang: najczęstsze błędy'),
+    ('facets', 'Filtry w sklepie a SEO'),
+]
+
+# ---- robots.txt tool (content/tools/robots-ai.json) ---------------------------------
+TOOL = [
+    s('metaTitle', 'SEO: tytuł', 'Do 60 znaków.'),
+    t('metaDescription', 'SEO: opis', 'Do 155 znaków.'),
+    s('eyebrow', 'Nadtytuł'),
+    s('title', 'Nagłówek (H1)'),
+    t('lead', 'Tekst pod nagłówkiem'),
+    s('inputLabel', 'Pole robots.txt: etykieta'),
+    s('inputHint', 'Pole robots.txt: podpowiedź'),
+    s('pathLabel', 'Pole ścieżki: etykieta'),
+    s('pathHint', 'Pole ścieżki: podpowiedź'),
+    s('check', 'Przycisk „sprawdź”'),
+    s('example', 'Przycisk „wstaw przykład”'),
+    s('colBot', 'Kolumna: bot'),
+    s('colPurpose', 'Kolumna: do czego służy'),
+    s('colStatus', 'Kolumna: dostęp'),
+    s('colRule', 'Kolumna: reguła'),
+    s('allowed', 'Status: ma dostęp'),
+    s('blocked', 'Status: zablokowany'),
+    s('noRule', 'Brak reguły'),
+    s('fromGroup', 'Słowo „grupa”'),
+    s('summary', 'Podsumowanie', 'Zostaw {blocked} i {total}: w ich miejsce wstawiają się liczby.'),
+    s('empty', 'Komunikat przed sprawdzeniem'),
+    obj('groups', 'Nazwy grup botów', [s('search', 'Wyszukiwarki'), s('aiSearch', 'Wyszukiwanie w AI'), s('training', 'Trening modeli'), s('user', 'Na prośbę użytkownika')]),
+    t('userNote', 'Uwaga przy botach „na prośbę użytkownika”'),
+    s('howTitle', 'Nagłówek „jak czytać wynik”'),
+    {'name': 'how', 'label': 'Jak czytać wynik (punkty)', 'type': 'text', 'list': True},
+    items('faq', 'FAQ', [s('q', 'Pytanie'), t('a', 'Odpowiedź')]),
+    s('guideCta', 'Link do poradnika'),
+    s('serviceTitle', 'Ramka usługi: nagłówek'),
+    t('serviceText', 'Ramka usługi: tekst'),
+    s('serviceCta', 'Ramka usługi: przycisk'),
+]
+
+# ---- robots.txt generator (content/tools/robots-gen.json) ---------------------------
+GEN = [
+    s('metaTitle', 'SEO: tytuł', 'Do 60 znaków.'),
+    t('metaDescription', 'SEO: opis', 'Do 155 znaków.'),
+    s('eyebrow', 'Nadtytuł'),
+    s('title', 'Nagłówek (H1)'),
+    t('lead', 'Tekst pod nagłówkiem'),
+    s('presetsLabel', 'Gotowe ustawienia: etykieta'),
+    obj('presets', 'Gotowe ustawienia', [s('searchOnly', 'Wyszukiwanie tak, trening nie'), s('open', 'Wpuść wszystkie'), s('blockAi', 'Zablokuj boty AI')]),
+    s('botsLabel', 'Lista botów: etykieta'),
+    s('allowLabel', 'Etykieta „wpuszczony”'),
+    s('pathsLabel', 'Ścieżki: etykieta'),
+    s('pathsHint', 'Ścieżki: podpowiedź'),
+    s('sitemapLabel', 'Mapa witryny: etykieta'),
+    s('sitemapPlaceholder', 'Mapa witryny: przykład'),
+    s('outputLabel', 'Wynik: etykieta'),
+    s('copy', 'Przycisk „kopiuj”'),
+    s('copied', 'Napis po skopiowaniu'),
+    s('testCta', 'Link do testera'),
+    s('commentAllow', 'Komentarz w pliku: wpuszczone'),
+    s('commentBlock', 'Komentarz w pliku: zablokowane'),
+    s('commentRest', 'Komentarz w pliku: pozostałe'),
+    s('howTitle', 'Nagłówek „zanim wgrasz plik”'),
+    {'name': 'how', 'label': 'Zanim wgrasz plik (punkty)', 'type': 'text', 'list': True},
+    items('faq', 'FAQ', [s('q', 'Pytanie'), t('a', 'Odpowiedź')]),
+    s('serviceTitle', 'Ramka usługi: nagłówek'),
+    t('serviceText', 'Ramka usługi: tekst'),
+    s('serviceCta', 'Ramka usługi: przycisk'),
+]
+
+# ---- hreflang checker (content/tools/hreflang.json) -----------------------------------
+HL = [
+    s('metaTitle', 'SEO: tytuł', 'Do 60 znaków.'),
+    t('metaDescription', 'SEO: opis', 'Do 155 znaków.'),
+    s('eyebrow', 'Nadtytuł'),
+    s('title', 'Nagłówek (H1)'),
+    t('lead', 'Tekst pod nagłówkiem'),
+    s('inputLabel', 'Pole: etykieta'),
+    t('inputHint', 'Pole: podpowiedź'),
+    s('urlLabel', 'Adres strony: etykieta'),
+    s('urlHint', 'Adres strony: podpowiedź'),
+    s('check', 'Przycisk „sprawdź”'),
+    s('exampleHtml', 'Przycisk „przykład: tagi”'),
+    s('exampleSitemap', 'Przycisk „przykład: mapa witryny”'),
+    s('empty', 'Komunikat przed sprawdzeniem'),
+    s('modeHtml', 'Tryb: tagi'),
+    s('modeSitemap', 'Tryb: mapa witryny'),
+    s('pagesLabel', 'Etykieta „strony”'),
+    s('summary', 'Podsumowanie', 'Zostaw {e}, {w} i {i}: w ich miejsce wstawiają się liczby.'),
+    s('allGood', 'Komunikat „brak problemów”'),
+    obj('levels', 'Poziomy', [s('error', 'Błąd'), s('warning', 'Ostrzeżenie'), s('info', 'Uwaga')]),
+    obj('messages', 'Komunikaty (zostaw {x}: w jego miejsce wstawia się kod albo adres)', [
+        s('none', 'Brak tagów'), s('codeUnderscore', 'Podkreślnik'), s('codeFormat', 'Zły format'), s('codeRegionOnly', 'Sam kraj'),
+        s('codeLanguage', 'Nieznany język'), s('codeThreeLetter', 'Trzyliterowy język'), s('codeUk', 'Kod UK'),
+        s('codeRegionFormat', 'Region spoza ISO 3166'), s('codeRegion', 'Nieznany kraj'), s('relative', 'Adres względny'),
+        s('duplicate', 'Duplikat kodu'), s('noXDefault', 'Brak x-default'), s('noSelf', 'Brak odwołania do siebie'), s('noReturn', 'Brak linku zwrotnego'),
+    ]),
+    s('guideCta', 'Link do poradnika'),
+    s('howTitle', 'Nagłówek „co sprawdza tester”'),
+    {'name': 'how', 'label': 'Co sprawdza tester (punkty)', 'type': 'text', 'list': True},
+    items('faq', 'FAQ', [s('q', 'Pytanie'), t('a', 'Odpowiedź')]),
+    s('serviceTitle', 'Ramka usługi: nagłówek'),
+    t('serviceText', 'Ramka usługi: tekst'),
+    s('serviceCta', 'Ramka usługi: przycisk'),
+]
+
+# ---- MCP server page (content/tools/mcp-server.json) --------------------------------
+MCPS = [
+    s('metaTitle', 'SEO: tytuł', 'Do 60 znaków.'),
+    t('metaDescription', 'SEO: opis', 'Do 155 znaków.'),
+    s('eyebrow', 'Nadtytuł'),
+    s('title', 'Nagłówek (H1)'),
+    t('lead', 'Tekst pod nagłówkiem'),
+    s('urlLabel', 'Adres serwera: etykieta'),
+    s('copy', 'Przycisk „kopiuj”'),
+    s('copied', 'Napis po skopiowaniu'),
+    s('note', 'Dopisek pod adresem'),
+    s('toolsTitle', 'Narzędzia: nagłówek'),
+    t('toolsLead', 'Narzędzia: wstęp'),
+    items('tools', 'Narzędzia', [s('name', 'Nazwa w kodzie', 'Nie zmieniaj: to nazwa narzędzia na serwerze (functions/mcp.ts).'), t('text', 'Opis')]),
+    s('examplesTitle', 'Przykładowe pytania: nagłówek'),
+    strings('examples', 'Przykładowe pytania'),
+    s('setupTitle', 'Jak podłączyć: nagłówek'),
+    t('setupNote', 'Jak podłączyć: dopisek'),
+    items('setup', 'Jak podłączyć (aplikacje)', [
+        s('client', 'Aplikacja'),
+        {'name': 'steps', 'label': 'Kroki', 'type': 'text', 'list': True},
+        t('code', 'Kod do skopiowania', 'Opcjonalnie. {url} zamienia się na adres serwera.'),
+        t('note', 'Dopisek'),
+    ]),
+    s('sourcesTitle', 'Źródła: nagłówek'),
+    items('sources', 'Źródła (oficjalna dokumentacja)', [s('label', 'Nazwa'), s('url', 'Adres')]),
+    s('buildTitle', 'Jak to jest zbudowane: nagłówek'),
+    t('buildLead', 'Jak to jest zbudowane: wstęp'),
+    {'name': 'build', 'label': 'Jak to jest zbudowane (punkty)', 'type': 'text', 'list': True},
+    items('faq', 'FAQ', [s('q', 'Pytanie'), t('a', 'Odpowiedź')]),
+    s('guideCta', 'Link do poradnika'),
+    s('serviceTitle', 'Ramka usługi: nagłówek'),
+    t('serviceText', 'Ramka usługi: tekst'),
+    s('serviceCta', 'Ramka usługi: przycisk'),
+    s('demoTitle', 'Ramka w poradniku i usłudze: nagłówek'),
+    t('demoText', 'Ramka w poradniku i usłudze: tekst'),
+    s('demoCta', 'Ramka w poradniku i usłudze: link'),
+]
+
+# services outside SEO get their own contact heading (shown instead of the SEO one)
+SERVICE_LOCAL = SERVICE + [
+    obj('showcase', 'Mój system (dowód)', [
+        s('eyebrow', 'Nadtytuł'), s('title', 'Nagłówek'), t('lead', 'Tekst pod nagłówkiem'),
+        items('stats', 'Liczby', [s('v', 'Wartość'), s('k', 'Opis')]),
+        obj('feature', 'Główny temat (duży panel)', [s('t', 'Nagłówek'), t('lead', 'Wstęp'), {'name': 'items', 'label': 'Punkty', 'type': 'text', 'list': True}]),
+        items('groups', 'Rozwiązania', [s('t', 'Nazwa'), t('d', 'Opis')]),
+        obj('next', 'Następny projekt', [s('eyebrow', 'Etykieta'), s('t', 'Nagłówek'), t('d', 'Opis'), s('cta', 'Przycisk')]),
+        s('note', 'Dopisek (np. stan na dzień)'),
+    ]),
+    obj('offer', 'Oferta i ceny', [
+        s('eyebrow', 'Etykieta (np. Oferta na start)'), s('title', 'Nagłówek'), t('lead', 'Tekst pod nagłówkiem'),
+        s('wasLabel', 'Napis przed ceną po promocji (np. po promocji)'),
+        items('items', 'Pozycje', [s('name', 'Nazwa'), s('price', 'Cena'), s('was', 'Cena po promocji'), s('unit', 'Jednostka'), t('d', 'Opis')]),
+        t('note', 'Dopisek pod cenami'), s('cta', 'Przycisk'),
+    ], 'Ceny trafiają też do danych dla Google. Zmieniaj je w obu językach.'),
+    obj('contact', 'Sekcja kontaktu', [
+        s('title', 'Nagłówek'), t('lead', 'Tekst pod nagłówkiem'),
+        items('next', 'Co się stanie, gdy napiszesz', [s('t', 'Krok'), t('d', 'Opis')]),
+    ]),
+]
+LOCAL_SERVICES = {'ha'}
+
 SERVICES = [  # key, label in the CMS menu
     ('audit', 'Technical SEO (audyty)'),
     ('ai', 'Widoczność w odpowiedziach AI'),
+    ('mcp', 'Aplikacje w ChatGPT (MCP)'),
     ('schema', 'Dane strukturalne'),
     ('webops', 'WebOps i SEO Operations'),
+    ('data', 'Data scraping i automatyzacje'),
     ('content', 'Planowanie treści'),
     ('large', 'Duże serwisy i programmatic SEO'),
     ('intl', 'Enterprise i SEO międzynarodowe'),
     ('migration', 'Migracje i przebudowy stron'),
     ('ecom', 'SEO dla e-commerce'),
+    ('ha', 'Home Assistant i inteligentny dom'),
 ]
 
 config = {
@@ -263,8 +523,33 @@ config = {
         {'name': 'services', 'label': 'Usługi', 'type': 'group', 'items': [
             {'name': f'service-{key}', 'label': label, 'type': 'file', 'path': f'content/services/{key}.json', 'format': 'json',
              'description': 'Adres podstrony jest stały (src/data/routes.ts), zmieniasz tylko treść.',
-             'fields': [obj('pl', 'Po polsku', SERVICE), obj('en', 'Po angielsku', SERVICE)]}
+             'fields': [obj('pl', 'Po polsku', F), obj('en', 'Po angielsku', F)]}
             for key, label in SERVICES
+            for F in [SERVICE_LOCAL if key in LOCAL_SERVICES else SERVICE]
+        ]},
+        {'name': 'more-pages', 'label': 'Inne strony', 'type': 'group', 'items': [
+            {'name': 'about', 'label': 'O mnie', 'type': 'file', 'path': 'content/about.json', 'format': 'json',
+             'fields': [obj('pl', 'Po polsku', ABOUT), obj('en', 'Po angielsku', ABOUT)]},
+            {'name': 'tool-robots', 'label': 'Narzędzie: robots.txt dla botów AI', 'type': 'file', 'path': 'content/tools/robots-ai.json', 'format': 'json',
+             'description': 'Lista botów i logika sprawdzania są w kodzie (src/data/ai-bots.ts, src/lib/robots.ts).',
+             'fields': [obj('pl', 'Po polsku', TOOL), obj('en', 'Po angielsku', TOOL)]},
+            {'name': 'tool-robots-gen', 'label': 'Narzędzie: generator robots.txt', 'type': 'file', 'path': 'content/tools/robots-gen.json', 'format': 'json',
+             'fields': [obj('pl', 'Po polsku', GEN), obj('en', 'Po angielsku', GEN)]},
+            {'name': 'tool-hreflang', 'label': 'Narzędzie: tester hreflang', 'type': 'file', 'path': 'content/tools/hreflang.json', 'format': 'json',
+             'fields': [obj('pl', 'Po polsku', HL), obj('en', 'Po angielsku', HL)]},
+            {'name': 'tool-mcp', 'label': 'Narzędzie: serwer MCP', 'type': 'file', 'path': 'content/tools/mcp-server.json', 'format': 'json',
+             'description': 'Same narzędzia i ich logika są w kodzie (functions/mcp.ts). Tu zmieniasz tylko treść strony.',
+             'fields': [obj('pl', 'Po polsku', MCPS), obj('en', 'Po angielsku', MCPS)]},
+        ]},
+        {'name': 'guides', 'label': 'Poradniki', 'type': 'group', 'items': [
+            {'name': f'guide-{key}', 'label': label, 'type': 'file', 'path': f'content/guides/{key}.json', 'format': 'json',
+             'description': 'Adres poradnika jest stały (src/data/routes.ts). Po zmianie treści zaktualizuj datę aktualizacji.',
+             'fields': [
+                 {'name': 'published', 'label': 'Data publikacji', 'type': 'date'},
+                 {'name': 'updated', 'label': 'Data aktualizacji', 'type': 'date'},
+                 obj('pl', 'Po polsku', GUIDE), obj('en', 'Po angielsku', GUIDE),
+             ]}
+            for key, label in GUIDES
         ]},
     ],
 }

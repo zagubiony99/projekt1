@@ -14,7 +14,7 @@
     "metaDescription": "SEO dla marek enterprise i serwisów wielojęzycznych: hreflang, struktura rynków, Sitecore, AEM, WordPress i systemy autorskie, praca z zespołami IT.",
     "eyebrow": "Enterprise i SEO międzynarodowe",
     "title": "Jedna marka, wiele rynków. Zero chaosu w wynikach.",
-    "lead": "Przy wielu rynkach i językach SEO to przede wszystkim proces: hreflang, szablony, wydania i ludzie w różnych zespołach. Pracuję w takim środowisku na co dzień, na różnych platformach: WordPress, Sitecore, Adobe Experience Manager i systemy autorskie.",
+    "lead": "Przy wielu rynkach i językach SEO to przede wszystkim proces: hreflang, szablony, wydania i ludzie w różnych zespołach. Pracuję w takim środowisku na co dzień, na różnych platformach: WordPressie, Sitecore, Adobe Experience Manager i systemach autorskich.",
     "painTitle": "Brzmi znajomo?",
     "pains": [
       "Google pokazuje użytkownikom w Niemczech wersję brytyjską albo odwrotnie.",
@@ -32,7 +32,7 @@
       },
       {
         "t": "Strategię struktury rynków",
-        "d": "Domeny, subdomeny czy katalogi, oraz jak to wpływa na SEO, utrzymanie i koszty."
+        "d": "Domeny, subdomeny czy katalogi oraz to, jak ten wybór wpływa na SEO, utrzymanie i koszty."
       },
       {
         "t": "Wytyczne SEO dla Twojego CMS-a",
@@ -92,7 +92,7 @@
       },
       {
         "q": "Na jakich CMS-ach pracujesz?",
-        "a": "Na różnych: WordPress, Sitecore, Adobe Experience Manager i systemy autorskie, a w e-commerce na platformach sklepowych. Zasady SEO międzynarodowego są wspólne, różni się konfiguracja, a tę dopasowuję do Twojego systemu."
+        "a": "Na różnych: WordPressie, Sitecore, Adobe Experience Manager i systemach autorskich, a w e-commerce na platformach sklepowych. Zasady SEO międzynarodowego są wspólne, różni się konfiguracja, a tę dopasowuję do Twojego systemu."
       },
       {
         "q": "W jakich językach pracujesz?",
@@ -119,7 +119,7 @@
     "painTitle": "Sound familiar?",
     "pains": [
       "Google shows German users the UK version, or the other way round.",
-      "Hreflang is in place, but Search Console shows errors and nobody knows which matter.",
+      "Hreflang is in place, but a crawl shows hundreds of errors and nobody knows which matter.",
       "Every market does SEO its own way and results can’t be compared.",
       "SEO fixes wait months in the release queue.",
       "A global template breaks local pages that used to rank well.",
@@ -141,7 +141,7 @@
       },
       {
         "t": "Standards for markets and agencies",
-        "d": "One set of SEO rules across markets, so results are comparable and scalable."
+        "d": "One set of SEO rules across markets, so results are comparable and good solutions can be reused."
       },
       {
         "t": "SEO in the release process",
@@ -161,12 +161,12 @@
       },
       {
         "t": "Audit",
-        "when": "Week 1–3",
+        "when": "Weeks 1–3",
         "d": "Hreflang, canonicals, templates and CMS configuration on representative markets."
       },
       {
         "t": "Standards",
-        "when": "Week 3–4",
+        "when": "Weeks 3–4",
         "d": "Guidelines and SEO acceptance criteria for teams and agencies."
       },
       {

@@ -1,0 +1,102 @@
+{
+  "pl": {
+    "metaTitle": "Generator robots.txt dla botów AI",
+    "metaDescription": "Darmowy generator robots.txt: zdecyduj, które boty AI wpuścić, a które zablokować, dodaj ścieżki i mapę witryny, skopiuj gotowy plik.",
+    "eyebrow": "Darmowe narzędzie",
+    "title": "Generator robots.txt dla botów AI",
+    "lead": "Wybierz gotowe ustawienie albo zdecyduj osobno o każdym bocie. Generator pilnuje pułapki z grupami: ścieżki zamknięte dla wszystkich powtarza w grupie wpuszczonych botów.",
+    "presetsLabel": "Gotowe ustawienia",
+    "presets": {
+      "searchOnly": "Wyszukiwanie tak, trening nie",
+      "open": "Wpuść wszystkie",
+      "blockAi": "Zablokuj boty AI"
+    },
+    "botsLabel": "Boty",
+    "allowLabel": "Wpuszczony",
+    "pathsLabel": "Ścieżki zamknięte dla wszystkich",
+    "pathsHint": "Jedna na linię, np. /koszyk/ albo /konto/",
+    "sitemapLabel": "Adres mapy witryny",
+    "sitemapPlaceholder": "https://twojadomena.pl/sitemap.xml",
+    "outputLabel": "Twój robots.txt",
+    "copy": "Kopiuj",
+    "copied": "Skopiowano",
+    "testCta": "Sprawdź ten plik w testerze",
+    "commentAllow": "Wpuszczone boty",
+    "commentBlock": "Zablokowane boty",
+    "commentRest": "Pozostałe boty",
+    "howTitle": "Zanim wgrasz plik",
+    "how": [
+      "Porównaj wynik z obecnym robots.txt. Generator nie zna Twoich dotychczasowych reguł, więc przenieś te, które są nadal potrzebne.",
+      "Plik musi leżeć w katalogu głównym domeny: twojadomena.pl/robots.txt.",
+      "Sprawdź firewall i CDN. Jeśli blokują boty, robots.txt nic nie zmieni.",
+      "Po wgraniu wklej plik do testera i upewnij się, że każdy bot dostaje to, co zaplanowałeś."
+    ],
+    "faq": [
+      {
+        "q": "Dlaczego ścieżki powtarzają się w kilku grupach?",
+        "a": "Bot stosuje się tylko do jednej grupy, tej z jego nazwą. Jeśli Googlebot ma własną grupę, reguły spod User-agent: * go nie dotyczą, więc ścieżki zamknięte dla wszystkich muszą być powtórzone."
+      },
+      {
+        "q": "Czy blokada botów treningowych usunie mnie z odpowiedzi AI?",
+        "a": "Nie. Boty treningowe zbierają dane do przyszłych modeli. O cytowaniu w odpowiedziach decydują boty wyszukiwania, np. OAI-SearchBot czy PerplexityBot."
+      },
+      {
+        "q": "Czy robots.txt chroni prywatne dane?",
+        "a": "Nie. To prośba do botów, a nie zabezpieczenie. Prywatne treści chroń logowaniem."
+      }
+    ],
+    "serviceTitle": "Nie wiesz, którą opcję wybrać?",
+    "serviceText": "Pomogę zdecydować, które boty wpuścić, sprawdzę firewall, CDN i logi serwera i zmierzę, czy Twoja marka pojawia się w odpowiedziach AI.",
+    "serviceCta": "Zobacz usługę"
+  },
+  "en": {
+    "metaTitle": "Robots.txt Generator for AI Bots",
+    "metaDescription": "Free robots.txt generator: decide which AI bots to allow and which to block, add paths and your sitemap, and copy the finished file.",
+    "eyebrow": "Free tool",
+    "title": "Robots.txt generator for AI bots",
+    "lead": "Pick a preset or decide on each bot separately. The generator handles the group trap for you: paths closed to everyone are repeated in the allowed bots’ group.",
+    "presetsLabel": "Presets",
+    "presets": {
+      "searchOnly": "Search yes, training no",
+      "open": "Allow all",
+      "blockAi": "Block AI bots"
+    },
+    "botsLabel": "Bots",
+    "allowLabel": "Allowed",
+    "pathsLabel": "Paths closed to everyone",
+    "pathsHint": "One per line, e.g. /cart/ or /account/",
+    "sitemapLabel": "Sitemap URL",
+    "sitemapPlaceholder": "https://yourdomain.com/sitemap.xml",
+    "outputLabel": "Your robots.txt",
+    "copy": "Copy",
+    "copied": "Copied",
+    "testCta": "Check this file in the checker",
+    "commentAllow": "Allowed bots",
+    "commentBlock": "Blocked bots",
+    "commentRest": "Everyone else",
+    "howTitle": "Before you upload it",
+    "how": [
+      "Compare the result with your current robots.txt. The generator doesn’t know your existing rules, so carry over the ones you still need.",
+      "The file must sit at the root of your domain: yourdomain.com/robots.txt.",
+      "Check your firewall and CDN. If they block bots, robots.txt changes nothing.",
+      "Once it is live, paste it into the checker and make sure every bot gets what you planned."
+    ],
+    "faq": [
+      {
+        "q": "Why are paths repeated in several groups?",
+        "a": "A bot follows only one group, the one with its name. If Googlebot has its own group, the rules under User-agent: * don’t apply to it, so paths closed to everyone have to be repeated."
+      },
+      {
+        "q": "Will blocking training bots remove me from AI answers?",
+        "a": "No. Training bots collect data for future models. Being cited in answers depends on search bots such as OAI-SearchBot or PerplexityBot."
+      },
+      {
+        "q": "Does robots.txt protect private data?",
+        "a": "No. It is a request to bots, not a safeguard. Protect private content with a login."
+      }
+    ],
+    "serviceTitle": "Not sure which option to pick?",
+    "serviceText": "I will help you decide which bots to allow, check your firewall, CDN and server logs, and measure whether your brand appears in AI answers.",
+    "serviceCta": "See the service"
+  }
+}
