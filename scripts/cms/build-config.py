@@ -142,7 +142,7 @@ COPY = [
         items('common', 'Z czym przychodzą klienci', [
             s('t', 'Problem'),
             {'name': 'key', 'label': 'Usługa, do której prowadzi link', 'type': 'select',
-             'options': {'values': ['audit', 'ai', 'mcp', 'schema', 'webops', 'content', 'large', 'intl', 'migration', 'ecom', 'ha']}},
+             'options': {'values': ['audit', 'ai', 'mcp', 'schema', 'webops', 'data', 'content', 'large', 'intl', 'migration', 'ecom', 'ha']}},
         ]),
     ], 'Treść kart usług edytujesz w sekcji „Usługi”.'),
     obj('experience', 'Doświadczenie', [
@@ -501,6 +501,7 @@ SERVICES = [  # key, label in the CMS menu
     ('mcp', 'Aplikacje w ChatGPT (MCP)'),
     ('schema', 'Dane strukturalne'),
     ('webops', 'WebOps i SEO Operations'),
+    ('data', 'Data scraping i automatyzacje'),
     ('content', 'Planowanie treści'),
     ('large', 'Duże serwisy i programmatic SEO'),
     ('intl', 'Enterprise i SEO międzynarodowe'),

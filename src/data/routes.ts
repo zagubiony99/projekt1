@@ -7,6 +7,7 @@ export const serviceRoutes = [
   { key: 'mcp', slug: { pl: 'aplikacja-chatgpt-mcp', en: 'chatgpt-app-mcp' }, topic: { pl: 'Aplikacja w ChatGPT', en: 'ChatGPT app' } },
   { key: 'schema', slug: { pl: 'dane-strukturalne-schema', en: 'structured-data-schema' }, topic: { pl: 'Dane strukturalne', en: 'Structured data' } },
   { key: 'webops', slug: { pl: 'webops-seo-operations', en: 'webops-seo-operations' }, topic: { pl: 'WebOps', en: 'WebOps' } },
+  { key: 'data', slug: { pl: 'data-scraping-automatyzacje', en: 'data-scraping-automation' }, topic: { pl: 'Scraping i automatyzacje', en: 'Scraping & automation' } },
   { key: 'content', slug: { pl: 'planowanie-tresci-seo', en: 'seo-content-planning' }, topic: { pl: 'Planowanie treści', en: 'Content planning' } },
   { key: 'large', slug: { pl: 'seo-duzych-serwisow', en: 'large-website-seo' }, topic: { pl: 'Duży serwis', en: 'Large website' } },
   { key: 'intl', slug: { pl: 'seo-enterprise-miedzynarodowe', en: 'enterprise-international-seo' }, topic: { pl: 'Enterprise / CMS', en: 'Enterprise / CMS' } },

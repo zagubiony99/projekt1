@@ -1,0 +1,232 @@
+{
+  "pl": {
+    "name": "Data scraping i automatyzacje",
+    "card": {
+      "desc": "Skrypty, które zbierają dane ze stron i z API, także z dużych marketplace’ów i serwisów powyżej 50 tys. adresów URL, i automatyzacje, które zastępują ręczne kopiowanie do arkuszy.",
+      "tags": [
+        "Własne skrypty",
+        "Zbieranie danych",
+        "Automatyzacje",
+        "Raporty i alerty"
+      ]
+    },
+    "metaTitle": "Data scraping i automatyzacje: własne skrypty",
+    "metaDescription": "Własne skrypty do zbierania danych ze stron i API oraz automatyzacje raportów i alertów. Dane konkurencji, produkty, wyniki wyszukiwania, monitoring zmian.",
+    "eyebrow": "Data scraping i automatyzacje",
+    "title": "Dane, których potrzebujesz, bez ręcznego kopiowania.",
+    "lead": "Od lat buduję skrypty, które zbierają dane z różnych stron, także z dużych marketplace’ów i serwisów powyżej 50 tys. adresów URL, i automatyzacje dla klientów. Ty mówisz, jakich danych potrzebujesz i jak często, a ja przygotowuję rozwiązanie, które działa samo i dostarcza je tam, gdzie z nich korzystasz.",
+    "painTitle": "Brzmi znajomo?",
+    "pains": [
+      "Ktoś w zespole co tydzień ręcznie kopiuje dane ze stron do arkusza.",
+      "Chcesz śledzić ceny albo ofertę konkurencji, ale nie ma na to czasu.",
+      "Gotowe narzędzia nie zbierają akurat tych danych, których potrzebujesz.",
+      "Dane są w kilku systemach i nikt nie widzi ich w jednym miejscu.",
+      "O zmianie na stronie albo w wynikach wyszukiwania dowiadujesz się po fakcie.",
+      "Raport, który powinien powstawać sam, zajmuje komuś pół dnia."
+    ],
+    "getTitle": "W czym pomagam",
+    "gets": [
+      {
+        "t": "Własne skrypty do zbierania danych",
+        "d": "Dane ze stron, sklepów i katalogów: produkty, ceny, dostępność, treści, linki. Także ze stron renderowanych przez JavaScript."
+      },
+      {
+        "t": "Duże serwisy i marketplace’y",
+        "d": "Zbieranie danych z serwisów powyżej 50 tys. adresów URL: kolejki, wznawianie po przerwie, rozsądne tempo zapytań i kontrola, czy niczego nie brakuje."
+      },
+      {
+        "t": "Dane z API",
+        "d": "Połączenie danych z Search Console, Google Analytics, narzędzi SEO i innych systemów, które udostępniają API."
+      },
+      {
+        "t": "Monitoring zmian i alerty",
+        "d": "Powiadomienie, gdy zmieni się cena, treść, status strony albo pozycja w wynikach wyszukiwania."
+      },
+      {
+        "t": "Automatyczne raporty",
+        "d": "Uporządkowane dane, bez duplikatów, trafiają same do arkusza, bazy albo dashboardu, w ustalonym rytmie: codziennie, co tydzień albo na żądanie."
+      },
+      {
+        "t": "Dane do SEO",
+        "d": "Ekstrakcja danych z dużych serwisów do audytu: szablony, dane strukturalne, linkowanie, treści na tysiącach stron."
+      }
+    ],
+    "stepsTitle": "Jak to przebiega",
+    "steps": [
+      {
+        "t": "Rozmowa",
+        "when": "Start",
+        "d": "Jakich danych potrzebujesz, skąd, jak często i do czego. Sprawdzam, czy da się je zebrać legalnie i stabilnie."
+      },
+      {
+        "t": "Prototyp",
+        "when": "Pierwsze dni",
+        "d": "Skrypt na małej próbce danych. Widzisz wynik, zanim powstanie pełne rozwiązanie."
+      },
+      {
+        "t": "Wdrożenie",
+        "when": "Po akceptacji",
+        "d": "Pełne zbieranie danych, harmonogram, zapis tam, gdzie z nich korzystasz, i alerty o błędach."
+      },
+      {
+        "t": "Utrzymanie",
+        "when": "Na życzenie",
+        "d": "Strony się zmieniają. Gdy zmieni się źródło danych, poprawiam skrypt, żeby dane dalej płynęły."
+      }
+    ],
+    "forTitle": "Dla kogo to jest",
+    "forYes": [
+      "Duże marketplace’y i serwisy powyżej 50 tys. adresów URL",
+      "Sklepy i firmy, które chcą śledzić ofertę i ceny konkurencji",
+      "Zespoły marketingu i SEO, które tracą czas na ręczne raporty",
+      "Firmy, które potrzebują danych, jakich nie zbierają gotowe narzędzia",
+      "Każdy, kto co tydzień kopiuje te same dane z tych samych miejsc"
+    ],
+    "forNo": [
+      "Zbieranie danych osobowych bez podstawy prawnej albo omijanie zabezpieczeń stron",
+      "Projekty, w których dane mają służyć do spamu albo kopiowania cudzych treści"
+    ],
+    "proof": "Zbieraniem danych ze stron zajmuję się od lat, przy bardzo różnych serwisach, danych i przypadkach. W pracy SEO na co dzień automatyzuję crawl, ekstrakcję danych i raporty, a dla klientów budowałem własne skrypty i automatyzacje dopasowane do ich potrzeb.",
+    "faq": [
+      {
+        "q": "Czy scraping jest legalny?",
+        "a": "Zbieranie publicznie dostępnych danych jest zwykle dozwolone, ale zależy od rodzaju danych i regulaminu strony. Nie zbieram danych osobowych bez podstawy prawnej i nie omijam zabezpieczeń. Przed startem sprawdzamy, czy dany przypadek jest w porządku."
+      },
+      {
+        "q": "Czy poradzisz sobie z bardzo dużym serwisem?",
+        "a": "Tak. Skrypty dla serwisów powyżej 50 tys. adresów URL planuję od początku pod skalę: kolejka adresów, wznawianie po przerwie, rozsądne tempo zapytań, żeby nie obciążać serwera, i raport, czy wszystkie strony zostały zebrane."
+      },
+      {
+        "q": "Co, jeśli strona, z której zbieramy dane, się zmieni?",
+        "a": "To normalne i warto to zaplanować. Skrypt zgłasza błąd, gdy dane przestają się zgadzać, a w ramach utrzymania poprawiam go, żeby dane dalej płynęły."
+      },
+      {
+        "q": "W jakiej formie dostanę dane?",
+        "a": "W takiej, jakiej używasz: arkusz Google, plik CSV albo JSON, baza danych albo dashboard. Mogę też wysyłać podsumowania i alerty na e-mail."
+      },
+      {
+        "q": "Czy dostanę kod?",
+        "a": "Tak, jeśli chcesz. Możesz dostać kod i instrukcję uruchomienia albo zlecić mi uruchamianie i utrzymanie skryptów."
+      },
+      {
+        "q": "Ile to kosztuje?",
+        "a": "Zależy od liczby źródeł, ilości danych i tego, jak często mają być zbierane. Prosty skrypt to inna skala niż stały monitoring wielu stron. Wycenę dostaniesz po krótkiej, bezpłatnej rozmowie."
+      }
+    ]
+  },
+  "en": {
+    "name": "Data scraping & automation",
+    "card": {
+      "desc": "Scripts that collect data from websites and APIs, large marketplaces and sites with 50,000+ URLs included, and automations that replace copying things into spreadsheets by hand.",
+      "tags": [
+        "Custom scripts",
+        "Data collection",
+        "Automation",
+        "Reports and alerts"
+      ]
+    },
+    "metaTitle": "Data Scraping & Automation: Custom Scripts",
+    "metaDescription": "Custom scripts that collect data from websites and APIs, plus automated reports and alerts. Competitor data, products, search results, change monitoring.",
+    "eyebrow": "Data scraping & automation",
+    "title": "The data you need, without copying it by hand.",
+    "lead": "For years I have been building scripts that collect data from all kinds of websites, large marketplaces and sites with 50,000+ URLs included, and automations for clients. You tell me what data you need and how often, and I build something that runs on its own and delivers it where you use it.",
+    "painTitle": "Sound familiar?",
+    "pains": [
+      "Someone on the team copies data from websites into a spreadsheet every week.",
+      "You want to track competitors’ prices or offers, but nobody has the time.",
+      "Off-the-shelf tools don’t collect exactly the data you need.",
+      "Data sits in several systems and nobody sees it in one place.",
+      "You find out about a change on a site or in search results after the fact.",
+      "A report that should build itself takes someone half a day."
+    ],
+    "getTitle": "How I help",
+    "gets": [
+      {
+        "t": "Custom data collection scripts",
+        "d": "Data from websites, shops and directories: products, prices, availability, content, links. JavaScript-rendered pages included."
+      },
+      {
+        "t": "Large sites and marketplaces",
+        "d": "Collecting data from sites with 50,000+ URLs: queues, resuming after a break, a sensible request rate and checks that nothing is missing."
+      },
+      {
+        "t": "Data from APIs",
+        "d": "Combining data from Search Console, Google Analytics, SEO tools and other systems that offer an API."
+      },
+      {
+        "t": "Change monitoring and alerts",
+        "d": "A notification when a price, a page’s content or status, or a search ranking changes."
+      },
+      {
+        "t": "Automated reports",
+        "d": "Tidy, deduplicated data lands in a spreadsheet, database or dashboard on its own, on a set schedule: daily, weekly or on demand."
+      },
+      {
+        "t": "Data for SEO",
+        "d": "Extracting data from large sites for an audit: templates, structured data, internal links and content across thousands of pages."
+      }
+    ],
+    "stepsTitle": "How it works",
+    "steps": [
+      {
+        "t": "Call",
+        "when": "Start",
+        "d": "What data you need, from where, how often and what for. I check whether it can be collected legally and reliably."
+      },
+      {
+        "t": "Prototype",
+        "when": "First days",
+        "d": "A script run on a small sample. You see the result before the full solution is built."
+      },
+      {
+        "t": "Set-up",
+        "when": "Once approved",
+        "d": "Full data collection, a schedule, delivery to where you use the data, and alerts when something fails."
+      },
+      {
+        "t": "Maintenance",
+        "when": "On request",
+        "d": "Websites change. When a data source changes, I update the script so the data keeps flowing."
+      }
+    ],
+    "forTitle": "Who it’s for",
+    "forYes": [
+      "Large marketplaces and sites with 50,000+ URLs",
+      "Shops and companies that want to track competitors’ offers and prices",
+      "Marketing and SEO teams losing time on manual reports",
+      "Companies that need data off-the-shelf tools don’t collect",
+      "Anyone who copies the same data from the same places every week"
+    ],
+    "forNo": [
+      "Collecting personal data without a legal basis, or getting around a site’s protections",
+      "Projects where the data is meant for spam or for copying other people’s content"
+    ],
+    "proof": "I have been collecting data from websites for years, across very different sites, data and use cases. In my SEO work I automate crawls, data extraction and reporting every day, and I have built custom scripts and automations for clients to fit their needs.",
+    "faq": [
+      {
+        "q": "Is scraping legal?",
+        "a": "Collecting publicly available data is usually allowed, but it depends on the kind of data and the site’s terms. I don’t collect personal data without a legal basis and I don’t get around protections. Before we start, we check that your case is fine."
+      },
+      {
+        "q": "Can you handle a very large site?",
+        "a": "Yes. For sites with 50,000+ URLs I plan the scripts for scale from the start: a URL queue, resuming after a break, a sensible request rate so the server is not overloaded, and a report on whether every page was collected."
+      },
+      {
+        "q": "What if the site we collect from changes?",
+        "a": "That is normal and worth planning for. The script reports an error when the data stops adding up, and as part of maintenance I fix it so the data keeps flowing."
+      },
+      {
+        "q": "What format will I get the data in?",
+        "a": "Whatever you use: a Google Sheet, a CSV or JSON file, a database or a dashboard. I can also send summaries and alerts by email."
+      },
+      {
+        "q": "Do I get the code?",
+        "a": "Yes, if you want it. You can get the code with instructions to run it, or have me run and maintain the scripts."
+      },
+      {
+        "q": "How much does it cost?",
+        "a": "It depends on the number of sources, the amount of data and how often it is collected. A simple script is a different scale from ongoing monitoring of many sites. You get a quote after a short, free call."
+      }
+    ]
+  }
+}

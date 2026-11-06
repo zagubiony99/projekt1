@@ -29,6 +29,12 @@ const v = {
   mcpRows: pl
     ? [['2 pokoje · 48 m² · Podgórze', '589 000 zł'], ['3 pokoje · 61 m² · Krowodrza', '598 000 zł']]
     : [['2 rooms · 48 m² · Podgórze', 'PLN 589,000'], ['3 rooms · 61 m² · Krowodrza', 'PLN 598,000']],
+  // Data scraping: a script run over a large site, then the rows it collected
+  scrapeCmd: pl ? 'python zbierz.py --sitemap sklep.pl' : 'python collect.py --sitemap shop.com',
+  scrapeDone: pl ? '52 418 / 52 418 URL' : '52,418 / 52,418 URLs',
+  scrapeRows: pl
+    ? [['Buty trailowe X2', '349 zł', 'dostępny'], ['Kurtka Storm', '599 zł', 'brak'], ['Plecak 30 l', '219 zł', 'dostępny']]
+    : [['Trail shoes X2', 'PLN 349', 'in stock'], ['Storm jacket', 'PLN 599', 'out'], ['30 l backpack', 'PLN 219', 'in stock']],
   // Home Assistant: a small dashboard
   haTiles: pl
     ? [['Salon', '21,5°'], ['Światło', 'wł.'], ['Słońce dziś', '18,4 kWh'], ['Drzwi', 'zamknięte']]
@@ -150,6 +156,15 @@ const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-
                   </svg>
                   <span class="hub">{v.hub}</span>
                   {v.topics.map((tp, k) => <span class="tp" style={`--k:${k};left:${topicPos[k][0]}%;top:${topicPos[k][1]}%`}>{tp}</span>)}
+                </div>
+              )}
+              {it.key === 'data' && (
+                <div class="scrape">
+                  <p class="cmd"><span class="pr">$</span> {v.scrapeCmd}</p>
+                  <div class="prog"><i></i><span>{v.scrapeDone}</span></div>
+                  <ul class="rows">
+                    {v.scrapeRows.map(([n, pz, st], k) => <li style={`--k:${k}`}><span>{n}</span><b>{pz}</b><em class:list={{ out: k === 1 }}>{st}</em></li>)}
+                  </ul>
                 </div>
               )}
               {it.key === 'ha' && (
@@ -354,6 +369,22 @@ const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-
   .card.is-on .mcpv .call { animation: pop 0.5s var(--ease-out) 0.6s forwards; }
   .card.is-on .app li { animation: pop 0.45s var(--ease-out) forwards; animation-delay: calc(1.1s + var(--k) * 0.25s); }
 
+  /* Data scraping: a terminal line, a progress bar filling up, then the collected rows */
+  .scrape { display: grid; gap: 8px; width: 100%; max-width: 340px; }
+  .cmd { padding: 9px 12px; border-radius: 12px; background: var(--dark-2); color: var(--on-dark-2); font: 500 0.6875rem/1.4 ui-monospace, Menlo, monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cmd .pr { color: color-mix(in srgb, var(--a3) 70%, white); }
+  .prog { position: relative; height: 26px; border-radius: 999px; background: var(--gray-2); overflow: hidden; }
+  .prog i { position: absolute; inset: 0; background: var(--ai); transform-origin: 0 50%; transform: scaleX(0.04); }
+  .prog span { position: relative; display: block; padding: 0 12px; color: #fff; font: 600 0.6875rem/26px ui-monospace, Menlo, monospace; text-shadow: 0 1px 2px rgb(0 0 0 / 0.25); }
+  .card.is-on .prog i { animation: fillx 1.6s var(--ease-out) 0.3s forwards; }
+  @keyframes fillx { to { transform: scaleX(1); } }
+  .rows { display: grid; gap: 5px; padding: 6px; border-radius: 14px; background: var(--white); box-shadow: inset 0 0 0 1px var(--gray-2); }
+  .rows li { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 10px; padding: 6px 9px; border-radius: 9px; background: var(--gray); font-size: 0.75rem; opacity: 0; transform: translateY(8px); }
+  .rows b { font-weight: 650; white-space: nowrap; }
+  .rows em { font-style: normal; font-size: 0.6875rem; color: var(--ok); }
+  .rows em.out { color: var(--err); }
+  .card.is-on .rows li { animation: pop 0.45s var(--ease-out) forwards; animation-delay: calc(1.5s + var(--k) * 0.2s); }
+
   /* Home Assistant: dashboard tiles */
   .hav { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; max-width: 320px; }
   .hav li { display: grid; gap: 4px; padding: 12px 14px; border-radius: 16px; background: var(--white); box-shadow: inset 0 0 0 1px var(--gray-2); font-size: 0.75rem; color: var(--muted); opacity: 0; transform: translateY(10px); }
@@ -439,7 +470,8 @@ const hreflang = [['pl-PL', '/pl/'], ['en-GB', '/en/'], ['de-DE', '/de/'], ['cs-
     .card { height: 560px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .bubble, .code li, .redir li, .grid i, .r-meta, .r-ld li, .pipe li, .call, .app li { opacity: 1; transform: none; }
+    .bubble, .code li, .redir li, .grid i, .r-meta, .r-ld li, .pipe li, .call, .app li, .rows li, .hav li { opacity: 1; transform: none; }
+    .prog i { transform: none; }
     .tp { opacity: 1; scale: 1; }
   }
 </style>

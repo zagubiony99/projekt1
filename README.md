@@ -25,7 +25,7 @@ Wszystkie teksty (PL i EN), usługi i ustawienia kontaktowe edytujesz w przeglą
 4. Po lewej masz menu:
    - **Ustawienia i kontakt**: e-mail, LinkedIn, zdjęcie, formularz, kalendarz, Google Tag Manager,
    - **Strona główna**: wszystkie teksty po polsku i po angielsku, w tym „Formy współpracy” (konsultacja, projekt, stała współpraca; pole „Cena” puste = „Wycena po rozmowie”),
-   - **Usługi**: 10 podstron usług, każda z wersją polską i angielską,
+   - **Usługi**: 12 podstron usług, każda z wersją polską i angielską,
    - **Inne strony**: „O mnie” i strony narzędzi (tester robots.txt, generator robots.txt, tester hreflang, serwer MCP),
    - **Poradniki**: 9 poradników. Treść rozdziału jest w HTML (akapity `<p>`, listy, tabele), daty publikacji i aktualizacji ustawiasz w kalendarzu.
 5. Zmieniasz tekst i klikasz **Save**. CMS zapisuje zmianę w repozytorium, a hosting (Cloudflare Pages / Netlify / Vercel) w ok. minutę publikuje nową wersję strony.
@@ -99,7 +99,7 @@ W CMS (**Ustawienia i kontakt**) albo w `content/site.json`:
 
 - `/` to wersja polska (domyślna)
 - `/en/` to wersja angielska
-- `/uslugi/<slug>/` i `/en/services/<slug>/` to podstrony usług (10 × 2 języki), każda z danymi Service, BreadcrumbList i FAQPage
+- `/uslugi/<slug>/` i `/en/services/<slug>/` to podstrony usług (12 × 2 języki), każda z danymi Service, BreadcrumbList i FAQPage
 - `/o-mnie/` i `/en/about/` to strona „O mnie” (ProfilePage)
 - `/poradniki/` i `/en/guides/` to lista poradników, a `/poradniki/<slug>/` i `/en/guides/<slug>/` same poradniki (Article, BreadcrumbList, FAQPage)
 - `/narzedzia/…` i `/en/tools/…` to darmowe narzędzia (WebApplication): tester robots.txt, generator robots.txt, tester hreflang i strona serwera MCP
